@@ -4,7 +4,7 @@
  * Fired during plugin deactivation
  *
  * @link       http://www.mapo-dev.com
- * @since      1.0.0
+ * @since      0.0.1
  *
  * @package    Wp_Impressum_Plugin
  * @subpackage Wp_Impressum_Plugin/includes
@@ -15,7 +15,7 @@
  *
  * This class defines all code necessary to run during the plugin's deactivation.
  *
- * @since      1.0.0
+ * @since      0.0.1
  * @package    Wp_Impressum_Plugin
  * @subpackage Wp_Impressum_Plugin/includes
  * @author     mapo <mapo@mapo-dev.com>
@@ -27,7 +27,7 @@ class Wp_Impressum_Plugin_Deactivator {
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since    0.0.1
 	 */
 	public static function deactivate() {
 

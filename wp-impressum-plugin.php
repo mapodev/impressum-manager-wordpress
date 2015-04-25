@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              http://www.mapo-dev.com
- * @since             1.0.0
+ * @since             0.0.1
  * @package           Wp_Impressum_Plugin
  *
  * @wordpress-plugin
  * Plugin Name:       WP Impressum Plugin
  * Plugin URI:        http://www.wp-impressum.com
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Version:           0.0.1
  * Author:            mapo
  * Author URI:        http://www.mapo-dev.com
  * License:           GPL-2.0+
@@ -64,7 +64,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wp-impressum-plugin.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    0.0.1
  */
 function run_wp_impressum_plugin() {
 

@@ -20,7 +20,7 @@
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
  * @link       http://www.mapo-dev.com
- * @since      1.0.0
+ * @since      0.0.1
  *
  * @package    Wp_Impressum_Plugin
  */
