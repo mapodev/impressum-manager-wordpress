@@ -14,13 +14,13 @@ class WPImpressumConfig
         $this->slug = "wp-impressum-plugin";
 
         if (is_admin()) {
-            add_action('admin_menu', array($this, 'addmenu'));
+            add_action('admin_menu', array($this, 'wpi_addmenu'));
         }
     }
 
-    public function addmenu()
+    public function wpi_addmenu()
     {
-        add_options_page("WP Impressum", 'WP Impressum', 'manage_options', $this->getSlug(), array($this, 'show'), 99.5);
+        add_options_page("WP Impressum", 'WP Impressum', 'manage_options', $this->wpi_getSlug(), array($this, 'wpi_show'), 99.5);
     }
 
     public static function getInstance()
@@ -34,7 +34,7 @@ class WPImpressumConfig
     /**
      * @return mixed
      */
-    public function getSlug()
+    public function wpi_getSlug()
     {
         return $this->slug;
     }
@@ -42,18 +42,18 @@ class WPImpressumConfig
     /**
      * @return mixed
      */
-    public function getVersion()
+    public function wpi_getVersion()
     {
         return $this->version;
     }
 
-    public function show()
+    public function wpi_show()
     {
 ?>
 <div class="wrap">
     <h2>WP Impressum</h2>
 
-    <h3><?php _e('HTML Options','autoptimize'); ?></h3>
+    <h3>Settings</h3>
     <table class="form-table">
         <tr valign="top">
             <th scope="row"><?php _e('Optimize HTML Code?','autoptimize'); ?></th>
@@ -68,4 +68,5 @@ class WPImpressumConfig
 </div>
 <?php
     }
+
 }

@@ -30,6 +30,8 @@ if (!defined('WPINC')) {
     die;
 }
 
+require_once(plugin_dir_path(__FILE__) . 'wp-impressum/wp-impressum.class.php');
+
 function activate_wp_impressum_plugin()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/wp-impressum-activate.php';
@@ -47,10 +49,11 @@ register_deactivation_hook(__FILE__, 'deactivate_wp_impressum_plugin');
 
 require plugin_dir_path(__FILE__) . 'wp-impressum/wp-impressum-config.class.php';
 
+$conf = WPImpressumConfig::getInstance();
 
 // Load translations
 $plugin_dir = basename(dirname(__FILE__));
-load_plugin_textdomain(WPImpressumConfig::getInstance()->getSlug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
+load_plugin_textdomain($conf->wpi_getSlug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
 
 /**
  * Begins execution of the plugin.
@@ -63,11 +66,8 @@ load_plugin_textdomain(WPImpressumConfig::getInstance()->getSlug(), 'wp-content/
  */
 function run_wp_impressum_plugin()
 {
-    try {
-        $conf = WPImpressumConfig::getInstance();
-    } catch (Exception $e) {
-        error_log($e);
-    }
+    global $conf;
+    $wpi = new WPImpressum();
 }
 
 run_wp_impressum_plugin();
