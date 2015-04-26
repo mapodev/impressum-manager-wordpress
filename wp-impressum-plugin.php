@@ -26,36 +26,31 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if (!defined('WPINC')) {
+    die;
 }
 
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-wp-impressum-plugin-activator.php
- */
-function activate_wp_impressum_plugin() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-impressum-plugin-activator.php';
-	Wp_Impressum_Plugin_Activator::activate();
+function activate_wp_impressum_plugin()
+{
+    require_once plugin_dir_path(__FILE__) . 'includes/wp-impressum-activate.php';
+    activate();
 }
 
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-wp-impressum-plugin-deactivator.php
- */
-function deactivate_wp_impressum_plugin() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-wp-impressum-plugin-deactivator.php';
-	Wp_Impressum_Plugin_Deactivator::deactivate();
+function deactivate_wp_impressum_plugin()
+{
+    require_once plugin_dir_path(__FILE__) . 'includes/wp-impressum-deactivate.php';
+    deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_wp_impressum_plugin' );
-register_deactivation_hook( __FILE__, 'deactivate_wp_impressum_plugin' );
+register_activation_hook(__FILE__, 'activate_wp_impressum_plugin');
+register_deactivation_hook(__FILE__, 'deactivate_wp_impressum_plugin');
 
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-wp-impressum-plugin.php';
+require plugin_dir_path(__FILE__) . 'wp-impressum/wp-impressum-config.class.php';
+
+
+// Load translations
+$plugin_dir = basename(dirname(__FILE__));
+load_plugin_textdomain(WPImpressumConfig::getInstance()->getSlug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
 
 /**
  * Begins execution of the plugin.
@@ -66,10 +61,13 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-wp-impressum-plugin.php';
  *
  * @since    0.0.1
  */
-function run_wp_impressum_plugin() {
-
-	$plugin = new Wp_Impressum_Plugin();
-	$plugin->run();
-
+function run_wp_impressum_plugin()
+{
+    try {
+        $conf = WPImpressumConfig::getInstance();
+    } catch (Exception $e) {
+        error_log($e);
+    }
 }
+
 run_wp_impressum_plugin();
