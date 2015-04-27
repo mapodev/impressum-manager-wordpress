@@ -461,10 +461,12 @@ class WPImpressumConfig
                                 <th scope="row" colspan="2"><b>Vertretungsberechtigte Persone(n)</b></th>
                             </tr>
                             <tr valign="top">
-                               <textarea  style="width: 340px; height: 225px;">
+                                <td colspan="2">
+                                    <textarea style="width: 340px; height: 225px;">
 
-                               </textarea><br>
-                                <small>Namen und Vornamen</small>
+                                    </textarea><br>
+                                    <small>Namen und Vornamen</small>
+                                </td>
                             </tr>
                         </table>
                         <?= submit_button("Nächster Schritt") ?>
@@ -525,38 +527,99 @@ class WPImpressumConfig
                         method="post">
                         <table class="form-table">
                             <tr valign="top">
-                                <th scope="row" colspan="2"><b>Umsatzsteuer ID</b></th>
+                                <th scope="row" colspan="2"><b>Reglementierter Beruf</b></th>
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <input type="text" name="umsatzseteuer" title="Umsatzseteuer" style="width: 340px">
+                                    <input type="text" name="umsatzseteuer" title="Umsatzseteuer"
+                                           style="width: 340px"><br>
+                                    <small>Gesetzliche Berufsbezeichnung</small>
                                 </td>
                             </tr>
-
-                            <tr valign="top">
-                                <th scope="row" colspan="2"><b>Register</b></th>
-                            </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <select>
-                                        <option>keines</option>
-                                        <option>kein plan</option>
-                                        <option>noch irgendwas vlt</option>
-                                    </select>
+                                    <input type="text" name="umsatzseteuer" title="Umsatzseteuer"
+                                           style="width: 340px"><br>
+                                    <small>Staat, in dem die Berufsbezeichnung verliehen wurde</small>
                                 </td>
                             </tr>
-
                             <tr valign="top">
-                                <th scope="row" colspan="2"><b>Registernummer</b></th>
+                                <td colspan="2">
+                                    <input type="text" name="umsatzseteuer" title="Umsatzseteuer"
+                                           style="width: 340px"><br>
+                                    <small>Berfusrechtliche Regelungen (Bezeichnung)</small>
+                                </td>
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <input type="text" name="registernr" title="Registernummer" style="width: 340px">
+                                    <input type="text" name="umsatzseteuer" title="Umsatzseteuer"
+                                           style="width: 340px"><br>
+                                    <small>Kammer, der Sie angehören</small>
                                 </td>
                             </tr>
                         </table>
                         <?= submit_button("Nächster Schritt") ?>
                     </form>
+                    <?php
+
+                    break;
+
+                case 6:
+
+                    ?>
+                    <form
+                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=7&setup=true"
+                        method="post">
+                        <table class="form-table">
+                            <tr valign="top">
+                                <th scope="row" colspan="2"><b>Bildquellen</b></th>
+                            </tr>
+                            <tr valign="top">
+                                <td colspan="2">
+                                    <textarea style="width: 340px; height: 225px;">
+
+                                    </textarea><br>
+                                    <small>z.B. Max Mustermann, http://www.fotolia.com</small>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <th scope="row" colspan="2"><b>Verantwortliche(r) für journalistisch-redaktionelle
+                                        Inhalte</b></th>
+                            </tr>
+                            <tr valign="top">
+                                <td colspan="2">
+                                    <textarea style="width: 340px; height: 225px;">
+
+                                    </textarea><br>
+                                    <small>Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die
+                                        Verantwortungen entsprechend mit angeben.
+                                    </small>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <th scope="row" colspan="2"><b>Behördliche Zuslassung</b></th>
+                            </tr>
+                            <tr valign="top">
+                                <td colspan="2">
+                                    <textarea style="width: 340px; height: 225px;">
+
+                                    </textarea><br>
+                                    <small>Zuständige Aufsichtsbehörde</small>
+                                </td>
+                            </tr>
+                        </table>
+                        <?= submit_button("Nächster Schritt") ?>
+                    </form>
+                    <?php
+
+                    break;
+
+                case 7:
+
+                    ?>
+                    Ihr Impressum ist fertig konfiguriert.
                     <?php
 
                     break;
