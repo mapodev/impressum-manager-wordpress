@@ -256,14 +256,20 @@ class WPImpressumConfig
         $this->slug = "wp-impressum-plugin";
 
         if (is_admin()) {
+            add_action('admin_init', array($this, 'wpi_admin_init'));
             add_action('admin_menu', array($this, 'wpi_addmenu'));
         }
+    }
+
+    public function wpi_admin_init() {
+        wp_enqueue_style('wp_impressum_style', plugins_url('css/wp-impressum.min.css', __FILE__));
     }
 
     public function wpi_addmenu()
     {
         add_options_page("WP Impressum", 'WP Impressum', 'manage_options', $this->wpi_getSlug(), array($this, 'wpi_show'), 99.5);
     }
+
 
     public static function getInstance()
     {
@@ -305,11 +311,17 @@ class WPImpressumConfig
     public function wpi_show_setup()
     {
 
+        $totalQuestions = 7;
+
         if (array_key_exists("setup", $_GET)) {
             $step = $_GET['step'];
             switch ($step) {
                 case 1:
+
+                    $this->wpi_progress_bar(1, $totalQuestions);
+
                     ?>
+
                     <form
                         action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=2&setup=true"
                         method="post">
@@ -334,6 +346,8 @@ class WPImpressumConfig
                     break;
 
                 case 2:
+
+                    $this->wpi_progress_bar(2, $totalQuestions);
 
                     $fields2 = array();
 
@@ -459,6 +473,8 @@ class WPImpressumConfig
 
                 case 3:
 
+                    $this->wpi_progress_bar(3, $totalQuestions);
+
                     $fields3 = array();
 
                     $fields3[] = $form_of_organization = mysql_real_escape_string($_POST['form_of_organization']);
@@ -497,6 +513,8 @@ class WPImpressumConfig
                     break;
 
                 case 4:
+
+                    $this->wpi_progress_bar(4, $totalQuestions);
 
                     $fields4 = array();
 
@@ -547,6 +565,8 @@ class WPImpressumConfig
                     break;
 
                 case 5:
+
+                    $this->wpi_progress_bar(5, $totalQuestions);
 
                     $fields5 = array();
 
@@ -600,6 +620,8 @@ class WPImpressumConfig
                     break;
 
                 case 6:
+
+                    $this->wpi_progress_bar(6, $totalQuestions);
 
                     $fields6 = array();
 
@@ -658,6 +680,8 @@ class WPImpressumConfig
 
                 case 7:
 
+                    $this->wpi_progress_bar(7, $totalQuestions);
+
                     $fields7 = array();
 
                     $fields7[] = $image_source = mysql_real_escape_string($_POST['image_source']);
@@ -690,6 +714,28 @@ class WPImpressumConfig
             <input class="button button-primary" type="button" value="<?= _e('Impressum konfigurieren') ?>">
         </a>
     <?php
+    }
+
+    private function wpi_progress_bar($step, $total) {
+        $slug = WPImpressumConfig::getInstance()->wpi_getSlug();
+
+        ?>
+        <table>
+            <tr>
+                <?php
+
+                for($i = 1; $i <= $total; $i++) {
+                    if($step >= $i) {
+                        echo "<td style='background-color: green; padding:2px 15px 2px 15px'><a style='color: #fff;' href='options-general.php?page={$slug}&step={$i}&setup=true'>" . $i . "</a></td>";
+                    } else {
+                        echo "<td style='background-color: #ddd; padding:2px 15px 2px 15px;'>" . $i . "</td>";
+                    }
+                }
+
+                ?>
+            </tr>
+        </table>
+<?php
     }
 
 }
