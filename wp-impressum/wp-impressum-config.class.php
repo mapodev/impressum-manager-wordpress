@@ -334,6 +334,13 @@ class WPImpressumConfig
                     break;
 
                 case 2:
+
+                    $fields2 = array();
+
+                    $fields2[] = $kind_of_person = mysql_real_escape_string($_POST['person']);
+
+                    print_r($fields2);
+
                     ?>
 
                     <form
@@ -345,16 +352,16 @@ class WPImpressumConfig
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <select>
-                                        <option>Einzelunternehmen</option>
-                                        <option>Stille Gesellschaft</option>
-                                        <option>Offene Handelsgesellschaft (OHG)</option>
-                                        <option>Kommanditgesellschaft (KG)</option>
-                                        <option>Gesellschaft bürgerlichen Rechts (GdR)</option>
-                                        <option>Aktiengesellschaft (AG)</option>
-                                        <option>Kommanditgesellschaft auf Aktien (KGaA)</option>
-                                        <option>Gesellschaft mit beschränkter Haftung (GmbH)</option>
-                                        <option>Genossenschaft (eG)</option>
+                                    <select name="form_of_organization">
+                                        <option value="1">Einzelunternehmen</option>
+                                        <option value="2">Stille Gesellschaft</option>
+                                        <option value="3">Offene Handelsgesellschaft (OHG)</option>
+                                        <option value="4">Kommanditgesellschaft (KG)</option>
+                                        <option value="5">Gesellschaft bürgerlichen Rechts (GdR)</option>
+                                        <option value="6">Aktiengesellschaft (AG)</option>
+                                        <option value="7">Kommanditgesellschaft auf Aktien (KGaA)</option>
+                                        <option value="8">Gesellschaft mit beschränkter Haftung (GmbH)</option>
+                                        <option value="9">Genossenschaft (eG)</option>
                                     </select>
                                 </td>
                             </tr>
@@ -439,7 +446,7 @@ class WPImpressumConfig
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <input type="text" name="fax" title="E-Mail Address" style="width: 340px">
+                                    <input type="text" name="email" title="E-Mail Address" style="width: 340px">
                                 </td>
                             </tr>
                         </table>
@@ -452,6 +459,21 @@ class WPImpressumConfig
 
                 case 3:
 
+                    $fields3 = array();
+
+                    $fields3[] = $form_of_organization = mysql_real_escape_string($_POST['form_of_organization']);
+                    $fields3[] = $name_company = mysql_real_escape_string($_POST['name-company']);
+                    $fields3[] = $address = mysql_real_escape_string($_POST['address']);
+                    $fields3[] = $address_extra = mysql_real_escape_string($_POST['address-extra']);
+                    $fields3[] = $place = mysql_real_escape_string($_POST['place']);
+                    $fields3[] = $zip = mysql_real_escape_string($_POST['zip']);
+                    $fields3[] = $country = mysql_real_escape_string($_POST['country']);
+                    $fields3[] = $phone = mysql_real_escape_string($_POST['phone']);
+                    $fields3[] = $fax = mysql_real_escape_string($_POST['fax']);
+                    $fields3[] = $email = mysql_real_escape_string($_POST['email']);
+
+                    print_r($fields3);
+
                     ?>
                     <form
                         action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=4&setup=true"
@@ -462,9 +484,8 @@ class WPImpressumConfig
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <textarea style="width: 340px; height: 225px;">
-
-                                    </textarea><br>
+                                    <textarea name="authorized_person"
+                                              style="width: 340px; height: 225px;"></textarea><br>
                                     <small>Namen und Vornamen</small>
                                 </td>
                             </tr>
@@ -477,6 +498,12 @@ class WPImpressumConfig
 
                 case 4:
 
+                    $fields4 = array();
+
+                    $fields4[] = $authorized_person = mysql_real_escape_string($_POST['authorized_person']);
+
+                    print_r($fields4);
+
                     ?>
                     <form
                         action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=5&setup=true"
@@ -487,7 +514,7 @@ class WPImpressumConfig
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <input type="text" name="umsatzseteuer" title="Umsatzseteuer" style="width: 340px">
+                                    <input type="text" name="vat" title="VAT" style="width: 340px">
                                 </td>
                             </tr>
 
@@ -496,7 +523,7 @@ class WPImpressumConfig
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <select>
+                                    <select namer="register">
                                         <option>keines</option>
                                         <option>kein plan</option>
                                         <option>noch irgendwas vlt</option>
@@ -521,6 +548,14 @@ class WPImpressumConfig
 
                 case 5:
 
+                    $fields5 = array();
+
+                    $fields5[] = $vat = mysql_real_escape_string($_POST['vat']);
+                    $fields5[] = $reigster = mysql_real_escape_string($_POST['register']);
+                    $fields5[] = $registernr = mysql_real_escape_string($_POST['registernr']);
+
+                    print_r($fields5);
+
                     ?>
                     <form
                         action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=6&setup=true"
@@ -531,28 +566,28 @@ class WPImpressumConfig
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <input type="text" name="umsatzseteuer" title="Umsatzseteuer"
+                                    <input type="text" name="regulated_profession" title="Regulated profession"
                                            style="width: 340px"><br>
                                     <small>Gesetzliche Berufsbezeichnung</small>
                                 </td>
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <input type="text" name="umsatzseteuer" title="Umsatzseteuer"
+                                    <input type="text" name="state" title="State"
                                            style="width: 340px"><br>
                                     <small>Staat, in dem die Berufsbezeichnung verliehen wurde</small>
                                 </td>
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <input type="text" name="umsatzseteuer" title="Umsatzseteuer"
+                                    <input type="text" name="state_rules" title="State rules"
                                            style="width: 340px"><br>
                                     <small>Berfusrechtliche Regelungen (Bezeichnung)</small>
                                 </td>
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <input type="text" name="umsatzseteuer" title="Umsatzseteuer"
+                                    <input type="text" name="chamber" title="Chamber"
                                            style="width: 340px"><br>
                                     <small>Kammer, der Sie angehören</small>
                                 </td>
@@ -566,6 +601,15 @@ class WPImpressumConfig
 
                 case 6:
 
+                    $fields6 = array();
+
+                    $fields6[] = $regulated_profession = mysql_real_escape_string($_POST['regulated_profession']);
+                    $fields6[] = $state = mysql_real_escape_string($_POST['state']);
+                    $fields6[] = $state_rules = mysql_real_escape_string($_POST['state_rules']);
+                    $fields6[] = $chamber = mysql_real_escape_string($_POST['chamber']);
+
+                    print_r($fields6);
+
                     ?>
                     <form
                         action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=7&setup=true"
@@ -576,9 +620,7 @@ class WPImpressumConfig
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <textarea style="width: 340px; height: 225px;">
-
-                                    </textarea><br>
+                                    <textarea name="image_source" style="width: 340px; height: 225px;"></textarea><br>
                                     <small>z.B. Max Mustermann, http://www.fotolia.com</small>
                                 </td>
                             </tr>
@@ -589,9 +631,8 @@ class WPImpressumConfig
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <textarea style="width: 340px; height: 225px;">
-
-                                    </textarea><br>
+                                    <textarea name="responsible_persons"
+                                              style="width: 340px; height: 225px;"></textarea><br>
                                     <small>Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die
                                         Verantwortungen entsprechend mit angeben.
                                     </small>
@@ -603,9 +644,8 @@ class WPImpressumConfig
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <textarea style="width: 340px; height: 225px;">
-
-                                    </textarea><br>
+                                    <textarea name="responsible_chamber"
+                                              style="width: 340px; height: 225px;"></textarea><br>
                                     <small>Zuständige Aufsichtsbehörde</small>
                                 </td>
                             </tr>
@@ -618,6 +658,14 @@ class WPImpressumConfig
 
                 case 7:
 
+                    $fields7 = array();
+
+                    $fields7[] = $image_source = mysql_real_escape_string($_POST['image_source']);
+                    $fields7[] = $responsible_persons = mysql_real_escape_string($_POST['responsible_persons']);
+                    $fields7[] = $responsible_chamber = mysql_real_escape_string($_POST['responsible_chamber']);
+
+                    print_r($fields7);
+
                     ?>
                     Ihr Impressum ist fertig konfiguriert.
                     <?php
@@ -627,12 +675,21 @@ class WPImpressumConfig
                     $this->wpi_config_view();
                     break;
             }
+        } else {
+            $this->wpi_config_view();
         }
     }
 
     private function wpi_config_view()
     {
-
+        ?>
+        <p>
+            Richten Sie Ihr Impressum jetzt ein! Es kostet nur wenige Klicks!
+        </p>
+        <a href="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=1&setup=true">
+            <input class="button button-primary" type="button" value="<?= _e('Impressum konfigurieren') ?>">
+        </a>
+    <?php
     }
 
 }
