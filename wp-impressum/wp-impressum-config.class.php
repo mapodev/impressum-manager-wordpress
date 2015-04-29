@@ -261,7 +261,8 @@ class WPImpressumConfig
         }
     }
 
-    public function wpi_admin_init() {
+    public function wpi_admin_init()
+    {
         wp_enqueue_style('wp_impressum_style', plugins_url('css/wp-impressum.min.css', __FILE__));
     }
 
@@ -710,13 +711,74 @@ class WPImpressumConfig
         <p>
             Richten Sie Ihr Impressum jetzt ein! Es kostet nur wenige Klicks!
         </p>
+
+        <table class="widefat fixed striped comments">
+            <thead>
+            <tr>
+                <th scope="col" id="cb" class="manage-column column-cb check-column" style=""></th>
+                <th scope="col" class="manage-column column-author sorted asc" style=""><span>Impressum</span></a></th>
+                <th scope="col" class="manage-column column-comment" style="">Informationen</th>
+                <th scope="col" class="manage-column column-response sortable" style=""><span>Löschen</span></a></th>
+            </tr>
+            </thead>
+            <tbody id="the-comment-list" data-wp-lists="list:comment">
+            <?php
+
+            for($i = 0; $i < 5; $i++) {
+                ?>
+
+                <tr id="comment-1" class="comment even thread-even depth-1 approved">
+                    <th scope="row" class="check-column"><label class="screen-reader-text" for="cb-select-1">Impressum
+                            auswählen</label>
+                        <input id="cb-select-1" type="radio" name="delete_comments[]" value="1">
+                    </th>
+                    <td class="impressum column-author"><strong>Impressum #1</strong></td>
+                    <td class="impressum column-comment">
+                        <div class="impressum-author">
+                        </div>
+                        <div class="submitted-on">Eingereicht am <a href="http://localhost/wordpress/?p=1#comment-1">%%DATE%%
+                                um %%DATETIME%%</a></div>
+
+                        %%INFORMATION%%
+
+                        <div class="row-actions"><span class="approve"><span class="edit"><a
+                                        href="comment.php?action=editcomment&amp;c=1"
+                                        title="Kommentar bearbeiten">Bearbeiten</a></span>
+                        </div>
+                    </td>
+                    <td class="response column-response">
+                        <input type="button" class="button button-secondary" value="Löschen">
+                    </td>
+                </tr>
+
+                <?php
+            }
+
+            ?>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th scope="col" id="cb" class="manage-column column-cb check-column" style=""></th>
+                <th scope="col" class="manage-column column-author sorted asc" style=""><span>Impressum</span></a></th>
+                <th scope="col" class="manage-column column-comment" style="">Informationen</th>
+                <th scope="col" class="manage-column column-response sortable" style=""><span>Löschen</span></a></th>
+            </tr>
+            </tfoot>
+
+        </table>
+
+        <br>
         <a href="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=1&setup=true">
-            <input class="button button-primary" type="button" value="<?= _e('Impressum konfigurieren') ?>">
+            <input class="button button-secondary" type="button" value="<?= _e('Veröffentliche ausgewähltes Impressum') ?>">
+        </a>
+        <a href="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=1&setup=true">
+            <input class="button button-primary" type="button" value="<?= _e('Impressum hinzufügen') ?>">
         </a>
     <?php
     }
 
-    private function wpi_progress_bar($step, $total) {
+    private function wpi_progress_bar($step, $total)
+    {
         $slug = WPImpressumConfig::getInstance()->wpi_getSlug();
 
         ?>
@@ -724,8 +786,8 @@ class WPImpressumConfig
             <tr>
                 <?php
 
-                for($i = 1; $i <= $total; $i++) {
-                    if($step >= $i) {
+                for ($i = 1; $i <= $total; $i++) {
+                    if ($step >= $i) {
                         echo "<td style='background-color: green; padding:2px 15px 2px 15px'><a style='color: #fff;' href='options-general.php?page={$slug}&step={$i}&setup=true'>" . $i . "</a></td>";
                     } else {
                         echo "<td style='background-color: #ddd; padding:2px 15px 2px 15px;'>" . $i . "</td>";
@@ -735,7 +797,7 @@ class WPImpressumConfig
                 ?>
             </tr>
         </table>
-<?php
+    <?php
     }
 
 }
