@@ -263,7 +263,8 @@ class WPImpressumConfig
 
     public function wpi_admin_init()
     {
-        wp_enqueue_style('wp_impressum_style', plugins_url('css/wp-impressum.min.css', __FILE__));
+        wp_enqueue_style('wp_impressum_style', plugins_url('../css/wp-impressum.min.css', __FILE__));
+        wp_enqueue_script('wp_impressum_script', plugins_url('../js/wp-impressum.min.js', __FILE__));
     }
 
     public function wpi_addmenu()
@@ -322,7 +323,7 @@ class WPImpressumConfig
                     $this->wpi_progress_bar(1, $totalQuestions);
 
                     ?>
-
+                    a
                     <form
                         action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=2&setup=true"
                         method="post">
@@ -712,68 +713,87 @@ class WPImpressumConfig
             Richten Sie Ihr Impressum jetzt ein! Es kostet nur wenige Klicks!
         </p>
 
-        <table class="widefat fixed striped comments">
-            <thead>
-            <tr>
-                <th scope="col" id="cb" class="manage-column column-cb check-column" style=""></th>
-                <th scope="col" class="manage-column column-author sorted asc" style=""><span>Impressum</span></a></th>
-                <th scope="col" class="manage-column column-comment" style="">Informationen</th>
-                <th scope="col" class="manage-column column-response sortable" style=""><span>Löschen</span></a></th>
-            </tr>
-            </thead>
-            <tbody id="the-comment-list" data-wp-lists="list:comment">
-            <?php
-
-            for($i = 0; $i < 5; $i++) {
-                ?>
-
-                <tr id="comment-1" class="comment even thread-even depth-1 approved">
-                    <th scope="row" class="check-column"><label class="screen-reader-text" for="cb-select-1">Impressum
-                            auswählen</label>
-                        <input id="cb-select-1" type="radio" name="delete_comments[]" value="1">
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active">
+                <a href="#tab-1" class="manage-impressum-tab">Impressum verwalten</a></li>
+            <li class="ui-state-default ui-corner-top">
+                <a href="#tab-2" class="manage-setting-tab">Einstellung</a>
+            </li>
+        </ul>
+        <div class="manage-impressum">
+            <br>
+            <table class="widefat fixed striped comments">
+                <thead>
+                <tr>
+                    <th scope="col" id="cb" class="manage-column column-cb check-column" style=""></th>
+                    <th scope="col" class="manage-column column-author sorted asc" style=""><span>Impressum</span></a>
                     </th>
-                    <td class="impressum column-author"><strong>Impressum #1</strong></td>
-                    <td class="impressum column-comment">
-                        <div class="impressum-author">
-                        </div>
-                        <div class="submitted-on">Eingereicht am <a href="http://localhost/wordpress/?p=1#comment-1">%%DATE%%
-                                um %%DATETIME%%</a></div>
-
-                        %%INFORMATION%%
-
-                        <div class="row-actions"><span class="approve"><span class="edit"><a
-                                        href="comment.php?action=editcomment&amp;c=1"
-                                        title="Kommentar bearbeiten">Bearbeiten</a></span>
-                        </div>
-                    </td>
-                    <td class="response column-response">
-                        <input type="button" class="button button-secondary" value="Löschen">
-                    </td>
+                    <th scope="col" class="manage-column column-comment" style="">Informationen</th>
+                    <th scope="col" class="manage-column column-response sortable" style=""><span>Löschen</span></a>
+                    </th>
                 </tr>
+                </thead>
+                <tbody id="the-comment-list" data-wp-lists="list:comment">
+                <?php
+
+                for ($i = 0; $i < 5; $i++) {
+                    ?>
+
+                    <tr id="comment-1" class="comment even thread-even depth-1 approved">
+                        <th scope="row" class="check-column"><label class="screen-reader-text" for="cb-select-1">Impressum
+                                auswählen</label>
+                            <input id="cb-select-1" type="radio" name="delete_comments[]" value="1">
+                        </th>
+                        <td class="impressum column-author"><strong>Impressum #1</strong></td>
+                        <td class="impressum column-comment">
+                            <div class="impressum-author">
+                            </div>
+                            <div class="submitted-on">Eingereicht am <a
+                                    href="http://localhost/wordpress/?p=1#comment-1">%%DATE%%
+                                    um %%DATETIME%%</a></div>
+
+                            %%INFORMATION%%
+
+                            <div class="row-actions"><span class="approve"><span class="edit"><a
+                                            href="comment.php?action=editcomment&amp;c=1"
+                                            title="Kommentar bearbeiten">Bearbeiten</a></span>
+                            </div>
+                        </td>
+                        <td class="response column-response">
+                            <input type="button" class="button button-secondary" value="Löschen">
+                        </td>
+                    </tr>
 
                 <?php
-            }
+                }
 
-            ?>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th scope="col" id="cb" class="manage-column column-cb check-column" style=""></th>
-                <th scope="col" class="manage-column column-author sorted asc" style=""><span>Impressum</span></a></th>
-                <th scope="col" class="manage-column column-comment" style="">Informationen</th>
-                <th scope="col" class="manage-column column-response sortable" style=""><span>Löschen</span></a></th>
-            </tr>
-            </tfoot>
+                ?>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th scope="col" id="cb" class="manage-column column-cb check-column" style=""></th>
+                    <th scope="col" class="manage-column column-author sorted asc" style=""><span>Impressum</span></a>
+                    </th>
+                    <th scope="col" class="manage-column column-comment" style="">Informationen</th>
+                    <th scope="col" class="manage-column column-response sortable" style=""><span>Löschen</span></a>
+                    </th>
+                </tr>
+                </tfoot>
 
-        </table>
+            </table>
 
-        <br>
-        <a href="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=1&setup=true">
-            <input class="button button-secondary" type="button" value="<?= _e('Veröffentliche ausgewähltes Impressum') ?>">
-        </a>
-        <a href="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=1&setup=true">
-            <input class="button button-primary" type="button" value="<?= _e('Impressum hinzufügen') ?>">
-        </a>
+            <br>
+            <a href="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=1&setup=true">
+                <input class="button button-secondary" type="button"
+                       value="<?= _e('Veröffentliche ausgewähltes Impressum') ?>">
+            </a>
+            <a href="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=1&setup=true">
+                <input class="button button-primary" type="button" value="<?= _e('Impressum hinzufügen') ?>">
+            </a>
+        </div>
+        <div class="manage-setting">
+            Einstelungen... Hier kommt some shit...
+        </div>
     <?php
     }
 
