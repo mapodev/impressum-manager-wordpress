@@ -253,23 +253,24 @@ class WPImpressumConfig
     public function __construct()
     {
         $this->version = "0.0.1";
-        $this->slug = "wp-impressum-plugin";
+        $this->slug = "wp-impressum";
 
         if (is_admin()) {
-            add_action('admin_init', array($this, 'wpi_admin_init'));
-            add_action('admin_menu', array($this, 'wpi_addmenu'));
+            add_action('admin_init', array($this, 'wpimpressum_admin_init'));
+            add_action('admin_menu', array($this, 'wpimpressum_addmenu'));
         }
     }
 
-    public function wpi_admin_init()
+    public function wpimpressum_admin_init()
     {
+        $this->wpimpressum_register_settings();
         wp_enqueue_style('wp_impressum_style', plugins_url('../css/wp-impressum.min.css', __FILE__));
         wp_enqueue_script('wp_impressum_script', plugins_url('../js/wp-impressum.min.js', __FILE__));
     }
 
-    public function wpi_addmenu()
+    public function wpimpressum_addmenu()
     {
-        add_options_page("WP Impressum", 'WP Impressum', 'manage_options', $this->wpi_getSlug(), array($this, 'wpi_show'), 99.5);
+        add_options_page("WP Impressum", 'WP Impressum', 'manage_options', $this->wpimpressum_getSlug(), array($this, 'wpimpressum_show'), 99.5);
     }
 
 
@@ -284,7 +285,7 @@ class WPImpressumConfig
     /**
      * @return mixed
      */
-    public function wpi_getSlug()
+    public function wpimpressum_getSlug()
     {
         return $this->slug;
     }
@@ -292,25 +293,25 @@ class WPImpressumConfig
     /**
      * @return mixed
      */
-    public function wpi_getVersion()
+    public function wpimpressum_getVersion()
     {
         return $this->version;
     }
 
-    public function wpi_show()
+    public function wpimpressum_show()
     {
         ?>
         <div class="wrap">
             <h2>WP Impressum</h2>
             <?php
-            $this->wpi_show_setup();
+            $this->wpimpressum_show_setup();
             ?>
         </div>
     <?php
     }
 
 
-    public function wpi_show_setup()
+    public function wpimpressum_show_setup()
     {
 
         $totalQuestions = 7;
@@ -320,23 +321,34 @@ class WPImpressumConfig
             switch ($step) {
                 case 1:
 
-                    $this->wpi_progress_bar(1, $totalQuestions);
+                    $this->wpimpressum_progress_bar(1, $totalQuestions);
 
                     ?>
-                    a
+
                     <form
-                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=2&setup=true"
+                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpimpressum_getSlug() ?>&step=2&setup=true"
                         method="post">
                         <table class="form-table">
                             <tr valign="top">
                                 <th scope="row" colspan="2"><b>Art der Person</b></th>
                             </tr>
                             <tr valign="top">
-                                <td width="5"><input type="radio" name="person" value="1"></td>
+                                <td width="5"><input type="radio" name="person" value="1" <?php
+                                    if (get_option("wp-impressum_person") == '1') {
+                                        echo "checked=checked";
+                                    }
+                                    ?>>
+                                </td>
                                 <td>Privatperson</td>
                             </tr>
                             <tr valign="top">
-                                <td><input type="radio" name="person" value="2"></td>
+                                <td><input type="radio" name="person"
+                                           value="2" <?php
+                                    if (get_option("wp-impressum_person") == '2') {
+                                        echo "checked=checked";
+                                    }
+                                    ?>>
+                                </td>
                                 <td>Juristische Person (z.B. Firma, Verein, Organisation, Einrichtung)</td>
                             </tr>
                         </table>
@@ -349,18 +361,18 @@ class WPImpressumConfig
 
                 case 2:
 
-                    $this->wpi_progress_bar(2, $totalQuestions);
+                    $this->wpimpressum_progress_bar(2, $totalQuestions);
 
                     $fields2 = array();
 
                     $fields2[] = $kind_of_person = mysql_real_escape_string($_POST['person']);
 
-                    print_r($fields2);
+                    update_option("wp-impressum_person", $kind_of_person);
 
                     ?>
 
                     <form
-                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=3&setup=true"
+                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpimpressum_getSlug() ?>&step=3&setup=true"
                         method="post">
                         <table class="form-table">
                             <tr valign="top">
@@ -369,15 +381,31 @@ class WPImpressumConfig
                             <tr valign="top">
                                 <td colspan="2">
                                     <select name="form_of_organization">
-                                        <option value="1">Einzelunternehmen</option>
-                                        <option value="2">Stille Gesellschaft</option>
-                                        <option value="3">Offene Handelsgesellschaft (OHG)</option>
-                                        <option value="4">Kommanditgesellschaft (KG)</option>
-                                        <option value="5">Gesellschaft bürgerlichen Rechts (GdR)</option>
-                                        <option value="6">Aktiengesellschaft (AG)</option>
-                                        <option value="7">Kommanditgesellschaft auf Aktien (KGaA)</option>
-                                        <option value="8">Gesellschaft mit beschränkter Haftung (GmbH)</option>
-                                        <option value="9">Genossenschaft (eG)</option>
+                                        <?php
+                                        $forms_of_organization = array(
+                                            "Einzelunternehmen",
+                                            "Stille Gesellschaft",
+                                            "Offene Handelsgesellschaft (OHG)",
+                                            "Kommanditgesellschaft (KG)",
+                                            "Gesellschaft bürgerlichen Rechts (GdR)",
+                                            "Aktiengesellschaft (AG)",
+                                            "Kommanditgesellschaft auf Aktien (KGaA)",
+                                            "Gesellschaft mit beschränkter Haftung (GmbH)",
+                                            "Genossenschaft (eG)"
+                                        );
+
+                                        $idx = 1;
+                                        foreach ($forms_of_organization as $org_form) {
+                                            ?>
+                                            <option value="<?= $idx ?>" <?php
+                                            if ($idx == get_option("wp-impressum_form_of_organization")) {
+                                                echo "selected=selected";
+                                            }
+                                            ?>><?= $org_form ?></option>
+                                            <?php
+                                            $idx++;
+                                        }
+                                        ?>
                                     </select>
                                 </td>
                             </tr>
@@ -387,20 +415,22 @@ class WPImpressumConfig
                             <tr>
                                 <td colspan="2">
                                     <input type="text" style="width: 340px" name="name-company"
-                                           title="Company Name"><br>
+                                           title="Company Name"
+                                           value="<?= get_option("wp-impressum_name-company") ?>"><br>
                                     <small>Vollständiger Name</small>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <input type="text" name="address" title="Address" style="width: 340px"><br>
+                                    <input type="text" name="address" title="Address" style="width: 340px"
+                                           value="<?= get_option("wp-impressum_address") ?>"><br>
                                     <small>Straße & Hausnummer</small>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
                                     <input type="text" name="address-extra" title="Address Extra"
-                                           style="width: 340px"><br>
+                                           style="width: 340px" value="<?= get_option("wp-impressum_address-extra") ?>"><br>
                                     <small>Adresszusatz</small>
                                 </td>
                             </tr>
@@ -408,10 +438,12 @@ class WPImpressumConfig
                                 <td colspan="2">
                                     <table>
                                         <tr>
-                                            <td style="padding: 0;"><input type="text" name="place" title="Place"><br>
+                                            <td style="padding: 0;"><input type="text" name="place" title="Place"
+                                                                           value="<?= get_option("wp-impressum_place") ?>"><br>
                                                 <small>Ort</small>
                                             </td>
-                                            <td style="padding: 0;"><input type="text" name="zip" title="ZIP Code"><br>
+                                            <td style="padding: 0;"><input type="text" name="zip" title="ZIP Code"
+                                                                           value="<?= get_option("wp-impressum_zip") ?>"><br>
                                                 <small>PLZ</small>
                                             </td>
                                         </tr>
@@ -425,8 +457,15 @@ class WPImpressumConfig
                                         <?php
 
                                         foreach ($this->_countries as $country_code => $country_name) {
+                                            if (get_option("wp-impressum_country") == $country_code) {
+                                                $s = "selected=selected";
+                                            } else {
+                                                $s = "";
+                                            }
+
                                             ?>
-                                            <option value="<?= $country_code ?>"><?= __($country_name) ?></option>
+                                            <option
+                                                value="<?= $country_code ?>" <?= $s ?>><?= __($country_name) ?></option>
                                         <?php
                                         }
 
@@ -442,7 +481,8 @@ class WPImpressumConfig
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <input type="text" name="phone" title="Phone Number" style="width: 340px">
+                                    <input type="text" name="phone" title="Phone Number" style="width: 340px"
+                                           value="<?= get_option("wp-impressum_phone") ?>">
                                 </td>
                             </tr>
                             <tr>
@@ -452,7 +492,8 @@ class WPImpressumConfig
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <input type="text" name="fax" title="Fax Number" style="width: 340px">
+                                    <input type="text" name="fax" title="Fax Number" style="width: 340px"
+                                           value="<?= get_option("wp-impressum_fax") ?>">
                                 </td>
                             </tr>
                             <tr>
@@ -462,7 +503,8 @@ class WPImpressumConfig
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <input type="text" name="email" title="E-Mail Address" style="width: 340px">
+                                    <input type="text" name="email" title="E-Mail Address" style="width: 340px"
+                                           value="<?= get_option("wp-impressum_email") ?>">
                                 </td>
                             </tr>
                         </table>
@@ -475,7 +517,7 @@ class WPImpressumConfig
 
                 case 3:
 
-                    $this->wpi_progress_bar(3, $totalQuestions);
+                    $this->wpimpressum_progress_bar(3, $totalQuestions);
 
                     $fields3 = array();
 
@@ -490,11 +532,20 @@ class WPImpressumConfig
                     $fields3[] = $fax = mysql_real_escape_string($_POST['fax']);
                     $fields3[] = $email = mysql_real_escape_string($_POST['email']);
 
-                    print_r($fields3);
+                    update_option("wp-impressum_form_of_organization", $form_of_organization);
+                    update_option("wp-impressum_name-company", $name_company);
+                    update_option("wp-impressum_address", $address);
+                    update_option("wp-impressum_address-extra", $address_extra);
+                    update_option("wp-impressum_place", $place);
+                    update_option("wp-impressum_zip", $zip);
+                    update_option("wp-impressum_country", $country);
+                    update_option("wp-impressum_phone", $phone);
+                    update_option("wp-impressum_fax", $fax);
+                    update_option("wp-impressum_email", $email);
 
                     ?>
                     <form
-                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=4&setup=true"
+                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpimpressum_getSlug() ?>&step=4&setup=true"
                         method="post">
                         <table class="form-table">
                             <tr valign="top">
@@ -503,7 +554,7 @@ class WPImpressumConfig
                             <tr valign="top">
                                 <td colspan="2">
                                     <textarea name="authorized_person"
-                                              style="width: 340px; height: 225px;"></textarea><br>
+                                              style="width: 340px; height: 225px;"><?= get_option("wp-impressum_authorized_person") ?></textarea><br>
                                     <small>Namen und Vornamen</small>
                                 </td>
                             </tr>
@@ -516,17 +567,17 @@ class WPImpressumConfig
 
                 case 4:
 
-                    $this->wpi_progress_bar(4, $totalQuestions);
+                    $this->wpimpressum_progress_bar(4, $totalQuestions);
 
                     $fields4 = array();
 
                     $fields4[] = $authorized_person = mysql_real_escape_string($_POST['authorized_person']);
 
-                    print_r($fields4);
+                    update_option("wp-impressum_authorized_person", $authorized_person);
 
                     ?>
                     <form
-                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=5&setup=true"
+                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpimpressum_getSlug() ?>&step=5&setup=true"
                         method="post">
                         <table class="form-table">
                             <tr valign="top">
@@ -534,7 +585,8 @@ class WPImpressumConfig
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <input type="text" name="vat" title="VAT" style="width: 340px">
+                                    <input type="text" name="vat" title="VAT" style="width: 340px"
+                                           value="<?= get_option("wp-impressum_vat") ?>">
                                 </td>
                             </tr>
 
@@ -543,10 +595,33 @@ class WPImpressumConfig
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <select namer="register">
-                                        <option>keines</option>
-                                        <option>kein plan</option>
-                                        <option>noch irgendwas vlt</option>
+                                    <select name="register">
+                                        <?php
+                                        $registerDescr = array(
+                                            "Kein Register",
+                                            "Genossenschaftsregister",
+                                            "Handelsregister",
+                                            "Partnerschaftsregister",
+                                            "Vereinsregister"
+                                        );
+
+                                        $idx = 1;
+
+                                        echo get_option("wp-impressum_register");
+
+                                        foreach($registerDescr as $registerName) {
+                                            if(get_option("wp-impressum_register") == $idx) {
+                                                $selected = "selected=selected";
+                                            } else {
+                                                $selected = "";
+                                            }
+                                            ?>
+                                            <option value="<?=$idx?>" <?=$selected?>><?=$registerName?></option>
+                                            <?php
+                                            $idx++;
+                                        }
+
+                                        ?>
                                     </select>
                                 </td>
                             </tr>
@@ -556,7 +631,8 @@ class WPImpressumConfig
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
-                                    <input type="text" name="registernr" title="Registernummer" style="width: 340px">
+                                    <input type="text" name="registernr" title="Registernummer" style="width: 340px"
+                                           value="<?= get_option("wp-impressum_registenr") ?>">
                                 </td>
                             </tr>
                         </table>
@@ -568,19 +644,22 @@ class WPImpressumConfig
 
                 case 5:
 
-                    $this->wpi_progress_bar(5, $totalQuestions);
+                    $this->wpimpressum_progress_bar(5, $totalQuestions);
 
                     $fields5 = array();
 
                     $fields5[] = $vat = mysql_real_escape_string($_POST['vat']);
-                    $fields5[] = $reigster = mysql_real_escape_string($_POST['register']);
+                    $fields5[] = $register = mysql_real_escape_string($_POST['register']);
                     $fields5[] = $registernr = mysql_real_escape_string($_POST['registernr']);
 
-                    print_r($fields5);
+                    update_option("wp-impressum_vat", $vat);
+                    update_option("wp-impressum_register", $register);
+                    update_option("wp-impressum_registenr", $registernr);
+
 
                     ?>
                     <form
-                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=6&setup=true"
+                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpimpressum_getSlug() ?>&step=6&setup=true"
                         method="post">
                         <table class="form-table">
                             <tr valign="top">
@@ -623,7 +702,7 @@ class WPImpressumConfig
 
                 case 6:
 
-                    $this->wpi_progress_bar(6, $totalQuestions);
+                    $this->wpimpressum_progress_bar(6, $totalQuestions);
 
                     $fields6 = array();
 
@@ -632,11 +711,14 @@ class WPImpressumConfig
                     $fields6[] = $state_rules = mysql_real_escape_string($_POST['state_rules']);
                     $fields6[] = $chamber = mysql_real_escape_string($_POST['chamber']);
 
-                    print_r($fields6);
+                    update_option("wp-impressum_regulated_profession", $regulated_profession);
+                    update_option("wp-impressum_state", $state);
+                    update_option("wp-impressum_state_rules", $state_rules);
+                    update_option("wp-impressum_chamber", $chamber);
 
                     ?>
                     <form
-                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=7&setup=true"
+                        action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpimpressum_getSlug() ?>&step=7&setup=true"
                         method="post">
                         <table class="form-table">
                             <tr valign="top">
@@ -682,7 +764,7 @@ class WPImpressumConfig
 
                 case 7:
 
-                    $this->wpi_progress_bar(7, $totalQuestions);
+                    $this->wpimpressum_progress_bar(7, $totalQuestions);
 
                     $fields7 = array();
 
@@ -690,116 +772,165 @@ class WPImpressumConfig
                     $fields7[] = $responsible_persons = mysql_real_escape_string($_POST['responsible_persons']);
                     $fields7[] = $responsible_chamber = mysql_real_escape_string($_POST['responsible_chamber']);
 
-                    print_r($fields7);
+                    update_option("wp-impressum_image_source", $image_source);
+                    update_option("wp-impressum_responsible_persons", $responsible_persons);
+                    update_option("wp-impressum_responsible_chamber", $responsible_chamber);
 
-                    ?>
-                    Ihr Impressum ist fertig konfiguriert.
-                    <?php
+                    echo _e("Ihr Impressum ist fertig konfiguriert.");
 
                     break;
                 default:
-                    $this->wpi_config_view();
+                    $this->wpimpressum_config_view();
                     break;
             }
         } else {
-            $this->wpi_config_view();
+            $this->wpimpressum_config_view();
         }
     }
 
-    private function wpi_config_view()
+    private function wpimpressum_register_settings()
     {
-        ?>
-        <p>
-            Richten Sie Ihr Impressum jetzt ein! Es kostet nur wenige Klicks!
-        </p>
+        register_setting('wp-impressum', 'wp-impressum_person');
+        register_setting('wp-impressum', 'wp-impressum_form_of_organization');
+        register_setting('wp-impressum', 'wp-impressum_name-company');
+        register_setting('wp-impressum', 'wp-impressum_address');
+        register_setting('wp-impressum', 'wp-impressum_address-extra');
+        register_setting('wp-impressum', 'wp-impressum_place');
+        register_setting('wp-impressum', 'wp-impressum_zip');
+        register_setting('wp-impressum', 'wp-impressum_country');
+        register_setting('wp-impressum', 'wp-impressum_phone');
+        register_setting('wp-impressum', 'wp-impressum_fax');
+        register_setting('wp-impressum', 'wp-impressum_email');
+        register_setting('wp-impressum', 'wp-impressum_authorized_person');
+        register_setting('wp-impressum', 'wp-impressum_vat');
+        register_setting('wp-impressum', 'wp-impressum_register');
+        register_setting('wp-impressum', 'wp-impressum_registernr');
+        register_setting('wp-impressum', 'wp-impressum_regulated_profession');
+        register_setting('wp-impressum', 'wp-impressum_state');
+        register_setting('wp-impressum', 'wp-impressum_state_rules');
+        register_setting('wp-impressum', 'wp-impressum_chamber');
+        register_setting('wp-impressum', 'wp-impressum_image_source');
+        register_setting('wp-impressum', 'wp-impressum_responsible_persons');
+        register_setting('wp-impressum', 'wp-impressum_responsible_chamber');
 
-        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-            <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active">
-                <a href="#tab-1" class="manage-impressum-tab">Impressum verwalten</a></li>
-            <li class="ui-state-default ui-corner-top">
-                <a href="#tab-2" class="manage-setting-tab">Einstellung</a>
-            </li>
-        </ul>
-        <div class="manage-impressum">
-            <br>
-            <table class="widefat fixed striped comments">
-                <thead>
-                <tr>
-                    <th scope="col" id="cb" class="manage-column column-cb check-column" style=""></th>
-                    <th scope="col" class="manage-column column-author sorted asc" style=""><span>Impressum</span></a>
-                    </th>
-                    <th scope="col" class="manage-column column-comment" style="">Informationen</th>
-                    <th scope="col" class="manage-column column-response sortable" style=""><span>Löschen</span></a>
-                    </th>
-                </tr>
-                </thead>
-                <tbody id="the-comment-list" data-wp-lists="list:comment">
-                <?php
-
-                for ($i = 0; $i < 5; $i++) {
-                    ?>
-
-                    <tr id="comment-1" class="comment even thread-even depth-1 approved">
-                        <th scope="row" class="check-column"><label class="screen-reader-text" for="cb-select-1">Impressum
-                                auswählen</label>
-                            <input id="cb-select-1" type="radio" name="delete_comments[]" value="1">
-                        </th>
-                        <td class="impressum column-author"><strong>Impressum #1</strong></td>
-                        <td class="impressum column-comment">
-                            <div class="impressum-author">
-                            </div>
-                            <div class="submitted-on">Eingereicht am <a
-                                    href="http://localhost/wordpress/?p=1#comment-1">%%DATE%%
-                                    um %%DATETIME%%</a></div>
-
-                            %%INFORMATION%%
-
-                            <div class="row-actions"><span class="approve"><span class="edit"><a
-                                            href="comment.php?action=editcomment&amp;c=1"
-                                            title="Kommentar bearbeiten">Bearbeiten</a></span>
-                            </div>
-                        </td>
-                        <td class="response column-response">
-                            <input type="button" class="button button-secondary" value="Löschen">
-                        </td>
-                    </tr>
-
-                <?php
-                }
-
-                ?>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th scope="col" id="cb" class="manage-column column-cb check-column" style=""></th>
-                    <th scope="col" class="manage-column column-author sorted asc" style=""><span>Impressum</span></a>
-                    </th>
-                    <th scope="col" class="manage-column column-comment" style="">Informationen</th>
-                    <th scope="col" class="manage-column column-response sortable" style=""><span>Löschen</span></a>
-                    </th>
-                </tr>
-                </tfoot>
-
-            </table>
-
-            <br>
-            <a href="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=1&setup=true">
-                <input class="button button-secondary" type="button"
-                       value="<?= _e('Veröffentliche ausgewähltes Impressum') ?>">
-            </a>
-            <a href="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpi_getSlug() ?>&step=1&setup=true">
-                <input class="button button-primary" type="button" value="<?= _e('Impressum hinzufügen') ?>">
-            </a>
-        </div>
-        <div class="manage-setting">
-            Einstelungen... Hier kommt some shit...
-        </div>
-    <?php
+        register_setting('wp-impressum', 'wp-impressum_general_privacy_policy');
+        register_setting('wp-impressum', 'wp-impressum_policy_facebook');
+        register_setting('wp-impressum', 'wp-impressum_policy_google_analytics');
+        register_setting('wp-impressum', 'wp-impressum_policy_google_adsense');
+        register_setting('wp-impressum', 'wp-impressum_policy_google_plus');
+        register_setting('wp-impressum', 'wp-impressum_policy_twitter');
     }
 
-    private function wpi_progress_bar($step, $total)
+    private function wpimpressum_config_view()
     {
-        $slug = WPImpressumConfig::getInstance()->wpi_getSlug();
+
+        $wpimpressum_settings[] = $general_privacy_policy = mysql_real_escape_string($_POST['general_privacy_policy']);
+        $wpimpressum_settings[] = $policy_facebook = mysql_real_escape_string($_POST['policy_facebook']);
+        $wpimpressum_settings[] = $policy_google_analytics = mysql_real_escape_string($_POST['policy_google_analytics']);
+        $wpimpressum_settings[] = $policy_google_adsense = mysql_real_escape_string($_POST['policy_google_adsense']);
+        $wpimpressum_settings[] = $policy_google_plus = mysql_real_escape_string($_POST['policy_google_plus']);
+        $wpimpressum_settings[] = $policy_google_twitter = mysql_real_escape_string($_POST['policy_twitter']);
+
+        update_option("wp-impressum_general_privacy_policy", $general_privacy_policy);
+        update_option("wp-impressum_policy_facebook", $policy_facebook);
+        update_option("wp-impressum_policy_google_analytics", $policy_google_analytics);
+        update_option("wp-impressum_policy_google_adsense", $policy_google_adsense);
+        update_option("wp-impressum_policy_google_plus", $policy_google_plus);
+        update_option("wp-impressum_policy_twitter", $policy_google_twitter);
+
+        ?>
+        <form method="post"
+              action="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpimpressum_getSlug() ?>">
+
+            <table class="form-table">
+                <tbody>
+                <tr>
+                    <th>
+                        Impressum Konfiguration
+                    </th>
+                    <td>
+                        <a href="options-general.php?page=<?= WPImpressumConfig::getInstance()->wpimpressum_getSlug() ?>&step=1&setup=true">
+                            <input class="button" type="button" value="<?= _e('Impressum konfigurieren') ?>">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?= __("Language") ?></th>
+                    <td>
+                        <select name="country" style="width: 340px">
+                            <option>Wähle dein Land ...</option>
+                            <option value="DE">Deutsch</option>
+                        </select><br><br>
+                        <?= _e("Wähle die Sprache für dein Impressum") ?>
+                    </td>
+                    <td><b></b></td>
+                </tr>
+                <tr>
+                    <th>
+                        <?= _e("Allgemine Datenschutzerklärung") ?>
+                    </th>
+                    <td>
+                        <label for="general_privacy_policy">
+                            <input id="general_privacy_policy" type="checkbox" name="general_privacy_policy">
+                            <?= _e("Füge eine allgemeine Datenschutzerklärung in dein Impressum ein.") ?>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <?= _e("Datenschutzerklärung für Facebook") ?>
+                    </th>
+                    <td>
+                        <label for="policy_facebook">
+                            <input id="policy_facebook" type="checkbox" name="policy_facebook">
+                            <?= _e("Füge eine Datenschutzerklärung für die Nutzung von Facebook Elementen in dein Impressum ein.") ?>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <?= _e("Datenschutzerklärung für Google") ?>
+                    </th>
+                    <td>
+                        <label for="policy_google_analytics">
+                            <input id="policy_google_analytics" type="checkbox" name="policy_google_analytics">
+                            <?= _e("Füge eine Datenschutzerklärung für die Nutzung von <b>Google Analytics</b> in dein Impressum ein.") ?>
+                        </label>
+                        <br><br>
+                        <label for="policy_google_adsense">
+                            <input id="policy_google_adsense" type="checkbox" name="policy_google_adsense">
+                            <?= _e("Füge eine Datenschutzerklärung für die Nutzung von <b>Google Adsense</b> in dein Impressum ein.") ?>
+                        </label>
+                        <br><br>
+                        <label for="policy_google_plus">
+                            <input id="policy_google_plus" type="checkbox" name="policy_google_plus">
+                            <?= _e("Füge eine Datenschutzerklärung für die Nutzung von <b>Google +1</b> in dein Impressum ein.") ?>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <?= _e("Datenschutzerklärung für Twitter") ?>
+                    </th>
+                    <td>
+                        <label for="policy_twitter">
+                            <input id="policy_twitter" type="checkbox" name="policy_twitter">
+                            <?= _e("Füge eine Datenschutzerklärung für die Nutzung von Twitter Elementen in dein Impressum ein.") ?>
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <?php submit_button("Impressum aktualisieren"); ?>
+        </form>
+    <?php
+
+
+    }
+
+    private function wpimpressum_progress_bar($step, $total)
+    {
+        $slug = WPImpressumConfig::getInstance()->wpimpressum_getSlug();
 
         ?>
         <table>
@@ -808,9 +939,9 @@ class WPImpressumConfig
 
                 for ($i = 1; $i <= $total; $i++) {
                     if ($step >= $i) {
-                        echo "<td style='background-color: green; padding:2px 15px 2px 15px'><a style='color: #fff;' href='options-general.php?page={$slug}&step={$i}&setup=true'>" . $i . "</a></td>";
+                        echo "<td style='background-color: green; padding: 10px 25px 10px 25px; font-size: 2em;'><a style='color: #fff;' href='options-general.php?page={$slug}&step={$i}&setup=true'>" . $i . "</a></td>";
                     } else {
-                        echo "<td style='background-color: #ddd; padding:2px 15px 2px 15px;'>" . $i . "</td>";
+                        echo "<td style='background-color: #ddd; padding: 10px 25px 10px 25px; font-size: 2em;'>" . $i . "</td>";
                     }
                 }
 

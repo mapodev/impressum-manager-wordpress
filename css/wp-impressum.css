@@ -52,3 +52,7 @@
     border: 0px solid #d3d3d3;
     border-top-width: 1px;
 }
+
+.form-table tbody th {
+    width: 300px;
+}
