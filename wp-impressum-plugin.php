@@ -53,7 +53,7 @@ $conf = WPImpressumConfig::getInstance();
 
 // Load translations
 $plugin_dir = basename(dirname(__FILE__));
-load_plugin_textdomain($conf->wpi_getSlug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
+load_plugin_textdomain($conf->wpimpressum_getSlug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
 
 /**
  * Begins execution of the plugin.
