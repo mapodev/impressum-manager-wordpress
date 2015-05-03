@@ -783,6 +783,7 @@ class WPImpressumConfig
         register_setting("wp-impressum-conf_2", "wp_impressum_country");
         register_setting("wp-impressum-conf_2", "wp_impressum_fax");
         register_setting("wp-impressum-conf_2", "wp_impressum_email");
+        register_setting("wp-impressum-conf_2", "wp_impressum_phone");
 
         register_setting("wp-impressum-conf_3", "wp_impressum_authorized_person");
 
@@ -799,6 +800,7 @@ class WPImpressumConfig
         register_setting("wp-impressum-conf_6", "wp_impressum_responsible_chamber");
         register_setting("wp-impressum-conf_6", "wp_impressum_responsible_persons");
 
+        register_setting("wp-impressum-policy_group", "wp_impressum_set_impressum");
         register_setting("wp-impressum-policy_group", "wp_impressum_language_of_impressum");
         register_setting("wp-impressum-policy_group", "wp_impressum_general_privacy_policy");
         register_setting("wp-impressum-policy_group", "wp_impressum_policy_facebook");

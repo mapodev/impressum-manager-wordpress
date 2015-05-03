@@ -68,6 +68,9 @@ function run_wp_impressum_plugin()
 {
     global $conf;
     $wpi = new WPImpressum();
+    $wpi->wpimpressum_update_impressum();
 }
 
-run_wp_impressum_plugin();
+add_action("admin_head", "run_wp_impressum_plugin");
+
+
