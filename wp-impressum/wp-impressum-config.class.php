@@ -800,6 +800,7 @@ class WPImpressumConfig
         register_setting("wp-impressum-conf_6", "wp_impressum_responsible_chamber");
         register_setting("wp-impressum-conf_6", "wp_impressum_responsible_persons");
 
+        register_setting("wp-impressum-policy_group", "wp_impressum_disclaimer");
         register_setting("wp-impressum-policy_group", "wp_impressum_set_impressum");
         register_setting("wp-impressum-policy_group", "wp_impressum_language_of_impressum");
         register_setting("wp-impressum-policy_group", "wp_impressum_general_privacy_policy");
@@ -859,6 +860,18 @@ class WPImpressumConfig
                         <?= _e("Wähle die Sprache für dein Impressum") ?>
                     </td>
                     <td><b></b></td>
+                </tr>
+                <tr>
+                    <th>
+                        <?= _e("Haftungsausschluss (Disclaimer)") ?>
+                    </th>
+                    <td>
+                        <label for="wp_impressum_disclaimer">
+                            <input id="wp_impressum_disclaimer" type="checkbox"
+                                   name="wp_impressum_disclaimer" <?= $this->isChecked("wp_impressum_disclaimer") ?>>
+                            <?= _e("Füge einen Disclaimer in dein Impressum ein.") ?>
+                        </label>
+                    </td>
                 </tr>
                 <tr>
                     <th>
