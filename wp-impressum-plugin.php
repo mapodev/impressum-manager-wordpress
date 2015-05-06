@@ -57,7 +57,7 @@ load_plugin_textdomain($conf->wpimpressum_getSlug(), 'wp-content/plugins/' . $pl
 
 // shortcode for "wpimpressum", shortcode: wpimpressum
 function wpimpressum_shortcode( $atts ) {
-    $impressum_id = get_option("wp_impressum_choosen_post_id");
+    $impressum_id = get_option("wp_impressum_page");
     if(empty($impressum_id)) {
         return '<a href="'.site_url().'">Impressum</a>';
     }
