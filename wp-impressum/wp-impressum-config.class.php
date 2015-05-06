@@ -809,6 +809,7 @@ class WPImpressumConfig
         register_setting("wp-impressum-policy_group", "wp_impressum_policy_google_adsense");
         register_setting("wp-impressum-policy_group", "wp_impressum_policy_twitter");
         register_setting("wp-impressum-policy_group", "wp_impressum_policy_google_plus");
+        register_setting("wp-impressum-policy_group", "wp_impressum_page");
     }
 
     private function wpimpressum_config_view()
@@ -821,6 +822,8 @@ class WPImpressumConfig
         $wpimpressum_settings[] = $policy_google_adsense = mysql_real_escape_string($_POST['policy_google_adsense']);
         $wpimpressum_settings[] = $policy_google_plus = mysql_real_escape_string($_POST['policy_google_plus']);
         $wpimpressum_settings[] = $policy_google_twitter = mysql_real_escape_string($_POST['policy_twitter']);
+
+        $pageArray = get_pages();
 
         ?>
         <form action="options-general.php">
@@ -860,6 +863,25 @@ class WPImpressumConfig
                         <?= _e("Wähle die Sprache für dein Impressum") ?>
                     </td>
                     <td><b></b></td>
+                </tr>
+                <tr>
+                    <th><?=_e("Wähle eine Seite für das Impressum")?></th>
+                    <td>
+                        <select name="wp_impressum_page">
+                            <?php
+                            foreach($pageArray as $page) {
+                                if($page->ID == get_option("wp_impressum_page")) {
+                                    $is_selected = "selected=selected";
+                                } else {
+                                    $is_selected = "";
+                                }
+                                ?>
+                                <option value="<?=$page->ID?>" <?=$is_selected?>><?=$page->post_title?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <th>
