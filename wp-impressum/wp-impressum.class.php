@@ -55,6 +55,8 @@ class WPImpressum
 
         // standard language, can be changed later on
         if (empty($lang)) $lang = "de";
+        // TODO: change key to search fore
+        if(strpos($lang, "Wähle") !== false) $lang = "de";
 
         $name = get_option("wp_impressum_name_company");
         $address = get_option("wp_impressum_address");
