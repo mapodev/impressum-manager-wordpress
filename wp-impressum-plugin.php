@@ -55,6 +55,17 @@ $conf = WPImpressumConfig::getInstance();
 $plugin_dir = basename(dirname(__FILE__));
 load_plugin_textdomain($conf->wpimpressum_getSlug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
 
+// shortcode for "wpimpressum", shortcode: wpimpressum
+function wpimpressum_shortcode( $atts ) {
+    $impressum_id = get_option("wp_impressum_choosen_post_id");
+    if(empty($impressum_id)) {
+        return '<a href="'.site_url().'">Impressum</a>';
+    }
+    $page_link = get_permalink( $impressum_id );
+    return '<a href="'.$page_link.'">Impressum</span>';
+}
+add_shortcode( 'wpimpressum', 'wpimpressum_shortcode' );
+
 /**
  * Begins execution of the plugin.
  *
