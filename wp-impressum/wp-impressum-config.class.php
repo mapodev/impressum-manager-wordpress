@@ -252,7 +252,7 @@ class WPImpressumConfig
 
     public function __construct()
     {
-        $this->version = "0.0.1";
+        $this->version = "0.1.1";
         $this->slug = "wp-impressum";
 
         if (is_admin()) {
@@ -809,6 +809,9 @@ class WPImpressumConfig
         register_setting("wp-impressum-policy_group", "wp_impressum_policy_google_adsense");
         register_setting("wp-impressum-policy_group", "wp_impressum_policy_twitter");
         register_setting("wp-impressum-policy_group", "wp_impressum_policy_google_plus");
+        register_setting("wp-impressum-policy_group", "wp_impressum_page");
+        register_setting("wp-impressum-policy_group", "wp_impressum_disabled");
+        register_setting("wp-impressum-policy_group", "wp_impressum_extra_field");
     }
 
     private function wpimpressum_config_view()
@@ -821,6 +824,16 @@ class WPImpressumConfig
         $wpimpressum_settings[] = $policy_google_adsense = mysql_real_escape_string($_POST['policy_google_adsense']);
         $wpimpressum_settings[] = $policy_google_plus = mysql_real_escape_string($_POST['policy_google_plus']);
         $wpimpressum_settings[] = $policy_google_twitter = mysql_real_escape_string($_POST['policy_twitter']);
+
+        $pageArray = get_pages();
+
+        // update impressum if refreshed
+        if($_REQUEST['settings-updated']) {
+            if(get_option("wp_impressum_page")) {
+                $wpi = new WPImpressum();
+                $wpi->wpimpressum_update_impressum();
+            }
+        }
 
         ?>
         <form action="options-general.php">
@@ -859,7 +872,30 @@ class WPImpressumConfig
                         </select><br><br>
                         <?= _e("Wähle die Sprache für dein Impressum") ?>
                     </td>
-                    <td><b></b></td>
+                </tr>
+                <tr>
+                    <th><?=_e("Wähle eine Seite für das Impressum")?></th>
+                    <td>
+                        <select name="wp_impressum_page">
+                            <option value="none"><?=_e("Keine (Ausgeschaltet)")?></option>
+                            <?php
+                            foreach($pageArray as $page) {
+                                if($page->ID == get_option("wp_impressum_page")) {
+                                    $is_selected = "selected=selected";
+                                } else {
+                                    $is_selected = "";
+                                }
+                                ?>
+                                <option value="<?=$page->ID?>" <?=$is_selected?>><?=$page->post_title?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <?=_e("<b>Achtung:</b> Die Seite wird mit dem Impressum überschrieben!")?>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2"><h2><?=_e("Impressum Inhalt Einstellungen")?></h2></th>
                 </tr>
                 <tr>
                     <th>
@@ -933,6 +969,14 @@ class WPImpressumConfig
                         </label>
                     </td>
                 </tr>
+                <tr>
+                    <th>
+                        <?= _e("Zusatzfeld") ?>
+                    </th>
+                    <td>
+                        <textarea style="width:500px; height: 200px;" name="wp_impressum_extra_field"></textarea>
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <?php submit_button("Impressum aktualisieren"); ?>
@@ -978,7 +1022,7 @@ class WPImpressumConfig
         <script type="text/javascript">
             setTimeout(function() {
                 jQuery(document).ready(function() {
-                    jQuery("input[name*='referer']").val("<?=admin_url("options-general.php")?>?page=<?=$this->wpimpressum_getSlug()?>&setup=true&step=<?=$step?>");
+                    jQuery("input[name='_wp_http_referer']").val("<?=admin_url("options-general.php")?>?page=<?=$this->wpimpressum_getSlug()?>&setup=true&step=<?=$step?>");
                 });
             }, 1000);
         </script>
