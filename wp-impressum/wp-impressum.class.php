@@ -89,6 +89,12 @@ class WPImpressum
             $impressum .= $this->wpimpressum_return_privacy_policy($lang, $general_policy, $policy_facebook, $policy_analytics, $policy_adsense, $policy_plus, $policy_twitter);
         }
 
+        $extra_field = get_option("wp_impressum_extra_field");
+
+        if(!empty($extra_field)) {
+            $impressum .= $extra_field;
+        }
+
         $impressum .= self::${'_' . $lang . '_source'};
         $impressum .= self::${'_' . $lang . '_plugin_by'};
 

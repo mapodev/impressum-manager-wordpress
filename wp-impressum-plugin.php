@@ -66,22 +66,6 @@ function wpimpressum_shortcode( $atts ) {
 }
 add_shortcode( 'wpimpressum', 'wpimpressum_shortcode' );
 
-/**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    0.1.0
- */
-function run_wp_impressum_plugin()
-{
-    global $conf;
-    $wpi = new WPImpressum();
-    $wpi->wpimpressum_update_impressum();
-}
-
 function wpimpressum_goodybye() {
 ?>
     Goodbye!
@@ -89,7 +73,5 @@ function wpimpressum_goodybye() {
 }
 
 register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "wpimpressum_goodybye");
-
-add_action("admin_head", "run_wp_impressum_plugin");
 
 

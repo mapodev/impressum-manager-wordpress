@@ -811,6 +811,7 @@ class WPImpressumConfig
         register_setting("wp-impressum-policy_group", "wp_impressum_policy_google_plus");
         register_setting("wp-impressum-policy_group", "wp_impressum_page");
         register_setting("wp-impressum-policy_group", "wp_impressum_disabled");
+        register_setting("wp-impressum-policy_group", "wp_impressum_extra_field");
     }
 
     private function wpimpressum_config_view()
@@ -825,6 +826,14 @@ class WPImpressumConfig
         $wpimpressum_settings[] = $policy_google_twitter = mysql_real_escape_string($_POST['policy_twitter']);
 
         $pageArray = get_pages();
+
+        // update impressum if refreshed
+        if($_REQUEST['settings-updated']) {
+            if(get_option("wp_impressum_page")) {
+                $wpi = new WPImpressum();
+                $wpi->wpimpressum_update_impressum();
+            }
+        }
 
         ?>
         <form action="options-general.php">
@@ -850,18 +859,6 @@ class WPImpressumConfig
             <table class="form-table">
                 <tbody>
                 <tr>
-                    <th>
-                        <?= _e("WP Impressum ausschalten") ?>
-                    </th>
-                    <td>
-                        <label for="wp_impressum_disabled">
-                            <input id="wp_impressum_disabled" type="checkbox"
-                                   name="wp_impressum_disabled" <?= $this->isChecked("wp_impressum_disabled") ?>>
-                            <?= _e("Markiere die Checkbox um WP Impressum auszuschalten.") ?>
-                        </label>
-                    </td>
-                </tr>
-                <tr>
                     <th scope="row"><?= __("Language") ?></th>
                     <td>
                         <select name="wp_impressum_language_of_impressum" style="width: 340px">
@@ -880,6 +877,7 @@ class WPImpressumConfig
                     <th><?=_e("Wähle eine Seite für das Impressum")?></th>
                     <td>
                         <select name="wp_impressum_page">
+                            <option value="none"><?=_e("Keine (Ausgeschaltet)")?></option>
                             <?php
                             foreach($pageArray as $page) {
                                 if($page->ID == get_option("wp_impressum_page")) {
@@ -969,6 +967,14 @@ class WPImpressumConfig
                                    name="wp_impressum_policy_twitter" <?= $this->isChecked("wp_impressum_policy_twitter") ?>>
                             <?= _e("Füge eine Datenschutzerklärung für die Nutzung von Twitter Elementen in dein Impressum ein.") ?>
                         </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <?= _e("Zusatzfeld") ?>
+                    </th>
+                    <td>
+                        <textarea style="width:500px; height: 200px;" name="wp_impressum_extra_field"></textarea>
                     </td>
                 </tr>
                 </tbody>
