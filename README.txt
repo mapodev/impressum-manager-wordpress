@@ -26,12 +26,15 @@ No questions asked yet.
 
 == Changelog ==
 
+= 0.1.2 hotfix =
+Bug caused to still publish impressum even if was disabled.
+
 = 0.1.1 =
-* Shortcode added.
-* Overwritting choosen page with impressum.
-* Only updating impressum on click of refresh.
-* Extra field added for impressum.
-* Some fixes
+Shortcode added.
+Overwritting choosen page with impressum.
+Only updating impressum on click of refresh.
+Extra field added for impressum.
+Some fixes
 
 = 0.1.0 =
 First release. Half way working Impressum Generator. Only german supported.
