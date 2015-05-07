@@ -9,13 +9,13 @@
  * that starts the plugin.
  *
  * @link              http://www.mapo-dev.com
- * @since             0.1.0
+ * @since             1.0.0
  * @package           Wp_Impressum_Plugin
  *
  * @wordpress-plugin
  * Plugin Name:       WP Impressum Plugin
  * Plugin URI:        http://www.wp-impressum.com
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       WP Impressum Generator for your wordpress copy. Manages all points for creating an impressum.
  * Version:           0.1.0
  * Author:            mapo
  * Author URI:        http://www.mapo-dev.com
@@ -81,6 +81,14 @@ function run_wp_impressum_plugin()
     $wpi = new WPImpressum();
     $wpi->wpimpressum_update_impressum();
 }
+
+function wpimpressum_goodybye() {
+?>
+    Goodbye!
+<?
+}
+
+register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "wpimpressum_goodybye");
 
 add_action("admin_head", "run_wp_impressum_plugin");
 

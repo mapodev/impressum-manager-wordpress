@@ -147,22 +147,22 @@ class WPImpressum
 
         switch ($register) {
             case 1:
-                $register_registered_in = "Kein Register";
+                $register_registered_in = _e("Kein Register");
                 break;
             case 2:
-                $register_registered_in = "Genossenschaftsregister";
+                $register_registered_in = _e("Genossenschaftsregister");
                 break;
             case 3:
-                $register_registered_in = "Handelsregister";
+                $register_registered_in = _e("Handelsregister");
                 break;
             case 4:
-                $register_registered_in = "Partnerschaftsregister";
+                $register_registered_in = _e("Partnerschaftsregister");
                 break;
             case 5:
-                $register_registered_in = "Vereinsregister";
+                $register_registered_in = _e("Vereinsregister");
                 break;
             default:
-                $register_registered_in = "Kein Register";
+                $register_registered_in = _e("Kein Register");
                 break;
         }
 

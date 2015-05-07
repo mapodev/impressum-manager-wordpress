@@ -810,6 +810,7 @@ class WPImpressumConfig
         register_setting("wp-impressum-policy_group", "wp_impressum_policy_twitter");
         register_setting("wp-impressum-policy_group", "wp_impressum_policy_google_plus");
         register_setting("wp-impressum-policy_group", "wp_impressum_page");
+        register_setting("wp-impressum-policy_group", "wp_impressum_disabled");
     }
 
     private function wpimpressum_config_view()
@@ -849,6 +850,18 @@ class WPImpressumConfig
             <table class="form-table">
                 <tbody>
                 <tr>
+                    <th>
+                        <?= _e("WP Impressum ausschalten") ?>
+                    </th>
+                    <td>
+                        <label for="wp_impressum_disabled">
+                            <input id="wp_impressum_disabled" type="checkbox"
+                                   name="wp_impressum_disabled" <?= $this->isChecked("wp_impressum_disabled") ?>>
+                            <?= _e("Markiere die Checkbox um WP Impressum auszuschalten.") ?>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
                     <th scope="row"><?= __("Language") ?></th>
                     <td>
                         <select name="wp_impressum_language_of_impressum" style="width: 340px">
@@ -862,7 +875,6 @@ class WPImpressumConfig
                         </select><br><br>
                         <?= _e("Wähle die Sprache für dein Impressum") ?>
                     </td>
-                    <td><b></b></td>
                 </tr>
                 <tr>
                     <th><?=_e("Wähle eine Seite für das Impressum")?></th>
@@ -881,7 +893,11 @@ class WPImpressumConfig
                             }
                             ?>
                         </select>
+                        <?=_e("<b>Achtung:</b> Die Seite wird mit dem Impressum überschrieben!")?>
                     </td>
+                </tr>
+                <tr>
+                    <th colspan="2"><h2><?=_e("Impressum Inhalt Einstellungen")?></h2></th>
                 </tr>
                 <tr>
                     <th>
@@ -1000,7 +1016,7 @@ class WPImpressumConfig
         <script type="text/javascript">
             setTimeout(function() {
                 jQuery(document).ready(function() {
-                    jQuery("input[name*='referer']").val("<?=admin_url("options-general.php")?>?page=<?=$this->wpimpressum_getSlug()?>&setup=true&step=<?=$step?>");
+                    jQuery("input[name='_wp_http_referer']").val("<?=admin_url("options-general.php")?>?page=<?=$this->wpimpressum_getSlug()?>&setup=true&step=<?=$step?>");
                 });
             }, 1000);
         </script>
