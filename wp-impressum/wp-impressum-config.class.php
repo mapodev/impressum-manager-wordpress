@@ -252,7 +252,7 @@ class WPImpressumConfig
 
     public function __construct()
     {
-        $this->version = "0.0.1";
+        $this->version = "0.1.1";
         $this->slug = "wp-impressum";
 
         if (is_admin()) {

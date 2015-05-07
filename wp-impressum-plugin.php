@@ -16,7 +16,7 @@
  * Plugin Name:       WP Impressum Plugin
  * Plugin URI:        http://www.wp-impressum.com
  * Description:       WP Impressum Generator for your wordpress copy. Manages all points for creating an impressum.
- * Version:           0.1.0
+ * Version:           0.1.1
  * Author:            mapo
  * Author URI:        http://www.mapo-dev.com
  * License:           GPL-2.0+
