@@ -252,7 +252,7 @@ class WPImpressumConfig
 
     public function __construct()
     {
-        $this->version = "0.1.1";
+        $this->version = "0.1.2";
         $this->slug = "wp-impressum";
 
         if (is_admin()) {
@@ -829,7 +829,8 @@ class WPImpressumConfig
 
         // update impressum if refreshed
         if($_REQUEST['settings-updated']) {
-            if(get_option("wp_impressum_page")) {
+            $_page = get_option("wp_impressum_page");
+            if($_page != "none" && !empty($_page)) {
                 $wpi = new WPImpressum();
                 $wpi->wpimpressum_update_impressum();
             }
