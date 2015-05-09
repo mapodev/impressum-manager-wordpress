@@ -55,16 +55,11 @@ $conf = WPImpressumConfig::getInstance();
 $plugin_dir = basename(dirname(__FILE__));
 load_plugin_textdomain($conf->wpimpressum_getSlug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
 
-// shortcode for "wpimpressum", shortcode: wpimpressum
-function wpimpressum_shortcode( $atts ) {
-    $impressum_id = get_option("wp_impressum_page");
-    if(empty($impressum_id)) {
-        return '<a href="'.site_url().'">Impressum</a>';
-    }
-    $page_link = get_permalink( $impressum_id );
-    return '<a href="'.$page_link.'">Impressum</span>';
+function wpimpressum_content_shortcode( $atts ) {
+    $wpi = new WPImpressum();
+    return $wpi->wpimpressum_content();
 }
-add_shortcode( 'wpimpressum', 'wpimpressum_shortcode' );
+add_shortcode( 'wp_impressum', 'wpimpressum_content_shortcode' );
 
 function wpimpressum_goodybye() {
 ?>

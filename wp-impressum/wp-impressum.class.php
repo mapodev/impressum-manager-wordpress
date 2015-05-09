@@ -34,7 +34,7 @@ class WPImpressum
         // empty constructor
     }
 
-    public function wpimpressum_update_impressum()
+    public function wpimpressum_content()
     {
         $impressum = "";
 
@@ -98,23 +98,7 @@ class WPImpressum
         $impressum .= self::${'_' . $lang . '_source'};
         $impressum .= self::${'_' . $lang . '_plugin_by'};
 
-        $page_id = get_option("wp_impressum_page");
-
-        // break impressum update, because no post was choosen for displaying
-        if(empty($page_id) || !is_numeric($page_id)) {
-            return;
-        }
-
-        $page = get_post($page_id);
-        $id = $page->ID;
-        if ($id) {
-            $impressum_post = array(
-                'ID' => $page_id,
-                'post_content' => $impressum
-            );
-
-            wp_update_post($impressum_post);
-        }
+        return $impressum;
     }
 
     private function wpimpressum_return_address($lang, $name, $adress, $adress_extra, $place, $zip)
@@ -146,31 +130,29 @@ class WPImpressum
 
     private function wpimpressum_return_register($lang, $register_chamber, $registernr, $register)
     {
-        $result = self::${'_' . $lang . '_format_register'};
-        $result .= "<p>";
-
-        $register_registered_in = "";
-
         switch ($register) {
             case 1:
-                $register_registered_in = _e("Kein Register");
+                $register_registered_in = "Kein Register";
                 break;
             case 2:
-                $register_registered_in = _e("Genossenschaftsregister");
+                $register_registered_in = "Genossenschaftsregister";
                 break;
             case 3:
-                $register_registered_in = _e("Handelsregister");
+                $register_registered_in = "Handelsregister";
                 break;
             case 4:
-                $register_registered_in = _e("Partnerschaftsregister");
+                $register_registered_in = "Partnerschaftsregister";
                 break;
             case 5:
-                $register_registered_in = _e("Vereinsregister");
+                $register_registered_in = "Vereinsregister";
                 break;
             default:
-                $register_registered_in = _e("Kein Register");
+                $register_registered_in = "Kein Register";
                 break;
         }
+
+        $result = self::${'_' . $lang . '_format_register'};
+        $result .= "<p>";
 
         if (!empty($register)) $result .= sprintf(self::${'_' . $lang . '_format_register_registered_in'}, $register_registered_in);
         if (!empty($registernr)) $result .= sprintf(self::${'_' . $lang . '_format_register_registernr'}, $registernr);

@@ -827,15 +827,6 @@ class WPImpressumConfig
 
         $pageArray = get_pages();
 
-        // update impressum if refreshed
-        if($_REQUEST['settings-updated']) {
-            $_page = get_option("wp_impressum_page");
-            if($_page != "none" && !empty($_page)) {
-                $wpi = new WPImpressum();
-                $wpi->wpimpressum_update_impressum();
-            }
-        }
-
         ?>
         <form action="options-general.php">
             <table class="form-table">
@@ -872,27 +863,6 @@ class WPImpressumConfig
                             </option>
                         </select><br><br>
                         <?= _e("Wähle die Sprache für dein Impressum") ?>
-                    </td>
-                </tr>
-                <tr>
-                    <th><?=_e("Wähle eine Seite für das Impressum")?></th>
-                    <td>
-                        <select name="wp_impressum_page">
-                            <option value="none"><?=_e("Keine (Ausgeschaltet)")?></option>
-                            <?php
-                            foreach($pageArray as $page) {
-                                if($page->ID == get_option("wp_impressum_page")) {
-                                    $is_selected = "selected=selected";
-                                } else {
-                                    $is_selected = "";
-                                }
-                                ?>
-                                <option value="<?=$page->ID?>" <?=$is_selected?>><?=$page->post_title?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
-                        <?=_e("<b>Achtung:</b> Die Seite wird mit dem Impressum überschrieben!")?>
                     </td>
                 </tr>
                 <tr>
