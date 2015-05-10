@@ -302,7 +302,7 @@ class WPImpressumConfig
     {
         ?>
         <div class="wrap">
-            <h2>WP Impressum</h2>
+            <h2>WP Impressum</h2><small>Version: <?=$this->version?></small>
             <?php
             $this->wpimpressum_show_setup();
             ?>
@@ -310,10 +310,32 @@ class WPImpressumConfig
     <?php
     }
 
+    private function wpimpressum_notice($notice_text) {
+        ?>
+        <div class="updated">
+            <p><?=translate( $notice_text ); ?></p>
+        </div>
+    <?php
+    }
 
     public function wpimpressum_show_setup()
     {
-        if (array_key_exists("setup", $_REQUEST)) {
+        $onboarded = get_option("wpimpresusm_onboarding_conf");
+        $enter_config = true;
+
+        if($onboarded == "onboarded") {
+            $enter_config = false;
+        } else {
+            add_option("wpimpresusm_onboarding_conf", "onboarded");
+        }
+
+        update_option("wpimpresusm_onboarding_conf", "onboarded");
+
+        if($enter_config) {
+            $this->wpimpressum_notice("Konfigureiren Sie einmalig ihr Impressum.");
+        }
+
+        if (array_key_exists("setup", $_REQUEST) || $enter_config) {
             ?>
             <br>
             <a href="options-general.php?page=<?=WPImpressumConfig::getInstance()->wpimpressum_getSlug()?>">
@@ -646,18 +668,6 @@ class WPImpressumConfig
         }
     }
 
-    /**
-     * @param $opt_name
-     */
-    private function wpimpressum_opt_update($opt_name, $value)
-    {
-        if (get_option($opt_name) === false) {
-            add_option($opt_name, $value);
-        } else {
-            update_option($opt_name, $value);
-        }
-    }
-
     private function wpimpressum_register_settings()
     {
         register_setting("wp-impressum-conf", "wp_impressum_person");
@@ -712,8 +722,6 @@ class WPImpressumConfig
         $wpimpressum_settings[] = $policy_google_adsense = mysql_real_escape_string($_POST['policy_google_adsense']);
         $wpimpressum_settings[] = $policy_google_plus = mysql_real_escape_string($_POST['policy_google_plus']);
         $wpimpressum_settings[] = $policy_google_twitter = mysql_real_escape_string($_POST['policy_twitter']);
-
-        $pageArray = get_pages();
 
         ?>
         <form action="options-general.php">
