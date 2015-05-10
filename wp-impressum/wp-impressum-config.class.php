@@ -462,7 +462,7 @@ class WP_Impressum_Config
 
                                 ?>
                                 <option
-                                    value="<?= $country_code ?>" <?= $s ?>><?= __($country_name) ?></option>
+                                    value="<?= $country_code ?>" <?= $s ?>><?= __($country_name, $this->slug) ?></option>
                             <?php
                             }
 
@@ -747,7 +747,7 @@ class WP_Impressum_Config
             <table class="form-table">
                 <tbody>
                 <tr>
-                    <th scope="row"><?= __("Language") ?></th>
+                    <th scope="row"><?= __("Language", $this->slug) ?></th>
                     <td>
                         <select name="wp_impressum_language_of_impressum" style="width: 340px">
                             <option>Wähle dein Land ...</option>
@@ -858,28 +858,5 @@ class WP_Impressum_Config
         if (strlen(get_option($key)) > 0) {
             echo "checked=checked";
         }
-    }
-
-    private function wpimpressum_progress_bar($step, $total)
-    {
-        $slug = WP_Impressum_Config::getInstance()->wpimpressum_getSlug();
-
-        ?>
-        <table>
-            <tr>
-                <?php
-
-                for ($i = 1; $i <= $total; $i++) {
-                    if ($step >= $i) {
-                        echo "<td style='background-color: green; padding: 10px 25px 10px 25px; font-size: 2em;'><a style='color: #fff;' href='options-general.php?page={$slug}&step={$i}&setup=true'>" . $i . "</a></td>";
-                    } else {
-                        echo "<td style='background-color: #ddd; padding: 10px 25px 10px 25px; font-size: 2em;'>" . $i . "</td>";
-                    }
-                }
-
-                ?>
-            </tr>
-        </table>
-    <?php
     }
 }
