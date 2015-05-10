@@ -1,6 +1,6 @@
 <?php
 
-class WPImpressumConfig
+class WP_Impressum_Config
 {
 
     private $version;
@@ -277,7 +277,7 @@ class WPImpressumConfig
     public static function getInstance()
     {
         if (self::$instance == null) {
-            self::$instance = new WPImpressumConfig();
+            self::$instance = new WP_Impressum_Config();
         }
         return self::$instance;
     }
@@ -338,7 +338,7 @@ class WPImpressumConfig
         if (array_key_exists("setup", $_REQUEST) || $enter_config) {
             ?>
             <br>
-            <a href="options-general.php?page=<?=WPImpressumConfig::getInstance()->wpimpressum_getSlug()?>">
+            <a href="options-general.php?page=<?=WP_Impressum_Config::getInstance()->wpimpressum_getSlug()?>">
                 <input type="button" class="button button-secondary" value="<?=_e("Zurück zu den Einstellungen")?>">
             </a>
 
@@ -652,12 +652,12 @@ class WPImpressumConfig
             <table>
                 <tr>
                     <td>
-                        <a href="options-general.php?page=<?=WPImpressumConfig::getInstance()->wpimpressum_getSlug()?>">
+                        <a href="options-general.php?page=<?=WP_Impressum_Config::getInstance()->wpimpressum_getSlug()?>">
                             <input type="button" class="button button-secondary" value="<?=_e("Zurück zu den Einstellungen")?>" style="margin-top: 5px">
                         </a>
                     </td>
                     <td>
-                        <?=submit_button(__("Daten Speichern"))?>
+                        <?=submit_button(__("Daten Speichern", $this->slug))?>
                     </td>
                 </tr>
             </table>
@@ -726,7 +726,7 @@ class WPImpressumConfig
         ?>
         <form action="options-general.php">
             <table class="form-table">
-                <input type="hidden" name="page" value="<?= WPImpressumConfig::getInstance()->wpimpressum_getSlug() ?>">
+                <input type="hidden" name="page" value="<?= WP_Impressum_Config::getInstance()->wpimpressum_getSlug() ?>">
                 <input type="hidden" name="step" value="1"/>
                 <input type="hidden" name="setup" value="true"/>
                 <tbody>
@@ -862,7 +862,7 @@ class WPImpressumConfig
 
     private function wpimpressum_progress_bar($step, $total)
     {
-        $slug = WPImpressumConfig::getInstance()->wpimpressum_getSlug();
+        $slug = WP_Impressum_Config::getInstance()->wpimpressum_getSlug();
 
         ?>
         <table>
