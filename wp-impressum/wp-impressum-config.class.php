@@ -450,7 +450,7 @@ class WPImpressumConfig
                 <tr>
                     <td colspan="2">
                         <select name="wp_impressum_country" style="width: 340px">
-                            <option>Wähle dein Land ...</option>
+                            <option value="no_land_choosen">Wähle dein Land ...</option>
                             <?php
 
                             foreach ($this->_countries as $country_code => $country_name) {
