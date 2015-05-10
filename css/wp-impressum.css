@@ -56,3 +56,7 @@
 .form-table tbody th {
     width: 300px;
 }
+
+.form-table td {
+    padding: 3px 10px;
+}

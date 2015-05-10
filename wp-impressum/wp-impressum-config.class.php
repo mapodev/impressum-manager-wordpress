@@ -252,7 +252,7 @@ class WPImpressumConfig
 
     public function __construct()
     {
-        $this->version = "0.1.2";
+        $this->version = "0.2.0";
         $this->slug = "wp-impressum";
 
         if (is_admin()) {
@@ -302,7 +302,7 @@ class WPImpressumConfig
     {
         ?>
         <div class="wrap">
-            <h2>WP Impressum</h2>
+            <h2>WP Impressum</h2><small>Version: <?=$this->version?></small>
             <?php
             $this->wpimpressum_show_setup();
             ?>
@@ -310,495 +310,393 @@ class WPImpressumConfig
     <?php
     }
 
+    private function wpimpressum_notice($notice_text) {
+        ?>
+        <div class="updated">
+            <p><?=translate( $notice_text ); ?></p>
+        </div>
+    <?php
+    }
 
     public function wpimpressum_show_setup()
     {
+        $onboarded = get_option("wpimpresusm_onboarding_conf");
+        $enter_config = true;
 
-        $totalQuestions = 7;
-        $confLink = "options.php";
+        if($onboarded == "onboarded") {
+            $enter_config = false;
+        } else {
+            add_option("wpimpresusm_onboarding_conf", "onboarded");
+        }
 
-        if (array_key_exists("setup", $_REQUEST)) {
-            $step = $_REQUEST['step'];
-            switch ($step) {
-                case 1:
-                    $this->wpimpressum_progress_bar(1, $totalQuestions);
-                    $this->changeReferrer(2);
-                    ?>
+        update_option("wpimpresusm_onboarding_conf", "onboarded");
 
-                    <form action="<?= $confLink ?>" method="post">
-                        <?php settings_fields('wp-impressum-conf_1'); ?>
-                        <?php do_settings_sections('wp-impressum-conf_1'); ?>
+        if($enter_config) {
+            $this->wpimpressum_notice("Konfigureiren Sie einmalig ihr Impressum.");
+        }
 
-                        <input type="hidden" name="step" value="2">
-                        <input type="hidden" name="setup" value="true">
+        if (array_key_exists("setup", $_REQUEST) || $enter_config) {
+            ?>
+            <br>
+            <a href="options-general.php?page=<?=WPImpressumConfig::getInstance()->wpimpressum_getSlug()?>">
+                <input type="button" class="button button-secondary" value="<?=_e("Zurück zu den Einstellungen")?>">
+            </a>
 
-                        <table class="form-table">
-                            <tr valign="top">
-                                <th scope="row" colspan="2"><b>Art der Person</b></th>
-                            </tr>
-                            <tr valign="top">
-                                <td width="5"><input type="radio" name="wp_impressum_person" value="1" <?php
-                                    if (get_option("wp_impressum_person") == '1') {
-                                        echo "checked=checked";
-                                    }
-                                    ?>>
+            <form action="options.php" method="post">
+            <?php settings_fields('wp-impressum-conf'); ?>
+            <?php do_settings_sections('wp-impressum-conf'); ?>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row" colspan="2"><b>Art der Person</b></th>
+                </tr>
+                <tr valign="top">
+                    <td width="5"><input type="radio" name="wp_impressum_person" value="1" <?php
+                        if (get_option("wp_impressum_person") == '1') {
+                            echo "checked=checked";
+                        }
+                        ?>>
+                    </td>
+                    <td>Privatperson</td>
+                </tr>
+                <tr valign="top">
+                    <td><input type="radio" name="wp_impressum_person"
+                               value="2" <?php
+                        if (get_option("wp_impressum_person") == '2') {
+                            echo "checked=checked";
+                        }
+                        ?>>
+                    </td>
+                    <td>Juristische Person (z.B. Firma, Verein, Organisation, Einrichtung)</td>
+                </tr>
+            </table>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row" colspan="2" style="width: 300px"><b>Rechtsform</b></th>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <select name="wp_impressum_form_of_organization">
+                            <?php
+                            $forms_of_organization = array(
+                                "Einzelunternehmen",
+                                "Stille Gesellschaft",
+                                "Offene Handelsgesellschaft (OHG)",
+                                "Kommanditgesellschaft (KG)",
+                                "Gesellschaft bürgerlichen Rechts (GdR)",
+                                "Aktiengesellschaft (AG)",
+                                "Kommanditgesellschaft auf Aktien (KGaA)",
+                                "Gesellschaft mit beschränkter Haftung (GmbH)",
+                                "Genossenschaft (eG)"
+                            );
+
+                            $idx = 1;
+                            foreach ($forms_of_organization as $org_form) {
+                                ?>
+                                <option value="<?= $idx ?>" <?php
+                                if ($idx == get_option("wp_impressum_form_of_organization")) {
+                                    echo "selected=selected";
+                                }
+                                ?>><?= $org_form ?></option>
+                                <?php
+                                $idx++;
+                            }
+                            ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row" colspan="2"><b>Angaben zur Organisation</b></th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" style="width: 340px" name="wp_impressum_name_company"
+                               title="Company Name"
+                               value="<?= get_option("wp_impressum_name_company") ?>"><br>
+                        <small>Vollständiger Name</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" name="wp_impressum_address" title="Address" style="width: 340px"
+                               value="<?= get_option("wp_impressum_address") ?>"><br>
+                        <small>Straße & Hausnummer</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" name="wp_impressum_address_extra" title="Address Extra"
+                               style="width: 340px" value="<?= get_option("wp_impressum_address_extra") ?>"><br>
+                        <small>Adresszusatz</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td style="padding: 0;"><input type="text" name="wp_impressum_place"
+                                                               title="Place"
+                                                               value="<?= get_option("wp_impressum_place") ?>"><br>
+                                    <small>Ort</small>
                                 </td>
-                                <td>Privatperson</td>
-                            </tr>
-                            <tr valign="top">
-                                <td><input type="radio" name="wp_impressum_person"
-                                           value="2" <?php
-                                    if (get_option("wp_impressum_person") == '2') {
-                                        echo "checked=checked";
-                                    }
-                                    ?>>
-                                </td>
-                                <td>Juristische Person (z.B. Firma, Verein, Organisation, Einrichtung)</td>
-                            </tr>
-                        </table>
-                        <?= submit_button("Nächster Schritt") ?>
-                    </form>
-                    <?php
-
-
-                    break;
-
-                case 2:
-
-                    $this->wpimpressum_progress_bar(2, $totalQuestions);
-                    $this->changeReferrer(3);
-                    ?>
-
-                    <form
-                        action="<?= $confLink ?>"
-                        method="post">
-
-                        <?php settings_fields('wp-impressum-conf_2'); ?>
-                        <?php do_settings_sections('wp-impressum-conf_2'); ?>
-
-                        <input type="hidden" name="step" value="3">
-                        <input type="hidden" name="setup" value="true">
-
-                        <table class="form-table">
-                            <tr valign="top">
-                                <th scope="row" colspan="2" style="width: 300px"><b>Rechtsform</b></th>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <select name="wp_impressum_form_of_organization">
-                                        <?php
-                                        $forms_of_organization = array(
-                                            "Einzelunternehmen",
-                                            "Stille Gesellschaft",
-                                            "Offene Handelsgesellschaft (OHG)",
-                                            "Kommanditgesellschaft (KG)",
-                                            "Gesellschaft bürgerlichen Rechts (GdR)",
-                                            "Aktiengesellschaft (AG)",
-                                            "Kommanditgesellschaft auf Aktien (KGaA)",
-                                            "Gesellschaft mit beschränkter Haftung (GmbH)",
-                                            "Genossenschaft (eG)"
-                                        );
-
-                                        $idx = 1;
-                                        foreach ($forms_of_organization as $org_form) {
-                                            ?>
-                                            <option value="<?= $idx ?>" <?php
-                                            if ($idx == get_option("wp_impressum_form_of_organization")) {
-                                                echo "selected=selected";
-                                            }
-                                            ?>><?= $org_form ?></option>
-                                            <?php
-                                            $idx++;
-                                        }
-                                        ?>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <th scope="row" colspan="2"><b>Angaben zur Organisation</b></th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="text" style="width: 340px" name="wp_impressum_name_company"
-                                           title="Company Name"
-                                           value="<?= get_option("wp_impressum_name_company") ?>"><br>
-                                    <small>Vollständiger Name</small>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="text" name="wp_impressum_address" title="Address" style="width: 340px"
-                                           value="<?= get_option("wp_impressum_address") ?>"><br>
-                                    <small>Straße & Hausnummer</small>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="text" name="wp_impressum_address_extra" title="Address Extra"
-                                           style="width: 340px" value="<?= get_option("wp_impressum_address_extra") ?>"><br>
-                                    <small>Adresszusatz</small>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <table>
-                                        <tr>
-                                            <td style="padding: 0;"><input type="text" name="wp_impressum_place"
-                                                                           title="Place"
-                                                                           value="<?= get_option("wp_impressum_place") ?>"><br>
-                                                <small>Ort</small>
-                                            </td>
-                                            <td style="padding: 0;"><input type="text" name="wp_impressum_zip"
-                                                                           title="ZIP Code"
-                                                                           value="<?= get_option("wp_impressum_zip") ?>"><br>
-                                                <small>PLZ</small>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <select name="wp_impressum_country" style="width: 340px">
-                                        <option>Wähle dein Land ...</option>
-                                        <?php
-
-                                        foreach ($this->_countries as $country_code => $country_name) {
-                                            if (get_option("wp_impressum_country") == $country_code) {
-                                                $s = "selected=selected";
-                                            } else {
-                                                $s = "";
-                                            }
-
-                                            ?>
-                                            <option
-                                                value="<?= $country_code ?>" <?= $s ?>><?= __($country_name) ?></option>
-                                        <?php
-                                        }
-
-                                        ?>
-                                    </select><br>
-                                    <small>Land</small>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="2">
-                                    <b>Telefonnummer (inkl. Vorwahl)</b>
-                                </th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="text" name="wp_impressum_phone" title="Phone Number"
-                                           style="width: 340px"
-                                           value="<?= get_option("wp_impressum_phone") ?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="2">
-                                    <b>Faxnummer (optional)</b>
-                                </th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="text" name="wp_impressum_fax" title="Fax Number" style="width: 340px"
-                                           value="<?= get_option("wp_impressum_fax") ?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="2">
-                                    <b>E-Mail Adresse</b>
-                                </th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="text" name="wp_impressum_email" title="E-Mail Address"
-                                           style="width: 340px"
-                                           value="<?= get_option("wp_impressum_email") ?>">
+                                <td style="padding: 0;"><input type="text" name="wp_impressum_zip"
+                                                               title="ZIP Code"
+                                                               value="<?= get_option("wp_impressum_zip") ?>"><br>
+                                    <small>PLZ</small>
                                 </td>
                             </tr>
                         </table>
-                        <?= submit_button("Nächster Schritt") ?>
-                    </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select name="wp_impressum_country" style="width: 340px">
+                            <option value="no_land_choosen">Wähle dein Land ...</option>
+                            <?php
 
-                    <?php
+                            foreach ($this->_countries as $country_code => $country_name) {
+                                if (get_option("wp_impressum_country") == $country_code) {
+                                    $s = "selected=selected";
+                                } else {
+                                    $s = "";
+                                }
 
-                    break;
+                                ?>
+                                <option
+                                    value="<?= $country_code ?>" <?= $s ?>><?= __($country_name) ?></option>
+                            <?php
+                            }
 
-                case 3:
-                    $this->wpimpressum_progress_bar(3, $totalQuestions);
-                    $this->changeReferrer(4);
+                            ?>
+                        </select><br>
+                        <small>Land</small>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <b>Telefonnummer (inkl. Vorwahl)</b>
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" name="wp_impressum_phone" title="Phone Number"
+                               style="width: 340px"
+                               value="<?= get_option("wp_impressum_phone") ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <b>Faxnummer (optional)</b>
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" name="wp_impressum_fax" title="Fax Number" style="width: 340px"
+                               value="<?= get_option("wp_impressum_fax") ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <b>E-Mail Adresse</b>
+                    </th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" name="wp_impressum_email" title="E-Mail Address"
+                               style="width: 340px"
+                               value="<?= get_option("wp_impressum_email") ?>">
+                    </td>
+                </tr>
+            </table>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row" colspan="2"><b>Vertretungsberechtigte Persone(n)</b></th>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <textarea name="wp_impressum_authorized_person"
+                                  style="width: 340px; height: 225px;"><?= get_option("wp_impressum_authorized_person") ?></textarea><br>
+                        <small>Namen und Vornamen</small>
+                    </td>
+                </tr>
+            </table>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row" colspan="2"><b>Umsatzsteuer ID</b></th>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <input type="text" name="wp_impressum_vat" title="VAT" style="width: 340px"
+                               value="<?= get_option("wp_impressum_vat") ?>">
+                    </td>
+                </tr>
 
-                    ?>
-                    <form action="<?= $confLink ?>" method="post">
+                <tr valign="top">
+                    <th scope="row" colspan="2"><b>Register</b></th>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <select name="wp_impressum_register">
+                            <?php
+                            $registerDescr = array(
+                                "Kein Register",
+                                "Genossenschaftsregister",
+                                "Handelsregister",
+                                "Partnerschaftsregister",
+                                "Vereinsregister"
+                            );
 
-                        <?php settings_fields('wp-impressum-conf_3'); ?>
-                        <?php do_settings_sections('wp-impressum-conf_3'); ?>
+                            $idx = 1;
 
-                        <table class="form-table">
-                            <tr valign="top">
-                                <th scope="row" colspan="2"><b>Vertretungsberechtigte Persone(n)</b></th>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <textarea name="wp_impressum_authorized_person"
-                                              style="width: 340px; height: 225px;"><?= get_option("wp_impressum_authorized_person") ?></textarea><br>
-                                    <small>Namen und Vornamen</small>
-                                </td>
-                            </tr>
-                        </table>
-                        <?= submit_button("Nächster Schritt") ?>
-                    </form>
-                    <?php
+                            echo get_option("wp_impressum_register");
 
-                    break;
+                            foreach ($registerDescr as $registerName) {
+                                if (get_option("wp_impressum_register") == $idx) {
+                                    $selected = "selected=selected";
+                                } else {
+                                    $selected = "";
+                                }
+                                ?>
+                                <option value="<?= $idx ?>" <?= $selected ?>><?= $registerName ?></option>
+                                <?php
+                                $idx++;
+                            }
 
-                case 4:
-                    $this->changeReferrer(5);
-                    $this->wpimpressum_progress_bar(4, $totalQuestions);
+                            ?>
+                        </select>
+                    </td>
+                </tr>
 
-                    $fields4 = array();
+                <tr valign="top">
+                    <th scope="row" colspan="2"><b>Registernummer</b></th>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <input type="text" name="wp_impressum_registenr" title="Registernummer"
+                               style="width: 340px"
+                               value="<?= get_option("wp_impressum_registenr") ?>">
+                    </td>
+                </tr>
+            </table>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row" colspan="2"><b>Reglementierter Beruf</b></th>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <input type="text" name="wp_impressum_regulated_profession"
+                               title="Regulated profession"
+                               style="width: 340px"
+                               value="<?= get_option("wp_impressum_regulated_profession") ?>"><br>
+                        <small>Gesetzliche Berufsbezeichnung</small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <input type="text" name="wp_impressum_state" title="State"
+                               style="width: 340px" value="<?= get_option("wp_impressum_state") ?>"><br>
+                        <small>Staat, in dem die Berufsbezeichnung verliehen wurde</small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <input type="text" name="wp_impressum_state_rules" title="State rules"
+                               style="width: 340px"
+                               value="<?= get_option("wp_impressum_state_rules") ?>"><br>
+                        <small>Berfusrechtliche Regelungen (Bezeichnung)</small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <input type="text" name="wp_impressum_chamber" title="Chamber"
+                               style="width: 340px" value="<?= get_option("wp_impressum_chamber") ?>"><br>
+                        <small>Kammer, der Sie angehören</small>
+                    </td>
+                </tr>
+            </table>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row" colspan="2"><b>Bildquellen</b></th>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <textarea name="wp_impressum_image_source"
+                                  style="width: 340px; height: 225px;"><?= get_option("wp_impressum_image_source") ?></textarea><br>
+                        <small>z.B. Max Mustermann, http://www.fotolia.com</small>
+                    </td>
+                </tr>
 
-                    $fields4[] = $authorized_person = mysql_real_escape_string($_POST['authorized_person']);
-
-                    ?>
-                    <form
-                        action="<?= $confLink ?>" method="post">
-
-                        <?php settings_fields('wp-impressum-conf_4'); ?>
-                        <?php do_settings_sections('wp-impressum-conf_4'); ?>
-
-                        <input type="hidden" name="step" value="5"/>
-                        <input type="hidden" name="setup" value="true"/>
-
-                        <table class="form-table">
-                            <tr valign="top">
-                                <th scope="row" colspan="2"><b>Umsatzsteuer ID</b></th>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <input type="text" name="wp_impressum_vat" title="VAT" style="width: 340px"
-                                           value="<?= get_option("wp_impressum_vat") ?>">
-                                </td>
-                            </tr>
-
-                            <tr valign="top">
-                                <th scope="row" colspan="2"><b>Register</b></th>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <select name="wp_impressum_register">
-                                        <?php
-                                        $registerDescr = array(
-                                            "Kein Register",
-                                            "Genossenschaftsregister",
-                                            "Handelsregister",
-                                            "Partnerschaftsregister",
-                                            "Vereinsregister"
-                                        );
-
-                                        $idx = 1;
-
-                                        echo get_option("wp_impressum_register");
-
-                                        foreach ($registerDescr as $registerName) {
-                                            if (get_option("wp_impressum_register") == $idx) {
-                                                $selected = "selected=selected";
-                                            } else {
-                                                $selected = "";
-                                            }
-                                            ?>
-                                            <option value="<?= $idx ?>" <?= $selected ?>><?= $registerName ?></option>
-                                            <?php
-                                            $idx++;
-                                        }
-
-                                        ?>
-                                    </select>
-                                </td>
-                            </tr>
-
-                            <tr valign="top">
-                                <th scope="row" colspan="2"><b>Registernummer</b></th>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <input type="text" name="wp_impressum_registenr" title="Registernummer"
-                                           style="width: 340px"
-                                           value="<?= get_option("wp_impressum_registenr") ?>">
-                                </td>
-                            </tr>
-                        </table>
-                        <?= submit_button("Nächster Schritt") ?>
-                    </form>
-                    <?php
-
-                    break;
-
-                case 5:
-                    $this->changeReferrer(6);
-                    $this->wpimpressum_progress_bar(5, $totalQuestions);
-                    ?>
-                    <form
-                        action="<?= $confLink ?>"
-                        method="post">
-
-                        <?php settings_fields('wp-impressum-conf_5'); ?>
-                        <?php do_settings_sections('wp-impressum-conf_5'); ?>
-
-                        <table class="form-table">
-                            <tr valign="top">
-                                <th scope="row" colspan="2"><b>Reglementierter Beruf</b></th>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <input type="text" name="wp_impressum_regulated_profession"
-                                           title="Regulated profession"
-                                           style="width: 340px"
-                                           value="<?= get_option("wp_impressum_regulated_profession") ?>"><br>
-                                    <small>Gesetzliche Berufsbezeichnung</small>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <input type="text" name="wp_impressum_state" title="State"
-                                           style="width: 340px" value="<?= get_option("wp_impressum_state") ?>"><br>
-                                    <small>Staat, in dem die Berufsbezeichnung verliehen wurde</small>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <input type="text" name="wp_impressum_state_rules" title="State rules"
-                                           style="width: 340px"
-                                           value="<?= get_option("wp_impressum_state_rules") ?>"><br>
-                                    <small>Berfusrechtliche Regelungen (Bezeichnung)</small>
-                                </td>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <input type="text" name="wp_impressum_chamber" title="Chamber"
-                                           style="width: 340px" value="<?= get_option("wp_impressum_chamber") ?>"><br>
-                                    <small>Kammer, der Sie angehören</small>
-                                </td>
-                            </tr>
-                        </table>
-                        <?= submit_button("Nächster Schritt") ?>
-                    </form>
-                    <?php
-
-                    break;
-
-                case 6:
-                    $this->changeReferrer(7);
-                    $this->wpimpressum_progress_bar(6, $totalQuestions);
-
-                    ?>
-                    <form
-                        action="<?= $confLink ?>"
-                        method="post">
-
-                        <?php settings_fields('wp-impressum-conf_6'); ?>
-                        <?php do_settings_sections('wp-impressum-conf_6'); ?>
-
-                        <table class="form-table">
-                            <tr valign="top">
-                                <th scope="row" colspan="2"><b>Bildquellen</b></th>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <textarea name="wp_impressum_image_source"
-                                              style="width: 340px; height: 225px;"><?= get_option("wp_impressum_image_source") ?></textarea><br>
-                                    <small>z.B. Max Mustermann, http://www.fotolia.com</small>
-                                </td>
-                            </tr>
-
-                            <tr valign="top">
-                                <th scope="row" colspan="2"><b>Verantwortliche(r) für journalistisch-redaktionelle
-                                        Inhalte</b></th>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <textarea name="wp_impressum_responsible_persons"
-                                              style="width: 340px; height: 225px;"><?= get_option("wp_impressum_responsible_persons") ?></textarea><br>
-                                    <small>Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die
-                                        Verantwortungen entsprechend mit angeben.
-                                    </small>
-                                </td>
-                            </tr>
-
-                            <tr valign="top">
-                                <th scope="row" colspan="2"><b>Behördliche Zuslassung</b></th>
-                            </tr>
-                            <tr valign="top">
-                                <td colspan="2">
-                                    <textarea name="wp_impressum_responsible_chamber"
-                                              style="width: 340px; height: 225px;"><?= get_option("wp_impressum_responsible_chamber") ?></textarea><br>
-                                    <small>Zuständige Aufsichtsbehörde</small>
-                                </td>
-                            </tr>
-                        </table>
-                        <?= submit_button("Nächster Schritt") ?>
-                    </form>
-                    <?php
-
-                    break;
-
-                case 7:
-
-                    $this->wpimpressum_progress_bar(7, $totalQuestions);
-
-                    echo _e("Ihr Impressum ist fertig konfiguriert.");
-
-                    break;
-                default:
-                    $this->wpimpressum_config_view();
-                    break;
-            }
+                <tr valign="top">
+                    <th scope="row" colspan="2"><b>Verantwortliche(r) für journalistisch-redaktionelle
+                            Inhalte</b></th>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <textarea name="wp_impressum_responsible_persons"
+                                  style="width: 340px; height: 225px;"><?= get_option("wp_impressum_responsible_persons") ?></textarea><br>
+                        <small>Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die
+                            Verantwortungen entsprechend mit angeben.
+                        </small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row" colspan="2"><b>Behördliche Zuslassung</b></th>
+                </tr>
+                <tr valign="top">
+                    <td colspan="2">
+                        <textarea name="wp_impressum_responsible_chamber"
+                                  style="width: 340px; height: 225px;"><?= get_option("wp_impressum_responsible_chamber") ?></textarea><br>
+                        <small>Zuständige Aufsichtsbehörde</small>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <a href="options-general.php?page=<?=WPImpressumConfig::getInstance()->wpimpressum_getSlug()?>">
+                            <input type="button" class="button button-secondary" value="<?=_e("Zurück zu den Einstellungen")?>" style="margin-top: 5px">
+                        </a>
+                    </td>
+                    <td>
+                        <?=submit_button(__("Daten Speichern"))?>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        <?php
         } else {
             $this->wpimpressum_config_view();
         }
     }
 
-    /**
-     * @param $opt_name
-     */
-    private function wpimpressum_opt_update($opt_name, $value)
-    {
-        if (get_option($opt_name) === false) {
-            add_option($opt_name, $value);
-        } else {
-            update_option($opt_name, $value);
-        }
-    }
-
     private function wpimpressum_register_settings()
     {
-        register_setting("wp-impressum-conf_1", "wp_impressum_person");
+        register_setting("wp-impressum-conf", "wp_impressum_person");
 
-        register_setting("wp-impressum-conf_2", "wp_impressum_form_of_organization");
-        register_setting("wp-impressum-conf_2", "wp_impressum_name_company");
-        register_setting("wp-impressum-conf_2", "wp_impressum_address");
-        register_setting("wp-impressum-conf_2", "wp_impressum_address_extra");
-        register_setting("wp-impressum-conf_2", "wp_impressum_place");
-        register_setting("wp-impressum-conf_2", "wp_impressum_zip");
-        register_setting("wp-impressum-conf_2", "wp_impressum_country");
-        register_setting("wp-impressum-conf_2", "wp_impressum_fax");
-        register_setting("wp-impressum-conf_2", "wp_impressum_email");
-        register_setting("wp-impressum-conf_2", "wp_impressum_phone");
+        register_setting("wp-impressum-conf", "wp_impressum_form_of_organization");
+        register_setting("wp-impressum-conf", "wp_impressum_name_company");
+        register_setting("wp-impressum-conf", "wp_impressum_address");
+        register_setting("wp-impressum-conf", "wp_impressum_address_extra");
+        register_setting("wp-impressum-conf", "wp_impressum_place");
+        register_setting("wp-impressum-conf", "wp_impressum_zip");
+        register_setting("wp-impressum-conf", "wp_impressum_country");
+        register_setting("wp-impressum-conf", "wp_impressum_fax");
+        register_setting("wp-impressum-conf", "wp_impressum_email");
+        register_setting("wp-impressum-conf", "wp_impressum_phone");
 
-        register_setting("wp-impressum-conf_3", "wp_impressum_authorized_person");
+        register_setting("wp-impressum-conf", "wp_impressum_authorized_person");
 
-        register_setting("wp-impressum-conf_4", "wp_impressum_vat");
-        register_setting("wp-impressum-conf_4", "wp_impressum_register");
-        register_setting("wp-impressum-conf_4", "wp_impressum_registenr");
+        register_setting("wp-impressum-conf", "wp_impressum_vat");
+        register_setting("wp-impressum-conf", "wp_impressum_register");
+        register_setting("wp-impressum-conf", "wp_impressum_registenr");
 
-        register_setting("wp-impressum-conf_5", "wp_impressum_regulated_profession");
-        register_setting("wp-impressum-conf_5", "wp_impressum_state");
-        register_setting("wp-impressum-conf_5", "wp_impressum_state_rules");
-        register_setting("wp-impressum-conf_5", "wp_impressum_chamber");
+        register_setting("wp-impressum-conf", "wp_impressum_regulated_profession");
+        register_setting("wp-impressum-conf", "wp_impressum_state");
+        register_setting("wp-impressum-conf", "wp_impressum_state_rules");
+        register_setting("wp-impressum-conf", "wp_impressum_chamber");
 
-        register_setting("wp-impressum-conf_6", "wp_impressum_image_source");
-        register_setting("wp-impressum-conf_6", "wp_impressum_responsible_chamber");
-        register_setting("wp-impressum-conf_6", "wp_impressum_responsible_persons");
+        register_setting("wp-impressum-conf", "wp_impressum_image_source");
+        register_setting("wp-impressum-conf", "wp_impressum_responsible_chamber");
+        register_setting("wp-impressum-conf", "wp_impressum_responsible_persons");
 
         register_setting("wp-impressum-policy_group", "wp_impressum_disclaimer");
         register_setting("wp-impressum-policy_group", "wp_impressum_set_impressum");
@@ -824,17 +722,6 @@ class WPImpressumConfig
         $wpimpressum_settings[] = $policy_google_adsense = mysql_real_escape_string($_POST['policy_google_adsense']);
         $wpimpressum_settings[] = $policy_google_plus = mysql_real_escape_string($_POST['policy_google_plus']);
         $wpimpressum_settings[] = $policy_google_twitter = mysql_real_escape_string($_POST['policy_twitter']);
-
-        $pageArray = get_pages();
-
-        // update impressum if refreshed
-        if($_REQUEST['settings-updated']) {
-            $_page = get_option("wp_impressum_page");
-            if($_page != "none" && !empty($_page)) {
-                $wpi = new WPImpressum();
-                $wpi->wpimpressum_update_impressum();
-            }
-        }
 
         ?>
         <form action="options-general.php">
@@ -875,28 +762,7 @@ class WPImpressumConfig
                     </td>
                 </tr>
                 <tr>
-                    <th><?=_e("Wähle eine Seite für das Impressum")?></th>
-                    <td>
-                        <select name="wp_impressum_page">
-                            <option value="none"><?=_e("Keine (Ausgeschaltet)")?></option>
-                            <?php
-                            foreach($pageArray as $page) {
-                                if($page->ID == get_option("wp_impressum_page")) {
-                                    $is_selected = "selected=selected";
-                                } else {
-                                    $is_selected = "";
-                                }
-                                ?>
-                                <option value="<?=$page->ID?>" <?=$is_selected?>><?=$page->post_title?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
-                        <?=_e("<b>Achtung:</b> Die Seite wird mit dem Impressum überschrieben!")?>
-                    </td>
-                </tr>
-                <tr>
-                    <th colspan="2"><h2><?=_e("Impressum Inhalt Einstellungen")?></h2></th>
+                    <th colspan="2"><h2><?= _e("Impressum Inhalt Einstellungen") ?></h2></th>
                 </tr>
                 <tr>
                     <th>
@@ -1016,18 +882,4 @@ class WPImpressumConfig
         </table>
     <?php
     }
-
-    private function changeReferrer($step)
-    {
-        ?>
-        <script type="text/javascript">
-            setTimeout(function() {
-                jQuery(document).ready(function() {
-                    jQuery("input[name='_wp_http_referer']").val("<?=admin_url("options-general.php")?>?page=<?=$this->wpimpressum_getSlug()?>&setup=true&step=<?=$step?>");
-                });
-            }, 1000);
-        </script>
-    <?php
-    }
-
 }

@@ -26,18 +26,26 @@ No questions asked yet.
 
 == Changelog ==
 
+= 0.2.0 =
+- Onboarding process added.
+- General policy edited.
+- New Form design, all in one page. Therefore removed some functions and stuff.
+- Using Shortcode [wp_impressum] instead of choosing page.
+  User could understood it false and might think to edit the impresusm in the page.
+- Added Versions Number to Head
+
 = 0.1.2 hotfix =
-Bug caused to still publish impressum even if was disabled.
+- Bug caused to still publish impressum even if was disabled.
 
 = 0.1.1 =
-Shortcode added.
-Overwritting choosen page with impressum.
-Only updating impressum on click of refresh.
-Extra field added for impressum.
-Some fixes
+- Shortcode added.
+- Overwritting choosen page with impressum.
+- Only updating impressum on click of refresh.
+- Extra field added for impressum.
+- Some fixes
 
 = 0.1.0 =
-First release. Half way working Impressum Generator. Only german supported.
+- First release. Half way working Impressum Generator. Only german supported.
 
 == Upgrade Notice ==
 
