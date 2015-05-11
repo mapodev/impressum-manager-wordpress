@@ -318,14 +318,6 @@ class WP_Impressum_Config
     <?php
     }
 
-    private function wpimpressum_notice($notice_text) {
-        ?>
-        <div class="updated">
-            <p><?=translate( $notice_text ); ?></p>
-        </div>
-    <?php
-    }
-
     public function wpimpressum_show_setup()
     {
         $onboarded = get_option("wpimpresusm_onboarding_conf");
@@ -336,18 +328,20 @@ class WP_Impressum_Config
         } else {
             add_option("wpimpresusm_onboarding_conf", "onboarded");
         }
-
         update_option("wpimpresusm_onboarding_conf", "onboarded");
 
-        if($enter_config) {
-            $this->wpimpressum_notice("Konfigureiren Sie einmalig ihr Impressum.");
-        }
-
         if (array_key_exists("setup", $_REQUEST) || $enter_config) {
+            // dismiss admin notice
+            if(get_option("wp_impressum_notice") === false) {
+                add_option("wp_impressum_notice", "dismissed");
+            } else {
+                update_option("wp_impressum_notice", "dismissed");
+            }
+
             ?>
             <br>
             <a href="options-general.php?page=<?=WP_Impressum_Config::getInstance()->wpimpressum_getSlug()?>">
-                <input type="button" class="button button-secondary" value="<?=_e("Zurück zu den Einstellungen")?>">
+                <input type="button" class="button button-secondary" value="<?=__("Zurück zu den Einstellungen", $this->slug)?>">
             </a>
 
             <form action="options.php" method="post">
@@ -661,7 +655,7 @@ class WP_Impressum_Config
                 <tr>
                     <td>
                         <a href="options-general.php?page=<?=WP_Impressum_Config::getInstance()->wpimpressum_getSlug()?>">
-                            <input type="button" class="button button-secondary" value="<?=_e("Zurück zu den Einstellungen")?>" style="margin-top: 5px">
+                            <input type="button" class="button button-secondary" value="<?=__("Zurück zu den Einstellungen", $this->slug)?>" style="margin-top: 5px">
                         </a>
                     </td>
                     <td>
@@ -743,7 +737,7 @@ class WP_Impressum_Config
                         Impressum Konfiguration
                     </th>
                     <td>
-                        <input class="button" type="submit" value="<?= _e('Impressum konfigurieren') ?>">
+                        <input class="button" type="submit" value="<?= __('Impressum konfigurieren', $this->slug) ?>">
                     </td>
                 </tr>
                 </tbody>
@@ -766,51 +760,51 @@ class WP_Impressum_Config
                             ?>>Deutsch
                             </option>
                         </select><br><br>
-                        <?= _e("Wähle die Sprache für dein Impressum") ?>
+                        <?= __("Wähle die Sprache für dein Impressum", $this->slug) ?>
                     </td>
                 </tr>
                 <tr>
-                    <th colspan="2"><h2><?= _e("Impressum Inhalt Einstellungen") ?></h2></th>
+                    <th colspan="2"><h2><?= __("Impressum Inhalt Einstellungen", $this->slug) ?></h2></th>
                 </tr>
                 <tr>
                     <th>
-                        <?= _e("Haftungsausschluss (Disclaimer)") ?>
+                        <?= __("Haftungsausschluss (Disclaimer)", $this->slug) ?>
                     </th>
                     <td>
                         <label for="wp_impressum_disclaimer">
                             <input id="wp_impressum_disclaimer" type="checkbox"
                                    name="wp_impressum_disclaimer" <?= $this->isChecked("wp_impressum_disclaimer") ?>>
-                            <?= _e("Füge einen Disclaimer in dein Impressum ein.") ?>
+                            <?= __("Füge einen Disclaimer in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <?= _e("Allgemine Datenschutzerklärung") ?>
+                        <?= __("Allgemine Datenschutzerklärung", $this->slug) ?>
                     </th>
                     <td>
                         <label for="wp_impressum_general_privacy_policy">
                             <input id="wp_impressum_general_privacy_policy" type="checkbox"
                                    name="wp_impressum_general_privacy_policy" <?= $this->isChecked("wp_impressum_general_privacy_policy") ?>>
-                            <?= _e("Füge eine allgemeine Datenschutzerklärung in dein Impressum ein.") ?>
+                            <?= __("Füge eine allgemeine Datenschutzerklärung in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <?= _e("Datenschutzerklärung für Facebook") ?>
+                        <?= __("Datenschutzerklärung für Facebook", $this->slug) ?>
                     </th>
                     <td>
                         <label for="wp_impressum_policy_facebook">
                             <input id="wp_impressum_policy_facebook" type="checkbox"
                                    name="wp_impressum_policy_facebook" <?= $this->isChecked("wp_impressum_policy_facebook") ?>>
-                            <?= _e("Füge eine Datenschutzerklärung für die Nutzung von Facebook Elementen in dein Impressum ein.") ?>
+                            <?= __("Füge eine Datenschutzerklärung für die Nutzung von Facebook Elementen in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <?= _e("Datenschutzerklärung für Google") ?>
+                        <?= __("Datenschutzerklärung für Google", $this->slug) ?>
                     </th>
                     <td>
                         <label for="wp_impressum_policy_google_analytics">
@@ -822,13 +816,13 @@ class WP_Impressum_Config
                         <label for="wp_impressum_policy_google_adsense">
                             <input id="wp_impressum_policy_google_adsense" type="checkbox"
                                    name="wp_impressum_policy_google_adsense" <?= $this->isChecked("wp_impressum_policy_google_adsense") ?>>
-                            <?= _e("Füge eine Datenschutzerklärung für die Nutzung von <b>Google Adsense</b> in dein Impressum ein.") ?>
+                            <?= __("Füge eine Datenschutzerklärung für die Nutzung von <b>Google Adsense</b> in dein Impressum ein.", $this->slug) ?>
                         </label>
                         <br><br>
                         <label for="wp_impressum_policy_google_plus">
                             <input id="wp_impressum_policy_google_plus" type="checkbox"
                                    name="wp_impressum_policy_google_plus" <?= $this->isChecked("wp_impressum_policy_google_plus") ?>>
-                            <?= _e("Füge eine Datenschutzerklärung für die Nutzung von <b>Google +1</b> in dein Impressum ein.") ?>
+                            <?= __("Füge eine Datenschutzerklärung für die Nutzung von <b>Google +1</b> in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
                 </tr>
@@ -840,13 +834,13 @@ class WP_Impressum_Config
                         <label for="wp_impressum_policy_twitter">
                             <input id="wp_impressum_policy_twitter" type="checkbox"
                                    name="wp_impressum_policy_twitter" <?= $this->isChecked("wp_impressum_policy_twitter") ?>>
-                            <?= _e("Füge eine Datenschutzerklärung für die Nutzung von Twitter Elementen in dein Impressum ein.") ?>
+                            <?= __("Füge eine Datenschutzerklärung für die Nutzung von Twitter Elementen in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
                 </tr>
                 <tr>
                     <th>
-                        <?= _e("Zusatzfeld") ?>
+                        <?=__("Zusatzfeld", $this->slug) ?>
                     </th>
                     <td>
                         <textarea style="width:500px; height: 200px;" name="wp_impressum_extra_field"></textarea>
@@ -854,7 +848,7 @@ class WP_Impressum_Config
                 </tr>
                 </tbody>
             </table>
-            <?php submit_button("Impressum aktualisieren"); ?>
+            <?php submit_button(__("Impressum aktualisieren")); ?>
         </form>
     <?php
 
