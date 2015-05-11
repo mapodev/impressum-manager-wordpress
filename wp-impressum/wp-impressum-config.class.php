@@ -255,6 +255,14 @@ class WP_Impressum_Config
         $this->version = "0.2.0";
         $this->slug = "wp-impressum";
 
+        if(array_key_exists("dismiss", $_REQUEST)) {
+            if(get_option("wp_impressum_notice") === false) {
+                add_option("wp_impressum_notice", "dismissed");
+            } else {
+                update_option("wp_impressum_notice", "dismissed");
+            }
+        }
+
         if (is_admin()) {
             add_action('admin_init', array($this, 'wpimpressum_admin_init'));
             add_action('admin_menu', array($this, 'wpimpressum_addmenu'));

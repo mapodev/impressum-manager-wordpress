@@ -30,6 +30,23 @@ if (!defined('WPINC')) {
     die;
 }
 
+add_action('admin_notices', 'wpimpressum_installation_notice');
+
+function wpimpressum_installation_notice()
+{
+    $request = $_SERVER['REQUEST_URI'];
+    if(strpos($request, WP_Impressum_Config::getInstance()->wpimpressum_getSlug()) !== false) {
+        // indside impressum
+    } else {
+        if(get_option("wp_impressum_notice") === false) {
+            $class = "error";
+            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . WP_Impressum_Config::getInstance()->wpimpressum_getSlug() . "&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
+            echo "<div class=\"$class\"> <p>$message</p></div>";
+        }
+    }
+}
+
+
 require_once(plugin_dir_path(__FILE__) . 'wp-impressum/wp-impressum.class.php');
 
 function activate_wp_impressum_plugin()
