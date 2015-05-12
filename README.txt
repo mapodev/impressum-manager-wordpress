@@ -26,6 +26,12 @@ No questions asked yet.
 
 == Changelog ==
 
+= 0.2.1 =
+- Translation files added
+- Some refactor
+- admin_notces added
+- Impressum config interface semi finished
+
 = 0.2.0 =
 - Onboarding process added.
 - General policy edited.
