@@ -370,6 +370,7 @@ class WP_Impressum_Config
             $enter_config = false;
         } else {
             add_option("wpimpresusm_onboarding_conf", "onboarded");
+            $_GET['step'] = 1;
         }
         update_option("wpimpresusm_onboarding_conf", "onboarded");
 
