@@ -338,9 +338,7 @@ class WP_Impressum_Config
                 update_option("wp_impressum_notice", "dismissed");
             }
 
-            ?><br>
-            <img src="http://localhost/wordpress/wp-content/plugins/wp-impressum/includes/email-as-image.php?text=meine.mail@post.de">
-
+            ?>
             <br>
             <a href="options-general.php?page=<?=WP_Impressum_Config::getInstance()->wpimpressum_getSlug()?>">
                 <input type="button" class="button button-secondary" value="<?=__("Zurück zu den Einstellungen", $this->slug)?>">

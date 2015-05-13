@@ -67,7 +67,7 @@ class WPImpressum
 
         // standard language, can be changed later on
         if (empty($lang)) $lang = "de";
-        if(strpos($lang, "no_land_choosen") !== false) $lang = "de";
+        if (strpos($lang, "no_land_choosen") !== false) $lang = "de";
 
         $name = get_option("wp_impressum_name_company");
         $address = get_option("wp_impressum_address");
@@ -115,7 +115,7 @@ class WPImpressum
 
         $extra_field = get_option("wp_impressum_extra_field");
 
-        if(!empty($extra_field)) {
+        if (!empty($extra_field)) {
             $impressum .= $extra_field;
         }
 
@@ -128,11 +128,11 @@ class WPImpressum
     private function wpimpressum_return_address($lang, $name, $adress, $adress_extra, $place, $zip)
     {
         $result = self::$_format_address;
-        if(!empty($name)) $result .= $name."<br>";
-        if(!empty($adress)) $result .= $adress."<br>";
-        if(!empty($adress_extra)) $result .= $adress_extra."<br>";
-        if(!empty($zip)) $result .= $zip." ";
-        if(!empty($place)) $result .= $place."<br>";
+        if (!empty($name)) $result .= $name . "<br>";
+        if (!empty($adress)) $result .= $adress . "<br>";
+        if (!empty($adress_extra)) $result .= $adress_extra . "<br>";
+        if (!empty($zip)) $result .= $zip . " ";
+        if (!empty($place)) $result .= $place . "<br>";
         return $result;
     }
 
@@ -147,7 +147,12 @@ class WPImpressum
         $result .= "<table><tbody>";
         if (!empty($telefon)) $result .= sprintf(self::$_format_contact_telephone, $telefon);
         if (!empty($fax)) $result .= sprintf(self::$_format_contact_telefax, $fax);
-        if (!empty($email)) $result .= sprintf(self::$_format_contact_email, $email);
+
+        if ($email) {
+            $image = "<img src='" . plugin_dir_url(__FILE__) . "../includes/email-as-image.php?text=" . $email . "'>";
+        }
+
+        if (!empty($email)) $result .= sprintf(self::$_format_contact_email, $image);
         $result .= "</tbody></table>";
         return $result;
     }
