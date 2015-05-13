@@ -357,16 +357,18 @@ class WP_Impressum_Config
                     ?>
 
                     <script type="text/javascript">
-                        jQuery(document).ready(function () {
-                            jQuery("#person_1").click(function () {
-                                jQuery(".rechtsform").fadeOut();
-                                jQuery("#full_name").text("<?=__("Vollständiger Name")?>");
+                        (function($) {
+                            $(document).ready(function () {
+                                $("#person_1").click(function () {
+                                    $(".rechtsform").fadeOut();
+                                    $("#full_name").text("<?=__("Vollständiger Name")?>");
+                                });
+                                $("#person_2").click(function () {
+                                    $(".rechtsform").fadeIn();
+                                    $("#full_name").text("<?=__("Firmenname inkl. Rechtsform")?>");
+                                })
                             });
-                            jQuery("#person_2").click(function () {
-                                jQuery(".rechtsform").fadeIn();
-                                jQuery("#full_name").text("<?=__("Firmenname inkl. Rechtsform")?>");
-                            })
-                        });
+                        }(jQuery));
                     </script>
                     <br>
                     <a href="<?= $option_url ?>">
@@ -586,6 +588,10 @@ class WP_Impressum_Config
                     <script type="text/javascript">
                         (function ($) {
                             $(document).ready(function () {
+                                $("#press_content_textarea").hide();
+                                $("#allowness_textarea").hide();
+                                $(".hide_regulated_profession").hide();
+
                                 $("#press_content").click(function () {
                                     if ($(this).attr("checked")) {
                                         $("#press_content_textarea").show();
@@ -599,6 +605,14 @@ class WP_Impressum_Config
                                         $("#allowness_textarea").show();
                                     } else {
                                         $("#allowness_textarea").hide();
+                                    }
+                                });
+
+                                $("#regulated_profession").click(function() {
+                                    if($(this).attr("checked")) {
+                                        $(".hide_regulated_profession").show();
+                                    } else {
+                                        $(".hide_regulated_profession").hide();
                                     }
                                 });
                             });
@@ -677,9 +691,9 @@ class WP_Impressum_Config
                         </table>
                         <table class="form-table">
                             <tr valign="top">
-                                <th scope="row" colspan="2"><b>Reglementierter Beruf</b></th>
+                                <th scope="row" colspan="2"><input type="checkbox" id="regulated_profession" name="wp_impressum_regulated_profession_checked"><label for="regulated_profession"><b>Reglementierter Beruf</b></label></th>
                             </tr>
-                            <tr valign="top">
+                            <tr valign="top" class="hide_regulated_profession">
                                 <td colspan="2">
                                     <input type="text" name="wp_impressum_regulated_profession"
                                            title="Regulated profession"
@@ -688,14 +702,14 @@ class WP_Impressum_Config
                                     <small>Gesetzliche Berufsbezeichnung</small>
                                 </td>
                             </tr>
-                            <tr valign="top">
+                            <tr valign="top" class="hide_regulated_profession">
                                 <td colspan="2">
                                     <input type="text" name="wp_impressum_state" title="State"
                                            style="width: 340px" value="<?= get_option("wp_impressum_state") ?>"><br>
                                     <small>Staat, in dem die Berufsbezeichnung verliehen wurde</small>
                                 </td>
                             </tr>
-                            <tr valign="top">
+                            <tr valign="top" class="hide_regulated_profession">
                                 <td colspan="2">
                                     <input type="text" name="wp_impressum_state_rules" title="State rules"
                                            style="width: 340px"
@@ -703,7 +717,7 @@ class WP_Impressum_Config
                                     <small>Berfusrechtliche Regelungen (Bezeichnung)</small>
                                 </td>
                             </tr>
-                            <tr valign="top">
+                            <tr valign="top" class="hide_regulated_profession">
                                 <td colspan="2">
                                     <input type="text" name="wp_impressum_chamber" title="Chamber"
                                            style="width: 340px" value="<?= get_option("wp_impressum_chamber") ?>"><br>
@@ -711,8 +725,8 @@ class WP_Impressum_Config
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <th scope="row" colspan="2"><input type="checkbox" id="allowness" name="wp_impressum_allowness" checked="checked"> <b>Behördliche
-                                        Zuslassung</b></th>
+                                <th scope="row" colspan="2"><input type="checkbox" id="allowness" name="wp_impressum_allowness"><label for="allowness"><b>Behördliche
+                                        Zuslassung</b></label></th>
                             </tr>
                             <tr valign="top" id="allowness_textarea">
                                 <td colspan="2">
@@ -735,8 +749,7 @@ class WP_Impressum_Config
                             </tr>
 
                             <tr valign="top">
-                                <th scope="row" colspan="2"><input type="checkbox" id="press_content" name="wp_impressum_press_content" checked="checked">
-                                    <b>journalistisch-redaktionelle Inhalte</b></th>
+                                <th scope="row" colspan="2"><input type="checkbox" id="press_content" name="wp_impressum_press_content"><label for="press_content"><b>journalistisch-redaktionelle Inhalte</b></label></th>
                             </tr>
                             <tr valign="top" id="press_content_textarea">
                                 <td colspan="2">
@@ -790,6 +803,7 @@ class WP_Impressum_Config
                         $this->wpimpressum_save_option("wp_impressum_responsible_persons", $_POST["wp_impressum_responsible_persons"]);
                         $this->wpimpressum_save_option("wp_impressum_press_content", $_POST["wp_impressum_press_content"]);
                         $this->wpimpressum_save_option("wp_impressum_allowness", $_POST["wp_impressum_allowness"]);
+                        $this->wpimpressum_save_option("wp_impressum_regulated_profession_checked", $_POST['wp_impressum_regulated_profession_checked']);
                     }
 
                     ?>
@@ -980,7 +994,7 @@ class WP_Impressum_Config
             $this->wpimpressum_save_option("wp_impressum_policy_google_adsense", $policy_google_adsense);
             $this->wpimpressum_save_option("wp_impressum_policy_google_plus", $policy_google_plus);
             $this->wpimpressum_save_option("wp_impressum_policy_twitter", $policy_google_twitter);
-            $this->wpimpressum_save_option("wp_impressum_extra_field", $policy_google_twitter);
+            $this->wpimpressum_save_option("wp_impressum_extra_field", $extra_field);
         }
 
         ?>
