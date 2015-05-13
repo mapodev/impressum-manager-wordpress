@@ -184,10 +184,12 @@ class WPImpressum
                 break;
         }
 
+        if((empty($register) || $register == 1) && empty($registernr) && empty($register_chamber)) return "";
+
         $result = self::$_format_register;
         $result .= "<p>";
 
-        if (!empty($register)) $result .= sprintf(self::$_format_register_registered_in, $register_registered_in);
+        if (!empty($register) && $register != 1) $result .= sprintf(self::$_format_register_registered_in, $register_registered_in);
         if (!empty($registernr)) $result .= sprintf(self::$_format_register_registernr, $registernr);
         if (!empty($register_chamber)) $result .= sprintf(self::$_format_register_chamber, $register_chamber);
         $result .= "</p>";
