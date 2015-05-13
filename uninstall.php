@@ -26,9 +26,9 @@
  */
 
 // If uninstall not called from WordPress, then exit.
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	exit;
-}
+//if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+//    exit;
+//}
 
 delete_option("wp_impressum_person");
 delete_option("wp_impressum_form_of_organization");
@@ -58,29 +58,17 @@ delete_option("wp_impressum_language_of_impressum");
 delete_option("wp_impressum_general_privacy_policy");
 delete_option("wp_impressum_policy_facebook");
 delete_option("wp_impressum_policy_google_analytics");
+delete_option("wp_impressum_regulated_profession_checked");
+delete_option("wp_impressum_allowness");
+delete_option("wp_impressum_press_content");
+delete_option("wp_impressum_disabled");
+delete_option("wp_impressum_notice");
+delete_option("wp_impressum_extra_field");
+delete_option("wp_impressum_page");
+delete_option("wp_impressum_id");
+delete_option("wp_impressum_policy_google_plus");
+delete_option("wp_impressum_policy_twitter");
 
-unregister_setting("wp-impressum-conf", "wp_impressum_person");
-unregister_setting("wp-impressum-conf", "wp_impressum_form_of_organization");
-unregister_setting("wp-impressum-conf", "wp_impressum_name_company");
-unregister_setting("wp-impressum-conf", "wp_impressum_address");
-unregister_setting("wp-impressum-conf", "wp_impressum_address_extra");
-unregister_setting("wp-impressum-conf", "wp_impressum_place");
-unregister_setting("wp-impressum-conf", "wp_impressum_zip");
-unregister_setting("wp-impressum-conf", "wp_impressum_country");
-unregister_setting("wp-impressum-conf", "wp_impressum_fax");
-unregister_setting("wp-impressum-conf", "wp_impressum_email");
-unregister_setting("wp-impressum-conf", "wp_impressum_phone");
-unregister_setting("wp-impressum-conf", "wp_impressum_authorized_person");
-unregister_setting("wp-impressum-conf", "wp_impressum_vat");
-unregister_setting("wp-impressum-conf", "wp_impressum_register");
-unregister_setting("wp-impressum-conf", "wp_impressum_registenr");
-unregister_setting("wp-impressum-conf", "wp_impressum_regulated_profession");
-unregister_setting("wp-impressum-conf", "wp_impressum_state");
-unregister_setting("wp-impressum-conf", "wp_impressum_state_rules");
-unregister_setting("wp-impressum-conf", "wp_impressum_chamber");
-unregister_setting("wp-impressum-conf", "wp_impressum_image_source");
-unregister_setting("wp-impressum-conf", "wp_impressum_responsible_chamber");
-unregister_setting("wp-impressum-conf", "wp_impressum_responsible_persons");
 unregister_setting("wp-impressum-policy_group", "wp_impressum_disclaimer");
 unregister_setting("wp-impressum-policy_group", "wp_impressum_set_impressum");
 unregister_setting("wp-impressum-policy_group", "wp_impressum_language_of_impressum");

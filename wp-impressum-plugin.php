@@ -38,9 +38,9 @@ function wpimpressum_installation_notice()
     if(strpos($request, WP_Impressum_Config::getInstance()->wpimpressum_getSlug()) !== false) {
         // indside impressum
     } else {
-        if(get_option("wp_impressum_notice") === false) {
+        if(get_option("wp_impressum_notice") === false && get_option("wp_impressum_name_company") === false) {
             $class = "error";
-            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . WP_Impressum_Config::getInstance()->wpimpressum_getSlug() . "&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
+            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . WP_Impressum_Config::getInstance()->wpimpressum_getSlug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
             echo "<div class=\"$class\"> <p>$message</p></div>";
         }
     }

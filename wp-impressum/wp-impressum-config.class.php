@@ -266,7 +266,19 @@ class WP_Impressum_Config
         if (is_admin()) {
             add_action('admin_init', array($this, 'wpimpressum_admin_init'));
             add_action('admin_menu', array($this, 'wpimpressum_addmenu'));
+            add_action('wp_ajax_wp_impressum_delete_options', array($this, 'wp_impressum_delete_callback'));
         }
+    }
+
+    /**
+     * ajax response for DEV options
+     * TODO: Delete before release to Wordpress
+     */
+    function wp_impressum_delete_callback()
+    {
+        echo "OK";
+        require_once plugin_dir_path(__FILE__) . "../uninstall.php";
+        die();
     }
 
     public function wpimpressum_admin_init()
@@ -310,9 +322,29 @@ class WP_Impressum_Config
     public function wpimpressum_show()
     {
         ?>
+        <script>
+            (function ($) {
+                $(document).ready(function () {
+                    $("#delete_options").click(function () {
+                        var data = {
+                            'action': 'wp_impressum_delete_options',
+                            'delete': true
+                        };
+
+                        console.log(data);
+
+                        $.post(ajaxurl, data, function (response) {
+                            console.log(respnse);
+                        });
+                    });
+                });
+            }(jQuery));
+        </script>
         <div class="wrap">
             <h2>WP Impressum</h2>
             <small>Version: <?= $this->version ?></small>
+            |
+            <small><a href="javascript:void(0);" id="delete_options">Delete options</a></small>
             <?php
             $this->wpimpressum_show_setup();
             ?>
@@ -357,7 +389,7 @@ class WP_Impressum_Config
                     ?>
 
                     <script type="text/javascript">
-                        (function($) {
+                        (function ($) {
                             $(document).ready(function () {
                                 $("#person_1").click(function () {
                                     $(".rechtsform").fadeOut();
@@ -608,8 +640,8 @@ class WP_Impressum_Config
                                     }
                                 });
 
-                                $("#regulated_profession").click(function() {
-                                    if($(this).attr("checked")) {
+                                $("#regulated_profession").click(function () {
+                                    if ($(this).attr("checked")) {
                                         $(".hide_regulated_profession").show();
                                     } else {
                                         $(".hide_regulated_profession").hide();
@@ -691,7 +723,9 @@ class WP_Impressum_Config
                         </table>
                         <table class="form-table">
                             <tr valign="top">
-                                <th scope="row" colspan="2"><input type="checkbox" id="regulated_profession" name="wp_impressum_regulated_profession_checked"><label for="regulated_profession"><b>Reglementierter Beruf</b></label></th>
+                                <th scope="row" colspan="2"><input type="checkbox" id="regulated_profession"
+                                                                   name="wp_impressum_regulated_profession_checked"><label
+                                        for="regulated_profession"><b>Reglementierter Beruf</b></label></th>
                             </tr>
                             <tr valign="top" class="hide_regulated_profession">
                                 <td colspan="2">
@@ -725,8 +759,9 @@ class WP_Impressum_Config
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <th scope="row" colspan="2"><input type="checkbox" id="allowness" name="wp_impressum_allowness"><label for="allowness"><b>Behördliche
-                                        Zuslassung</b></label></th>
+                                <th scope="row" colspan="2"><input type="checkbox" id="allowness"
+                                                                   name="wp_impressum_allowness"><label for="allowness"><b>Behördliche
+                                            Zuslassung</b></label></th>
                             </tr>
                             <tr valign="top" id="allowness_textarea">
                                 <td colspan="2">
@@ -749,7 +784,9 @@ class WP_Impressum_Config
                             </tr>
 
                             <tr valign="top">
-                                <th scope="row" colspan="2"><input type="checkbox" id="press_content" name="wp_impressum_press_content"><label for="press_content"><b>journalistisch-redaktionelle Inhalte</b></label></th>
+                                <th scope="row" colspan="2"><input type="checkbox" id="press_content"
+                                                                   name="wp_impressum_press_content"><label
+                                        for="press_content"><b>journalistisch-redaktionelle Inhalte</b></label></th>
                             </tr>
                             <tr valign="top" id="press_content_textarea">
                                 <td colspan="2">
@@ -888,7 +925,7 @@ class WP_Impressum_Config
                                 </th>
                                 <td>
                                     <textarea style="width:500px; height: 200px;"
-                                              name="wp_impressum_extra_field"></textarea>
+                                              name="wp_impressum_extra_field"><?= get_option("wp_impressum_extra_field") ?></textarea>
                                 </td>
                             </tr>
                             </tbody>
@@ -1116,7 +1153,8 @@ class WP_Impressum_Config
                         <?= __("Zusatzfeld", $this->slug) ?>
                     </th>
                     <td>
-                        <textarea style="width:500px; height: 200px;" name="wp_impressum_extra_field"><?= get_option("wp_impressum_extra_field") ?></textarea>
+                        <textarea style="width:500px; height: 200px;"
+                                  name="wp_impressum_extra_field"><?= get_option("wp_impressum_extra_field") ?></textarea>
                     </td>
                 </tr>
                 </tbody>
