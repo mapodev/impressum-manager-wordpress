@@ -107,6 +107,39 @@ class WPImpressum
         $impressum .= $this->wpimpressum_return_vat($lang, $vat);
         $impressum .= $this->wpimpressum_return_register($lang, $chamber, $registernr, $register);
 
+        $creds = array();
+        $i = 0;
+
+        $post_types = get_post_types('', 'names');
+
+        foreach ($post_types as $post_type) {
+            $args = array(
+                'post_type' =>  $post_type,
+                'numberposts' => -1,
+                'post_status' => null
+            );
+
+            $posts = get_posts($args);
+
+            foreach($posts as $post) {
+                $args = array(
+                    'post_type' => 'attachment',
+                    'numberposts' => -1,
+                    'post_status' => null,
+                    'post_parent' => $post->ID
+                );
+
+                $attachments = get_posts($args);
+                if ($attachments) {
+                    foreach ($attachments as $attachment) {
+                        $creds[$i++] = trim(strip_tags(get_post_meta($attachment->ID, 'wp_impressum_image_credential', true)));
+                    }
+                }
+            }
+        }
+
+        print_r($creds);
+
         if ($disclaimer) $impressum .= self::$_disclaimer;
 
         if ($policy_general || $policy_facebook || $policy_analytics || $policy_adsense || $policy_plus || $policy_twitter) {
@@ -184,7 +217,7 @@ class WPImpressum
                 break;
         }
 
-        if((empty($register) || $register == 1) && empty($registernr) && empty($register_chamber)) return "";
+        if ((empty($register) || $register == 1) && empty($registernr) && empty($register_chamber)) return "";
 
         $result = self::$_format_register;
         $result .= "<p>";
