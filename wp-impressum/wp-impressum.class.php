@@ -254,7 +254,7 @@ class WPImpressum
     private function wpimpressum_return_authorized_person($person) {
         $result = self::$_format_authorized_person;
         if(!empty($person)) {
-            $result .= $person;
+            $result .= nl2br($person);
         }
         return $result;
     }
