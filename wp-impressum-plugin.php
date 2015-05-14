@@ -16,7 +16,7 @@
  * Plugin Name:       WP Impressum Plugin
  * Plugin URI:        http://www.wp-impressum.com
  * Description:       WP Impressum Generator for your wordpress copy. Manages all points for creating an impressum.
- * Version:           0.2.1
+ * Version:           0.3.0
  * Author:            mapo
  * Author URI:        http://www.mapo-dev.com
  * License:           GPL-2.0+
@@ -38,9 +38,9 @@ function wpimpressum_installation_notice()
     if(strpos($request, WP_Impressum_Config::getInstance()->wpimpressum_getSlug()) !== false) {
         // indside impressum
     } else {
-        if(get_option("wp_impressum_notice") === false) {
+        if(get_option("wp_impressum_notice") === false && get_option("wp_impressum_name_company") === false) {
             $class = "error";
-            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . WP_Impressum_Config::getInstance()->wpimpressum_getSlug() . "&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
+            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . WP_Impressum_Config::getInstance()->wpimpressum_getSlug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
             echo "<div class=\"$class\"> <p>$message</p></div>";
         }
     }
@@ -91,5 +91,30 @@ function wpimpressum_goodybye()
 }
 
 register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "wpimpressum_goodybye");
+
+// Some Logic that does not to be included in the classes
+
+// Fields for credentials which will be summed up in the impressum
+function wp_impressum_field_credit( $form_fields, $post ) {
+    $form_fields['wp-impressum-image-credential'] = array(
+        'label' => __('Urheber vom Bild'),
+        'input' => 'text',
+        'value' => get_post_meta( $post->ID, 'wp_impressum_image_credential', true ),
+        'helps' => __("Name von dem Urheber für den Nachweis im Impressum"),
+    );
+
+    return $form_fields;
+}
+
+add_filter( 'attachment_fields_to_edit', 'wp_impressum_field_credit', 10, 2 );
+
+function wp_impressum_field_credit_save( $post, $attachment ) {
+    if( isset( $attachment['wp-impressum-image-credential'] ) )
+        update_post_meta( $post['ID'], 'wp_impressum_image_credential', $attachment['wp-impressum-image-credential'] );
+
+    return $post;
+}
+
+add_filter( 'attachment_fields_to_save', 'wp_impressum_field_credit_save', 10, 2 );
 
 
