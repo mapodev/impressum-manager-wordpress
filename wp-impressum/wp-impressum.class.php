@@ -19,6 +19,7 @@ class WPImpressum
     private static $_format_office;
     private static $_format_image_soruce;
     private static $_format_authorized_person;
+    private static $_format_journalistic_content;
     private static $_disclaimer;
     private static $_privacy_policy_head;
     private static $_privacy_policy_general;
@@ -48,8 +49,9 @@ class WPImpressum
         self::$_format_register_chamber = __("<br>Registergericht: %s", $domain);
         self::$_format_vat = __("<h2>Umsatzsteuer-ID:</h2><p>Umsatzsteuer-Identifikationsnummer gemäß §27 a Umsatzsteuergesetz:<br>%s</p>", $domain);
         self::$_format_office = __("<h2>Aufsichtsbehörde:</h2><p>Aufsichtsbehörde</p><p>Berufsbezeichnung: gesetzl. Berufsbezeichnung:<br>Zuständige Kammer: %s<br>Verliehen durch: %s<br>Es gelten folgende berufsrechtliche Regelungen: %s<br></p>", $domain);
-        self::$_format_image_soruce = __("<h2>Bildquellen</h2>");
-        self::$_format_authorized_person = __("<h2>Vertreten durch:</h2>");
+        self::$_format_image_soruce = __("<h2>Bildquellen</h2>", $domain);
+        self::$_format_authorized_person = __("<h2>Vertreten durch:</h2>", $domain);
+        self::$_format_journalistic_content = __("<h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</h2>", $domain);
         self::$_disclaimer = __("<h1>Haftungsausschluss (Disclaimer)</h1><p><strong>Haftung für Inhalte</strong></p> <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.</p> <p><strong>Haftung für Links</strong></p> <p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p> <p><strong>Urheberrecht</strong></p> <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.</p>", $domain);
         self::$_privacy_policy_head = __("<h2>Datenschutzerklärung:</h2>", $domain);
         self::$_privacy_policy_general = __("<p><strong>Datenschutz</strong></p><p>Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben. </p><p>Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich. </p><p>Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.</p>", $domain);
@@ -110,12 +112,19 @@ class WPImpressum
         // autohirzed persons
         $authorized_person = get_option("wp_impressum_authorized_person");
 
+        $responsible_person_for_content = get_option("wp_impressum_responsible_persons");
+
         $impressum .= $this->wpimpressum_return_contact($lang, $telefon, $fax, $email);
         if(!empty($authorized_person)) {
             $impressum .= $this->wpimpressum_return_authorized_person($authorized_person);
         }
-        $impressum .= $this->wpimpressum_return_vat($lang, $vat);
+
         $impressum .= $this->wpimpressum_return_register($lang, $chamber, $registernr, $register);
+        $impressum .= $this->wpimpressum_return_vat($lang, $vat);
+
+        if(!empty($responsible_person_for_content)) {
+            $impressum .= $this->wpimpressum_return_journalistic($responsible_person_for_content);
+        }
 
         $creds = array();
         $i = 0;
@@ -263,6 +272,14 @@ class WPImpressum
     {
         if (!empty($vat)) return sprintf(self::$_format_vat, $vat);
         return "";
+    }
+
+    private function wpimpressum_return_journalistic($p) {
+        $result = self::$_format_journalistic_content;
+        if(!empty($p)) {
+            $result .= nl2br($p);
+        }
+        return $result;
     }
 
     private function wpimpressum_return_privacy_policy($lang, $general, $facebook, $analytics, $adsense, $plus, $twitter)
