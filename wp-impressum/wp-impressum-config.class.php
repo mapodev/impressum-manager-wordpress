@@ -412,7 +412,7 @@ class WP_Impressum_Config
                     <form action="<?= $option_url ?>&setup=true&step=2" method="post">
                         <table class="form-table">
                             <tr valign="top">
-                                <th scope="row" colspan="2"><b>Art der Person</b></th>
+                                <th scope="row" colspan="2"><b><?=__("Art der Person", $this->slug)?></b></th>
                             </tr>
                             <tr valign="top">
                                 <td width="5"><input type="radio" id="person_1" name="wp_impressum_person"
@@ -432,27 +432,27 @@ class WP_Impressum_Config
                                     }
                                     ?>>
                                 </td>
-                                <td>Juristische Person (z.B. Firma, Verein, Organisation, Einrichtung)</td>
+                                <td><?=__("Juristische Person (z.B. Firma, Verein, Organisation, Einrichtung)")?></td>
                             </tr>
                         </table>
                         <table class="form-table">
                             <tr valign="top" class="rechtsform">
-                                <th scope="row" colspan="2" style="width: 300px"><b>Rechtsform</b></th>
+                                <th scope="row" colspan="2" style="width: 300px"><b><?=__("Rechtsform")?></b></th>
                             </tr>
                             <tr valign="top" class="rechtsform">
                                 <td colspan="2">
                                     <select name="wp_impressum_form_of_organization">
                                         <?php
                                         $forms_of_organization = array(
-                                            "Einzelunternehmen",
-                                            "Stille Gesellschaft",
-                                            "Offene Handelsgesellschaft (OHG)",
-                                            "Kommanditgesellschaft (KG)",
-                                            "Gesellschaft bürgerlichen Rechts (GdR)",
-                                            "Aktiengesellschaft (AG)",
-                                            "Kommanditgesellschaft auf Aktien (KGaA)",
-                                            "Gesellschaft mit beschränkter Haftung (GmbH)",
-                                            "Genossenschaft (eG)"
+                                            __("Einzelunternehmen",$this->slug),
+                                            __("Stille Gesellschaft",$this->slug),
+                                            __("Offene Handelsgesellschaft (OHG)",$this->slug),
+                                            __("Kommanditgesellschaft (KG)",$this->slug),
+                                            __("Gesellschaft bürgerlichen Rechts (GdR)",$this->slug),
+                                            __("Aktiengesellschaft (AG)",$this->slug),
+                                            __("Kommanditgesellschaft auf Aktien (KGaA)",$this->slug),
+                                            __("Gesellschaft mit beschränkter Haftung (GmbH)",$this->slug),
+                                            __("Genossenschaft (eG)",$this->slug)
                                         );
 
                                         $idx = 1;
@@ -471,28 +471,28 @@ class WP_Impressum_Config
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <th scope="row" colspan="2"><b>Angaben zur Organisation</b></th>
+                                <th scope="row" colspan="2"><b><?=__("Angaben zur Organisation", $this->slug)?></b></th>
                             </tr>
                             <tr>
                                 <td colspan="2">
                                     <input type="text" style="width: 340px" name="wp_impressum_name_company"
                                            title="Company Name"
                                            value="<?= get_option("wp_impressum_name_company") ?>"><br>
-                                    <small id="full_name">Vollständiger Name</small>
+                                    <small id="full_name"><?=__("Vollständiger Name", $this->slug)?></small>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
                                     <input type="text" name="wp_impressum_address" title="Address" style="width: 340px"
                                            value="<?= get_option("wp_impressum_address") ?>"><br>
-                                    <small>Straße & Hausnummer</small>
+                                    <small><?=__("Straße & Hausnummer", $this->slug)?></small>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
                                     <input type="text" name="wp_impressum_address_extra" title="Address Extra"
                                            style="width: 340px" value="<?= get_option("wp_impressum_address_extra") ?>"><br>
-                                    <small>Adresszusatz</small>
+                                    <small><?=__("Adresszusatz", $this->slug)?></small>
                                 </td>
                             </tr>
                             <tr>
@@ -502,12 +502,12 @@ class WP_Impressum_Config
                                             <td style="padding: 0;"><input type="text" name="wp_impressum_place"
                                                                            title="Place"
                                                                            value="<?= get_option("wp_impressum_place") ?>"><br>
-                                                <small>Ort</small>
+                                                <small><?=__("Ort")?></small>
                                             </td>
                                             <td style="padding: 0;"><input type="text" name="wp_impressum_zip"
                                                                            title="ZIP Code"
                                                                            value="<?= get_option("wp_impressum_zip") ?>"><br>
-                                                <small>PLZ</small>
+                                                <small><?=__("PLZ")?></small>
                                             </td>
                                         </tr>
                                     </table>
@@ -516,7 +516,7 @@ class WP_Impressum_Config
                             <tr>
                                 <td colspan="2">
                                     <select name="wp_impressum_country" style="width: 340px">
-                                        <option value="no_land_choosen">Wähle dein Land ...</option>
+                                        <option value="no_land_choosen"><?=__("Wähle dein Land ...")?></option>
                                         <?php
 
                                         foreach ($this->_countries as $country_code => $country_name) {
@@ -539,7 +539,7 @@ class WP_Impressum_Config
                             </tr>
                             <tr>
                                 <th colspan="2">
-                                    <b>Telefonnummer (inkl. Vorwahl)</b>
+                                    <b><?=__("Telefonnummer (inkl. Vorwahl)", $this->slug)?></b>
                                 </th>
                             </tr>
                             <tr>
@@ -551,7 +551,7 @@ class WP_Impressum_Config
                             </tr>
                             <tr>
                                 <th colspan="2">
-                                    <b>Faxnummer (optional)</b>
+                                    <b><?=__("Faxnummer (optional)", $this->slug)?></b>
                                 </th>
                             </tr>
                             <tr>
@@ -562,7 +562,7 @@ class WP_Impressum_Config
                             </tr>
                             <tr>
                                 <th colspan="2">
-                                    <b>E-Mail Adresse</b>
+                                    <b><?=__("E-Mail Adresse", $this->slug)?></b>
                                 </th>
                             </tr>
                             <tr>
@@ -655,19 +655,19 @@ class WP_Impressum_Config
                     <form action="<?= $option_url ?>&setup=true&step=3" method="post">
                         <table class="form-table" <?= $cssDef ?>>
                             <tr valign="top">
-                                <th scope="row" colspan="2"><b>Vertretungsberechtigte Persone(n)</b></th>
+                                <th scope="row" colspan="2"><b><?=__("Vertretungsberechtigte Persone(n)", $this->slug)?></b></th>
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
                                     <textarea name="wp_impressum_authorized_person"
                                               style="width: 340px; height: 225px;"><?= get_option("wp_impressum_authorized_person") ?></textarea><br>
-                                    <small>Namen und Vornamen</small>
+                                    <small><?=__("Namen und Vornamen", $this->slug)?></small>
                                 </td>
                             </tr>
                         </table>
                         <table class="form-table">
                             <tr valign="top" <?= $cssDef ?>>
-                                <th scope="row" colspan="2"><b>Umsatzsteuer ID</b></th>
+                                <th scope="row" colspan="2"><b><?=__("Umsatzsteuer ID", $this->slug)?></b></th>
                             </tr>
                             <tr valign="top" <?= $cssDef ?>>
                                 <td colspan="2">
@@ -676,18 +676,18 @@ class WP_Impressum_Config
                                 </td>
                             </tr>
                             <tr valign="top" <?= $cssDef ?>>
-                                <th scope="row" colspan="2"><b>Register</b></th>
+                                <th scope="row" colspan="2"><b><?=__("Register", $this->slug)?></b></th>
                             </tr>
                             <tr valign="top" <?= $cssDef ?>>
                                 <td colspan="2">
                                     <select name="wp_impressum_register">
                                         <?php
                                         $registerDescr = array(
-                                            "Kein Register",
-                                            "Genossenschaftsregister",
-                                            "Handelsregister",
-                                            "Partnerschaftsregister",
-                                            "Vereinsregister"
+                                            __("Kein Register", $this->slug),
+                                            __("Genossenschaftsregister", $this->slug),
+                                            __("Handelsregister", $this->slug),
+                                            __("Partnerschaftsregister", $this->slug),
+                                            __("Vereinsregister", $this->slug)
                                         );
 
                                         $idx = 1;
@@ -712,7 +712,7 @@ class WP_Impressum_Config
                             </tr>
 
                             <tr valign="top" <?= $cssDef ?>>
-                                <th scope="row" colspan="2"><b>Registernummer</b></th>
+                                <th scope="row" colspan="2"><b><?=__("Registernummer", $this->slug)?></b></th>
                             </tr>
                             <tr valign="top" <?= $cssDef ?>>
                                 <td colspan="2">
@@ -726,7 +726,7 @@ class WP_Impressum_Config
                             <tr valign="top">
                                 <th scope="row" colspan="2"><input type="checkbox" id="regulated_profession"
                                                                    name="wp_impressum_regulated_profession_checked"><label
-                                        for="regulated_profession"><b>Reglementierter Beruf</b></label></th>
+                                        for="regulated_profession"><b><?=__("Reglementierter Beruf", $this->slug)?></b></label></th>
                             </tr>
                             <tr valign="top" class="hide_regulated_profession">
                                 <td colspan="2">
@@ -734,14 +734,14 @@ class WP_Impressum_Config
                                            title="Regulated profession"
                                            style="width: 340px"
                                            value="<?= get_option("wp_impressum_regulated_profession") ?>"><br>
-                                    <small>Gesetzliche Berufsbezeichnung</small>
+                                    <small><?=__("Gesetzliche Berufsbezeichnung", $this->slug)?></small>
                                 </td>
                             </tr>
                             <tr valign="top" class="hide_regulated_profession">
                                 <td colspan="2">
                                     <input type="text" name="wp_impressum_state" title="State"
                                            style="width: 340px" value="<?= get_option("wp_impressum_state") ?>"><br>
-                                    <small>Staat, in dem die Berufsbezeichnung verliehen wurde</small>
+                                    <small><?=__("Staat, in dem die Berufsbezeichnung verliehen wurde", $this->slug)?></small>
                                 </td>
                             </tr>
                             <tr valign="top" class="hide_regulated_profession">
@@ -749,52 +749,51 @@ class WP_Impressum_Config
                                     <input type="text" name="wp_impressum_state_rules" title="State rules"
                                            style="width: 340px"
                                            value="<?= get_option("wp_impressum_state_rules") ?>"><br>
-                                    <small>Berfusrechtliche Regelungen (Bezeichnung)</small>
+                                    <small><?=__("Berfusrechtliche Regelungen (Bezeichnung)", $this->slug)?></small>
                                 </td>
                             </tr>
                             <tr valign="top" class="hide_regulated_profession">
                                 <td colspan="2">
                                     <input type="text" name="wp_impressum_chamber" title="Chamber"
                                            style="width: 340px" value="<?= get_option("wp_impressum_chamber") ?>"><br>
-                                    <small>Kammer, der Sie angehören</small>
+                                    <small><?=__("Kammer, der Sie angehören", $this->slug)?></small>
                                 </td>
                             </tr>
                             <tr valign="top">
                                 <th scope="row" colspan="2"><input type="checkbox" id="allowness"
-                                                                   name="wp_impressum_allowness"><label for="allowness"><b>Behördliche
-                                            Zuslassung</b></label></th>
+                                                                   name="wp_impressum_allowness"><label for="allowness"><b><?=__("Behördliche Zuslassung", $this->slug)?></b></label></th>
                             </tr>
                             <tr valign="top" id="allowness_textarea">
                                 <td colspan="2">
                                     <textarea name="wp_impressum_responsible_chamber"
                                               style="width: 340px; height: 225px;"><?= get_option("wp_impressum_responsible_chamber") ?></textarea><br>
-                                    <small>Zuständige Aufsichtsbehörde</small>
+                                    <small><?=__("Zuständige Aufsichtsbehörde", $this->slug)?></small>
                                 </td>
                             </tr>
                         </table>
                         <table class="form-table">
                             <tr valign="top">
-                                <th scope="row" colspan="2"><b>Bildquellen</b></th>
+                                <th scope="row" colspan="2"><b><?=__("Bildquellen", $this->slug)?></b></th>
                             </tr>
                             <tr valign="top">
                                 <td colspan="2">
                                     <textarea name="wp_impressum_image_source"
                                               style="width: 340px; height: 225px;"><?= get_option("wp_impressum_image_source") ?></textarea><br>
-                                    <small>z.B. Max Mustermann, http://www.fotolia.com</small>
+                                    <small><?=__("z.B. Max Mustermann, http://www.fotolia.com", $this->slug)?></small>
                                 </td>
                             </tr>
 
                             <tr valign="top">
                                 <th scope="row" colspan="2"><input type="checkbox" id="press_content"
                                                                    name="wp_impressum_press_content"><label
-                                        for="press_content"><b>journalistisch-redaktionelle Inhalte</b></label></th>
+                                        for="press_content"><b><?=__("journalistisch-redaktionelle Inhalte", $this->slug)?></b></label></th>
                             </tr>
                             <tr valign="top" id="press_content_textarea">
                                 <td colspan="2">
                                     <textarea name="wp_impressum_responsible_persons"
                                               style="width: 340px; height: 225px;"><?= get_option("wp_impressum_responsible_persons") ?></textarea><br>
-                                    <small>Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die
-                                        Verantwortungen entsprechend mit angeben.
+                                    <small><?=__("Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die
+                                        Verantwortungen entsprechend mit angeben.", $this->slug)?>
                                     </small>
                                 </td>
                             </tr>

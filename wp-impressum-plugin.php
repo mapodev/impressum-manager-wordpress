@@ -99,8 +99,7 @@ function wp_impressum_field_credit( $form_fields, $post ) {
     $form_fields['wp-impressum-image-credential'] = array(
         'label' => __('Urheber vom Bild'),
         'input' => 'text',
-        'value' => get_post_meta( $post->ID, 'wp_impressum_image_credential', true ),
-        'helps' => __("Name von dem Urheber für den Nachweis im Impressum"),
+        'value' => get_post_meta( $post->ID, 'wp_impressum_image_credential', true )
     );
 
     return $form_fields;
