@@ -92,4 +92,29 @@ function wpimpressum_goodybye()
 
 register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "wpimpressum_goodybye");
 
+// Some Logic that does not to be included in the classes
+
+// Fields for credentials which will be summed up in the impressum
+function wp_impressum_field_credit( $form_fields, $post ) {
+    $form_fields['wp-impressum-image-credential'] = array(
+        'label' => __('Urheber vom Bild'),
+        'input' => 'text',
+        'value' => get_post_meta( $post->ID, 'wp_impressum_image_credential', true ),
+        'helps' => __("Name von dem Urheber für den Nachweis im Impressum"),
+    );
+
+    return $form_fields;
+}
+
+add_filter( 'attachment_fields_to_edit', 'wp_impressum_field_credit', 10, 2 );
+
+function wp_impressum_field_credit_save( $post, $attachment ) {
+    if( isset( $attachment['wp-impressum-image-credential'] ) )
+        update_post_meta( $post['ID'], 'wp_impressum_image_credential', $attachment['wp-impressum-image-credential'] );
+
+    return $post;
+}
+
+add_filter( 'attachment_fields_to_save', 'wp_impressum_field_credit_save', 10, 2 );
+
 
