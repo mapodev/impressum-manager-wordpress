@@ -26,6 +26,14 @@ No questions asked yet.
 
 == Changelog ==
 
+= 0.3.0 =
+- Dev tools added. Possibilty given to delete all setting options
+- Feature added: Email shown as image. Solves spam problem
+- Feature added: Image Source credentials field added in image details. Summed up in impressum.
+- some variable logic fixed
+- hiding inputs with javascript, when not selected
+- some fixes
+
 = 0.2.1 =
 - Translation files added
 - Some refactor
