@@ -157,7 +157,11 @@ class WPImpressum
             }
         }
 
-        $impressum .= $this->wpimpressum_return_credits($creds);
+        $image_source = get_option("wp_impressum_image_source");
+
+        if(!empty($image_source) || !empty($creds)) {
+            $impressum .= $this->wpimpressum_return_credits($creds);
+        }
 
         if ($disclaimer) $impressum .= self::$_disclaimer;
 
@@ -255,7 +259,7 @@ class WPImpressum
             $result .= $credit . "<br>";
         }
         if(get_option("wp_impressum_image_source") !== false) {
-            $result .= get_option("wp_impressum_image_source");
+            $result .= nl2br(get_option("wp_impressum_image_source"));
         }
         return $result;
     }
