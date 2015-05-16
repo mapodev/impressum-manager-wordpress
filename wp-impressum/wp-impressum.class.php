@@ -38,7 +38,6 @@ class WPImpressum
         $domain = $conf->wpimpressum_getSlug();
 
         self::$_format_address = __("<h2>Angaben gemäß § 5 TMG:</h2>", $domain);
-        self::$_format_representant = __("<h2>Vertreten durch:</h2><p>[Vertreten durch: %s, %s]</p>", $domain);
         self::$_format_contact = __("<h2>Kontakt:</h2>", $domain, $domain);
         self::$_format_contact_telephone = __("<tr><td>Telefon:</td><td>%s</td></tr>", $domain);
         self::$_format_contact_telefax = __("<tr><td>Telefax:</td><td>%s</td></tr>", $domain);
@@ -112,17 +111,24 @@ class WPImpressum
         // autohirzed persons
         $authorized_person = get_option("wp_impressum_authorized_person");
 
+        // journalistic responsible persons for content
         $responsible_person_for_content = get_option("wp_impressum_responsible_persons");
 
+        // chamber, state and rules for given VAT
+        $chamber = get_option("wp_impressum_chamber");
+        $rules = get_option("wp_impressum_state_rules");
+        $state = get_option("wp_impressum_state");
+        $profession = get_option("wp_impressum_regulated_profession");
+
         $impressum .= $this->wpimpressum_return_contact($lang, $telefon, $fax, $email);
-        if(!empty($authorized_person)) {
+        if (!empty($authorized_person)) {
             $impressum .= $this->wpimpressum_return_authorized_person($authorized_person);
         }
 
         $impressum .= $this->wpimpressum_return_register($lang, $chamber, $registernr, $register);
-        $impressum .= $this->wpimpressum_return_vat($lang, $vat);
+        $impressum .= $this->wpimpressum_return_vat($lang, $vat, $profession, $state, $rules, $chamber);
 
-        if(!empty($responsible_person_for_content)) {
+        if (!empty($responsible_person_for_content)) {
             $impressum .= $this->wpimpressum_return_journalistic($responsible_person_for_content);
         }
 
@@ -133,14 +139,14 @@ class WPImpressum
 
         foreach ($post_types as $post_type) {
             $args = array(
-                'post_type' =>  $post_type,
+                'post_type' => $post_type,
                 'numberposts' => -1,
                 'post_status' => null
             );
 
             $posts = get_posts($args);
 
-            foreach($posts as $post) {
+            foreach ($posts as $post) {
                 $args = array(
                     'post_type' => 'attachment',
                     'numberposts' => -1,
@@ -159,7 +165,7 @@ class WPImpressum
 
         $image_source = get_option("wp_impressum_image_source");
 
-        if(!empty($image_source) || !empty($creds)) {
+        if (!empty($image_source) || !empty($creds)) {
             $impressum .= $this->wpimpressum_return_credits($creds);
         }
 
@@ -190,11 +196,6 @@ class WPImpressum
         if (!empty($zip)) $result .= $zip . " ";
         if (!empty($place)) $result .= $place . "<br>";
         return $result;
-    }
-
-    private function wpimpressum_return_representant($lang, $name, $address)
-    {
-        return sprintf(self::$_format_representant, $name, $address);
     }
 
     private function wpimpressum_return_contact($lang, $telefon, $fax, $email)
@@ -252,35 +253,45 @@ class WPImpressum
         return $result;
     }
 
-    private function wpimpressum_return_credits($creds) {
+    private function wpimpressum_return_credits($creds)
+    {
         $result = self::$_format_image_soruce;
         $creds = array_unique($creds);
-        foreach($creds as $credit) {
+        foreach ($creds as $credit) {
             $result .= $credit . "<br>";
         }
-        if(get_option("wp_impressum_image_source") !== false) {
+        if (get_option("wp_impressum_image_source") !== false) {
             $result .= nl2br(get_option("wp_impressum_image_source"));
         }
         return $result;
     }
 
-    private function wpimpressum_return_authorized_person($person) {
+    private function wpimpressum_return_authorized_person($person)
+    {
         $result = self::$_format_authorized_person;
-        if(!empty($person)) {
+        if (!empty($person)) {
             $result .= nl2br($person);
         }
         return $result;
     }
 
-    private function wpimpressum_return_vat($lang, $vat)
+    private function wpimpressum_return_vat($lang, $vat, $profession, $state, $rules, $chamber)
     {
-        if (!empty($vat)) return sprintf(self::$_format_vat, $vat);
-        return "";
+        $result = "";
+        if (!empty($vat)) $result .= sprintf(self::$_format_vat, $vat);
+        if(strlen(get_option("wp_impressum_regulated_profession_checked")) > 0) {
+            if (!empty($profession)) $result .= __("Berufsbezeichnung:") . " " . $profession . "<br>";
+            if (!empty($chamber)) $result .= __("Zuständige Kammer:") . " " . $chamber . "<br>";
+            if (!empty($state)) $result .= __("Verliehen durch:") . " " . $state . "<br>";
+            if (!empty($rules)) $result .= __("Es gelten folgende berufsrechtliche Regelungen:") . " " . $rules . "<br>";
+        }
+        return $result;
     }
 
-    private function wpimpressum_return_journalistic($p) {
+    private function wpimpressum_return_journalistic($p)
+    {
         $result = self::$_format_journalistic_content;
-        if(!empty($p)) {
+        if (!empty($p)) {
             $result .= nl2br($p);
         }
         return $result;
