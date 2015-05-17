@@ -81,7 +81,7 @@ function wpimpressum_content_shortcode($atts)
     return $wpi->wpimpressum_content();
 }
 
-add_shortcode('wp_impressum', 'wpimpressum_content_shortcode');
+//add_shortcode('wp_impressum', 'wpimpressum_content_shortcode');
 
 function wpimpressum_goodybye()
 {
@@ -115,5 +115,42 @@ function wp_impressum_field_credit_save( $post, $attachment ) {
 }
 
 add_filter( 'attachment_fields_to_save', 'wp_impressum_field_credit_save', 10, 2 );
+
+// Function to hook to "the_posts" (just edit the two variables)
+function wp_impressum_metashortcode( $posts ) {
+    $shortcode = 'wp_impressum';
+    $callback_function = 'wp_impressum_metashortcode_setmeta';
+
+    return wp_impressum_metashortcode_shortcode_to_wphead( $posts, $shortcode, $callback_function );
+}
+
+// To execute when shortcode is found
+function wp_impressum_metashortcode_setmeta() {
+    echo '<meta name="robots" content="noindex,nofollow">';
+}
+
+// look for shortcode in the content and apply expected behaviour (don't edit!)
+function wp_impressum_metashortcode_shortcode_to_wphead( $posts, $shortcode, $callback_function ) {
+    if ( empty( $posts ) )
+        return $posts;
+
+    $found = false;
+    foreach ($posts as $post) {
+        if ( stripos( $post->post_content, '[' . $shortcode ) !== false ) {
+            remove_action( 'wp_head', 'noindex', 1 );
+            add_shortcode( $shortcode, 'wpimpressum_content_shortcode' );
+            $found = true;
+            break;
+        }
+    }
+
+    if ( $found )
+        add_action('wp_head', $callback_function );
+
+    return $posts;
+}
+
+// Instead of creating a shortcode, hook to the_posts
+add_action('the_posts', 'wp_impressum_metashortcode');
 
 

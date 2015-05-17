@@ -219,7 +219,6 @@ class WPImpressum
         $conf = WP_Impressum_Config::getInstance();
         $domain = $conf->wpimpressum_getSlug();
 
-
         switch ($register) {
             case 1:
                 $register_registered_in = __("Kein Register", $domain);
@@ -277,13 +276,16 @@ class WPImpressum
 
     private function wpimpressum_return_vat($lang, $vat, $profession, $state, $rules, $chamber)
     {
+        $conf = WP_Impressum_Config::getInstance();
+        $domain = $conf->wpimpressum_getSlug();
+
         $result = "";
         if (!empty($vat)) $result .= sprintf(self::$_format_vat, $vat);
         if(strlen(get_option("wp_impressum_regulated_profession_checked")) > 0) {
-            if (!empty($profession)) $result .= __("Berufsbezeichnung:") . " " . $profession . "<br>";
-            if (!empty($chamber)) $result .= __("Zuständige Kammer:") . " " . $chamber . "<br>";
-            if (!empty($state)) $result .= __("Verliehen durch:") . " " . $state . "<br>";
-            if (!empty($rules)) $result .= __("Es gelten folgende berufsrechtliche Regelungen:") . " " . $rules . "<br>";
+            if (!empty($profession)) $result .= __("Berufsbezeichnung:", $domain) . " " . $profession . "<br>";
+            if (!empty($chamber)) $result .= __("Zuständige Kammer:", $domain) . " " . $chamber . "<br>";
+            if (!empty($state)) $result .= __("Verliehen durch:", $domain) . " " . $state . "<br>";
+            if (!empty($rules)) $result .= __("Es gelten folgende berufsrechtliche Regelungen:", $domain) . " " . $rules . "<br>";
         }
         return $result;
     }
