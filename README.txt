@@ -26,6 +26,12 @@ No questions asked yet.
 
 == Changelog ==
 
+= 0.4.0 =
+- New Feature: Noindex possibility on given impressum page and added to settings field
+- nl2br fix for some textareas
+- some hiding/showing logic for some impressum data enhanced
+- regulated profession fields added to VAT output
+
 = 0.3.0 =
 - Dev tools added. Possibilty given to delete all setting options
 - Feature added: Email shown as image. Solves spam problem
