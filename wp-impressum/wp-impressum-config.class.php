@@ -252,7 +252,7 @@ class WP_Impressum_Config
 
     public function __construct()
     {
-        $this->version = "0.3.0";
+        $this->version = "0.4.0";
         $this->slug = "wp-impressum";
 
         if (array_key_exists("dismiss", $_REQUEST)) {
