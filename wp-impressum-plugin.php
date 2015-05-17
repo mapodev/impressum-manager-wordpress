@@ -35,10 +35,10 @@ add_action('admin_notices', 'wpimpressum_installation_notice');
 function wpimpressum_installation_notice()
 {
     $request = $_SERVER['REQUEST_URI'];
-    if(strpos($request, WP_Impressum_Config::getInstance()->wpimpressum_getSlug()) !== false) {
+    if (strpos($request, WP_Impressum_Config::getInstance()->wpimpressum_getSlug()) !== false) {
         // indside impressum
     } else {
-        if(get_option("wp_impressum_notice") === false && get_option("wp_impressum_name_company") === false) {
+        if (get_option("wp_impressum_notice") === false && get_option("wp_impressum_name_company") === false) {
             $class = "error";
             $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . WP_Impressum_Config::getInstance()->wpimpressum_getSlug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
             echo "<div class=\"$class\"> <p>$message</p></div>";
@@ -73,6 +73,7 @@ function wpimpressum_load_translations()
     $plugin_dir = basename(dirname(__FILE__));
     load_plugin_textdomain($conf->wpimpressum_getSlug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
 }
+
 add_action('init', "wpimpressum_load_translations");
 
 function wpimpressum_content_shortcode($atts)
@@ -95,57 +96,69 @@ register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "wpimpressu
 // Some Logic that does not to be included in the classes
 
 // Fields for credentials which will be summed up in the impressum
-function wp_impressum_field_credit( $form_fields, $post ) {
+function wp_impressum_field_credit($form_fields, $post)
+{
     $form_fields['wp-impressum-image-credential'] = array(
         'label' => __('Urheber vom Bild'),
         'input' => 'text',
-        'value' => get_post_meta( $post->ID, 'wp_impressum_image_credential', true )
+        'value' => get_post_meta($post->ID, 'wp_impressum_image_credential', true)
     );
 
     return $form_fields;
 }
 
-add_filter( 'attachment_fields_to_edit', 'wp_impressum_field_credit', 10, 2 );
+add_filter('attachment_fields_to_edit', 'wp_impressum_field_credit', 10, 2);
 
-function wp_impressum_field_credit_save( $post, $attachment ) {
-    if( isset( $attachment['wp-impressum-image-credential'] ) )
-        update_post_meta( $post['ID'], 'wp_impressum_image_credential', $attachment['wp-impressum-image-credential'] );
+function wp_impressum_field_credit_save($post, $attachment)
+{
+    if (isset($attachment['wp-impressum-image-credential']))
+        update_post_meta($post['ID'], 'wp_impressum_image_credential', $attachment['wp-impressum-image-credential']);
 
     return $post;
 }
 
-add_filter( 'attachment_fields_to_save', 'wp_impressum_field_credit_save', 10, 2 );
+add_filter('attachment_fields_to_save', 'wp_impressum_field_credit_save', 10, 2);
 
 // Function to hook to "the_posts" (just edit the two variables)
-function wp_impressum_metashortcode( $posts ) {
+function wp_impressum_metashortcode($posts)
+{
     $shortcode = 'wp_impressum';
     $callback_function = 'wp_impressum_metashortcode_setmeta';
 
-    return wp_impressum_metashortcode_shortcode_to_wphead( $posts, $shortcode, $callback_function );
+    return wp_impressum_metashortcode_shortcode_to_wphead($posts, $shortcode, $callback_function);
 }
 
 // To execute when shortcode is found
-function wp_impressum_metashortcode_setmeta() {
+function wp_impressum_metashortcode_setmeta()
+{
     echo '<meta name="robots" content="noindex,nofollow">';
 }
 
 // look for shortcode in the content and apply expected behaviour (don't edit!)
-function wp_impressum_metashortcode_shortcode_to_wphead( $posts, $shortcode, $callback_function ) {
-    if ( empty( $posts ) )
+function wp_impressum_metashortcode_shortcode_to_wphead($posts, $shortcode, $callback_function)
+{
+    if (empty($posts))
         return $posts;
+
+    $show_noindex = get_option("wp_impressum_noindex");
+    $execute_wp_head = false;
+
+    if ($show_noindex !== false && strlen($show_noindex) > 0) {
+        $execute_wp_head = true;
+    }
 
     $found = false;
     foreach ($posts as $post) {
-        if ( stripos( $post->post_content, '[' . $shortcode ) !== false ) {
-            remove_action( 'wp_head', 'noindex', 1 );
-            add_shortcode( $shortcode, 'wpimpressum_content_shortcode' );
+        if (stripos($post->post_content, '[' . $shortcode) !== false) {
+            if($execute_wp_head) remove_action('wp_head', 'noindex', 1);
+            add_shortcode($shortcode, 'wpimpressum_content_shortcode');
             $found = true;
             break;
         }
     }
 
-    if ( $found )
-        add_action('wp_head', $callback_function );
+    if ($found && $execute_wp_head)
+        add_action('wp_head', $callback_function);
 
     return $posts;
 }

@@ -967,34 +967,6 @@ class WP_Impressum_Config
 
     private function wpimpressum_register_settings()
     {
-        register_setting("wp-impressum-conf-1", "wp_impressum_person");
-
-        register_setting("wp-impressum-conf-1", "wp_impressum_form_of_organization");
-        register_setting("wp-impressum-conf-1", "wp_impressum_name_company");
-        register_setting("wp-impressum-conf-1", "wp_impressum_address");
-        register_setting("wp-impressum-conf-1", "wp_impressum_address_extra");
-        register_setting("wp-impressum-conf-1", "wp_impressum_place");
-        register_setting("wp-impressum-conf-1", "wp_impressum_zip");
-        register_setting("wp-impressum-conf-1", "wp_impressum_country");
-        register_setting("wp-impressum-conf-1", "wp_impressum_fax");
-        register_setting("wp-impressum-conf-1", "wp_impressum_email");
-        register_setting("wp-impressum-conf-1", "wp_impressum_phone");
-
-        register_setting("wp-impressum-conf", "wp_impressum_authorized_person");
-
-        register_setting("wp-impressum-conf", "wp_impressum_vat");
-        register_setting("wp-impressum-conf", "wp_impressum_register");
-        register_setting("wp-impressum-conf", "wp_impressum_registenr");
-
-        register_setting("wp-impressum-conf", "wp_impressum_regulated_profession");
-        register_setting("wp-impressum-conf", "wp_impressum_state");
-        register_setting("wp-impressum-conf", "wp_impressum_state_rules");
-        register_setting("wp-impressum-conf", "wp_impressum_chamber");
-
-        register_setting("wp-impressum-conf", "wp_impressum_image_source");
-        register_setting("wp-impressum-conf", "wp_impressum_responsible_chamber");
-        register_setting("wp-impressum-conf", "wp_impressum_responsible_persons");
-
         register_setting("wp-impressum-policy_group", "wp_impressum_disclaimer");
         register_setting("wp-impressum-policy_group", "wp_impressum_set_impressum");
         register_setting("wp-impressum-policy_group", "wp_impressum_language_of_impressum");
@@ -1007,6 +979,7 @@ class WP_Impressum_Config
         register_setting("wp-impressum-policy_group", "wp_impressum_page");
         register_setting("wp-impressum-policy_group", "wp_impressum_disabled");
         register_setting("wp-impressum-policy_group", "wp_impressum_extra_field");
+        register_setting("wp-impressum-policy_group", "wp_impressum_noindex");
     }
 
     private function wpimpressum_config_view()
@@ -1071,6 +1044,15 @@ class WP_Impressum_Config
                             </option>
                         </select><br><br>
                         <?= __("Wähle die Sprache für dein Impressum", $this->slug) ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?= __("No Index", $this->slug) ?></th>
+                    <td>
+                        <label for="wp_impressum_noindex">
+                            <input id="wp_impressum_noindex" type="checkbox" name="wp_impressum_noindex" <?=$this->isChecked("wp_impressum_noindex")?>>
+                            <?= __("Lass die Impressum Seite nicht von Suchmaschinen indexieren.", $this->slug) ?>
+                        </label>
                     </td>
                 </tr>
                 <tr>
