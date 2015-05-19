@@ -68,7 +68,7 @@ delete_option("wp_impressum_page");
 delete_option("wp_impressum_id");
 delete_option("wp_impressum_policy_google_plus");
 delete_option("wp_impressum_policy_twitter");
-delete_option("wpimpresusm_onboarding_conf");
+delete_option("wp_impresusm_onboarding_conf");
 
 unregister_setting("wp-impressum-policy_group", "wp_impressum_disclaimer");
 unregister_setting("wp-impressum-policy_group", "wp_impressum_set_impressum");
