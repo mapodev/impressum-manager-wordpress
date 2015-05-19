@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Impressum Plugin\n"
-"POT-Creation-Date: 2015-05-10 21:46+0100\n"
-"PO-Revision-Date: 2015-05-17 21:14+0100\n"
+"POT-Creation-Date: 2015-05-17 21:14+0100\n"
+"PO-Revision-Date: 2015-05-17 22:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,52 +18,247 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wp-impressum/wp-impressum-config.class.php:342
-#: wp-impressum/wp-impressum-config.class.php:656
+#: wp-impressum-plugin.php:43
+#, php-format
+msgid ""
+"Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite "
+"rechtssicher zu machen."
+msgstr ""
+
+#: wp-impressum-plugin.php:102
+msgid "Urheber vom Bild"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:397
+#: wp-impressum/wp-impressum-config.class.php:481
+msgid "Vollständiger Name"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:401
+msgid "Firmenname inkl. Rechtsform"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:409
+#: wp-impressum/wp-impressum-config.class.php:581
+#: wp-impressum/wp-impressum-config.class.php:806
+#: wp-impressum/wp-impressum-config.class.php:938
 msgid "Zurück zu den Einstellungen"
 msgstr "Zurück zu den Einstellungen"
 
-#: wp-impressum/wp-impressum-config.class.php:660
-msgid "Daten Speichern"
-msgstr "Daten speichern"
+#: wp-impressum/wp-impressum-config.class.php:415
+msgid "Art der Person"
+msgstr ""
 
-#: wp-impressum/wp-impressum-config.class.php:738
-msgid "Impressum konfigurieren"
-msgstr "Impressum konfigurieren"
+#: wp-impressum/wp-impressum-config.class.php:435
+msgid "Juristische Person (z.B. Firma, Verein, Organisation, Einrichtung)"
+msgstr ""
 
-#: wp-impressum/wp-impressum-config.class.php:750
-msgid "Language"
-msgstr "Sprache"
+#: wp-impressum/wp-impressum-config.class.php:440
+msgid "Rechtsform"
+msgstr ""
 
-#: wp-impressum/wp-impressum-config.class.php:761
-msgid "Wähle die Sprache für dein Impressum"
-msgstr "Wähle die Sprache für dein Impressum"
+#: wp-impressum/wp-impressum-config.class.php:447
+msgid "Einzelunternehmen"
+msgstr ""
 
-#: wp-impressum/wp-impressum-config.class.php:765
-msgid "Impressum Inhalt Einstellungen"
-msgstr "Impressum Inhalt Einstellungen"
+#: wp-impressum/wp-impressum-config.class.php:448
+msgid "Stille Gesellschaft"
+msgstr ""
 
-#: wp-impressum/wp-impressum-config.class.php:769
+#: wp-impressum/wp-impressum-config.class.php:449
+msgid "Offene Handelsgesellschaft (OHG)"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:450
+msgid "Kommanditgesellschaft (KG)"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:451
+msgid "Gesellschaft bürgerlichen Rechts (GdR)"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:452
+msgid "Aktiengesellschaft (AG)"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:453
+msgid "Kommanditgesellschaft auf Aktien (KGaA)"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:454
+msgid "Gesellschaft mit beschränkter Haftung (GmbH)"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:455
+msgid "Genossenschaft (eG)"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:474
+msgid "Angaben zur Organisation"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:488
+msgid "Straße & Hausnummer"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:495
+msgid "Adresszusatz"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:505
+msgid "Ort"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:510
+msgid "PLZ"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:519
+msgid "Wähle dein Land ..."
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:542
+msgid "Telefonnummer (inkl. Vorwahl)"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:554
+msgid "Faxnummer (optional)"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:565
+msgid "E-Mail Adresse"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:586
+#: wp-impressum/wp-impressum-config.class.php:818
+msgid "Nächster Schritt"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:658
+msgid "Vertretungsberechtigte Persone(n)"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:664
+msgid "Namen und Vornamen"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:670
+msgid "Umsatzsteuer ID"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:679
+msgid "Register"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:686
+#: wp-impressum/wp-impressum.class.php:224
+#: wp-impressum/wp-impressum.class.php:239
+msgid "Kein Register"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:687
+#: wp-impressum/wp-impressum.class.php:227
+msgid "Genossenschaftsregister"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:688
+#: wp-impressum/wp-impressum.class.php:230
+msgid "Handelsregister"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:689
+#: wp-impressum/wp-impressum.class.php:233
+msgid "Partnerschaftsregister"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:690
+#: wp-impressum/wp-impressum.class.php:236
+msgid "Vereinsregister"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:715
+msgid "Registernummer"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:729
+msgid "Reglementierter Beruf"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:737
+msgid "Gesetzliche Berufsbezeichnung"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:744
+msgid "Staat, in dem die Berufsbezeichnung verliehen wurde"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:752
+msgid "Berfusrechtliche Regelungen (Bezeichnung)"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:759
+msgid "Kammer, der Sie angehören"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:764
+msgid "Behördliche Zuslassung"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:770
+msgid "Zuständige Aufsichtsbehörde"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:776
+msgid "Bildquellen"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:782
+msgid "z.B. Max Mustermann, http://www.fotolia.com"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:789
+msgid "journalistisch-redaktionelle Inhalte"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:795
+msgid ""
+"Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die\n"
+"                                        Verantwortungen entsprechend mit "
+"angeben."
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:813
+#: wp-impressum/wp-impressum-config.class.php:945
+msgid "Schritt zurück"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:852
+#: wp-impressum/wp-impressum-config.class.php:1063
 msgid "Haftungsausschluss (Disclaimer)"
 msgstr "Haftungsausschluss (Disclaimer)"
 
-#: wp-impressum/wp-impressum-config.class.php:775
+#: wp-impressum/wp-impressum-config.class.php:858
+#: wp-impressum/wp-impressum-config.class.php:1069
 msgid "Füge einen Disclaimer in dein Impressum ein."
 msgstr "Füge einen Disclaimer in dein Impressum ein."
 
-#: wp-impressum/wp-impressum-config.class.php:781
+#: wp-impressum/wp-impressum-config.class.php:864
+#: wp-impressum/wp-impressum-config.class.php:1075
 msgid "Allgemine Datenschutzerklärung"
 msgstr "Allgemine Datenschutzerklärung"
 
-#: wp-impressum/wp-impressum-config.class.php:787
+#: wp-impressum/wp-impressum-config.class.php:870
+#: wp-impressum/wp-impressum-config.class.php:1081
 msgid "Füge eine allgemeine Datenschutzerklärung in dein Impressum ein."
 msgstr "Füge eine allgemeine Datenschutzerklärung in dein Impressum ein."
 
-#: wp-impressum/wp-impressum-config.class.php:793
+#: wp-impressum/wp-impressum-config.class.php:876
+#: wp-impressum/wp-impressum-config.class.php:1087
 msgid "Datenschutzerklärung für Facebook"
 msgstr "Datenschutzerklärung für Facebook"
 
-#: wp-impressum/wp-impressum-config.class.php:799
+#: wp-impressum/wp-impressum-config.class.php:882
+#: wp-impressum/wp-impressum-config.class.php:1093
 msgid ""
 "Füge eine Datenschutzerklärung für die Nutzung von Facebook Elementen in "
 "dein Impressum ein."
@@ -71,11 +266,13 @@ msgstr ""
 "Füge eine Datenschutzerklärung für die Nutzung von Facebook Elementen in "
 "dein Impressum ein."
 
-#: wp-impressum/wp-impressum-config.class.php:805
+#: wp-impressum/wp-impressum-config.class.php:888
+#: wp-impressum/wp-impressum-config.class.php:1099
 msgid "Datenschutzerklärung für Google"
 msgstr "Datenschutzerklärung für Google"
 
-#: wp-impressum/wp-impressum-config.class.php:811
+#: wp-impressum/wp-impressum-config.class.php:894
+#: wp-impressum/wp-impressum-config.class.php:1105
 msgid ""
 "Füge eine Datenschutzerklärung für die Nutzung von <b>Google Analytics</b> "
 "in dein Impressum ein."
@@ -83,7 +280,8 @@ msgstr ""
 "Füge eine Datenschutzerklärung für die Nutzung von <b>Google Analytics</b> "
 "in dein Impressum ein."
 
-#: wp-impressum/wp-impressum-config.class.php:817
+#: wp-impressum/wp-impressum-config.class.php:900
+#: wp-impressum/wp-impressum-config.class.php:1111
 msgid ""
 "Füge eine Datenschutzerklärung für die Nutzung von <b>Google Adsense</b> in "
 "dein Impressum ein."
@@ -91,7 +289,8 @@ msgstr ""
 "Füge eine Datenschutzerklärung für die Nutzung von <b>Google Adsense</b> in "
 "dein Impressum ein."
 
-#: wp-impressum/wp-impressum-config.class.php:823
+#: wp-impressum/wp-impressum-config.class.php:906
+#: wp-impressum/wp-impressum-config.class.php:1117
 msgid ""
 "Füge eine Datenschutzerklärung für die Nutzung von <b>Google +1</b> in dein "
 "Impressum ein."
@@ -99,11 +298,13 @@ msgstr ""
 "Füge eine Datenschutzerklärung für die Nutzung von <b>Google +1</b> in dein "
 "Impressum ein."
 
-#: wp-impressum/wp-impressum-config.class.php:829
+#: wp-impressum/wp-impressum-config.class.php:912
+#: wp-impressum/wp-impressum-config.class.php:1123
 msgid "Datenschutzerklärung für Twitter"
 msgstr "Datenschutzerklärung für Twitter"
 
-#: wp-impressum/wp-impressum-config.class.php:835
+#: wp-impressum/wp-impressum-config.class.php:918
+#: wp-impressum/wp-impressum-config.class.php:1129
 msgid ""
 "Füge eine Datenschutzerklärung für die Nutzung von Twitter Elementen in dein "
 "Impressum ein."
@@ -111,65 +312,95 @@ msgstr ""
 "Füge eine Datenschutzerklärung für die Nutzung von Twitter Elementen in dein "
 "Impressum ein."
 
-#: wp-impressum/wp-impressum-config.class.php:841
+#: wp-impressum/wp-impressum-config.class.php:924
+#: wp-impressum/wp-impressum-config.class.php:1135
 msgid "Zusatzfeld"
 msgstr "Zusatzfeld"
 
-#: wp-impressum/wp-impressum.class.php:34
+#: wp-impressum/wp-impressum-config.class.php:950
+#, fuzzy
+msgid "Daten speichern"
+msgstr "Daten speichern"
+
+#: wp-impressum/wp-impressum-config.class.php:1023
+msgid "Impressum konfigurieren"
+msgstr "Impressum konfigurieren"
+
+#: wp-impressum/wp-impressum-config.class.php:1035
+msgid "Language"
+msgstr "Sprache"
+
+#: wp-impressum/wp-impressum-config.class.php:1046
+msgid "Wähle die Sprache für dein Impressum"
+msgstr "Wähle die Sprache für dein Impressum"
+
+#: wp-impressum/wp-impressum-config.class.php:1050
+msgid "No Index"
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:1054
+msgid "Lass die Impressum Seite nicht von Suchmaschinen indexieren."
+msgstr ""
+
+#: wp-impressum/wp-impressum-config.class.php:1059
+msgid "Impressum Inhalt Einstellungen"
+msgstr "Impressum Inhalt Einstellungen"
+
+#: wp-impressum/wp-impressum-config.class.php:1144
+#, fuzzy
+msgid "Impressum aktualisieren"
+msgstr "Impressum konfigurieren"
+
+#: wp-impressum/wp-impressum.class.php:40
 msgid "<h2>Angaben gemäß § 5 TMG:</h2>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:35
-#, php-format
-msgid "<h2>Vertreten durch:</h2><p>[Vertreten durch: %s, %s]</p>"
-msgstr ""
-
-#: wp-impressum/wp-impressum.class.php:36
+#: wp-impressum/wp-impressum.class.php:41
 msgid "<h2>Kontakt:</h2>"
 msgstr "<h2>Kontakt:</h2>"
 
-#: wp-impressum/wp-impressum.class.php:37
+#: wp-impressum/wp-impressum.class.php:42
 #, php-format
 msgid "<tr><td>Telefon:</td><td>%s</td></tr>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:38
+#: wp-impressum/wp-impressum.class.php:43
 #, php-format
 msgid "<tr><td>Telefax:</td><td>%s</td></tr>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:39
+#: wp-impressum/wp-impressum.class.php:44
 #, php-format
 msgid "<tr><td>E-Mail:</td><td>%s</td></tr>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:40
+#: wp-impressum/wp-impressum.class.php:45
 msgid "<h2>Registereintrag:</h2>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:41
+#: wp-impressum/wp-impressum.class.php:46
 #, php-format
 msgid "Eintragung im %s."
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:42
+#: wp-impressum/wp-impressum.class.php:47
 #, php-format
 msgid "<br>Registernummer: %s"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:43
+#: wp-impressum/wp-impressum.class.php:48
 #, php-format
 msgid "<br>Registergericht: %s"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:44
+#: wp-impressum/wp-impressum.class.php:49
 #, php-format
 msgid ""
 "<h2>Umsatzsteuer-ID:</h2><p>Umsatzsteuer-Identifikationsnummer gemäß §27 a "
 "Umsatzsteuergesetz:<br>%s</p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:45
+#: wp-impressum/wp-impressum.class.php:50
 #, php-format
 msgid ""
 "<h2>Aufsichtsbehörde:</h2><p>Aufsichtsbehörde</p><p>Berufsbezeichnung: "
@@ -177,7 +408,19 @@ msgid ""
 "%s<br>Es gelten folgende berufsrechtliche Regelungen: %s<br></p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:46
+#: wp-impressum/wp-impressum.class.php:51
+msgid "<h2>Bildquellen</h2>"
+msgstr ""
+
+#: wp-impressum/wp-impressum.class.php:52
+msgid "<h2>Vertreten durch:</h2>"
+msgstr ""
+
+#: wp-impressum/wp-impressum.class.php:53
+msgid "<h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</h2>"
+msgstr ""
+
+#: wp-impressum/wp-impressum.class.php:54
 msgid ""
 "<h1>Haftungsausschluss (Disclaimer)</h1><p><strong>Haftung für Inhalte</"
 "strong></p> <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene "
@@ -214,12 +457,12 @@ msgid ""
 "werden wir derartige Inhalte umgehend entfernen.</p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:47
+#: wp-impressum/wp-impressum.class.php:55
 #, fuzzy
 msgid "<h2>Datenschutzerklärung:</h2>"
 msgstr "Allgemine Datenschutzerklärung"
 
-#: wp-impressum/wp-impressum.class.php:48
+#: wp-impressum/wp-impressum.class.php:56
 msgid ""
 "<p><strong>Datenschutz</strong></p><p>Die Nutzung unserer Webseite ist in "
 "der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren "
@@ -237,7 +480,7 @@ msgid ""
 "von Werbeinformationen, etwa durch Spam-Mails, vor.</p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:49
+#: wp-impressum/wp-impressum.class.php:57
 msgid ""
 "<p><strong>Datenschutzerkl&auml;rung f&uuml;r die Nutzung von Facebook-"
 "Plugins (Like-Button)</strong></p> <p>Auf unseren Seiten sind Plugins des "
@@ -264,7 +507,7 @@ msgid ""
 "bitte aus Ihrem Facebook-Benutzerkonto aus.</p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:50
+#: wp-impressum/wp-impressum.class.php:58
 msgid ""
 "<p><strong>Datenschutzerkl&auml;rung f&uuml;r die Nutzung von Google "
 "Analytics</strong></p> <p>Diese Website benutzt Google Analytics, einen "
@@ -298,7 +541,7 @@ msgid ""
 "\">http://tools.google.com/dlpage/gaoptout?hl=de</a>.<p>&nbsp;</p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:51
+#: wp-impressum/wp-impressum.class.php:59
 msgid ""
 "<p><strong>Datenschutzerkl&auml;rung f&uuml;r die Nutzung von Google "
 "Adsense</strong></p> <p>Diese Website benutzt Google AdSense, einen Dienst "
@@ -324,7 +567,7 @@ msgid ""
 "p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:52
+#: wp-impressum/wp-impressum.class.php:60
 msgid ""
 "<p><strong>Datenschutzerkl&auml;rung f&uuml;r die Nutzung von Google +1</"
 "strong></p> <p><i>Erfassung und Weitergabe von Informationen:</i><br /> "
@@ -356,7 +599,7 @@ msgid ""
 "Websites. </p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:53
+#: wp-impressum/wp-impressum.class.php:61
 msgid ""
 "<p><strong>Datenschutzerkl&auml;rung f&uuml;r die Nutzung von Twitter</"
 "strong></p> <p>Auf unseren Seiten sind Funktionen des Dienstes Twitter "
@@ -375,7 +618,7 @@ msgid ""
 "\"_blank\">http://twitter.com/account/settings</a> &auml;ndern.</p><p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:54
+#: wp-impressum/wp-impressum.class.php:62
 msgid ""
 "<strong>Auskunft, L&ouml;schung, Sperrung</strong></p> <p>Sie haben "
 "jederzeit das Recht auf unentgeltliche Auskunft &uuml;ber Ihre gespeicherten "
@@ -386,34 +629,29 @@ msgid ""
 "Impressum angegeben Adresse des Webseitenbetreibers an uns wenden.</p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:55
+#: wp-impressum/wp-impressum.class.php:63
 msgid ""
 "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-"
 "generator.html\">http://www.e-recht24.de</a></em></p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:56
+#: wp-impressum/wp-impressum.class.php:64
 msgid ""
 "<p>Plugin von <a href=\"http://www.wp-impressum.com\">WP-Impressum</a></p>"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:156
-#: wp-impressum/wp-impressum.class.php:171
-msgid "Kein Register"
+#: wp-impressum/wp-impressum.class.php:285
+msgid "Berufsbezeichnung:"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:159
-msgid "Genossenschaftsregister"
+#: wp-impressum/wp-impressum.class.php:286
+msgid "Zuständige Kammer:"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:162
-msgid "Handelsregister"
+#: wp-impressum/wp-impressum.class.php:287
+msgid "Verliehen durch:"
 msgstr ""
 
-#: wp-impressum/wp-impressum.class.php:165
-msgid "Partnerschaftsregister"
-msgstr ""
-
-#: wp-impressum/wp-impressum.class.php:168
-msgid "Vereinsregister"
+#: wp-impressum/wp-impressum.class.php:288
+msgid "Es gelten folgende berufsrechtliche Regelungen:"
 msgstr ""
