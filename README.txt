@@ -26,6 +26,12 @@ No questions asked yet.
 
 == Changelog ==
 
+= 0.4.1 =
+- refactoring
+- fixes
+- onboarding has 3 steps
+- normal configuration has 1 page
+
 = 0.4.0 =
 - New Feature: Noindex possibility on given impressum page and added to settings field
 - nl2br fix for some textareas
