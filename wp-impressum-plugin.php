@@ -35,12 +35,12 @@ add_action('admin_notices', 'wpimpressum_installation_notice');
 function wpimpressum_installation_notice()
 {
     $request = $_SERVER['REQUEST_URI'];
-    if (strpos($request, WP_Impressum_Config::getInstance()->wpimpressum_getSlug()) !== false) {
+    if (strpos($request, WP_Impressum_Config::get_instance()->get_slug()) !== false) {
         // indside impressum
     } else {
         if (get_option("wp_impressum_notice") === false && get_option("wp_impressum_name_company") === false) {
             $class = "error";
-            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . WP_Impressum_Config::getInstance()->wpimpressum_getSlug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
+            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . WP_Impressum_Config::get_instance()->get_slug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
             echo "<div class=\"$class\"> <p>$message</p></div>";
         }
     }
@@ -68,10 +68,10 @@ register_deactivation_hook(__FILE__, 'deactivate_wp_impressum_plugin');
 function wpimpressum_load_translations()
 {
     require plugin_dir_path(__FILE__) . 'wp-impressum/wp-impressum-config.class.php';
-    $conf = WP_Impressum_Config::getInstance();
+    $conf = WP_Impressum_Config::get_instance();
     // Load translations
     $plugin_dir = basename(dirname(__FILE__));
-    load_plugin_textdomain($conf->wpimpressum_getSlug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
+    load_plugin_textdomain($conf->get_slug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
 }
 
 add_action('init', "wpimpressum_load_translations");

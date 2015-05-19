@@ -34,8 +34,8 @@ class WPImpressum
 
     function __construct()
     {
-        $conf = WP_Impressum_Config::getInstance();
-        $domain = $conf->wpimpressum_getSlug();
+        $conf = WP_Impressum_Config::get_instance();
+        $domain = $conf->get_slug();
 
         self::$_format_address = __("<h2>Angaben gemäß § 5 TMG:</h2>", $domain);
         self::$_format_contact = __("<h2>Kontakt:</h2>", $domain, $domain);
@@ -216,8 +216,8 @@ class WPImpressum
 
     private function wpimpressum_return_register($lang, $register_chamber, $registernr, $register)
     {
-        $conf = WP_Impressum_Config::getInstance();
-        $domain = $conf->wpimpressum_getSlug();
+        $conf = WP_Impressum_Config::get_instance();
+        $domain = $conf->get_slug();
 
         switch ($register) {
             case 1:
@@ -276,8 +276,8 @@ class WPImpressum
 
     private function wpimpressum_return_vat($lang, $vat, $profession, $state, $rules, $chamber)
     {
-        $conf = WP_Impressum_Config::getInstance();
-        $domain = $conf->wpimpressum_getSlug();
+        $conf = WP_Impressum_Config::get_instance();
+        $domain = $conf->get_slug();
 
         $result = "";
         if (!empty($vat)) $result .= sprintf(self::$_format_vat, $vat);
