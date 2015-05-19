@@ -1,5 +1,7 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 class WP_Impressum_Config
 {
 
@@ -291,7 +293,30 @@ class WP_Impressum_Config
 
     public function wpimpressum_addmenu()
     {
-        add_options_page("WP Impressum", 'WP Impressum', 'manage_options', $this->wpimpressum_getSlug(), array($this, 'wpimpressum_show'), 99.5);
+        $hook = add_options_page("WP Impressum", 'WP Impressum', 'manage_options', $this->wpimpressum_getSlug(), array($this, 'wpimpressum_show'), 99.5);
+        add_action('load-'.$hook, array($this, 'add_help_tab'));
+    }
+
+    public function add_help_tab() {
+        $screen = get_current_screen();
+
+        $tabs = array(
+            array(
+                'title'    => 'All About Books',
+                'id'       => 'cjr-books-about',
+                'content'  => '<p>Books are pretty awesome...</p>'
+            ),
+            array(
+                'title'    => 'More About Books',
+                'id'       => 'cjr-books-more'
+            )
+        );
+
+        foreach($tabs as $tab) {
+            $screen->add_help_tab($tab);
+        }
+
+        $screen->set_help_sidebar('<a href="#">More info!</a>');
     }
 
 
