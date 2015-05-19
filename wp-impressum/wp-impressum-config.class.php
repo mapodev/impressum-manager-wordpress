@@ -818,8 +818,7 @@ class WP_Impressum_Config
     <?php
     }
 
-    private
-    function wpimpressum_config_page_3($option_url, $show_buttons)
+    private function wpimpressum_config_page_3($option_url, $show_buttons)
     {
         ?>
         <form action="<?= $option_url ?>&finish=true&firstset=true" method="post">
@@ -941,16 +940,23 @@ class WP_Impressum_Config
     {
         $onboarded = get_option("wp_impresusm_onboarding_conf");
         $enter_config = true;
+        $finish = $_GET['finish'];
+
+        if($finish == "true") {
+            if ($onboarded == "onboarded") {
+                $enter_config = false;
+            } else {
+                add_option("wp_impresusm_onboarding_conf", "onboarded");
+                $_GET['step'] = 1;
+            }
+            update_option("wp_impresusm_onboarding_conf", "onboarded");
+        }
 
         if ($onboarded == "onboarded") {
             $enter_config = false;
-        } else {
-            add_option("wp_impresusm_onboarding_conf", "onboarded");
-            $_GET['step'] = 1;
         }
-        update_option("wp_impresusm_onboarding_conf", "onboarded");
 
-        if (array_key_exists("setup", $_REQUEST) || $enter_config) {
+        if (empty($finish) && (array_key_exists("setup", $_REQUEST) || $enter_config)) {
 
             // dismiss admin notice
             if (get_option("wp_impressum_notice") === false) {
@@ -1053,8 +1059,7 @@ class WP_Impressum_Config
         }
     }
 
-    private
-    function wpimpressum_register_settings()
+    private function wpimpressum_register_settings()
     {
         register_setting("wp-impressum-policy_group", "wp_impressum_disclaimer");
         register_setting("wp-impressum-policy_group", "wp_impressum_set_impressum");
@@ -1071,8 +1076,7 @@ class WP_Impressum_Config
         register_setting("wp-impressum-policy_group", "wp_impressum_noindex");
     }
 
-    private
-    function wpimpressum_config_view()
+    private function wpimpressum_config_view()
     {
 
         $wpimpressum_settings[] = $wpimpressum_language = mysql_real_escape_string($_POST['wp_impressum_language_of_impressum']);
@@ -1235,12 +1239,9 @@ class WP_Impressum_Config
             <?php submit_button(__("Impressum aktualisieren")); ?>
         </form>
     <?php
-
-
     }
 
-    private
-    function isChecked($key)
+    private function isChecked($key)
     {
         if (strlen(get_option($key)) > 0) {
             echo "checked=checked";
