@@ -30,9 +30,9 @@ if (!defined('WPINC')) {
     die;
 }
 
-add_action('admin_notices', 'wpimpressum_installation_notice');
+add_action('admin_notices', 'wp_impressum_installation_notice');
 
-function wpimpressum_installation_notice()
+function wp_impressum_installation_notice()
 {
     $request = $_SERVER['REQUEST_URI'];
     if (strpos($request, WP_Impressum_Config::get_instance()->get_slug()) !== false) {
@@ -65,7 +65,7 @@ register_activation_hook(__FILE__, 'activate_wp_impressum_plugin');
 register_deactivation_hook(__FILE__, 'deactivate_wp_impressum_plugin');
 
 
-function wpimpressum_load_translations()
+function wp_impressum_load_translations()
 {
     require plugin_dir_path(__FILE__) . 'wp-impressum/wp-impressum-config.class.php';
     $conf = WP_Impressum_Config::get_instance();
@@ -74,24 +74,22 @@ function wpimpressum_load_translations()
     load_plugin_textdomain($conf->get_slug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
 }
 
-add_action('init', "wpimpressum_load_translations");
+add_action('init', "wp_impressum_load_translations");
 
-function wpimpressum_content_shortcode($atts)
+function wp_impressum_content_shortcode($atts)
 {
     $wpi = new WPImpressum();
-    return $wpi->wpimpressum_content();
+    return $wpi->content();
 }
 
-//add_shortcode('wp_impressum', 'wpimpressum_content_shortcode');
-
-function wpimpressum_goodybye()
+function wp_impressum_goodybye()
 {
     ?>
     Goodbye!
 <?
 }
 
-register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "wpimpressum_goodybye");
+register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "wp_impressum_goodybye");
 
 // Some Logic that does not to be included in the classes
 
@@ -151,7 +149,7 @@ function wp_impressum_metashortcode_shortcode_to_wphead($posts, $shortcode, $cal
     foreach ($posts as $post) {
         if (stripos($post->post_content, '[' . $shortcode) !== false) {
             if($execute_wp_head) remove_action('wp_head', 'noindex', 1);
-            add_shortcode($shortcode, 'wpimpressum_content_shortcode');
+            add_shortcode($shortcode, 'wp_impressum_content_shortcode');
             $found = true;
             break;
         }
