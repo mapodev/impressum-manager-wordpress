@@ -148,7 +148,16 @@ function wp_impressum_metashortcode_shortcode_to_wphead($posts, $shortcode, $cal
     $found = false;
     foreach ($posts as $post) {
         if (stripos($post->post_content, '[' . $shortcode) !== false) {
+	        // remove standard no index
             if($execute_wp_head) remove_action('wp_head', 'noindex', 1);
+	        // remove others plugin noindex
+	        if($execute_wp_head) {
+		        // Yoast Seo
+		        if(class_exists('WPSEO_Frontend')) {
+			        $wpseo = WPSEO_Frontend::get_instance();
+			        remove_action('wpseo_head', array($wpseo, 'robots'));
+		        }
+	        }
             add_shortcode($shortcode, 'wp_impressum_content_shortcode');
             $found = true;
             break;
