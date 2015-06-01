@@ -157,6 +157,16 @@ function wp_impressum_metashortcode_shortcode_to_wphead($posts, $shortcode, $cal
 			        $wpseo = WPSEO_Frontend::get_instance();
 			        remove_action('wpseo_head', array($wpseo, 'robots'));
 		        }
+
+		        // WP SEO by sergej müller
+		        if(class_exists('wpSEO_Output')) {
+			        remove_action( 'wpseo_the_robots', array( 'wpSEO_Output', 'the_robots' ) );
+		        }
+
+		        // Wordpress Meta Robots
+		        if(class_exists('wp_meta_robots_plugin')) {
+			        remove_action('wp_head', array('wp_meta_robots_plugin','add_meta_robots_tag'));
+		        }
 	        }
             add_shortcode($shortcode, 'wp_impressum_content_shortcode');
             $found = true;
