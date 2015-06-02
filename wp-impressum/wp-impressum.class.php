@@ -34,8 +34,8 @@ class WPImpressum
 
     function __construct()
     {
-        $conf = WP_Impressum_Config::getInstance();
-        $domain = $conf->wpimpressum_getSlug();
+        $conf = WP_Impressum_Config::get_instance();
+        $domain = $conf->get_slug();
 
         self::$_format_address = __("<h2>Angaben gemäß § 5 TMG:</h2>", $domain);
         self::$_format_contact = __("<h2>Kontakt:</h2>", $domain, $domain);
@@ -64,7 +64,7 @@ class WPImpressum
         self::$_plugin_by = __("<p>Plugin von <a href=\"http://www.wp-impressum.com\">WP-Impressum</a></p>", $domain);
     }
 
-    public function wpimpressum_content()
+    public function content()
     {
         $impressum = "";
 
@@ -81,7 +81,7 @@ class WPImpressum
         $zip = get_option("wp_impressum_zip");
 
         if (!empty($name) || !empty($address) || !empty($address_extra) || !empty($place) || !empty($zip)) {
-            $impressum = $this->wpimpressum_return_address($lang, $name, $address, $address_extra, $place, $zip);
+            $impressum = $this->address($lang, $name, $address, $address_extra, $place, $zip);
         }
 
         // params for contact
@@ -120,16 +120,16 @@ class WPImpressum
         $state = get_option("wp_impressum_state");
         $profession = get_option("wp_impressum_regulated_profession");
 
-        $impressum .= $this->wpimpressum_return_contact($lang, $telefon, $fax, $email);
+        $impressum .= $this->contact($lang, $telefon, $fax, $email);
         if (!empty($authorized_person)) {
-            $impressum .= $this->wpimpressum_return_authorized_person($authorized_person);
+            $impressum .= $this->authorized_person($authorized_person);
         }
 
-        $impressum .= $this->wpimpressum_return_register($lang, $chamber, $registernr, $register);
-        $impressum .= $this->wpimpressum_return_vat($lang, $vat, $profession, $state, $rules, $chamber);
+        $impressum .= $this->register($lang, $chamber, $registernr, $register);
+        $impressum .= $this->vat($lang, $vat, $profession, $state, $rules, $chamber);
 
         if (!empty($responsible_person_for_content)) {
-            $impressum .= $this->wpimpressum_return_journalistic($responsible_person_for_content);
+            $impressum .= $this->journalistic($responsible_person_for_content);
         }
 
         $creds = array();
@@ -166,13 +166,13 @@ class WPImpressum
         $image_source = get_option("wp_impressum_image_source");
 
         if (!empty($image_source) || !empty($creds)) {
-            $impressum .= $this->wpimpressum_return_credits($creds);
+            $impressum .= $this->credits($creds);
         }
 
         if ($disclaimer) $impressum .= self::$_disclaimer;
 
         if ($policy_general || $policy_facebook || $policy_analytics || $policy_adsense || $policy_plus || $policy_twitter) {
-            $impressum .= $this->wpimpressum_return_privacy_policy($lang, $policy_general, $policy_facebook, $policy_analytics, $policy_adsense, $policy_plus, $policy_twitter);
+            $impressum .= $this->privacy_policy($lang, $policy_general, $policy_facebook, $policy_analytics, $policy_adsense, $policy_plus, $policy_twitter);
         }
 
         $extra_field = get_option("wp_impressum_extra_field");
@@ -187,7 +187,7 @@ class WPImpressum
         return $impressum;
     }
 
-    private function wpimpressum_return_address($lang, $name, $adress, $adress_extra, $place, $zip)
+    private function address($lang, $name, $adress, $adress_extra, $place, $zip)
     {
         $result = self::$_format_address;
         if (!empty($name)) $result .= $name . "<br>";
@@ -198,7 +198,7 @@ class WPImpressum
         return $result;
     }
 
-    private function wpimpressum_return_contact($lang, $telefon, $fax, $email)
+    private function contact($lang, $telefon, $fax, $email)
     {
         $result = self::$_format_contact;
         $result .= "<table><tbody>";
@@ -214,10 +214,10 @@ class WPImpressum
         return $result;
     }
 
-    private function wpimpressum_return_register($lang, $register_chamber, $registernr, $register)
+    private function register($lang, $register_chamber, $registernr, $register)
     {
-        $conf = WP_Impressum_Config::getInstance();
-        $domain = $conf->wpimpressum_getSlug();
+        $conf = WP_Impressum_Config::get_instance();
+        $domain = $conf->get_slug();
 
         switch ($register) {
             case 1:
@@ -252,7 +252,7 @@ class WPImpressum
         return $result;
     }
 
-    private function wpimpressum_return_credits($creds)
+    private function credits($creds)
     {
         $result = self::$_format_image_soruce;
         $creds = array_unique($creds);
@@ -265,7 +265,7 @@ class WPImpressum
         return $result;
     }
 
-    private function wpimpressum_return_authorized_person($person)
+    private function authorized_person($person)
     {
         $result = self::$_format_authorized_person;
         if (!empty($person)) {
@@ -274,10 +274,10 @@ class WPImpressum
         return $result;
     }
 
-    private function wpimpressum_return_vat($lang, $vat, $profession, $state, $rules, $chamber)
+    private function vat($lang, $vat, $profession, $state, $rules, $chamber)
     {
-        $conf = WP_Impressum_Config::getInstance();
-        $domain = $conf->wpimpressum_getSlug();
+        $conf = WP_Impressum_Config::get_instance();
+        $domain = $conf->get_slug();
 
         $result = "";
         if (!empty($vat)) $result .= sprintf(self::$_format_vat, $vat);
@@ -290,7 +290,7 @@ class WPImpressum
         return $result;
     }
 
-    private function wpimpressum_return_journalistic($p)
+    private function journalistic($p)
     {
         $result = self::$_format_journalistic_content;
         if (!empty($p)) {
@@ -299,7 +299,7 @@ class WPImpressum
         return $result;
     }
 
-    private function wpimpressum_return_privacy_policy($lang, $general, $facebook, $analytics, $adsense, $plus, $twitter)
+    private function privacy_policy($lang, $general, $facebook, $analytics, $adsense, $plus, $twitter)
     {
         $result = self::$_privacy_policy_head;
         if (strlen($general) > 0) $result .= self::$_privacy_policy_general;

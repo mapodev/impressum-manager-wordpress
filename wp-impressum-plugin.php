@@ -30,17 +30,17 @@ if (!defined('WPINC')) {
     die;
 }
 
-add_action('admin_notices', 'wpimpressum_installation_notice');
+add_action('admin_notices', 'wp_impressum_installation_notice');
 
-function wpimpressum_installation_notice()
+function wp_impressum_installation_notice()
 {
     $request = $_SERVER['REQUEST_URI'];
-    if (strpos($request, WP_Impressum_Config::getInstance()->wpimpressum_getSlug()) !== false) {
+    if (strpos($request, WP_Impressum_Config::get_instance()->get_slug()) !== false) {
         // indside impressum
     } else {
         if (get_option("wp_impressum_notice") === false && get_option("wp_impressum_name_company") === false) {
             $class = "error";
-            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . WP_Impressum_Config::getInstance()->wpimpressum_getSlug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
+            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . WP_Impressum_Config::get_instance()->get_slug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
             echo "<div class=\"$class\"> <p>$message</p></div>";
         }
     }
@@ -65,33 +65,31 @@ register_activation_hook(__FILE__, 'activate_wp_impressum_plugin');
 register_deactivation_hook(__FILE__, 'deactivate_wp_impressum_plugin');
 
 
-function wpimpressum_load_translations()
+function wp_impressum_load_translations()
 {
     require plugin_dir_path(__FILE__) . 'wp-impressum/wp-impressum-config.class.php';
-    $conf = WP_Impressum_Config::getInstance();
+    $conf = WP_Impressum_Config::get_instance();
     // Load translations
     $plugin_dir = basename(dirname(__FILE__));
-    load_plugin_textdomain($conf->wpimpressum_getSlug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
+    load_plugin_textdomain($conf->get_slug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
 }
 
-add_action('init', "wpimpressum_load_translations");
+add_action('init', "wp_impressum_load_translations");
 
-function wpimpressum_content_shortcode($atts)
+function wp_impressum_content_shortcode($atts)
 {
     $wpi = new WPImpressum();
-    return $wpi->wpimpressum_content();
+    return $wpi->content();
 }
 
-//add_shortcode('wp_impressum', 'wpimpressum_content_shortcode');
-
-function wpimpressum_goodybye()
+function wp_impressum_goodybye()
 {
     ?>
     Goodbye!
 <?
 }
 
-register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "wpimpressum_goodybye");
+register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "wp_impressum_goodybye");
 
 // Some Logic that does not to be included in the classes
 
@@ -150,8 +148,27 @@ function wp_impressum_metashortcode_shortcode_to_wphead($posts, $shortcode, $cal
     $found = false;
     foreach ($posts as $post) {
         if (stripos($post->post_content, '[' . $shortcode) !== false) {
+	        // remove standard no index
             if($execute_wp_head) remove_action('wp_head', 'noindex', 1);
-            add_shortcode($shortcode, 'wpimpressum_content_shortcode');
+	        // remove others plugin noindex
+	        if($execute_wp_head) {
+		        // Yoast Seo
+		        if(class_exists('WPSEO_Frontend')) {
+			        $wpseo = WPSEO_Frontend::get_instance();
+			        remove_action('wpseo_head', array($wpseo, 'robots'));
+		        }
+
+		        // WP SEO by sergej müller
+		        if(class_exists('wpSEO_Output')) {
+			        remove_action( 'wpseo_the_robots', array( 'wpSEO_Output', 'the_robots' ) );
+		        }
+
+		        // Wordpress Meta Robots
+		        if(class_exists('wp_meta_robots_plugin')) {
+			        remove_action('wp_head', array('wp_meta_robots_plugin','add_meta_robots_tag'));
+		        }
+	        }
+            add_shortcode($shortcode, 'wp_impressum_content_shortcode');
             $found = true;
             break;
         }
@@ -165,5 +182,4 @@ function wp_impressum_metashortcode_shortcode_to_wphead($posts, $shortcode, $cal
 
 // Instead of creating a shortcode, hook to the_posts
 add_action('the_posts', 'wp_impressum_metashortcode');
-
 

@@ -1,5 +1,7 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 class WP_Impressum_Config
 {
 
@@ -264,9 +266,9 @@ class WP_Impressum_Config
         }
 
         if (is_admin()) {
-            add_action('admin_init', array($this, 'wpimpressum_admin_init'));
-            add_action('admin_menu', array($this, 'wpimpressum_addmenu'));
-            add_action('wp_ajax_wp_impressum_delete_options', array($this, 'wp_impressum_delete_callback'));
+            add_action('admin_init', array($this, 'admin_init'));
+            add_action('admin_menu', array($this, 'add_menu'));
+            add_action('wp_ajax_wp_impressum_delete_options', array($this, 'delete_callback'));
         }
     }
 
@@ -274,28 +276,51 @@ class WP_Impressum_Config
      * ajax response for DEV options
      * TODO: Delete before release to Wordpress
      */
-    function wp_impressum_delete_callback()
+    function delete_callback()
     {
         echo "OK";
         require_once plugin_dir_path(__FILE__) . "../uninstall.php";
         die();
     }
 
-    public function wpimpressum_admin_init()
+    public function admin_init()
     {
-        $this->wpimpressum_register_settings();
+        $this->register_settings();
         wp_enqueue_style('wp_impressum_style', plugins_url('../css/wp-impressum.min.css', __FILE__));
         wp_enqueue_script('wp_impressum_script', plugins_url('../js/wp-impressum.min.js', __FILE__));
         wp_enqueue_script('jquery');
     }
 
-    public function wpimpressum_addmenu()
+    public function add_menu()
     {
-        add_options_page("WP Impressum", 'WP Impressum', 'manage_options', $this->wpimpressum_getSlug(), array($this, 'wpimpressum_show'), 99.5);
+        $hook = add_options_page("WP Impressum", 'WP Impressum', 'manage_options', $this->get_slug(), array($this, 'show'), 99.5);
+        add_action('load-'.$hook, array($this, 'add_help_tab'));
+    }
+
+    public function add_help_tab() {
+        $screen = get_current_screen();
+
+        $tabs = array(
+            array(
+                'title'    => 'All About Books',
+                'id'       => 'cjr-books-about',
+                'content'  => '<p>Books are pretty awesome...</p>'
+            ),
+            array(
+                'title'    => 'More About Books',
+                'id'       => 'cjr-books-more'
+            )
+        );
+
+        foreach($tabs as $tab) {
+            $screen->add_help_tab($tab);
+        }
+
+        $screen->set_help_sidebar('<a href="#">More info!</a>');
     }
 
 
-    public static function getInstance()
+    public static function get_instance()
     {
         if (self::$instance == null) {
             self::$instance = new WP_Impressum_Config();
@@ -306,7 +331,7 @@ class WP_Impressum_Config
     /**
      * @return mixed
      */
-    public function wpimpressum_getSlug()
+    public function get_slug()
     {
         return $this->slug;
     }
@@ -314,12 +339,12 @@ class WP_Impressum_Config
     /**
      * @return mixed
      */
-    public function wpimpressum_getVersion()
+    public function get_version()
     {
         return $this->version;
     }
 
-    public function wpimpressum_show()
+    public function show()
     {
         ?>
         <script>
@@ -346,13 +371,13 @@ class WP_Impressum_Config
             |
             <small><a href="javascript:void(0);" id="delete_options">Delete options</a></small>
             <?php
-            $this->wpimpressum_show_setup();
+            $this->show_setup();
             ?>
         </div>
     <?php
     }
 
-    private function wpimpressum_save_option($name, $val)
+    private function save_option($name, $val)
     {
         if (get_option($name) !== false) {
             update_option($name, $val);
@@ -361,7 +386,7 @@ class WP_Impressum_Config
         }
     }
 
-    private function wpimpressum_config_page_1($option_url, $show_buttons)
+    private function config_page_1($option_url, $show_buttons)
     {
         ?>
 
@@ -556,7 +581,7 @@ class WP_Impressum_Config
                 <table>
                 <tr>
                     <td>
-                        <a href="options-general.php?page=<?= WP_Impressum_Config::getInstance()->wpimpressum_getSlug() ?>">
+                        <a href="options-general.php?page=<?= WP_Impressum_Config::get_instance()->get_slug() ?>">
                             <input type="button" class="button button-secondary"
                                    value="<?= __("Zurück zu den Einstellungen", $this->slug) ?>"
                                    style="margin-top: 5px">
@@ -572,7 +597,7 @@ class WP_Impressum_Config
     <?php
     }
 
-    private function wpimpressum_config_page_2($option_url, $show_buttons, $last_page = false)
+    private function config_page_2($option_url, $show_buttons, $last_page = false)
     {
 
         $person = get_option("wp_impressum_person");
@@ -786,7 +811,7 @@ class WP_Impressum_Config
                 <table>
                     <tr>
                         <td>
-                            <a href="options-general.php?page=<?= WP_Impressum_Config::getInstance()->wpimpressum_getSlug() ?>">
+                            <a href="options-general.php?page=<?= WP_Impressum_Config::get_instance()->get_slug() ?>">
                                 <input type="button" class="button button-secondary"
                                        value="<?= __("Zurück zu den Einstellungen", $this->slug) ?>"
                                        style="margin-top: 5px">
@@ -794,7 +819,7 @@ class WP_Impressum_Config
                         </td>
                         <?php if (!$last_page) { ?>
                         <td>
-                            <a href="options-general.php?page=<?= WP_Impressum_Config::getInstance()->wpimpressum_getSlug() ?>&step=1&setup=true">
+                            <a href="options-general.php?page=<?= WP_Impressum_Config::get_instance()->get_slug() ?>&step=1&setup=true">
                                 <input type="button" class="button button-secondary"
                                        value="<?= __("Schritt zurück", $this->slug) ?>"
                                        style="margin-top: 5px">
@@ -818,7 +843,7 @@ class WP_Impressum_Config
     <?php
     }
 
-    private function wpimpressum_config_page_3($option_url, $show_buttons)
+    private function config_page_3($option_url, $show_buttons)
     {
         ?>
         <form action="<?= $option_url ?>&finish=true&firstset=true" method="post">
@@ -911,14 +936,14 @@ class WP_Impressum_Config
                 <table>
                     <tr>
                         <td>
-                            <a href="options-general.php?page=<?= WP_Impressum_Config::getInstance()->wpimpressum_getSlug() ?>">
+                            <a href="options-general.php?page=<?= WP_Impressum_Config::get_instance()->get_slug() ?>">
                                 <input type="button" class="button button-secondary"
                                        value="<?= __("Zurück zu den Einstellungen", $this->slug) ?>"
                                        style="margin-top: 5px">
                             </a>
                         </td>
                         <td>
-                            <a href="options-general.php?page=<?= WP_Impressum_Config::getInstance()->wpimpressum_getSlug() ?>&step=2&setup=true">
+                            <a href="options-general.php?page=<?= WP_Impressum_Config::get_instance()->get_slug() ?>&step=2&setup=true">
                                 <input type="button" class="button button-secondary"
                                        value="<?= __("Schritt zurück", $this->slug) ?>"
                                        style="margin-top: 5px">
@@ -936,7 +961,7 @@ class WP_Impressum_Config
     }
 
     public
-    function wpimpressum_show_setup()
+    function show_setup()
     {
         $onboarded = get_option("wp_impresusm_onboarding_conf");
         $enter_config = true;
@@ -965,101 +990,101 @@ class WP_Impressum_Config
                 update_option("wp_impressum_notice", "dismissed");
             }
 
-            $option_url = admin_url("options-general.php") . "?page=" . WP_Impressum_Config::getInstance()->wpimpressum_getSlug();
+            $option_url = admin_url("options-general.php") . "?page=" . WP_Impressum_Config::get_instance()->get_slug();
 
             if ($enter_config) {
                 switch ($_GET['step']) {
                     case 1:
 
-                        $this->wpimpressum_config_page_1($option_url, true);
+                        $this->config_page_1($option_url, true);
 
                         break;
 
                     case 2:
 
                         if (array_key_exists("submit", $_REQUEST)) {
-                            $this->wpimpressum_save_option("wp_impressum_person", $_POST["wp_impressum_person"]);
-                            $this->wpimpressum_save_option("wp_impressum_form_of_organization", $_POST["wp_impressum_form_of_organization"]);
-                            $this->wpimpressum_save_option("wp_impressum_name_company", $_POST["wp_impressum_name_company"]);
-                            $this->wpimpressum_save_option("wp_impressum_address", $_POST["wp_impressum_address"]);
-                            $this->wpimpressum_save_option("wp_impressum_address_extra", $_POST["wp_impressum_address_extra"]);
-                            $this->wpimpressum_save_option("wp_impressum_place", $_POST["wp_impressum_place"]);
-                            $this->wpimpressum_save_option("wp_impressum_zip", $_POST["wp_impressum_zip"]);
-                            $this->wpimpressum_save_option("wp_impressum_country", $_POST["wp_impressum_country"]);
-                            $this->wpimpressum_save_option("wp_impressum_fax", $_POST["wp_impressum_fax"]);
-                            $this->wpimpressum_save_option("wp_impressum_email", $_POST["wp_impressum_email"]);
-                            $this->wpimpressum_save_option("wp_impressum_phone", $_POST["wp_impressum_phone"]);
+                            $this->save_option("wp_impressum_person", $_POST["wp_impressum_person"]);
+                            $this->save_option("wp_impressum_form_of_organization", $_POST["wp_impressum_form_of_organization"]);
+                            $this->save_option("wp_impressum_name_company", $_POST["wp_impressum_name_company"]);
+                            $this->save_option("wp_impressum_address", $_POST["wp_impressum_address"]);
+                            $this->save_option("wp_impressum_address_extra", $_POST["wp_impressum_address_extra"]);
+                            $this->save_option("wp_impressum_place", $_POST["wp_impressum_place"]);
+                            $this->save_option("wp_impressum_zip", $_POST["wp_impressum_zip"]);
+                            $this->save_option("wp_impressum_country", $_POST["wp_impressum_country"]);
+                            $this->save_option("wp_impressum_fax", $_POST["wp_impressum_fax"]);
+                            $this->save_option("wp_impressum_email", $_POST["wp_impressum_email"]);
+                            $this->save_option("wp_impressum_phone", $_POST["wp_impressum_phone"]);
                         }
 
-                        $this->wpimpressum_config_page_2($option_url, true);
+                        $this->config_page_2($option_url, true);
 
                         break;
 
                     case 3:
 
                         if (array_key_exists("submit", $_REQUEST)) {
-                            $this->wpimpressum_save_option("wp_impressum_authorized_person", $_POST["wp_impressum_authorized_person"]);
-                            $this->wpimpressum_save_option("wp_impressum_vat", $_POST["wp_impressum_vat"]);
-                            $this->wpimpressum_save_option("wp_impressum_register", $_POST["wp_impressum_register"]);
-                            $this->wpimpressum_save_option("wp_impressum_registenr", $_POST["wp_impressum_registenr"]);
-                            $this->wpimpressum_save_option("wp_impressum_regulated_profession", $_POST["wp_impressum_regulated_profession"]);
-                            $this->wpimpressum_save_option("wp_impressum_state", $_POST["wp_impressum_state"]);
-                            $this->wpimpressum_save_option("wp_impressum_state_rules", $_POST["wp_impressum_state_rules"]);
-                            $this->wpimpressum_save_option("wp_impressum_chamber", $_POST["wp_impressum_chamber"]);
-                            $this->wpimpressum_save_option("wp_impressum_image_source", $_POST["wp_impressum_image_source"]);
-                            $this->wpimpressum_save_option("wp_impressum_responsible_chamber", $_POST["wp_impressum_responsible_chamber"]);
-                            $this->wpimpressum_save_option("wp_impressum_responsible_persons", $_POST["wp_impressum_responsible_persons"]);
-                            $this->wpimpressum_save_option("wp_impressum_press_content", $_POST["wp_impressum_press_content"]);
-                            $this->wpimpressum_save_option("wp_impressum_allowness", $_POST["wp_impressum_allowness"]);
-                            $this->wpimpressum_save_option("wp_impressum_regulated_profession_checked", $_POST['wp_impressum_regulated_profession_checked']);
+                            $this->save_option("wp_impressum_authorized_person", $_POST["wp_impressum_authorized_person"]);
+                            $this->save_option("wp_impressum_vat", $_POST["wp_impressum_vat"]);
+                            $this->save_option("wp_impressum_register", $_POST["wp_impressum_register"]);
+                            $this->save_option("wp_impressum_registenr", $_POST["wp_impressum_registenr"]);
+                            $this->save_option("wp_impressum_regulated_profession", $_POST["wp_impressum_regulated_profession"]);
+                            $this->save_option("wp_impressum_state", $_POST["wp_impressum_state"]);
+                            $this->save_option("wp_impressum_state_rules", $_POST["wp_impressum_state_rules"]);
+                            $this->save_option("wp_impressum_chamber", $_POST["wp_impressum_chamber"]);
+                            $this->save_option("wp_impressum_image_source", $_POST["wp_impressum_image_source"]);
+                            $this->save_option("wp_impressum_responsible_chamber", $_POST["wp_impressum_responsible_chamber"]);
+                            $this->save_option("wp_impressum_responsible_persons", $_POST["wp_impressum_responsible_persons"]);
+                            $this->save_option("wp_impressum_press_content", $_POST["wp_impressum_press_content"]);
+                            $this->save_option("wp_impressum_allowness", $_POST["wp_impressum_allowness"]);
+                            $this->save_option("wp_impressum_regulated_profession_checked", $_POST['wp_impressum_regulated_profession_checked']);
                         }
 
-                        $this->wpimpressum_config_page_3($option_url, true);
+                        $this->config_page_3($option_url, true);
 
                         break;
 
                     default:
-                        $this->wpimpressum_config_view();
+                        $this->config_view();
                 }
             } else {
                 if (array_key_exists("submit", $_REQUEST)) {
-                    $this->wpimpressum_save_option("wp_impressum_person", $_POST["wp_impressum_person"]);
-                    $this->wpimpressum_save_option("wp_impressum_form_of_organization", $_POST["wp_impressum_form_of_organization"]);
-                    $this->wpimpressum_save_option("wp_impressum_name_company", $_POST["wp_impressum_name_company"]);
-                    $this->wpimpressum_save_option("wp_impressum_address", $_POST["wp_impressum_address"]);
-                    $this->wpimpressum_save_option("wp_impressum_address_extra", $_POST["wp_impressum_address_extra"]);
-                    $this->wpimpressum_save_option("wp_impressum_place", $_POST["wp_impressum_place"]);
-                    $this->wpimpressum_save_option("wp_impressum_zip", $_POST["wp_impressum_zip"]);
-                    $this->wpimpressum_save_option("wp_impressum_country", $_POST["wp_impressum_country"]);
-                    $this->wpimpressum_save_option("wp_impressum_fax", $_POST["wp_impressum_fax"]);
-                    $this->wpimpressum_save_option("wp_impressum_email", $_POST["wp_impressum_email"]);
-                    $this->wpimpressum_save_option("wp_impressum_phone", $_POST["wp_impressum_phone"]);
-                    $this->wpimpressum_save_option("wp_impressum_authorized_person", $_POST["wp_impressum_authorized_person"]);
-                    $this->wpimpressum_save_option("wp_impressum_vat", $_POST["wp_impressum_vat"]);
-                    $this->wpimpressum_save_option("wp_impressum_register", $_POST["wp_impressum_register"]);
-                    $this->wpimpressum_save_option("wp_impressum_registenr", $_POST["wp_impressum_registenr"]);
-                    $this->wpimpressum_save_option("wp_impressum_regulated_profession", $_POST["wp_impressum_regulated_profession"]);
-                    $this->wpimpressum_save_option("wp_impressum_state", $_POST["wp_impressum_state"]);
-                    $this->wpimpressum_save_option("wp_impressum_state_rules", $_POST["wp_impressum_state_rules"]);
-                    $this->wpimpressum_save_option("wp_impressum_chamber", $_POST["wp_impressum_chamber"]);
-                    $this->wpimpressum_save_option("wp_impressum_image_source", $_POST["wp_impressum_image_source"]);
-                    $this->wpimpressum_save_option("wp_impressum_responsible_chamber", $_POST["wp_impressum_responsible_chamber"]);
-                    $this->wpimpressum_save_option("wp_impressum_responsible_persons", $_POST["wp_impressum_responsible_persons"]);
-                    $this->wpimpressum_save_option("wp_impressum_press_content", $_POST["wp_impressum_press_content"]);
-                    $this->wpimpressum_save_option("wp_impressum_allowness", $_POST["wp_impressum_allowness"]);
-                    $this->wpimpressum_save_option("wp_impressum_regulated_profession_checked", $_POST['wp_impressum_regulated_profession_checked']);
+                    $this->save_option("wp_impressum_person", $_POST["wp_impressum_person"]);
+                    $this->save_option("wp_impressum_form_of_organization", $_POST["wp_impressum_form_of_organization"]);
+                    $this->save_option("wp_impressum_name_company", $_POST["wp_impressum_name_company"]);
+                    $this->save_option("wp_impressum_address", $_POST["wp_impressum_address"]);
+                    $this->save_option("wp_impressum_address_extra", $_POST["wp_impressum_address_extra"]);
+                    $this->save_option("wp_impressum_place", $_POST["wp_impressum_place"]);
+                    $this->save_option("wp_impressum_zip", $_POST["wp_impressum_zip"]);
+                    $this->save_option("wp_impressum_country", $_POST["wp_impressum_country"]);
+                    $this->save_option("wp_impressum_fax", $_POST["wp_impressum_fax"]);
+                    $this->save_option("wp_impressum_email", $_POST["wp_impressum_email"]);
+                    $this->save_option("wp_impressum_phone", $_POST["wp_impressum_phone"]);
+                    $this->save_option("wp_impressum_authorized_person", $_POST["wp_impressum_authorized_person"]);
+                    $this->save_option("wp_impressum_vat", $_POST["wp_impressum_vat"]);
+                    $this->save_option("wp_impressum_register", $_POST["wp_impressum_register"]);
+                    $this->save_option("wp_impressum_registenr", $_POST["wp_impressum_registenr"]);
+                    $this->save_option("wp_impressum_regulated_profession", $_POST["wp_impressum_regulated_profession"]);
+                    $this->save_option("wp_impressum_state", $_POST["wp_impressum_state"]);
+                    $this->save_option("wp_impressum_state_rules", $_POST["wp_impressum_state_rules"]);
+                    $this->save_option("wp_impressum_chamber", $_POST["wp_impressum_chamber"]);
+                    $this->save_option("wp_impressum_image_source", $_POST["wp_impressum_image_source"]);
+                    $this->save_option("wp_impressum_responsible_chamber", $_POST["wp_impressum_responsible_chamber"]);
+                    $this->save_option("wp_impressum_responsible_persons", $_POST["wp_impressum_responsible_persons"]);
+                    $this->save_option("wp_impressum_press_content", $_POST["wp_impressum_press_content"]);
+                    $this->save_option("wp_impressum_allowness", $_POST["wp_impressum_allowness"]);
+                    $this->save_option("wp_impressum_regulated_profession_checked", $_POST['wp_impressum_regulated_profession_checked']);
 
                 }
 
-                $this->wpimpressum_config_page_1($option_url, false);
-                $this->wpimpressum_config_page_2($option_url, true, true);
+                $this->config_page_1($option_url, false);
+                $this->config_page_2($option_url, true, true);
             }
         } else {
-            $this->wpimpressum_config_view();
+            $this->config_view();
         }
     }
 
-    private function wpimpressum_register_settings()
+    private function register_settings()
     {
         register_setting("wp-impressum-policy_group", "wp_impressum_disclaimer");
         register_setting("wp-impressum-policy_group", "wp_impressum_set_impressum");
@@ -1076,7 +1101,7 @@ class WP_Impressum_Config
         register_setting("wp-impressum-policy_group", "wp_impressum_noindex");
     }
 
-    private function wpimpressum_config_view()
+    private function config_view()
     {
 
         $wpimpressum_settings[] = $wpimpressum_language = mysql_real_escape_string($_POST['wp_impressum_language_of_impressum']);
@@ -1090,22 +1115,22 @@ class WP_Impressum_Config
         $wpimpressum_settings[] = $extra_field = mysql_real_escape_string($_POST['wp_impressum_extra_field']);
 
         if (array_key_exists("firstset", $_GET) && $_GET['finish'] == true && array_key_exists("submit", $_REQUEST)) {
-            $this->wpimpressum_save_option("wp_impressum_language_of_impressum", $wpimpressum_language);
-            $this->wpimpressum_save_option("wp_impressum_general_privacy_policy", $general_privacy_policy);
-            $this->wpimpressum_save_option("wp_impressum_disclaimer", $disclaimer);
-            $this->wpimpressum_save_option("wp_impressum_policy_facebook", $policy_facebook);
-            $this->wpimpressum_save_option("wp_impressum_policy_google_analytics", $policy_google_analytics);
-            $this->wpimpressum_save_option("wp_impressum_policy_google_adsense", $policy_google_adsense);
-            $this->wpimpressum_save_option("wp_impressum_policy_google_plus", $policy_google_plus);
-            $this->wpimpressum_save_option("wp_impressum_policy_twitter", $policy_google_twitter);
-            $this->wpimpressum_save_option("wp_impressum_extra_field", $extra_field);
+            $this->save_option("wp_impressum_language_of_impressum", $wpimpressum_language);
+            $this->save_option("wp_impressum_general_privacy_policy", $general_privacy_policy);
+            $this->save_option("wp_impressum_disclaimer", $disclaimer);
+            $this->save_option("wp_impressum_policy_facebook", $policy_facebook);
+            $this->save_option("wp_impressum_policy_google_analytics", $policy_google_analytics);
+            $this->save_option("wp_impressum_policy_google_adsense", $policy_google_adsense);
+            $this->save_option("wp_impressum_policy_google_plus", $policy_google_plus);
+            $this->save_option("wp_impressum_policy_twitter", $policy_google_twitter);
+            $this->save_option("wp_impressum_extra_field", $extra_field);
         }
 
         ?>
         <form action="options-general.php">
             <table class="form-table">
                 <input type="hidden" name="page"
-                       value="<?= WP_Impressum_Config::getInstance()->wpimpressum_getSlug() ?>">
+                       value="<?= WP_Impressum_Config::get_instance()->get_slug() ?>">
                 <input type="hidden" name="step" value="1"/>
                 <input type="hidden" name="setup" value="true"/>
                 <tbody>
