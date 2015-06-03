@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die('No script kiddies please!');
 
-class WPImpressum
+class ImpressumManager
 {
 
     private static $_format_address;
@@ -34,7 +34,7 @@ class WPImpressum
 
     function __construct()
     {
-        $conf = WP_Impressum_Config::get_instance();
+        $conf = impressum_manager_Config::get_instance();
         $domain = $conf->get_slug();
 
         self::$_format_address = __("<h2>Angaben gemäß § 5 TMG:</h2>", $domain);
@@ -61,64 +61,64 @@ class WPImpressum
         self::$_privacy_policy_twitter = __("<p><strong>Datenschutzerkl&auml;rung f&uuml;r die Nutzung von Twitter</strong></p> <p>Auf unseren Seiten sind Funktionen des Dienstes Twitter eingebunden. Diese Funktionen werden angeboten durch die Twitter Inc., Twitter, Inc. 1355 Market St, Suite 900, San Francisco, CA 94103, USA. Durch das Benutzen von Twitter und der Funktion &quot;Re-Tweet&quot; werden die von Ihnen besuchten Webseiten mit Ihrem Twitter-Account verkn&uuml;pft und anderen Nutzern bekannt gegeben. Dabei werden auch Daten an Twitter &uuml;bertragen.</p> <p>Wir weisen darauf hin, dass wir als Anbieter der Seiten keine Kenntnis vom Inhalt der &uuml;bermittelten Daten sowie deren Nutzung durch Twitter erhalten. Weitere Informationen hierzu finden Sie in der Datenschutzerkl&auml;rung von Twitter unter <a href=\"http://twitter.com/privacy\" target=\"_blank\">http://twitter.com/privacy</a>.</p> <p>Ihre Datenschutzeinstellungen bei Twitter k&ouml;nnen Sie in den Konto-Einstellungen unter <a href=\"http://twitter.com/account/settings\" target=\"_blank\">http://twitter.com/account/settings</a> &auml;ndern.</p><p>", $domain);
         self::$_privacy_policy_end = __("<strong>Auskunft, L&ouml;schung, Sperrung</strong></p> <p>Sie haben jederzeit das Recht auf unentgeltliche Auskunft &uuml;ber Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empf&auml;nger und den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung, Sperrung oder L&ouml;schung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema personenbezogene Daten k&ouml;nnen Sie sich jederzeit &uuml;ber die im Impressum angegeben Adresse des Webseitenbetreibers an uns wenden.</p>", $domain);
         self::$_source = __("<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", $domain);
-        self::$_plugin_by = __("<p>Plugin von <a href=\"http://www.wp-impressum.com\">WP-Impressum</a></p>", $domain);
+        self::$_plugin_by = __("<p>Plugin von <a href=\"http://www.plugin.com\">impressum-manager</a></p>", $domain);
     }
 
     public function content()
     {
         $impressum = "";
 
-        $lang = strtolower(get_option("wp_impressum_language_of_impressum"));
+        $lang = strtolower(get_option("impressum_manager_language_of_impressum"));
 
         // standard language, can be changed later on
         if (empty($lang)) $lang = "de";
         if (strpos($lang, "no_land_choosen") !== false) $lang = "de";
 
-        $name = get_option("wp_impressum_name_company");
-        $address = get_option("wp_impressum_address");
-        $address_extra = get_option("wp_impressum_address_extra");
-        $place = get_option("wp_impressum_place");
-        $zip = get_option("wp_impressum_zip");
+        $name = get_option("impressum_manager_name_company");
+        $address = get_option("impressum_manager_address");
+        $address_extra = get_option("impressum_manager_address_extra");
+        $place = get_option("impressum_manager_place");
+        $zip = get_option("impressum_manager_zip");
 
         if (!empty($name) || !empty($address) || !empty($address_extra) || !empty($place) || !empty($zip)) {
             $impressum = $this->address($lang, $name, $address, $address_extra, $place, $zip);
         }
 
         // params for contact
-        $telefon = get_option("wp_impressum_phone");
-        $fax = get_option("wp_impressum_fax");
-        $email = get_option("wp_impressum_email");
+        $telefon = get_option("impressum_manager_phone");
+        $fax = get_option("impressum_manager_fax");
+        $email = get_option("impressum_manager_email");
 
         // params for vat
-        $vat = get_option("wp_impressum_vat");
+        $vat = get_option("impressum_manager_vat");
 
         // params for register
-        $register = get_option("wp_impressum_register");
-        $registernr = get_option("wp_impressum_registenr");
-        $chamber = get_option("wp_impressum_chamber");
+        $register = get_option("impressum_manager_register");
+        $registernr = get_option("impressum_manager_registenr");
+        $chamber = get_option("impressum_manager_chamber");
 
         // disclaimer
-        $disclaimer = get_option("wp_impressum_disclaimer");
+        $disclaimer = get_option("impressum_manager_disclaimer");
 
         // privacy policy stuff
-        $policy_general = get_option("wp_impressum_general_privacy_policy");
-        $policy_facebook = get_option("wp_impressum_policy_facebook");
-        $policy_analytics = get_option("wp_impressum_policy_google_analytics");
-        $policy_adsense = get_option("wp_impressum_policy_google_adsense");
-        $policy_plus = get_option("wp_impressum_policy_google_plus");
-        $policy_twitter = get_option("wp_impressum_policy_twitter");
+        $policy_general = get_option("impressum_manager_general_privacy_policy");
+        $policy_facebook = get_option("impressum_manager_policy_facebook");
+        $policy_analytics = get_option("impressum_manager_policy_google_analytics");
+        $policy_adsense = get_option("impressum_manager_policy_google_adsense");
+        $policy_plus = get_option("impressum_manager_policy_google_plus");
+        $policy_twitter = get_option("impressum_manager_policy_twitter");
 
         // autohirzed persons
-        $authorized_person = get_option("wp_impressum_authorized_person");
+        $authorized_person = get_option("impressum_manager_authorized_person");
 
         // journalistic responsible persons for content
-        $responsible_person_for_content = get_option("wp_impressum_responsible_persons");
+        $responsible_person_for_content = get_option("impressum_manager_responsible_persons");
 
         // chamber, state and rules for given VAT
-        $chamber = get_option("wp_impressum_chamber");
-        $rules = get_option("wp_impressum_state_rules");
-        $state = get_option("wp_impressum_state");
-        $profession = get_option("wp_impressum_regulated_profession");
+        $chamber = get_option("impressum_manager_chamber");
+        $rules = get_option("impressum_manager_state_rules");
+        $state = get_option("impressum_manager_state");
+        $profession = get_option("impressum_manager_regulated_profession");
 
         $impressum .= $this->contact($lang, $telefon, $fax, $email);
         if (!empty($authorized_person)) {
@@ -157,13 +157,13 @@ class WPImpressum
                 $attachments = get_posts($args);
                 if ($attachments) {
                     foreach ($attachments as $attachment) {
-                        $creds[$i++] = trim(strip_tags(get_post_meta($attachment->ID, 'wp_impressum_image_credential', true)));
+                        $creds[$i++] = trim(strip_tags(get_post_meta($attachment->ID, 'impressum_manager_image_credential', true)));
                     }
                 }
             }
         }
 
-        $image_source = get_option("wp_impressum_image_source");
+        $image_source = get_option("impressum_manager_image_source");
 
         if (!empty($image_source) || !empty($creds)) {
             $impressum .= $this->credits($creds);
@@ -175,7 +175,7 @@ class WPImpressum
             $impressum .= $this->privacy_policy($lang, $policy_general, $policy_facebook, $policy_analytics, $policy_adsense, $policy_plus, $policy_twitter);
         }
 
-        $extra_field = get_option("wp_impressum_extra_field");
+        $extra_field = get_option("impressum_manager_extra_field");
 
         if (!empty($extra_field)) {
             $impressum .= $extra_field;
@@ -216,7 +216,7 @@ class WPImpressum
 
     private function register($lang, $register_chamber, $registernr, $register)
     {
-        $conf = WP_Impressum_Config::get_instance();
+        $conf = impressum_manager_Config::get_instance();
         $domain = $conf->get_slug();
 
         switch ($register) {
@@ -259,8 +259,8 @@ class WPImpressum
         foreach ($creds as $credit) {
             $result .= $credit . "<br>";
         }
-        if (get_option("wp_impressum_image_source") !== false) {
-            $result .= nl2br(get_option("wp_impressum_image_source"));
+        if (get_option("impressum_manager_image_source") !== false) {
+            $result .= nl2br(get_option("impressum_manager_image_source"));
         }
         return $result;
     }
@@ -276,12 +276,12 @@ class WPImpressum
 
     private function vat($lang, $vat, $profession, $state, $rules, $chamber)
     {
-        $conf = WP_Impressum_Config::get_instance();
+        $conf = impressum_manager_Config::get_instance();
         $domain = $conf->get_slug();
 
         $result = "";
         if (!empty($vat)) $result .= sprintf(self::$_format_vat, $vat);
-        if(strlen(get_option("wp_impressum_regulated_profession_checked")) > 0) {
+        if(strlen(get_option("impressum_manager_regulated_profession_checked")) > 0) {
             if (!empty($profession)) $result .= __("Berufsbezeichnung:", $domain) . " " . $profession . "<br>";
             if (!empty($chamber)) $result .= __("Zuständige Kammer:", $domain) . " " . $chamber . "<br>";
             if (!empty($state)) $result .= __("Verliehen durch:", $domain) . " " . $state . "<br>";
