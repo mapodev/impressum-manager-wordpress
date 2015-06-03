@@ -61,7 +61,7 @@ class ImpressumManager
         self::$_privacy_policy_twitter = __("<p><strong>Datenschutzerkl&auml;rung f&uuml;r die Nutzung von Twitter</strong></p> <p>Auf unseren Seiten sind Funktionen des Dienstes Twitter eingebunden. Diese Funktionen werden angeboten durch die Twitter Inc., Twitter, Inc. 1355 Market St, Suite 900, San Francisco, CA 94103, USA. Durch das Benutzen von Twitter und der Funktion &quot;Re-Tweet&quot; werden die von Ihnen besuchten Webseiten mit Ihrem Twitter-Account verkn&uuml;pft und anderen Nutzern bekannt gegeben. Dabei werden auch Daten an Twitter &uuml;bertragen.</p> <p>Wir weisen darauf hin, dass wir als Anbieter der Seiten keine Kenntnis vom Inhalt der &uuml;bermittelten Daten sowie deren Nutzung durch Twitter erhalten. Weitere Informationen hierzu finden Sie in der Datenschutzerkl&auml;rung von Twitter unter <a href=\"http://twitter.com/privacy\" target=\"_blank\">http://twitter.com/privacy</a>.</p> <p>Ihre Datenschutzeinstellungen bei Twitter k&ouml;nnen Sie in den Konto-Einstellungen unter <a href=\"http://twitter.com/account/settings\" target=\"_blank\">http://twitter.com/account/settings</a> &auml;ndern.</p><p>", $domain);
         self::$_privacy_policy_end = __("<strong>Auskunft, L&ouml;schung, Sperrung</strong></p> <p>Sie haben jederzeit das Recht auf unentgeltliche Auskunft &uuml;ber Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empf&auml;nger und den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung, Sperrung oder L&ouml;schung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema personenbezogene Daten k&ouml;nnen Sie sich jederzeit &uuml;ber die im Impressum angegeben Adresse des Webseitenbetreibers an uns wenden.</p>", $domain);
         self::$_source = __("<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", $domain);
-        self::$_plugin_by = __("<p>Plugin von <a href=\"http://www.plugin.com\">impressum-manager</a></p>", $domain);
+        self::$_plugin_by = __("<p>Plugin von <a href=\"http://www.plugin.com\">Impressum-Manager</a></p>", $domain);
     }
 
     public function content()
@@ -120,13 +120,13 @@ class ImpressumManager
         $state = get_option("impressum_manager_state");
         $profession = get_option("impressum_manager_regulated_profession");
 
-        $impressum .= $this->contact($lang, $telefon, $fax, $email);
+        $impressum .= $this->contact($telefon, $fax, $email);
         if (!empty($authorized_person)) {
             $impressum .= $this->authorized_person($authorized_person);
         }
 
-        $impressum .= $this->register($lang, $chamber, $registernr, $register);
-        $impressum .= $this->vat($lang, $vat, $profession, $state, $rules, $chamber);
+        $impressum .= $this->register($chamber, $registernr, $register);
+        $impressum .= $this->vat($vat, $profession, $state, $rules, $chamber);
 
         if (!empty($responsible_person_for_content)) {
             $impressum .= $this->journalistic($responsible_person_for_content);
@@ -172,7 +172,7 @@ class ImpressumManager
         if ($disclaimer) $impressum .= self::$_disclaimer;
 
         if ($policy_general || $policy_facebook || $policy_analytics || $policy_adsense || $policy_plus || $policy_twitter) {
-            $impressum .= $this->privacy_policy($lang, $policy_general, $policy_facebook, $policy_analytics, $policy_adsense, $policy_plus, $policy_twitter);
+            $impressum .= $this->privacy_policy($policy_general, $policy_facebook, $policy_analytics, $policy_adsense, $policy_plus, $policy_twitter);
         }
 
         $extra_field = get_option("impressum_manager_extra_field");
@@ -187,7 +187,7 @@ class ImpressumManager
         return $impressum;
     }
 
-    private function address($lang, $name, $adress, $adress_extra, $place, $zip)
+    private function address($name, $adress, $adress_extra, $place, $zip)
     {
         $result = self::$_format_address;
         if (!empty($name)) $result .= $name . "<br>";
@@ -198,15 +198,17 @@ class ImpressumManager
         return $result;
     }
 
-    private function contact($lang, $telefon, $fax, $email)
+    private function contact($telefon, $fax, $email)
     {
         $result = self::$_format_contact;
         $result .= "<table><tbody>";
         if (!empty($telefon)) $result .= sprintf(self::$_format_contact_telephone, $telefon);
         if (!empty($fax)) $result .= sprintf(self::$_format_contact_telefax, $fax);
 
-        if ($email) {
+        if ($email && get_option("impressum_manager_show_email_as_image") == "on") {
             $image = "<img src='" . plugin_dir_url(__FILE__) . "../includes/email-as-image.php?text=" . $email . "'>";
+        } else if($email) {
+	        $image = $email;
         }
 
         if (!empty($email)) $result .= sprintf(self::$_format_contact_email, $image);
@@ -214,7 +216,7 @@ class ImpressumManager
         return $result;
     }
 
-    private function register($lang, $register_chamber, $registernr, $register)
+    private function register($register_chamber, $registernr, $register)
     {
         $conf = impressum_manager_Config::get_instance();
         $domain = $conf->get_slug();
@@ -274,7 +276,7 @@ class ImpressumManager
         return $result;
     }
 
-    private function vat($lang, $vat, $profession, $state, $rules, $chamber)
+    private function vat($vat, $profession, $state, $rules, $chamber)
     {
         $conf = impressum_manager_Config::get_instance();
         $domain = $conf->get_slug();
@@ -299,7 +301,7 @@ class ImpressumManager
         return $result;
     }
 
-    private function privacy_policy($lang, $general, $facebook, $analytics, $adsense, $plus, $twitter)
+    private function privacy_policy($general, $facebook, $analytics, $adsense, $plus, $twitter)
     {
         $result = self::$_privacy_policy_head;
         if (strlen($general) > 0) $result .= self::$_privacy_policy_general;

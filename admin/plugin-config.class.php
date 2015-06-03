@@ -255,7 +255,7 @@ class impressum_manager_Config
     public function __construct()
     {
         $this->version = "0.4.1";
-        $this->slug = "plugin";
+        $this->slug = "impressum-manager";
 
         if (array_key_exists("dismiss", $_REQUEST)) {
             if (get_option("impressum_manager_notice") === false) {
@@ -1086,19 +1086,20 @@ class impressum_manager_Config
 
     private function register_settings()
     {
-        register_setting("plugin-policy_group", "impressum_manager_disclaimer");
-        register_setting("plugin-policy_group", "impressum_manager_set_impressum");
-        register_setting("plugin-policy_group", "impressum_manager_language_of_impressum");
-        register_setting("plugin-policy_group", "impressum_manager_general_privacy_policy");
-        register_setting("plugin-policy_group", "impressum_manager_policy_facebook");
-        register_setting("plugin-policy_group", "impressum_manager_policy_google_analytics");
-        register_setting("plugin-policy_group", "impressum_manager_policy_google_adsense");
-        register_setting("plugin-policy_group", "impressum_manager_policy_twitter");
-        register_setting("plugin-policy_group", "impressum_manager_policy_google_plus");
-        register_setting("plugin-policy_group", "impressum_manager_page");
-        register_setting("plugin-policy_group", "impressum_manager_disabled");
-        register_setting("plugin-policy_group", "impressum_manager_extra_field");
-        register_setting("plugin-policy_group", "impressum_manager_noindex");
+        register_setting("impressum-manager-policy_group", "impressum_manager_disclaimer");
+        register_setting("impressum-manager-policy_group", "impressum_manager_set_impressum");
+        register_setting("impressum-manager-policy_group", "impressum_manager_language_of_impressum");
+        register_setting("impressum-manager-policy_group", "impressum_manager_general_privacy_policy");
+        register_setting("impressum-manager-policy_group", "impressum_manager_policy_facebook");
+        register_setting("impressum-manager-policy_group", "impressum_manager_policy_google_analytics");
+        register_setting("impressum-manager-policy_group", "impressum_manager_policy_google_adsense");
+        register_setting("impressum-manager-policy_group", "impressum_manager_policy_twitter");
+        register_setting("impressum-manager-policy_group", "impressum_manager_policy_google_plus");
+        register_setting("impressum-manager-policy_group", "impressum_manager_page");
+        register_setting("impressum-manager-policy_group", "impressum_manager_disabled");
+        register_setting("impressum-manager-policy_group", "impressum_manager_extra_field");
+        register_setting("impressum-manager-policy_group", "impressum_manager_noindex");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_show_email_as_image");
     }
 
     private function config_view()
@@ -1146,8 +1147,8 @@ class impressum_manager_Config
             </table>
         </form>
         <form method="post" action="options.php">
-            <?php settings_fields('plugin-policy_group'); ?>
-            <?php do_settings_sections('plugin-policy_group'); ?>
+            <?php settings_fields('impressum-manager-policy_group'); ?>
+            <?php do_settings_sections('impressum-manager-policy_group'); ?>
             <table class="form-table">
                 <tbody>
                 <tr>
@@ -1174,6 +1175,16 @@ class impressum_manager_Config
                             <?= __("Lass die Impressum Seite nicht von Suchmaschinen indexieren.", $this->slug) ?>
                         </label>
                     </td>
+                </tr>
+                <tr>
+	                <th scope="row"><?= __("E-Mail as Image", $this->slug) ?></th>
+	                <td>
+		                <label for="impressum_manager_show_email_as_image">
+			                <input id="impressum_manager_show_email_as_image" type="checkbox"
+			                       name="impressum_manager_show_email_as_image" <?= $this->isChecked("impressum_manager_show_email_as_image") ?>>
+			                <?= __("Show E-Mail as Image to prevent Spam.", $this->slug) ?>
+		                </label>
+	                </td>
                 </tr>
                 <tr>
                     <th colspan="2"><h2><?= __("Impressum Inhalt Einstellungen", $this->slug) ?></h2></th>
