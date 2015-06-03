@@ -86,7 +86,7 @@ function wp_impressum_goodybye()
 {
     ?>
     Goodbye!
-<?
+<?php
 }
 
 register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "wp_impressum_goodybye");
@@ -183,3 +183,4 @@ function wp_impressum_metashortcode_shortcode_to_wphead($posts, $shortcode, $cal
 // Instead of creating a shortcode, hook to the_posts
 add_action('the_posts', 'wp_impressum_metashortcode');
 
+?>
