@@ -977,14 +977,14 @@ class impressum_manager_Config
     {
         $onboarded = get_option("impressum_manager_onboarding_conf");
         $enter_config = true;
-        $finish = $_GET['finish'];
+        $finish = @$_GET['finish'];
 
         if($finish == "true") {
             if ($onboarded == "onboarded") {
                 $enter_config = false;
             } else {
                 add_option("impressum_manager_onboarding_conf", "onboarded");
-                $_GET['step'] = 1;
+                @$_GET['step'] = 1;
             }
             update_option("impressum_manager_onboarding_conf", "onboarded");
         }
@@ -1005,7 +1005,7 @@ class impressum_manager_Config
             $option_url = admin_url("options-general.php") . "?page=" . impressum_manager_Config::get_instance()->get_slug();
 
             if ($enter_config) {
-                switch ($_GET['step']) {
+                switch (@$_GET['step']) {
                     case 1:
 
                         $this->config_page_1($option_url, true);
@@ -1117,17 +1117,17 @@ class impressum_manager_Config
     private function config_view()
     {
 
-        $impressummanager_settings[] = $impressummanager_language = mysql_real_escape_string($_POST['impressum_manager_language_of_impressum']);
-        $impressummanager_settings[] = $general_privacy_policy = mysql_real_escape_string($_POST['impressum_manager_general_privacy_policy']);
-        $impressummanager_settings[] = $disclaimer = mysql_real_escape_string($_POST['impressum_manager_disclaimer']);
-        $impressummanager_settings[] = $policy_facebook = mysql_real_escape_string($_POST['impressum_manager_policy_facebook']);
-        $impressummanager_settings[] = $policy_google_analytics = mysql_real_escape_string($_POST['impressum_manager_policy_google_analytics']);
-        $impressummanager_settings[] = $policy_google_adsense = mysql_real_escape_string($_POST['impressum_manager_policy_google_adsense']);
-        $impressummanager_settings[] = $policy_google_plus = mysql_real_escape_string($_POST['impressum_manager_policy_google_plus']);
-        $impressummanager_settings[] = $policy_google_twitter = mysql_real_escape_string($_POST['impressum_manager_policy_twitter']);
-        $impressummanager_settings[] = $extra_field = mysql_real_escape_string($_POST['impressum_manager_extra_field']);
+        $impressummanager_settings[] = $impressummanager_language = @$_POST['impressum_manager_language_of_impressum'];
+        $impressummanager_settings[] = $general_privacy_policy = @$_POST['impressum_manager_general_privacy_policy'];
+        $impressummanager_settings[] = $disclaimer = @$_POST['impressum_manager_disclaimer'];
+        $impressummanager_settings[] = $policy_facebook = @$_POST['impressum_manager_policy_facebook'];
+        $impressummanager_settings[] = $policy_google_analytics = @$_POST['impressum_manager_policy_google_analytics'];
+        $impressummanager_settings[] = $policy_google_adsense = @$_POST['impressum_manager_policy_google_adsense'];
+        $impressummanager_settings[] = $policy_google_plus = @$_POST['impressum_manager_policy_google_plus'];
+        $impressummanager_settings[] = $policy_google_twitter = @$_POST['impressum_manager_policy_twitter'];
+        $impressummanager_settings[] = $extra_field = @$_POST['impressum_manager_extra_field'];
 
-        if (array_key_exists("firstset", $_GET) && $_GET['finish'] == true && array_key_exists("submit", $_REQUEST)) {
+        if (array_key_exists("firstset", @$_GET) && @$_GET['finish'] == true && array_key_exists("submit", $_REQUEST)) {
             $this->save_option("impressum_manager_language_of_impressum", $impressummanager_language);
             $this->save_option("impressum_manager_general_privacy_policy", $general_privacy_policy);
             $this->save_option("impressum_manager_disclaimer", $disclaimer);
