@@ -1163,7 +1163,7 @@ class impressum_manager_Config
             <?php do_settings_sections('impressum-manager-policy_group'); ?>
             <table class="form-table">
                 <tbody>
-                <tr>
+                <!--tr>
                     <th scope="row"><?= __("Language", $this->slug) ?></th>
                     <td>
                         <select name="impressum_manager_language_of_impressum" style="width: 340px">
@@ -1177,7 +1177,7 @@ class impressum_manager_Config
                         </select><br><br>
                         <?= __("Wähle die Sprache für dein Impressum", $this->slug) ?>
                     </td>
-                </tr>
+                </tr-->
                 <tr>
                     <th scope="row"><?= __("No Index", $this->slug) ?></th>
                     <td>
