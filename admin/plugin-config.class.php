@@ -370,9 +370,22 @@ class impressum_manager_Config
             <small>Version: <?= $this->version ?></small>
             |
             <small><a href="javascript:void(0);" id="delete_options">Delete options</a></small>
+	        <br><br>
+
+	        <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
+		        <a class="nav-tab nav-tab-active" id="settings-tab" href="javascript:void(0);"><?= __( "General" ) ?></a>
+		        <a class="nav-tab" id="fields-tab" href="javascript:void(0);"><?= __( "Impressum Fields" ) ?></a>
+	        </h2>
+
+	        <div class="settings-tab">
             <?php
             $this->show_setup();
             ?>
+	        </div>
+
+	        <div class="fields-tab" style="display:none;">
+		        <?php require_once ( plugins_url(__FILE__) . "admin/views/fields.php") ?>
+	        </div>
         </div>
     <?php
     }
