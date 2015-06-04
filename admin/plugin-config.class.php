@@ -384,7 +384,7 @@ class impressum_manager_Config
 	        </div>
 
 	        <div class="fields-tab" style="display:none;">
-		        <?php require_once ( plugins_url(__FILE__) . "admin/views/fields.php") ?>
+		        <?php require_once ( plugin_dir_path(__FILE__) . "admin/views/fields.php") ?>
 	        </div>
         </div>
     <?php
