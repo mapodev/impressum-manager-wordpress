@@ -960,8 +960,7 @@ class impressum_manager_Config
     <?php
     }
 
-    public
-    function show_setup()
+    public function show_setup()
     {
         $onboarded = get_option("impressum_manager_onboarding_conf");
         $enter_config = true;
@@ -1137,11 +1136,11 @@ class impressum_manager_Config
                 <tbody>
                 <tr>
                     <th>
-                        Impressum Konfiguration
+                        <?= __("Impressum Konfiguration") ?>
                     </th>
                     <td>
-                        <input class="button" type="submit" value="<?= _e('Impressum konfigurieren') ?>">
-                    </td>
+		                <input class="button" type="submit" value="<?= _e('Impressum konfigurieren') ?>">
+	                </td>
                 </tr>
                 </tbody>
             </table>

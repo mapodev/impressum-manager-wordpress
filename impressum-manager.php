@@ -49,13 +49,13 @@ function impressum_manager_installation_notice()
 
 require_once(plugin_dir_path(__FILE__) . 'impressum/impressum.class.php');
 
-function activate_impressum_manager_plugin()
+function impressum_manager_activate_plugin()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-activate.php';
     activate();
 }
 
-function deactivate_impressum_manager_plugin()
+function impressum_manager_deactivate_plugin()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-deactivate.php';
     deactivate();
