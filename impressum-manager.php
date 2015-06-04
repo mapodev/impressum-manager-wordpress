@@ -13,7 +13,7 @@
  * @package           impressum_manager_Plugin
  *
  * @wordpress-plugin
- * Plugin Name:       Impressum Manager Plugin
+ * Plugin Name:       Impressum Manager
  * Plugin URI:        http://www.plugin.com
  * Description:       Impressum Manager Generator for your wordpress copy. Manages all points for creating an impressum.
  * Version:           0.4.1
@@ -21,7 +21,7 @@
  * Author URI:        http://www.mapo-dev.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       plugin-plugin
+ * Text Domain:       impressum-manager
  * Domain Path:       /languages
  */
 
