@@ -1,6 +1,6 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 class impressum_manager_Config
 {
@@ -294,25 +294,26 @@ class impressum_manager_Config
     public function add_menu()
     {
         $hook = add_options_page("Impressum Manager", 'Impressum Manager', 'manage_options', $this->get_slug(), array($this, 'show'), 99.5);
-        add_action('load-'.$hook, array($this, 'add_help_tab'));
+        add_action('load-' . $hook, array($this, 'add_help_tab'));
     }
 
-    public function add_help_tab() {
+    public function add_help_tab()
+    {
         $screen = get_current_screen();
 
         $tabs = array(
             array(
-                'title'    => 'All About Books',
-                'id'       => 'cjr-books-about',
-                'content'  => '<p>Books are pretty awesome...</p>'
+                'title' => 'All About Books',
+                'id' => 'cjr-books-about',
+                'content' => '<p>Books are pretty awesome...</p>'
             ),
             array(
-                'title'    => 'More About Books',
-                'id'       => 'cjr-books-more'
+                'title' => 'More About Books',
+                'id' => 'cjr-books-more'
             )
         );
 
-        foreach($tabs as $tab) {
+        foreach ($tabs as $tab) {
             $screen->add_help_tab($tab);
         }
 
@@ -370,22 +371,27 @@ class impressum_manager_Config
             <small>Version: <?= $this->version ?></small>
             |
             <small><a href="javascript:void(0);" id="delete_options">Delete options</a></small>
-	        <br><br>
-
-	        <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
-		        <a class="nav-tab nav-tab-active" id="settings-tab" href="javascript:void(0);"><?= __( "General" ) ?></a>
-		        <a class="nav-tab" id="fields-tab" href="javascript:void(0);"><?= __( "Impressum Fields" ) ?></a>
-	        </h2>
-
-	        <div class="settings-tab tab">
+            <br><br>
             <?php
-            $this->show_setup();
+            if (!array_key_exists("setup", $_GET)) {
             ?>
-	        </div>
+            <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
+                <a class="nav-tab nav-tab-active" id="settings-tab" href="javascript:void(0);"><?= __("General") ?></a>
+                <a class="nav-tab" id="fields-tab" href="javascript:void(0);"><?= __("Impressum Fields") ?></a>
+            </h2>
 
-	        <div class="fields-tab tab" style="display:none;">
-		        <?php require_once ( plugin_dir_path(__FILE__) . "views/fields.php") ?>
-	        </div>
+            <div class="settings-tab tab">
+                <?php
+                }
+                $this->show_setup();
+                if (!array_key_exists("setup", $_GET)) {
+                ?>
+            </div>
+
+            <div class="fields-tab tab" style="display:none;">
+                <?php require_once(plugin_dir_path(__FILE__) . "views/fields.php") ?>
+            </div>
+        <?php } ?>
         </div>
     <?php
     }
@@ -677,8 +683,8 @@ class impressum_manager_Config
                 </tr>
                 <tr valign="top">
                     <td colspan="2">
-                                    <textarea name="impressum_manager_authorized_person"
-                                              style="width: 340px; height: 225px;"><?= get_option("impressum_manager_authorized_person") ?></textarea><br>
+                        <textarea name="impressum_manager_authorized_person"
+                                  style="width: 340px; height: 225px;"><?= get_option("impressum_manager_authorized_person") ?></textarea><br>
                         <small><?= __("Namen und Vornamen", $this->slug) ?></small>
                     </td>
                 </tr>
@@ -785,8 +791,8 @@ class impressum_manager_Config
                 </tr>
                 <tr valign="top" id="allowness_textarea">
                     <td colspan="2">
-                                    <textarea name="impressum_manager_responsible_chamber"
-                                              style="width: 340px; height: 225px;"><?= get_option("impressum_manager_responsible_chamber") ?></textarea><br>
+                        <textarea name="impressum_manager_responsible_chamber"
+                                  style="width: 340px; height: 225px;"><?= get_option("impressum_manager_responsible_chamber") ?></textarea><br>
                         <small><?= __("Zuständige Aufsichtsbehörde", $this->slug) ?></small>
                     </td>
                 </tr>
@@ -797,8 +803,8 @@ class impressum_manager_Config
                 </tr>
                 <tr valign="top">
                     <td colspan="2">
-                                    <textarea name="impressum_manager_image_source"
-                                              style="width: 340px; height: 225px;"><?= get_option("impressum_manager_image_source") ?></textarea><br>
+                        <textarea name="impressum_manager_image_source"
+                                  style="width: 340px; height: 225px;"><?= get_option("impressum_manager_image_source") ?></textarea><br>
                         <small><?= __("z.B. Max Mustermann, http://www.fotolia.com", $this->slug) ?></small>
                     </td>
                 </tr>
@@ -812,8 +818,8 @@ class impressum_manager_Config
                 </tr>
                 <tr valign="top" id="press_content_textarea">
                     <td colspan="2">
-                                    <textarea name="impressum_manager_responsible_persons"
-                                              style="width: 340px; height: 225px;"><?= get_option("impressum_manager_responsible_persons") ?></textarea><br>
+                        <textarea name="impressum_manager_responsible_persons"
+                                  style="width: 340px; height: 225px;"><?= get_option("impressum_manager_responsible_persons") ?></textarea><br>
                         <small><?= __("Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die
                                         Verantwortungen entsprechend mit angeben.", $this->slug) ?>
                         </small>
@@ -831,13 +837,13 @@ class impressum_manager_Config
                             </a>
                         </td>
                         <?php if (!$last_page) { ?>
-                        <td>
-                            <a href="options-general.php?page=<?= impressum_manager_Config::get_instance()->get_slug() ?>&step=1&setup=true">
-                                <input type="button" class="button button-secondary"
-                                       value="<?= __("Schritt zurück", $this->slug) ?>"
-                                       style="margin-top: 5px">
-                            </a>
-                        </td>
+                            <td>
+                                <a href="options-general.php?page=<?= impressum_manager_Config::get_instance()->get_slug() ?>&step=1&setup=true">
+                                    <input type="button" class="button button-secondary"
+                                           value="<?= __("Schritt zurück", $this->slug) ?>"
+                                           style="margin-top: 5px">
+                                </a>
+                            </td>
                         <?php } ?>
                         <?php if (!$last_page) { ?>
                             <td>
@@ -939,8 +945,8 @@ class impressum_manager_Config
                         <?= __("Zusatzfeld", $this->slug) ?>
                     </th>
                     <td>
-                                    <textarea style="width:500px; height: 200px;"
-                                              name="impressum_manager_extra_field"><?= get_option("impressum_manager_extra_field") ?></textarea>
+                        <textarea style="width:500px; height: 200px;"
+                                  name="impressum_manager_extra_field"><?= get_option("impressum_manager_extra_field") ?></textarea>
                     </td>
                 </tr>
                 </tbody>
@@ -979,7 +985,7 @@ class impressum_manager_Config
         $enter_config = true;
         $finish = @$_GET['finish'];
 
-        if($finish == "true") {
+        if ($finish == "true") {
             if ($onboarded == "onboarded") {
                 $enter_config = false;
             } else {
@@ -1111,7 +1117,7 @@ class impressum_manager_Config
         register_setting("impressum-manager-policy_group", "impressum_manager_disabled");
         register_setting("impressum-manager-policy_group", "impressum_manager_extra_field");
         register_setting("impressum-manager-policy_group", "impressum_manager_noindex");
-	    register_setting("impressum-manager-policy_group", "impressum_manager_show_email_as_image");
+        register_setting("impressum-manager-policy_group", "impressum_manager_show_email_as_image");
     }
 
     private function config_view()
@@ -1152,8 +1158,8 @@ class impressum_manager_Config
                         <?= __("Impressum Konfiguration") ?>
                     </th>
                     <td>
-		                <input class="button" type="submit" value="<?= _e('Impressum konfigurieren') ?>">
-	                </td>
+                        <input class="button" type="submit" value="<?= _e('Impressum konfigurieren') ?>">
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -1169,10 +1175,10 @@ class impressum_manager_Config
                         <select name="impressum_manager_language_of_impressum" style="width: 340px">
                             <option>Wähle dein Land ...</option>
                             <option value="DE" <?php
-                            if (get_option("impressum_manager_language_of_impressum") == "DE") {
-                                echo "selected=selected";
-                            }
-                            ?>>Deutsch
+                if (get_option("impressum_manager_language_of_impressum") == "DE") {
+                    echo "selected=selected";
+                }
+                ?>>Deutsch
                             </option>
                         </select><br><br>
                         <?= __("Wähle die Sprache für dein Impressum", $this->slug) ?>
@@ -1189,14 +1195,14 @@ class impressum_manager_Config
                     </td>
                 </tr>
                 <tr>
-	                <th scope="row"><?= __("E-Mail as Image", $this->slug) ?></th>
-	                <td>
-		                <label for="impressum_manager_show_email_as_image">
-			                <input id="impressum_manager_show_email_as_image" type="checkbox"
-			                       name="impressum_manager_show_email_as_image" <?= $this->isChecked("impressum_manager_show_email_as_image") ?>>
-			                <?= __("Show E-Mail as Image to prevent Spam.", $this->slug) ?>
-		                </label>
-	                </td>
+                    <th scope="row"><?= __("E-Mail as Image", $this->slug) ?></th>
+                    <td>
+                        <label for="impressum_manager_show_email_as_image">
+                            <input id="impressum_manager_show_email_as_image" type="checkbox"
+                                   name="impressum_manager_show_email_as_image" <?= $this->isChecked("impressum_manager_show_email_as_image") ?>>
+                            <?= __("Show E-Mail as Image to prevent Spam.", $this->slug) ?>
+                        </label>
+                    </td>
                 </tr>
                 <tr>
                     <th colspan="2"><h2><?= __("Impressum Inhalt Einstellungen", $this->slug) ?></h2></th>
