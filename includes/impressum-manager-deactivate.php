@@ -1,5 +1,5 @@
 <?php
 
-function deactivate() {
+function impressum_manager_deactivate() {
 
 }

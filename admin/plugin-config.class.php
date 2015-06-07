@@ -2,7 +2,7 @@
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-class impressum_manager_Config
+class Impressum_Manager_Config
 {
 
     private $version;
@@ -324,7 +324,7 @@ class impressum_manager_Config
     public static function get_instance()
     {
         if (self::$instance == null) {
-            self::$instance = new impressum_manager_Config();
+            self::$instance = new Impressum_Manager_Config();
         }
         return self::$instance;
     }
@@ -600,7 +600,7 @@ class impressum_manager_Config
                 <table>
                 <tr>
                     <td>
-                        <a href="options-general.php?page=<?= impressum_manager_Config::get_instance()->get_slug() ?>">
+                        <a href="options-general.php?page=<?= Impressum_Manager_Config::get_instance()->get_slug() ?>">
                             <input type="button" class="button button-secondary"
                                    value="<?= __("Zurück zu den Einstellungen", $this->slug) ?>"
                                    style="margin-top: 5px">
@@ -830,7 +830,7 @@ class impressum_manager_Config
                 <table>
                     <tr>
                         <td>
-                            <a href="options-general.php?page=<?= impressum_manager_Config::get_instance()->get_slug() ?>">
+                            <a href="options-general.php?page=<?= Impressum_Manager_Config::get_instance()->get_slug() ?>">
                                 <input type="button" class="button button-secondary"
                                        value="<?= __("Zurück zu den Einstellungen", $this->slug) ?>"
                                        style="margin-top: 5px">
@@ -838,7 +838,7 @@ class impressum_manager_Config
                         </td>
                         <?php if (!$last_page) { ?>
                             <td>
-                                <a href="options-general.php?page=<?= impressum_manager_Config::get_instance()->get_slug() ?>&step=1&setup=true">
+                                <a href="options-general.php?page=<?= Impressum_Manager_Config::get_instance()->get_slug() ?>&step=1&setup=true">
                                     <input type="button" class="button button-secondary"
                                            value="<?= __("Schritt zurück", $this->slug) ?>"
                                            style="margin-top: 5px">
@@ -955,14 +955,14 @@ class impressum_manager_Config
                 <table>
                     <tr>
                         <td>
-                            <a href="options-general.php?page=<?= impressum_manager_Config::get_instance()->get_slug() ?>">
+                            <a href="options-general.php?page=<?= Impressum_Manager_Config::get_instance()->get_slug() ?>">
                                 <input type="button" class="button button-secondary"
                                        value="<?= __("Zurück zu den Einstellungen", $this->slug) ?>"
                                        style="margin-top: 5px">
                             </a>
                         </td>
                         <td>
-                            <a href="options-general.php?page=<?= impressum_manager_Config::get_instance()->get_slug() ?>&step=2&setup=true">
+                            <a href="options-general.php?page=<?= Impressum_Manager_Config::get_instance()->get_slug() ?>&step=2&setup=true">
                                 <input type="button" class="button button-secondary"
                                        value="<?= __("Schritt zurück", $this->slug) ?>"
                                        style="margin-top: 5px">
@@ -1008,7 +1008,7 @@ class impressum_manager_Config
                 update_option("impressum_manager_notice", "dismissed");
             }
 
-            $option_url = admin_url("options-general.php") . "?page=" . impressum_manager_Config::get_instance()->get_slug();
+            $option_url = admin_url("options-general.php") . "?page=" . Impressum_Manager_Config::get_instance()->get_slug();
 
             if ($enter_config) {
                 switch (@$_GET['step']) {
@@ -1149,7 +1149,7 @@ class impressum_manager_Config
         <form action="options-general.php">
             <table class="form-table">
                 <input type="hidden" name="page"
-                       value="<?= impressum_manager_Config::get_instance()->get_slug() ?>">
+                       value="<?= Impressum_Manager_Config::get_instance()->get_slug() ?>">
                 <input type="hidden" name="step" value="1"/>
                 <input type="hidden" name="setup" value="true"/>
                 <tbody>

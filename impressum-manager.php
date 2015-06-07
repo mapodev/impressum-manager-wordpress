@@ -35,12 +35,12 @@ add_action('admin_notices', 'impressum_manager_installation_notice');
 function impressum_manager_installation_notice()
 {
     $request = $_SERVER['REQUEST_URI'];
-    if (strpos($request, impressum_manager_Config::get_instance()->get_slug()) !== false) {
+    if (strpos($request, Impressum_Manager_Config::get_instance()->get_slug()) !== false) {
         // indside impressum
     } else {
         if (get_option("impressum_manager_notice") === false && get_option("impressum_manager_name_company") === false) {
             $class = "error";
-            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . impressum_manager_Config::get_instance()->get_slug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
+            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . Impressum_Manager_Config::get_instance()->get_slug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
             echo "<div class=\"$class\"> <p>$message</p></div>";
         }
     }
@@ -52,13 +52,13 @@ require_once(plugin_dir_path(__FILE__) . 'classes/impressum.class.php');
 function impressum_manager_activate_plugin()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/classes-manager-activate.php';
-    activate();
+    impressum_manager_install_activate();
 }
 
 function impressum_manager_deactivate_plugin()
 {
     require_once plugin_dir_path(__FILE__) . 'includes/classes-manager-deactivate.php';
-    deactivate();
+    impressum_manager_deactivate();
 }
 
 register_activation_hook(__FILE__, 'activate_impressum_manager_plugin');
@@ -68,7 +68,7 @@ register_deactivation_hook(__FILE__, 'deactivate_impressum_manager_plugin');
 function impressum_manager_load_translations()
 {
     require plugin_dir_path(__FILE__) . 'admin/plugin-config.class.php';
-    $conf = impressum_manager_Config::get_instance();
+    $conf = Impressum_Manager_Config::get_instance();
     // Load translations
     $plugin_dir = basename(dirname(__FILE__));
     load_plugin_textdomain($conf->get_slug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
