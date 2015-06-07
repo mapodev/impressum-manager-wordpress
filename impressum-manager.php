@@ -17,7 +17,7 @@
  * Plugin URI:        http://www.plugin.com
  * Description:       Impressum Generator for your wordpress copy. Manages all points for creating an Impressum.
  * Version:           0.4.1
- * Author:            mapo
+ * Author:            Marcin Poholski, Christian Jäger
  * Author URI:        http://www.mapo-dev.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
