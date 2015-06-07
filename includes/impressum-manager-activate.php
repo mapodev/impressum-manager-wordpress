@@ -11,19 +11,17 @@ function impressum_manager_install_activate() {
 	$table_name = $wpdb->prefix . "impressum_manager_content";
 	$charset_collate = $wpdb->get_charset_collate();
 
-	$sql = "CREATE TABLE $table_name (
-	  id mediumint(9) NOT NULL AUTO_INCREMENT,
-	  lang tinytext NULL,
-	  impressum_key TEXT NULL,
-	  impressum_value TEXT NULL,
-	  UNIQUE KEY id (id)
+	$sql = "CREATE TABLE IF NOT EXISTS $table_name (
+	  `id` mediumint(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	  `lang` tinytext NULL,
+	  `impressum_key` TEXT NULL,
+	  `impressum_value` TEXT NULL
 	) $charset_collate;";
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta( $sql );
 
 	add_option("impressum_manager_db_version", "1.0");
-
 }
 
 function impressum_manager_insert_data() {
@@ -56,3 +54,5 @@ function impressum_manager_insert_data() {
 	$_privacy_policy_twitter = __("<p><strong>Datenschutzerkl&auml;rung f&uuml;r die Nutzung von Twitter</strong></p> <p>Auf unseren Seiten sind Funktionen des Dienstes Twitter eingebunden. Diese Funktionen werden angeboten durch die Twitter Inc., Twitter, Inc. 1355 Market St, Suite 900, San Francisco, CA 94103, USA. Durch das Benutzen von Twitter und der Funktion &quot;Re-Tweet&quot; werden die von Ihnen besuchten Webseiten mit Ihrem Twitter-Account verkn&uuml;pft und anderen Nutzern bekannt gegeben. Dabei werden auch Daten an Twitter &uuml;bertragen.</p> <p>Wir weisen darauf hin, dass wir als Anbieter der Seiten keine Kenntnis vom Inhalt der &uuml;bermittelten Daten sowie deren Nutzung durch Twitter erhalten. Weitere Informationen hierzu finden Sie in der Datenschutzerkl&auml;rung von Twitter unter <a href=\"http://twitter.com/privacy\" target=\"_blank\">http://twitter.com/privacy</a>.</p> <p>Ihre Datenschutzeinstellungen bei Twitter k&ouml;nnen Sie in den Konto-Einstellungen unter <a href=\"http://twitter.com/account/settings\" target=\"_blank\">http://twitter.com/account/settings</a> &auml;ndern.</p><p>", $domain);
 	$_privacy_policy_end = __("<strong>Auskunft, L&ouml;schung, Sperrung</strong></p> <p>Sie haben jederzeit das Recht auf unentgeltliche Auskunft &uuml;ber Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empf&auml;nger und den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung, Sperrung oder L&ouml;schung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema personenbezogene Daten k&ouml;nnen Sie sich jederzeit &uuml;ber die im Impressum angegeben Adresse des Webseitenbetreibers an uns wenden.</p>", $domain);
 }
+
+?>
