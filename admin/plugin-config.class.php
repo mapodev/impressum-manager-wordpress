@@ -391,13 +391,13 @@ class Impressum_Manager_Config
             </div>
 
             <div class="fields-tab tab" style="display:none;">
-                <?php require_once(plugin_dir_path(__FILE__) . "views/tabs/fieldsTab.php") ?>
+                <?php require_once(plugin_dir_path(__FILE__) . "views/tabs/fields-tab.php") ?>
             </div>
 	        <div class="settings2-tab tab" style="display:none;">
-		        <?php require_once(plugin_dir_path(__FILE__) . "views/tabs/settings2Tab.php") ?>
+		        <?php require_once(plugin_dir_path(__FILE__) . "views/tabs/settings-tab.php") ?>
 	        </div>
 	        <div class="preview-tab tab" style="display:none;">
-		        <?php require_once(plugin_dir_path(__FILE__) . "views/tabs/previewTab.php") ?>
+		        <?php require_once(plugin_dir_path(__FILE__) . "views/tabs/preview-tab.php") ?>
 	        </div>
         <?php } ?>
         </div>

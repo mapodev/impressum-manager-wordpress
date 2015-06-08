@@ -30,8 +30,8 @@ if (!defined('WPINC')) {
     die;
 }
 
-register_activation_hook(__FILE__, 'activate_impressum_manager_plugin');
-register_deactivation_hook(__FILE__, 'deactivate_impressum_manager_plugin');
+register_activation_hook(__FILE__, 'impressum_manager_activate_plugin');
+register_deactivation_hook(__FILE__, 'impressum_manager_deactivate_plugin');
 
 add_action('admin_notices', 'impressum_manager_installation_notice');
 
@@ -54,13 +54,13 @@ require_once(plugin_dir_path(__FILE__) . 'classes/impressum.class.php');
 
 function impressum_manager_activate_plugin()
 {
-    require_once plugin_dir_path(__FILE__) . 'includes/classes-manager-activate.php';
+    require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-activate.php';
     impressum_manager_install_activate();
 }
 
 function impressum_manager_deactivate_plugin()
 {
-    require_once plugin_dir_path(__FILE__) . 'includes/classes-manager-deactivate.php';
+    require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-deactivate.php';
     impressum_manager_deactivate();
 }
 
