@@ -378,6 +378,8 @@ class Impressum_Manager_Config
             <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
                 <a class="nav-tab nav-tab-active" id="settings-tab" href="javascript:void(0);"><?= __("General") ?></a>
                 <a class="nav-tab" id="fields-tab" href="javascript:void(0);"><?= __("Impressum Fields") ?></a>
+	            <a class="nav-tab" id="settings2-tab" href="javascript:void(0);"><?= __("New Settings") ?></a>
+	            <a class="nav-tab" id="preview-tab" href="javascript:void(0);"><?= __("Preview") ?></a>
             </h2>
 
             <div class="settings-tab tab">
@@ -389,8 +391,14 @@ class Impressum_Manager_Config
             </div>
 
             <div class="fields-tab tab" style="display:none;">
-                <?php require_once(plugin_dir_path(__FILE__) . "views/fields.php") ?>
+                <?php require_once(plugin_dir_path(__FILE__) . "views/tabs/fieldsTab.php") ?>
             </div>
+	        <div class="settings2-tab tab" style="display:none;">
+		        <?php require_once(plugin_dir_path(__FILE__) . "views/tabs/settings2Tab.php") ?>
+	        </div>
+	        <div class="preview-tab tab" style="display:none;">
+		        <?php require_once(plugin_dir_path(__FILE__) . "views/tabs/previewTab.php") ?>
+	        </div>
         <?php } ?>
         </div>
     <?php
@@ -1118,6 +1126,8 @@ class Impressum_Manager_Config
         register_setting("impressum-manager-policy_group", "impressum_manager_extra_field");
         register_setting("impressum-manager-policy_group", "impressum_manager_noindex");
         register_setting("impressum-manager-policy_group", "impressum_manager_show_email_as_image");
+
+	    register_setting("impressum-manager-policy_group", "impressum_manager_fax");
     }
 
     private function config_view()

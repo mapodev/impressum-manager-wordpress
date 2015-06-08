@@ -110,7 +110,7 @@ class ImpressumManager
         $policy_plus = get_option("impressum_manager_policy_google_plus");
         $policy_twitter = get_option("impressum_manager_policy_twitter");
 
-        // autohirzed persons
+        // authorized persons
         $authorized_person = get_option("impressum_manager_authorized_person");
 
         // journalistic responsible persons for content
