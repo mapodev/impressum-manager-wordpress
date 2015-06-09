@@ -300,7 +300,7 @@ class Impressum_Manager_Admin
     function delete_callback()
     {
         echo "OK";
-        require_once IMPRESSUMMANAGER__PLUGIN_DIR . "../uninstall.php";
+        require_once plugin_dir_path(__FILE__) . "uninstall.php";
         die();
     }
 
