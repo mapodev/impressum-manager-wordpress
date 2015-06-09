@@ -26,6 +26,9 @@ No questions asked yet.
 
 == Changelog ==
 
+= 0.4.2 =
+- temporary release, next version bump will have all new features list
+
 = 0.4.1 =
 - refactoring
 - fixes
@@ -56,7 +59,7 @@ No questions asked yet.
 - Onboarding process added.
 - General policy edited.
 - New Form design, all in one page. Therefore removed some functions and stuff.
-- Using Shortcode [wp_impressum] instead of choosing page.
+- Using Shortcode [impressum_manager] instead of choosing page.
   User could understood it false and might think to edit the impresusm in the page.
 - Added Versions Number to Head
 

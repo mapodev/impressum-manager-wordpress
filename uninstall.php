@@ -22,7 +22,7 @@
  * @link       http://www.mapo-dev.com
  * @since      0.1.0
  *
- * @package    Wp_Impressum_Plugin
+ * @package    impressum_manager_Plugin
  */
 
 // If uninstall not called from WordPress, then exit.
@@ -30,54 +30,54 @@
 //    exit;
 //}
 
-delete_option("wp_impressum_person");
-delete_option("wp_impressum_form_of_organization");
-delete_option("wp_impressum_name_company");
-delete_option("wp_impressum_address");
-delete_option("wp_impressum_address_extra");
-delete_option("wp_impressum_place");
-delete_option("wp_impressum_zip");
-delete_option("wp_impressum_country");
-delete_option("wp_impressum_fax");
-delete_option("wp_impressum_email");
-delete_option("wp_impressum_phone");
-delete_option("wp_impressum_authorized_person");
-delete_option("wp_impressum_vat");
-delete_option("wp_impressum_register");
-delete_option("wp_impressum_registenr");
-delete_option("wp_impressum_regulated_profession");
-delete_option("wp_impressum_state");
-delete_option("wp_impressum_state_rules");
-delete_option("wp_impressum_chamber");
-delete_option("wp_impressum_image_source");
-delete_option("wp_impressum_responsible_chamber");
-delete_option("wp_impressum_responsible_persons");
-delete_option("wp_impressum_disclaimer");
-delete_option("wp_impressum_set_impressum");
-delete_option("wp_impressum_language_of_impressum");
-delete_option("wp_impressum_general_privacy_policy");
-delete_option("wp_impressum_policy_facebook");
-delete_option("wp_impressum_policy_google_analytics");
-delete_option("wp_impressum_regulated_profession_checked");
-delete_option("wp_impressum_allowness");
-delete_option("wp_impressum_press_content");
-delete_option("wp_impressum_disabled");
-delete_option("wp_impressum_notice");
-delete_option("wp_impressum_extra_field");
-delete_option("wp_impressum_page");
-delete_option("wp_impressum_id");
-delete_option("wp_impressum_policy_google_plus");
-delete_option("wp_impressum_policy_twitter");
-delete_option("wp_impresusm_onboarding_conf");
+delete_option("impressum_manager_person");
+delete_option("impressum_manager_form_of_organization");
+delete_option("impressum_manager_name_company");
+delete_option("impressum_manager_address");
+delete_option("impressum_manager_address_extra");
+delete_option("impressum_manager_place");
+delete_option("impressum_manager_zip");
+delete_option("impressum_manager_country");
+delete_option("impressum_manager_fax");
+delete_option("impressum_manager_email");
+delete_option("impressum_manager_phone");
+delete_option("impressum_manager_authorized_person");
+delete_option("impressum_manager_vat");
+delete_option("impressum_manager_register");
+delete_option("impressum_manager_registenr");
+delete_option("impressum_manager_regulated_profession");
+delete_option("impressum_manager_state");
+delete_option("impressum_manager_state_rules");
+delete_option("impressum_manager_chamber");
+delete_option("impressum_manager_image_source");
+delete_option("impressum_manager_responsible_chamber");
+delete_option("impressum_manager_responsible_persons");
+delete_option("impressum_manager_disclaimer");
+delete_option("impressum_manager_set_impressum");
+delete_option("impressum_manager_language_of_impressum");
+delete_option("impressum_manager_general_privacy_policy");
+delete_option("impressum_manager_policy_facebook");
+delete_option("impressum_manager_policy_google_analytics");
+delete_option("impressum_manager_regulated_profession_checked");
+delete_option("impressum_manager_allowness");
+delete_option("impressum_manager_press_content");
+delete_option("impressum_manager_disabled");
+delete_option("impressum_manager_notice");
+delete_option("impressum_manager_extra_field");
+delete_option("impressum_manager_page");
+delete_option("impressum_manager_id");
+delete_option("impressum_manager_policy_google_plus");
+delete_option("impressum_manager_policy_twitter");
+delete_option("impressum_manager_onboarding_conf");
 
-unregister_setting("wp-impressum-policy_group", "wp_impressum_disclaimer");
-unregister_setting("wp-impressum-policy_group", "wp_impressum_set_impressum");
-unregister_setting("wp-impressum-policy_group", "wp_impressum_language_of_impressum");
-unregister_setting("wp-impressum-policy_group", "wp_impressum_general_privacy_policy");
-unregister_setting("wp-impressum-policy_group", "wp_impressum_policy_facebook");
-unregister_setting("wp-impressum-policy_group", "wp_impressum_policy_google_analytics");
-unregister_setting("wp-impressum-policy_group", "wp_impressum_policy_google_adsense");
-unregister_setting("wp-impressum-policy_group", "wp_impressum_policy_twitter");
-unregister_setting("wp-impressum-policy_group", "wp_impressum_policy_google_plus");
+unregister_setting("plugin-policy_group", "impressum_manager_disclaimer");
+unregister_setting("plugin-policy_group", "impressum_manager_set_impressum");
+unregister_setting("plugin-policy_group", "impressum_manager_language_of_impressum");
+unregister_setting("plugin-policy_group", "impressum_manager_general_privacy_policy");
+unregister_setting("plugin-policy_group", "impressum_manager_policy_facebook");
+unregister_setting("plugin-policy_group", "impressum_manager_policy_google_analytics");
+unregister_setting("plugin-policy_group", "impressum_manager_policy_google_adsense");
+unregister_setting("plugin-policy_group", "impressum_manager_policy_twitter");
+unregister_setting("plugin-policy_group", "impressum_manager_policy_google_plus");
 
 // no databases used, finishing

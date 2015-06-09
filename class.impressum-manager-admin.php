@@ -1,11 +1,10 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-class WP_Impressum_Config
+class Impressum_Manager_Admin
 {
 
-    private $version;
     private $slug;
 
     private $_countries = array(
@@ -254,23 +253,45 @@ class WP_Impressum_Config
 
     public function __construct()
     {
-        $this->version = "0.4.1";
-        $this->slug = "wp-impressum";
+        $this->slug = "impressum-manager";
 
         if (array_key_exists("dismiss", $_REQUEST)) {
-            if (get_option("wp_impressum_notice") === false) {
-                add_option("wp_impressum_notice", "dismissed");
+            if (get_option("impressum_manager_notice") === false) {
+                add_option("impressum_manager_notice", "dismissed");
             } else {
-                update_option("wp_impressum_notice", "dismissed");
+                update_option("impressum_manager_notice", "dismissed");
             }
         }
 
         if (is_admin()) {
             add_action('admin_init', array($this, 'admin_init'));
             add_action('admin_menu', array($this, 'add_menu'));
-            add_action('wp_ajax_wp_impressum_delete_options', array($this, 'delete_callback'));
+	        add_action('admin_notices',array($this, 'installation_notice'));
+            add_action('wp_ajax_impressum_manager_delete_options', array($this, 'delete_callback'));
         }
     }
+
+	public static function installation_notice()
+	{
+		$request = $_SERVER['REQUEST_URI'];
+		if (strpos($request, Impressum_Manager_Admin::get_instance()->get_slug()) !== false) {
+			// indside impressum
+		} else {
+			if (get_option("impressum_manager_notice") === false && get_option("impressum_manager_name_company") === false) {
+				$class = "error";
+				$message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . Impressum_Manager_Admin::get_instance()->get_slug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
+				echo "<div class=\"$class\"> <p>$message</p></div>";
+			}
+		}
+	}
+
+	public static function get_instance()
+	{
+		if (self::$instance == null) {
+			self::$instance = new Impressum_Manager_Admin();
+		}
+		return self::$instance;
+	}
 
     /**
      * ajax response for DEV options
@@ -279,53 +300,45 @@ class WP_Impressum_Config
     function delete_callback()
     {
         echo "OK";
-        require_once plugin_dir_path(__FILE__) . "../uninstall.php";
+        require_once plugin_dir_path(__FILE__) . "uninstall.php";
         die();
     }
 
     public function admin_init()
     {
         $this->register_settings();
-        wp_enqueue_style('wp_impressum_style', plugins_url('../css/wp-impressum.min.css', __FILE__));
-        wp_enqueue_script('wp_impressum_script', plugins_url('../js/wp-impressum.min.js', __FILE__));
+        wp_enqueue_style('impressum_manager_style', plugins_url('css/impressum-manager.min.css', __FILE__));
+        wp_enqueue_script('impressum_manager_script', plugins_url('js/impressum-manager.min.js', __FILE__));
         wp_enqueue_script('jquery');
     }
 
     public function add_menu()
     {
-        $hook = add_options_page("WP Impressum", 'WP Impressum', 'manage_options', $this->get_slug(), array($this, 'show'), 99.5);
-        add_action('load-'.$hook, array($this, 'add_help_tab'));
+        $hook = add_options_page("Impressum Manager", 'Impressum Manager', 'manage_options', $this->get_slug(), array($this, 'show'), 99.5);
+        add_action('load-' . $hook, array($this, 'add_help_tab'));
     }
 
-    public function add_help_tab() {
+    public function add_help_tab()
+    {
         $screen = get_current_screen();
 
         $tabs = array(
             array(
-                'title'    => 'All About Books',
-                'id'       => 'cjr-books-about',
-                'content'  => '<p>Books are pretty awesome...</p>'
+                'title' => 'All About Books',
+                'id' => 'cjr-books-about',
+                'content' => '<p>Books are pretty awesome...</p>'
             ),
             array(
-                'title'    => 'More About Books',
-                'id'       => 'cjr-books-more'
+                'title' => 'More About Books',
+                'id' => 'cjr-books-more'
             )
         );
 
-        foreach($tabs as $tab) {
+        foreach ($tabs as $tab) {
             $screen->add_help_tab($tab);
         }
 
         $screen->set_help_sidebar('<a href="#">More info!</a>');
-    }
-
-
-    public static function get_instance()
-    {
-        if (self::$instance == null) {
-            self::$instance = new WP_Impressum_Config();
-        }
-        return self::$instance;
     }
 
     /**
@@ -335,15 +348,6 @@ class WP_Impressum_Config
     {
         return $this->slug;
     }
-
-    /**
-     * @return mixed
-     */
-    public function get_version()
-    {
-        return $this->version;
-    }
-
     public function show()
     {
         ?>
@@ -352,7 +356,7 @@ class WP_Impressum_Config
                 $(document).ready(function () {
                     $("#delete_options").click(function () {
                         var data = {
-                            'action': 'wp_impressum_delete_options',
+                            'action': 'impressum_manager_delete_options',
                             'delete': true
                         };
 
@@ -366,13 +370,39 @@ class WP_Impressum_Config
             }(jQuery));
         </script>
         <div class="wrap">
-            <h2>WP Impressum</h2>
-            <small>Version: <?= $this->version ?></small>
+            <h2>Impressum Manager</h2>
+            <small>Version: <?= IMPRESSUMMANAGER_VERSION ?></small>
             |
             <small><a href="javascript:void(0);" id="delete_options">Delete options</a></small>
+            <br><br>
             <?php
-            $this->show_setup();
+            if (!array_key_exists("setup", $_GET)) {
             ?>
+            <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
+                <a class="nav-tab nav-tab-active" id="settings-tab" href="javascript:void(0);"><?= __("General") ?></a>
+                <a class="nav-tab" id="fields-tab" href="javascript:void(0);"><?= __("Impressum Fields") ?></a>
+	            <a class="nav-tab" id="settings2-tab" href="javascript:void(0);"><?= __("New Settings") ?></a>
+	            <a class="nav-tab" id="preview-tab" href="javascript:void(0);"><?= __("Preview") ?></a>
+            </h2>
+
+            <div class="settings-tab tab">
+                <?php
+                }
+                $this->show_setup();
+                if (!array_key_exists("setup", $_GET)) {
+                ?>
+            </div>
+
+            <div class="fields-tab tab" style="display:none;">
+                <?php include(plugin_dir_path(__FILE__) . "admin/views/fields-tab.php") ?>
+            </div>
+	        <div class="settings2-tab tab" style="display:none;">
+		        <?php include(plugin_dir_path(__FILE__) . "admin/views/settings-tab.php") ?>
+	        </div>
+	        <div class="preview-tab tab" style="display:none;">
+		        <?php include(plugin_dir_path(__FILE__) . "admin/views/preview-tab.php") ?>
+	        </div>
+        <?php } ?>
         </div>
     <?php
     }
@@ -419,9 +449,9 @@ class WP_Impressum_Config
                     <th scope="row" colspan="2"><b><?= __("Art der Person", $this->slug) ?></b></th>
                 </tr>
                 <tr valign="top">
-                    <td width="5"><input type="radio" id="person_1" name="wp_impressum_person"
+                    <td width="5"><input type="radio" id="person_1" name="impressum_manager_person"
                                          value="1" <?php
-                        if (get_option("wp_impressum_person") == '1') {
+                        if (get_option("impressum_manager_person") == '1') {
                             echo "checked=checked";
                         }
                         ?>>
@@ -429,9 +459,9 @@ class WP_Impressum_Config
                     <td>Privatperson</td>
                 </tr>
                 <tr valign="top">
-                    <td><input type="radio" id="person_2" name="wp_impressum_person"
+                    <td><input type="radio" id="person_2" name="impressum_manager_person"
                                value="2" <?php
-                        if (get_option("wp_impressum_person") == '2') {
+                        if (get_option("impressum_manager_person") == '2') {
                             echo "checked=checked";
                         }
                         ?>>
@@ -445,7 +475,7 @@ class WP_Impressum_Config
                 </tr>
                 <tr valign="top" class="rechtsform">
                     <td colspan="2">
-                        <select name="wp_impressum_form_of_organization">
+                        <select name="impressum_manager_form_of_organization">
                             <?php
                             $forms_of_organization = array(
                                 __("Einzelunternehmen", $this->slug),
@@ -463,7 +493,7 @@ class WP_Impressum_Config
                             foreach ($forms_of_organization as $org_form) {
                                 ?>
                                 <option value="<?= $idx ?>" <?php
-                                if ($idx == get_option("wp_impressum_form_of_organization")) {
+                                if ($idx == get_option("impressum_manager_form_of_organization")) {
                                     echo "selected=selected";
                                 }
                                 ?>><?= $org_form ?></option>
@@ -479,23 +509,23 @@ class WP_Impressum_Config
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="text" style="width: 340px" name="wp_impressum_name_company"
+                        <input type="text" style="width: 340px" name="impressum_manager_name_company"
                                title="Company Name"
-                               value="<?= get_option("wp_impressum_name_company") ?>"><br>
+                               value="<?= get_option("impressum_manager_name_company") ?>"><br>
                         <small id="full_name"><?= __("Vollständiger Name", $this->slug) ?></small>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="text" name="wp_impressum_address" title="Address" style="width: 340px"
-                               value="<?= get_option("wp_impressum_address") ?>"><br>
+                        <input type="text" name="impressum_manager_address" title="Address" style="width: 340px"
+                               value="<?= get_option("impressum_manager_address") ?>"><br>
                         <small><?= __("Straße & Hausnummer", $this->slug) ?></small>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="text" name="wp_impressum_address_extra" title="Address Extra"
-                               style="width: 340px" value="<?= get_option("wp_impressum_address_extra") ?>"><br>
+                        <input type="text" name="impressum_manager_address_extra" title="Address Extra"
+                               style="width: 340px" value="<?= get_option("impressum_manager_address_extra") ?>"><br>
                         <small><?= __("Adresszusatz", $this->slug) ?></small>
                     </td>
                 </tr>
@@ -503,14 +533,14 @@ class WP_Impressum_Config
                     <td colspan="2">
                         <table>
                             <tr>
-                                <td style="padding: 0;"><input type="text" name="wp_impressum_place"
+                                <td style="padding: 0;"><input type="text" name="impressum_manager_place"
                                                                title="Place"
-                                                               value="<?= get_option("wp_impressum_place") ?>"><br>
+                                                               value="<?= get_option("impressum_manager_place") ?>"><br>
                                     <small><?= __("Ort") ?></small>
                                 </td>
-                                <td style="padding: 0;"><input type="text" name="wp_impressum_zip"
+                                <td style="padding: 0;"><input type="text" name="impressum_manager_zip"
                                                                title="ZIP Code"
-                                                               value="<?= get_option("wp_impressum_zip") ?>"><br>
+                                                               value="<?= get_option("impressum_manager_zip") ?>"><br>
                                     <small><?= __("PLZ") ?></small>
                                 </td>
                             </tr>
@@ -519,12 +549,12 @@ class WP_Impressum_Config
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <select name="wp_impressum_country" style="width: 340px">
+                        <select name="impressum_manager_country" style="width: 340px">
                             <option value="no_land_choosen"><?= __("Wähle dein Land ...") ?></option>
                             <?php
 
                             foreach ($this->_countries as $country_code => $country_name) {
-                                if (get_option("wp_impressum_country") == $country_code) {
+                                if (get_option("impressum_manager_country") == $country_code) {
                                     $s = "selected=selected";
                                 } else {
                                     $s = "";
@@ -548,9 +578,9 @@ class WP_Impressum_Config
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="text" name="wp_impressum_phone" title="Phone Number"
+                        <input type="text" name="impressum_manager_phone" title="Phone Number"
                                style="width: 340px"
-                               value="<?= get_option("wp_impressum_phone") ?>">
+                               value="<?= get_option("impressum_manager_phone") ?>">
                     </td>
                 </tr>
                 <tr>
@@ -560,8 +590,8 @@ class WP_Impressum_Config
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="text" name="wp_impressum_fax" title="Fax Number" style="width: 340px"
-                               value="<?= get_option("wp_impressum_fax") ?>">
+                        <input type="text" name="impressum_manager_fax" title="Fax Number" style="width: 340px"
+                               value="<?= get_option("impressum_manager_fax") ?>">
                     </td>
                 </tr>
                 <tr>
@@ -571,9 +601,9 @@ class WP_Impressum_Config
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="text" name="wp_impressum_email" title="E-Mail Address"
+                        <input type="text" name="impressum_manager_email" title="E-Mail Address"
                                style="width: 340px"
-                               value="<?= get_option("wp_impressum_email") ?>">
+                               value="<?= get_option("impressum_manager_email") ?>">
                     </td>
                 </tr>
             </table>
@@ -581,7 +611,7 @@ class WP_Impressum_Config
                 <table>
                 <tr>
                     <td>
-                        <a href="options-general.php?page=<?= WP_Impressum_Config::get_instance()->get_slug() ?>">
+                        <a href="options-general.php?page=<?= Impressum_Manager_Admin::get_instance()->get_slug() ?>">
                             <input type="button" class="button button-secondary"
                                    value="<?= __("Zurück zu den Einstellungen", $this->slug) ?>"
                                    style="margin-top: 5px">
@@ -600,7 +630,7 @@ class WP_Impressum_Config
     private function config_page_2($option_url, $show_buttons, $last_page = false)
     {
 
-        $person = get_option("wp_impressum_person");
+        $person = get_option("impressum_manager_person");
 
         if ($person == 1) {
             $cssDef = "style='display:none;'";
@@ -664,8 +694,8 @@ class WP_Impressum_Config
                 </tr>
                 <tr valign="top">
                     <td colspan="2">
-                                    <textarea name="wp_impressum_authorized_person"
-                                              style="width: 340px; height: 225px;"><?= get_option("wp_impressum_authorized_person") ?></textarea><br>
+                        <textarea name="impressum_manager_authorized_person"
+                                  style="width: 340px; height: 225px;"><?= get_option("impressum_manager_authorized_person") ?></textarea><br>
                         <small><?= __("Namen und Vornamen", $this->slug) ?></small>
                     </td>
                 </tr>
@@ -676,8 +706,8 @@ class WP_Impressum_Config
                 </tr>
                 <tr valign="top" <?= $cssDef ?>>
                     <td colspan="2">
-                        <input type="text" name="wp_impressum_vat" title="VAT" style="width: 340px"
-                               value="<?= get_option("wp_impressum_vat") ?>">
+                        <input type="text" name="impressum_manager_vat" title="VAT" style="width: 340px"
+                               value="<?= get_option("impressum_manager_vat") ?>">
                     </td>
                 </tr>
                 <tr valign="top" <?= $cssDef ?>>
@@ -685,7 +715,7 @@ class WP_Impressum_Config
                 </tr>
                 <tr valign="top" <?= $cssDef ?>>
                     <td colspan="2">
-                        <select name="wp_impressum_register">
+                        <select name="impressum_manager_register">
                             <?php
                             $registerDescr = array(
                                 __("Kein Register", $this->slug),
@@ -697,10 +727,10 @@ class WP_Impressum_Config
 
                             $idx = 1;
 
-                            echo get_option("wp_impressum_register");
+                            echo get_option("impressum_manager_register");
 
                             foreach ($registerDescr as $registerName) {
-                                if (get_option("wp_impressum_register") == $idx) {
+                                if (get_option("impressum_manager_register") == $idx) {
                                     $selected = "selected=selected";
                                 } else {
                                     $selected = "";
@@ -721,59 +751,59 @@ class WP_Impressum_Config
                 </tr>
                 <tr valign="top" <?= $cssDef ?>>
                     <td colspan="2">
-                        <input type="text" name="wp_impressum_registenr" title="Registernummer"
+                        <input type="text" name="impressum_manager_registenr" title="Registernummer"
                                style="width: 340px"
-                               value="<?= get_option("wp_impressum_registenr") ?>">
+                               value="<?= get_option("impressum_manager_registenr") ?>">
                     </td>
                 </tr>
             </table>
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row" colspan="2"><input type="checkbox" id="regulated_profession"
-                                                       name="wp_impressum_regulated_profession_checked" <?= $this->isChecked("wp_impressum_regulated_profession_checked") ?>><label
+                                                       name="impressum_manager_regulated_profession_checked" <?= checked("on", get_option("impressum_manager_regulated_profession_checked"), false) ?>><label
                             for="regulated_profession"><b><?= __("Reglementierter Beruf", $this->slug) ?></b></label>
                     </th>
                 </tr>
                 <tr valign="top" class="hide_regulated_profession">
                     <td colspan="2">
-                        <input type="text" name="wp_impressum_regulated_profession"
+                        <input type="text" name="impressum_manager_regulated_profession"
                                title="Regulated profession"
                                style="width: 340px"
-                               value="<?= get_option("wp_impressum_regulated_profession") ?>"><br>
+                               value="<?= get_option("impressum_manager_regulated_profession") ?>"><br>
                         <small><?= __("Gesetzliche Berufsbezeichnung", $this->slug) ?></small>
                     </td>
                 </tr>
                 <tr valign="top" class="hide_regulated_profession">
                     <td colspan="2">
-                        <input type="text" name="wp_impressum_state" title="State"
-                               style="width: 340px" value="<?= get_option("wp_impressum_state") ?>"><br>
+                        <input type="text" name="impressum_manager_state" title="State"
+                               style="width: 340px" value="<?= get_option("impressum_manager_state") ?>"><br>
                         <small><?= __("Staat, in dem die Berufsbezeichnung verliehen wurde", $this->slug) ?></small>
                     </td>
                 </tr>
                 <tr valign="top" class="hide_regulated_profession">
                     <td colspan="2">
-                        <input type="text" name="wp_impressum_state_rules" title="State rules"
+                        <input type="text" name="impressum_manager_state_rules" title="State rules"
                                style="width: 340px"
-                               value="<?= get_option("wp_impressum_state_rules") ?>"><br>
+                               value="<?= get_option("impressum_manager_state_rules") ?>"><br>
                         <small><?= __("Berfusrechtliche Regelungen (Bezeichnung)", $this->slug) ?></small>
                     </td>
                 </tr>
                 <tr valign="top" class="hide_regulated_profession">
                     <td colspan="2">
-                        <input type="text" name="wp_impressum_chamber" title="Chamber"
-                               style="width: 340px" value="<?= get_option("wp_impressum_chamber") ?>"><br>
+                        <input type="text" name="impressum_manager_chamber" title="Chamber"
+                               style="width: 340px" value="<?= get_option("impressum_manager_chamber") ?>"><br>
                         <small><?= __("Kammer, der Sie angehören", $this->slug) ?></small>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row" colspan="2"><input type="checkbox" id="allowness"
-                                                       name="wp_impressum_allowness" <?= $this->isChecked("wp_impressum_allowness") ?>><label
+                                                       name="impressum_manager_allowness" <?= checked("on", get_option("impressum_manager_allowness"), false) ?>><label
                             for="allowness"><b><?= __("Behördliche Zuslassung", $this->slug) ?></b></label></th>
                 </tr>
                 <tr valign="top" id="allowness_textarea">
                     <td colspan="2">
-                                    <textarea name="wp_impressum_responsible_chamber"
-                                              style="width: 340px; height: 225px;"><?= get_option("wp_impressum_responsible_chamber") ?></textarea><br>
+                        <textarea name="impressum_manager_responsible_chamber"
+                                  style="width: 340px; height: 225px;"><?= get_option("impressum_manager_responsible_chamber") ?></textarea><br>
                         <small><?= __("Zuständige Aufsichtsbehörde", $this->slug) ?></small>
                     </td>
                 </tr>
@@ -784,23 +814,23 @@ class WP_Impressum_Config
                 </tr>
                 <tr valign="top">
                     <td colspan="2">
-                                    <textarea name="wp_impressum_image_source"
-                                              style="width: 340px; height: 225px;"><?= get_option("wp_impressum_image_source") ?></textarea><br>
+                        <textarea name="impressum_manager_image_source"
+                                  style="width: 340px; height: 225px;"><?= get_option("impressum_manager_image_source") ?></textarea><br>
                         <small><?= __("z.B. Max Mustermann, http://www.fotolia.com", $this->slug) ?></small>
                     </td>
                 </tr>
 
                 <tr valign="top">
                     <th scope="row" colspan="2"><input type="checkbox" id="press_content"
-                                                       name="wp_impressum_press_content" <?= $this->isChecked("wp_impressum_press_content") ?>
+                                                       name="impressum_manager_press_content" <?= checked("on", get_option("impressum_manager_press_content"), false) ?>
                         <label
                             for="press_content"><b><?= __("journalistisch-redaktionelle Inhalte", $this->slug) ?></b></label>
                     </th>
                 </tr>
                 <tr valign="top" id="press_content_textarea">
                     <td colspan="2">
-                                    <textarea name="wp_impressum_responsible_persons"
-                                              style="width: 340px; height: 225px;"><?= get_option("wp_impressum_responsible_persons") ?></textarea><br>
+                        <textarea name="impressum_manager_responsible_persons"
+                                  style="width: 340px; height: 225px;"><?= get_option("impressum_manager_responsible_persons") ?></textarea><br>
                         <small><?= __("Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die
                                         Verantwortungen entsprechend mit angeben.", $this->slug) ?>
                         </small>
@@ -811,20 +841,20 @@ class WP_Impressum_Config
                 <table>
                     <tr>
                         <td>
-                            <a href="options-general.php?page=<?= WP_Impressum_Config::get_instance()->get_slug() ?>">
+                            <a href="options-general.php?page=<?= Impressum_Manager_Admin::get_instance()->get_slug() ?>">
                                 <input type="button" class="button button-secondary"
                                        value="<?= __("Zurück zu den Einstellungen", $this->slug) ?>"
                                        style="margin-top: 5px">
                             </a>
                         </td>
                         <?php if (!$last_page) { ?>
-                        <td>
-                            <a href="options-general.php?page=<?= WP_Impressum_Config::get_instance()->get_slug() ?>&step=1&setup=true">
-                                <input type="button" class="button button-secondary"
-                                       value="<?= __("Schritt zurück", $this->slug) ?>"
-                                       style="margin-top: 5px">
-                            </a>
-                        </td>
+                            <td>
+                                <a href="options-general.php?page=<?= Impressum_Manager_Admin::get_instance()->get_slug() ?>&step=1&setup=true">
+                                    <input type="button" class="button button-secondary"
+                                           value="<?= __("Schritt zurück", $this->slug) ?>"
+                                           style="margin-top: 5px">
+                                </a>
+                            </td>
                         <?php } ?>
                         <?php if (!$last_page) { ?>
                             <td>
@@ -854,9 +884,9 @@ class WP_Impressum_Config
                         <?= __("Haftungsausschluss (Disclaimer)", $this->slug) ?>
                     </th>
                     <td>
-                        <label for="wp_impressum_disclaimer">
-                            <input id="wp_impressum_disclaimer" type="checkbox"
-                                   name="wp_impressum_disclaimer" <?= $this->isChecked("wp_impressum_disclaimer") ?>>
+                        <label for="impressum_manager_disclaimer">
+                            <input id="impressum_manager_disclaimer" type="checkbox"
+                                   name="impressum_manager_disclaimer" <?= checked("on", get_option("impressum_manager_disclaimer"), false) ?>>
                             <?= __("Füge einen Disclaimer in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -866,9 +896,9 @@ class WP_Impressum_Config
                         <?= __("Allgemine Datenschutzerklärung", $this->slug) ?>
                     </th>
                     <td>
-                        <label for="wp_impressum_general_privacy_policy">
-                            <input id="wp_impressum_general_privacy_policy" type="checkbox"
-                                   name="wp_impressum_general_privacy_policy" <?= $this->isChecked("wp_impressum_general_privacy_policy") ?>>
+                        <label for="impressum_manager_general_privacy_policy">
+                            <input id="impressum_manager_general_privacy_policy" type="checkbox"
+                                   name="impressum_manager_general_privacy_policy" <?= checked("on", get_option("impressum_manager_general_privacy_policy"), false) ?>>
                             <?= __("Füge eine allgemeine Datenschutzerklärung in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -878,9 +908,9 @@ class WP_Impressum_Config
                         <?= __("Datenschutzerklärung für Facebook", $this->slug) ?>
                     </th>
                     <td>
-                        <label for="wp_impressum_policy_facebook">
-                            <input id="wp_impressum_policy_facebook" type="checkbox"
-                                   name="wp_impressum_policy_facebook" <?= $this->isChecked("wp_impressum_policy_facebook") ?>>
+                        <label for="impressum_manager_policy_facebook">
+                            <input id="impressum_manager_policy_facebook" type="checkbox"
+                                   name="impressum_manager_policy_facebook" <?= checked("on",get_option("impressum_manager_policy_facebook"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von Facebook Elementen in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -890,21 +920,21 @@ class WP_Impressum_Config
                         <?= __("Datenschutzerklärung für Google", $this->slug) ?>
                     </th>
                     <td>
-                        <label for="wp_impressum_policy_google_analytics">
-                            <input id="wp_impressum_policy_google_analytics" type="checkbox"
-                                   name="wp_impressum_policy_google_analytics" <?= $this->isChecked("wp_impressum_policy_google_analytics") ?>>
+                        <label for="impressum_manager_policy_google_analytics">
+                            <input id="impressum_manager_policy_google_analytics" type="checkbox"
+                                   name="impressum_manager_policy_google_analytics" <?= checked("on",get_option("impressum_manager_policy_google_analytics"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von <b>Google Analytics</b> in dein Impressum ein.", $this->slug) ?>
                         </label>
                         <br><br>
-                        <label for="wp_impressum_policy_google_adsense">
-                            <input id="wp_impressum_policy_google_adsense" type="checkbox"
-                                   name="wp_impressum_policy_google_adsense" <?= $this->isChecked("wp_impressum_policy_google_adsense") ?>>
+                        <label for="impressum_manager_policy_google_adsense">
+                            <input id="impressum_manager_policy_google_adsense" type="checkbox"
+                                   name="impressum_manager_policy_google_adsense" <?= checked("on", get_option("impressum_manager_policy_google_adsense"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von <b>Google Adsense</b> in dein Impressum ein.", $this->slug) ?>
                         </label>
                         <br><br>
-                        <label for="wp_impressum_policy_google_plus">
-                            <input id="wp_impressum_policy_google_plus" type="checkbox"
-                                   name="wp_impressum_policy_google_plus" <?= $this->isChecked("wp_impressum_policy_google_plus") ?>>
+                        <label for="impressum_manager_policy_google_plus">
+                            <input id="impressum_manager_policy_google_plus" type="checkbox"
+                                   name="impressum_manager_policy_google_plus" <?= checked("on",get_option("impressum_manager_policy_google_plus"), false)?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von <b>Google +1</b> in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -914,9 +944,9 @@ class WP_Impressum_Config
                         <?= _e("Datenschutzerklärung für Twitter") ?>
                     </th>
                     <td>
-                        <label for="wp_impressum_policy_twitter">
-                            <input id="wp_impressum_policy_twitter" type="checkbox"
-                                   name="wp_impressum_policy_twitter" <?= $this->isChecked("wp_impressum_policy_twitter") ?>>
+                        <label for="impressum_manager_policy_twitter">
+                            <input id="impressum_manager_policy_twitter" type="checkbox"
+                                   name="impressum_manager_policy_twitter" <?= checked("on", get_option("impressum_manager_policy_twitter"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von Twitter Elementen in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -926,8 +956,8 @@ class WP_Impressum_Config
                         <?= __("Zusatzfeld", $this->slug) ?>
                     </th>
                     <td>
-                                    <textarea style="width:500px; height: 200px;"
-                                              name="wp_impressum_extra_field"><?= get_option("wp_impressum_extra_field") ?></textarea>
+                        <textarea style="width:500px; height: 200px;"
+                                  name="impressum_manager_extra_field"><?= get_option("impressum_manager_extra_field") ?></textarea>
                     </td>
                 </tr>
                 </tbody>
@@ -936,14 +966,14 @@ class WP_Impressum_Config
                 <table>
                     <tr>
                         <td>
-                            <a href="options-general.php?page=<?= WP_Impressum_Config::get_instance()->get_slug() ?>">
+                            <a href="options-general.php?page=<?= Impressum_Manager_Admin::get_instance()->get_slug() ?>">
                                 <input type="button" class="button button-secondary"
                                        value="<?= __("Zurück zu den Einstellungen", $this->slug) ?>"
                                        style="margin-top: 5px">
                             </a>
                         </td>
                         <td>
-                            <a href="options-general.php?page=<?= WP_Impressum_Config::get_instance()->get_slug() ?>&step=2&setup=true">
+                            <a href="options-general.php?page=<?= Impressum_Manager_Admin::get_instance()->get_slug() ?>&step=2&setup=true">
                                 <input type="button" class="button button-secondary"
                                        value="<?= __("Schritt zurück", $this->slug) ?>"
                                        style="margin-top: 5px">
@@ -960,21 +990,20 @@ class WP_Impressum_Config
     <?php
     }
 
-    public
-    function show_setup()
+    public function show_setup()
     {
-        $onboarded = get_option("wp_impresusm_onboarding_conf");
+        $onboarded = get_option("impressum_manager_onboarding_conf");
         $enter_config = true;
-        $finish = $_GET['finish'];
+        $finish = @$_GET['finish'];
 
-        if($finish == "true") {
+        if ($finish == "true") {
             if ($onboarded == "onboarded") {
                 $enter_config = false;
             } else {
-                add_option("wp_impresusm_onboarding_conf", "onboarded");
-                $_GET['step'] = 1;
+                add_option("impressum_manager_onboarding_conf", "onboarded");
+                @$_GET['step'] = 1;
             }
-            update_option("wp_impresusm_onboarding_conf", "onboarded");
+            update_option("impressum_manager_onboarding_conf", "onboarded");
         }
 
         if ($onboarded == "onboarded") {
@@ -984,16 +1013,16 @@ class WP_Impressum_Config
         if (empty($finish) && (array_key_exists("setup", $_REQUEST) || $enter_config)) {
 
             // dismiss admin notice
-            if (get_option("wp_impressum_notice") === false) {
-                add_option("wp_impressum_notice", "dismissed");
+            if (get_option("impressum_manager_notice") === false) {
+                add_option("impressum_manager_notice", "dismissed");
             } else {
-                update_option("wp_impressum_notice", "dismissed");
+                update_option("impressum_manager_notice", "dismissed");
             }
 
-            $option_url = admin_url("options-general.php") . "?page=" . WP_Impressum_Config::get_instance()->get_slug();
+            $option_url = admin_url("options-general.php") . "?page=" . Impressum_Manager_Admin::get_instance()->get_slug();
 
             if ($enter_config) {
-                switch ($_GET['step']) {
+                switch (@$_GET['step']) {
                     case 1:
 
                         $this->config_page_1($option_url, true);
@@ -1003,17 +1032,17 @@ class WP_Impressum_Config
                     case 2:
 
                         if (array_key_exists("submit", $_REQUEST)) {
-                            $this->save_option("wp_impressum_person", $_POST["wp_impressum_person"]);
-                            $this->save_option("wp_impressum_form_of_organization", $_POST["wp_impressum_form_of_organization"]);
-                            $this->save_option("wp_impressum_name_company", $_POST["wp_impressum_name_company"]);
-                            $this->save_option("wp_impressum_address", $_POST["wp_impressum_address"]);
-                            $this->save_option("wp_impressum_address_extra", $_POST["wp_impressum_address_extra"]);
-                            $this->save_option("wp_impressum_place", $_POST["wp_impressum_place"]);
-                            $this->save_option("wp_impressum_zip", $_POST["wp_impressum_zip"]);
-                            $this->save_option("wp_impressum_country", $_POST["wp_impressum_country"]);
-                            $this->save_option("wp_impressum_fax", $_POST["wp_impressum_fax"]);
-                            $this->save_option("wp_impressum_email", $_POST["wp_impressum_email"]);
-                            $this->save_option("wp_impressum_phone", $_POST["wp_impressum_phone"]);
+                            $this->save_option("impressum_manager_person", $_POST["impressum_manager_person"]);
+                            $this->save_option("impressum_manager_form_of_organization", $_POST["impressum_manager_form_of_organization"]);
+                            $this->save_option("impressum_manager_name_company", $_POST["impressum_manager_name_company"]);
+                            $this->save_option("impressum_manager_address", $_POST["impressum_manager_address"]);
+                            $this->save_option("impressum_manager_address_extra", $_POST["impressum_manager_address_extra"]);
+                            $this->save_option("impressum_manager_place", $_POST["impressum_manager_place"]);
+                            $this->save_option("impressum_manager_zip", $_POST["impressum_manager_zip"]);
+                            $this->save_option("impressum_manager_country", $_POST["impressum_manager_country"]);
+                            $this->save_option("impressum_manager_fax", $_POST["impressum_manager_fax"]);
+                            $this->save_option("impressum_manager_email", $_POST["impressum_manager_email"]);
+                            $this->save_option("impressum_manager_phone", $_POST["impressum_manager_phone"]);
                         }
 
                         $this->config_page_2($option_url, true);
@@ -1023,20 +1052,20 @@ class WP_Impressum_Config
                     case 3:
 
                         if (array_key_exists("submit", $_REQUEST)) {
-                            $this->save_option("wp_impressum_authorized_person", $_POST["wp_impressum_authorized_person"]);
-                            $this->save_option("wp_impressum_vat", $_POST["wp_impressum_vat"]);
-                            $this->save_option("wp_impressum_register", $_POST["wp_impressum_register"]);
-                            $this->save_option("wp_impressum_registenr", $_POST["wp_impressum_registenr"]);
-                            $this->save_option("wp_impressum_regulated_profession", $_POST["wp_impressum_regulated_profession"]);
-                            $this->save_option("wp_impressum_state", $_POST["wp_impressum_state"]);
-                            $this->save_option("wp_impressum_state_rules", $_POST["wp_impressum_state_rules"]);
-                            $this->save_option("wp_impressum_chamber", $_POST["wp_impressum_chamber"]);
-                            $this->save_option("wp_impressum_image_source", $_POST["wp_impressum_image_source"]);
-                            $this->save_option("wp_impressum_responsible_chamber", $_POST["wp_impressum_responsible_chamber"]);
-                            $this->save_option("wp_impressum_responsible_persons", $_POST["wp_impressum_responsible_persons"]);
-                            $this->save_option("wp_impressum_press_content", $_POST["wp_impressum_press_content"]);
-                            $this->save_option("wp_impressum_allowness", $_POST["wp_impressum_allowness"]);
-                            $this->save_option("wp_impressum_regulated_profession_checked", $_POST['wp_impressum_regulated_profession_checked']);
+                            $this->save_option("impressum_manager_authorized_person", $_POST["impressum_manager_authorized_person"]);
+                            $this->save_option("impressum_manager_vat", $_POST["impressum_manager_vat"]);
+                            $this->save_option("impressum_manager_register", $_POST["impressum_manager_register"]);
+                            $this->save_option("impressum_manager_registenr", $_POST["impressum_manager_registenr"]);
+                            $this->save_option("impressum_manager_regulated_profession", $_POST["impressum_manager_regulated_profession"]);
+                            $this->save_option("impressum_manager_state", $_POST["impressum_manager_state"]);
+                            $this->save_option("impressum_manager_state_rules", $_POST["impressum_manager_state_rules"]);
+                            $this->save_option("impressum_manager_chamber", $_POST["impressum_manager_chamber"]);
+                            $this->save_option("impressum_manager_image_source", $_POST["impressum_manager_image_source"]);
+                            $this->save_option("impressum_manager_responsible_chamber", $_POST["impressum_manager_responsible_chamber"]);
+                            $this->save_option("impressum_manager_responsible_persons", $_POST["impressum_manager_responsible_persons"]);
+                            $this->save_option("impressum_manager_press_content", $_POST["impressum_manager_press_content"]);
+                            $this->save_option("impressum_manager_allowness", $_POST["impressum_manager_allowness"]);
+                            $this->save_option("impressum_manager_regulated_profession_checked", $_POST['impressum_manager_regulated_profession_checked']);
                         }
 
                         $this->config_page_3($option_url, true);
@@ -1048,31 +1077,31 @@ class WP_Impressum_Config
                 }
             } else {
                 if (array_key_exists("submit", $_REQUEST)) {
-                    $this->save_option("wp_impressum_person", $_POST["wp_impressum_person"]);
-                    $this->save_option("wp_impressum_form_of_organization", $_POST["wp_impressum_form_of_organization"]);
-                    $this->save_option("wp_impressum_name_company", $_POST["wp_impressum_name_company"]);
-                    $this->save_option("wp_impressum_address", $_POST["wp_impressum_address"]);
-                    $this->save_option("wp_impressum_address_extra", $_POST["wp_impressum_address_extra"]);
-                    $this->save_option("wp_impressum_place", $_POST["wp_impressum_place"]);
-                    $this->save_option("wp_impressum_zip", $_POST["wp_impressum_zip"]);
-                    $this->save_option("wp_impressum_country", $_POST["wp_impressum_country"]);
-                    $this->save_option("wp_impressum_fax", $_POST["wp_impressum_fax"]);
-                    $this->save_option("wp_impressum_email", $_POST["wp_impressum_email"]);
-                    $this->save_option("wp_impressum_phone", $_POST["wp_impressum_phone"]);
-                    $this->save_option("wp_impressum_authorized_person", $_POST["wp_impressum_authorized_person"]);
-                    $this->save_option("wp_impressum_vat", $_POST["wp_impressum_vat"]);
-                    $this->save_option("wp_impressum_register", $_POST["wp_impressum_register"]);
-                    $this->save_option("wp_impressum_registenr", $_POST["wp_impressum_registenr"]);
-                    $this->save_option("wp_impressum_regulated_profession", $_POST["wp_impressum_regulated_profession"]);
-                    $this->save_option("wp_impressum_state", $_POST["wp_impressum_state"]);
-                    $this->save_option("wp_impressum_state_rules", $_POST["wp_impressum_state_rules"]);
-                    $this->save_option("wp_impressum_chamber", $_POST["wp_impressum_chamber"]);
-                    $this->save_option("wp_impressum_image_source", $_POST["wp_impressum_image_source"]);
-                    $this->save_option("wp_impressum_responsible_chamber", $_POST["wp_impressum_responsible_chamber"]);
-                    $this->save_option("wp_impressum_responsible_persons", $_POST["wp_impressum_responsible_persons"]);
-                    $this->save_option("wp_impressum_press_content", $_POST["wp_impressum_press_content"]);
-                    $this->save_option("wp_impressum_allowness", $_POST["wp_impressum_allowness"]);
-                    $this->save_option("wp_impressum_regulated_profession_checked", $_POST['wp_impressum_regulated_profession_checked']);
+                    $this->save_option("impressum_manager_person", $_POST["impressum_manager_person"]);
+                    $this->save_option("impressum_manager_form_of_organization", $_POST["impressum_manager_form_of_organization"]);
+                    $this->save_option("impressum_manager_name_company", $_POST["impressum_manager_name_company"]);
+                    $this->save_option("impressum_manager_address", $_POST["impressum_manager_address"]);
+                    $this->save_option("impressum_manager_address_extra", $_POST["impressum_manager_address_extra"]);
+                    $this->save_option("impressum_manager_place", $_POST["impressum_manager_place"]);
+                    $this->save_option("impressum_manager_zip", $_POST["impressum_manager_zip"]);
+                    $this->save_option("impressum_manager_country", $_POST["impressum_manager_country"]);
+                    $this->save_option("impressum_manager_fax", $_POST["impressum_manager_fax"]);
+                    $this->save_option("impressum_manager_email", $_POST["impressum_manager_email"]);
+                    $this->save_option("impressum_manager_phone", $_POST["impressum_manager_phone"]);
+                    $this->save_option("impressum_manager_authorized_person", $_POST["impressum_manager_authorized_person"]);
+                    $this->save_option("impressum_manager_vat", $_POST["impressum_manager_vat"]);
+                    $this->save_option("impressum_manager_register", $_POST["impressum_manager_register"]);
+                    $this->save_option("impressum_manager_registenr", $_POST["impressum_manager_registenr"]);
+                    $this->save_option("impressum_manager_regulated_profession", $_POST["impressum_manager_regulated_profession"]);
+                    $this->save_option("impressum_manager_state", $_POST["impressum_manager_state"]);
+                    $this->save_option("impressum_manager_state_rules", $_POST["impressum_manager_state_rules"]);
+                    $this->save_option("impressum_manager_chamber", $_POST["impressum_manager_chamber"]);
+                    $this->save_option("impressum_manager_image_source", $_POST["impressum_manager_image_source"]);
+                    $this->save_option("impressum_manager_responsible_chamber", $_POST["impressum_manager_responsible_chamber"]);
+                    $this->save_option("impressum_manager_responsible_persons", $_POST["impressum_manager_responsible_persons"]);
+                    $this->save_option("impressum_manager_press_content", $_POST["impressum_manager_press_content"]);
+                    $this->save_option("impressum_manager_allowness", $_POST["impressum_manager_allowness"]);
+                    $this->save_option("impressum_manager_regulated_profession_checked", $_POST['impressum_manager_regulated_profession_checked']);
 
                 }
 
@@ -1086,57 +1115,88 @@ class WP_Impressum_Config
 
     private function register_settings()
     {
-        register_setting("wp-impressum-policy_group", "wp_impressum_disclaimer");
-        register_setting("wp-impressum-policy_group", "wp_impressum_set_impressum");
-        register_setting("wp-impressum-policy_group", "wp_impressum_language_of_impressum");
-        register_setting("wp-impressum-policy_group", "wp_impressum_general_privacy_policy");
-        register_setting("wp-impressum-policy_group", "wp_impressum_policy_facebook");
-        register_setting("wp-impressum-policy_group", "wp_impressum_policy_google_analytics");
-        register_setting("wp-impressum-policy_group", "wp_impressum_policy_google_adsense");
-        register_setting("wp-impressum-policy_group", "wp_impressum_policy_twitter");
-        register_setting("wp-impressum-policy_group", "wp_impressum_policy_google_plus");
-        register_setting("wp-impressum-policy_group", "wp_impressum_page");
-        register_setting("wp-impressum-policy_group", "wp_impressum_disabled");
-        register_setting("wp-impressum-policy_group", "wp_impressum_extra_field");
-        register_setting("wp-impressum-policy_group", "wp_impressum_noindex");
+        register_setting("impressum-manager-policy_group", "impressum_manager_disclaimer");
+        register_setting("impressum-manager-policy_group", "impressum_manager_set_impressum");
+        register_setting("impressum-manager-policy_group", "impressum_manager_language_of_impressum");
+        register_setting("impressum-manager-policy_group", "impressum_manager_general_privacy_policy");
+        register_setting("impressum-manager-policy_group", "impressum_manager_policy_facebook");
+        register_setting("impressum-manager-policy_group", "impressum_manager_policy_google_analytics");
+        register_setting("impressum-manager-policy_group", "impressum_manager_policy_google_adsense");
+        register_setting("impressum-manager-policy_group", "impressum_manager_policy_twitter");
+        register_setting("impressum-manager-policy_group", "impressum_manager_policy_google_plus");
+        register_setting("impressum-manager-policy_group", "impressum_manager_page");
+        register_setting("impressum-manager-policy_group", "impressum_manager_disabled");
+        register_setting("impressum-manager-policy_group", "impressum_manager_extra_field");
+        register_setting("impressum-manager-policy_group", "impressum_manager_noindex");
+        register_setting("impressum-manager-policy_group", "impressum_manager_show_email_as_image");
+
+	    register_setting("impressum-manager-policy_group", "impressum_manager_person");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_form_of_organization");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_name_company");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_address");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_address_extra");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_place");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_zip");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_country");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_fax");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_email");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_disclaimer");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_phone");
+
+	    register_setting("impressum-manager-policy_group", "impressum_manager_authorized_person");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_vat");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_register");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_registenr");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_regulated_profession");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_state");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_state_rules");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_chamber");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_image_source");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_responsible_chamber");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_responsible_persons");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_press_content");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_allowness");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_regulated_profession_checked");
     }
 
     private function config_view()
     {
 
-        $wpimpressum_settings[] = $wpimpressum_language = mysql_real_escape_string($_POST['wp_impressum_language_of_impressum']);
-        $wpimpressum_settings[] = $general_privacy_policy = mysql_real_escape_string($_POST['wp_impressum_general_privacy_policy']);
-        $wpimpressum_settings[] = $disclaimer = mysql_real_escape_string($_POST['wp_impressum_disclaimer']);
-        $wpimpressum_settings[] = $policy_facebook = mysql_real_escape_string($_POST['wp_impressum_policy_facebook']);
-        $wpimpressum_settings[] = $policy_google_analytics = mysql_real_escape_string($_POST['wp_impressum_policy_google_analytics']);
-        $wpimpressum_settings[] = $policy_google_adsense = mysql_real_escape_string($_POST['wp_impressum_policy_google_adsense']);
-        $wpimpressum_settings[] = $policy_google_plus = mysql_real_escape_string($_POST['wp_impressum_policy_google_plus']);
-        $wpimpressum_settings[] = $policy_google_twitter = mysql_real_escape_string($_POST['wp_impressum_policy_twitter']);
-        $wpimpressum_settings[] = $extra_field = mysql_real_escape_string($_POST['wp_impressum_extra_field']);
+        $impressummanager_settings[] = $impressummanager_language = @$_POST['impressum_manager_language_of_impressum'];
+        $impressummanager_settings[] = $general_privacy_policy = @$_POST['impressum_manager_general_privacy_policy'];
+        $impressummanager_settings[] = $disclaimer = @$_POST['impressum_manager_disclaimer'];
+        $impressummanager_settings[] = $policy_facebook = @$_POST['impressum_manager_policy_facebook'];
+        $impressummanager_settings[] = $policy_google_analytics = @$_POST['impressum_manager_policy_google_analytics'];
+        $impressummanager_settings[] = $policy_google_adsense = @$_POST['impressum_manager_policy_google_adsense'];
+        $impressummanager_settings[] = $policy_google_plus = @$_POST['impressum_manager_policy_google_plus'];
+        $impressummanager_settings[] = $policy_google_twitter = @$_POST['impressum_manager_policy_twitter'];
+        $impressummanager_settings[] = $extra_field = @$_POST['impressum_manager_extra_field'];
 
-        if (array_key_exists("firstset", $_GET) && $_GET['finish'] == true && array_key_exists("submit", $_REQUEST)) {
-            $this->save_option("wp_impressum_language_of_impressum", $wpimpressum_language);
-            $this->save_option("wp_impressum_general_privacy_policy", $general_privacy_policy);
-            $this->save_option("wp_impressum_disclaimer", $disclaimer);
-            $this->save_option("wp_impressum_policy_facebook", $policy_facebook);
-            $this->save_option("wp_impressum_policy_google_analytics", $policy_google_analytics);
-            $this->save_option("wp_impressum_policy_google_adsense", $policy_google_adsense);
-            $this->save_option("wp_impressum_policy_google_plus", $policy_google_plus);
-            $this->save_option("wp_impressum_policy_twitter", $policy_google_twitter);
-            $this->save_option("wp_impressum_extra_field", $extra_field);
+        if (array_key_exists("firstset", @$_GET) && @$_GET['finish'] == true && array_key_exists("submit", $_REQUEST)) {
+            $this->save_option("impressum_manager_language_of_impressum", $impressummanager_language);
+            $this->save_option("impressum_manager_general_privacy_policy", $general_privacy_policy);
+            $this->save_option("impressum_manager_disclaimer", $disclaimer);
+            $this->save_option("impressum_manager_policy_facebook", $policy_facebook);
+            $this->save_option("impressum_manager_policy_google_analytics", $policy_google_analytics);
+            $this->save_option("impressum_manager_policy_google_adsense", $policy_google_adsense);
+            $this->save_option("impressum_manager_policy_google_plus", $policy_google_plus);
+            $this->save_option("impressum_manager_policy_twitter", $policy_google_twitter);
+            $this->save_option("impressum_manager_extra_field", $extra_field);
         }
 
         ?>
+
+
         <form action="options-general.php">
             <table class="form-table">
                 <input type="hidden" name="page"
-                       value="<?= WP_Impressum_Config::get_instance()->get_slug() ?>">
+                       value="<?= Impressum_Manager_Admin::get_instance()->get_slug() ?>">
                 <input type="hidden" name="step" value="1"/>
                 <input type="hidden" name="setup" value="true"/>
                 <tbody>
                 <tr>
                     <th>
-                        Impressum Konfiguration
+                        <?= __("Impressum Konfiguration") ?>
                     </th>
                     <td>
                         <input class="button" type="submit" value="<?= _e('Impressum konfigurieren') ?>">
@@ -1146,32 +1206,42 @@ class WP_Impressum_Config
             </table>
         </form>
         <form method="post" action="options.php">
-            <?php settings_fields('wp-impressum-policy_group'); ?>
-            <?php do_settings_sections('wp-impressum-policy_group'); ?>
+            <?php settings_fields('impressum-manager-policy_group'); ?>
+            <?php do_settings_sections('impressum-manager-policy_group'); ?>
             <table class="form-table">
                 <tbody>
-                <tr>
+                <!--tr>
                     <th scope="row"><?= __("Language", $this->slug) ?></th>
                     <td>
-                        <select name="wp_impressum_language_of_impressum" style="width: 340px">
+                        <select name="impressum_manager_language_of_impressum" style="width: 340px">
                             <option>Wähle dein Land ...</option>
                             <option value="DE" <?php
-                            if (get_option("wp_impressum_language_of_impressum") == "DE") {
-                                echo "selected=selected";
-                            }
-                            ?>>Deutsch
+                if (get_option("impressum_manager_language_of_impressum") == "DE") {
+                    echo "selected=selected";
+                }
+                ?>>Deutsch
                             </option>
                         </select><br><br>
                         <?= __("Wähle die Sprache für dein Impressum", $this->slug) ?>
                     </td>
-                </tr>
+                </tr-->
                 <tr>
                     <th scope="row"><?= __("No Index", $this->slug) ?></th>
                     <td>
-                        <label for="wp_impressum_noindex">
-                            <input id="wp_impressum_noindex" type="checkbox"
-                                   name="wp_impressum_noindex" <?= $this->isChecked("wp_impressum_noindex") ?>>
+                        <label for="impressum_manager_noindex">
+                            <input id="impressum_manager_noindex" type="checkbox"
+                                   name="impressum_manager_noindex" <?= checked("on", get_option("impressum_manager_noindex"), false) ?>>
                             <?= __("Lass die Impressum Seite nicht von Suchmaschinen indexieren.", $this->slug) ?>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?= __("E-Mail as Image", $this->slug) ?></th>
+                    <td>
+                        <label for="impressum_manager_show_email_as_image">
+                            <input id="impressum_manager_show_email_as_image" type="checkbox"
+                                   name="impressum_manager_show_email_as_image" <?= checked("on", get_option("impressum_manager_show_email_as_image"), false) ?>>
+                            <?= __("Show E-Mail as Image to prevent Spam.", $this->slug) ?>
                         </label>
                     </td>
                 </tr>
@@ -1183,9 +1253,9 @@ class WP_Impressum_Config
                         <?= __("Haftungsausschluss (Disclaimer)", $this->slug) ?>
                     </th>
                     <td>
-                        <label for="wp_impressum_disclaimer">
-                            <input id="wp_impressum_disclaimer" type="checkbox"
-                                   name="wp_impressum_disclaimer" <?= $this->isChecked("wp_impressum_disclaimer") ?>>
+                        <label for="impressum_manager_disclaimer">
+                            <input id="impressum_manager_disclaimer" type="checkbox"
+                                   name="impressum_manager_disclaimer" <?= checked("on", get_option("impressum_manager_disclaimer"), false) ?>>
                             <?= __("Füge einen Disclaimer in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -1195,9 +1265,9 @@ class WP_Impressum_Config
                         <?= __("Allgemine Datenschutzerklärung", $this->slug) ?>
                     </th>
                     <td>
-                        <label for="wp_impressum_general_privacy_policy">
-                            <input id="wp_impressum_general_privacy_policy" type="checkbox"
-                                   name="wp_impressum_general_privacy_policy" <?= $this->isChecked("wp_impressum_general_privacy_policy") ?>>
+                        <label for="impressum_manager_general_privacy_policy">
+                            <input id="impressum_manager_general_privacy_policy" type="checkbox"
+                                   name="impressum_manager_general_privacy_policy" <?= checked("on", get_option("impressum_manager_general_privacy_policy"), false) ?>>
                             <?= __("Füge eine allgemeine Datenschutzerklärung in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -1207,9 +1277,9 @@ class WP_Impressum_Config
                         <?= __("Datenschutzerklärung für Facebook", $this->slug) ?>
                     </th>
                     <td>
-                        <label for="wp_impressum_policy_facebook">
-                            <input id="wp_impressum_policy_facebook" type="checkbox"
-                                   name="wp_impressum_policy_facebook" <?= $this->isChecked("wp_impressum_policy_facebook") ?>>
+                        <label for="impressum_manager_policy_facebook">
+                            <input id="impressum_manager_policy_facebook" type="checkbox"
+                                   name="impressum_manager_policy_facebook" <?= checked("on", get_option("impressum_manager_policy_facebook"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von Facebook Elementen in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -1219,21 +1289,21 @@ class WP_Impressum_Config
                         <?= __("Datenschutzerklärung für Google", $this->slug) ?>
                     </th>
                     <td>
-                        <label for="wp_impressum_policy_google_analytics">
-                            <input id="wp_impressum_policy_google_analytics" type="checkbox"
-                                   name="wp_impressum_policy_google_analytics" <?= $this->isChecked("wp_impressum_policy_google_analytics") ?>>
+                        <label for="impressum_manager_policy_google_analytics">
+                            <input id="impressum_manager_policy_google_analytics" type="checkbox"
+                                   name="impressum_manager_policy_google_analytics" <?= checked("on", get_option("impressum_manager_policy_google_analytics"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von <b>Google Analytics</b> in dein Impressum ein.", $this->slug) ?>
                         </label>
                         <br><br>
-                        <label for="wp_impressum_policy_google_adsense">
-                            <input id="wp_impressum_policy_google_adsense" type="checkbox"
-                                   name="wp_impressum_policy_google_adsense" <?= $this->isChecked("wp_impressum_policy_google_adsense") ?>>
+                        <label for="impressum_manager_policy_google_adsense">
+                            <input id="impressum_manager_policy_google_adsense" type="checkbox"
+                                   name="impressum_manager_policy_google_adsense" <?= checked("on", get_option("impressum_manager_policy_google_adsense"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von <b>Google Adsense</b> in dein Impressum ein.", $this->slug) ?>
                         </label>
                         <br><br>
-                        <label for="wp_impressum_policy_google_plus">
-                            <input id="wp_impressum_policy_google_plus" type="checkbox"
-                                   name="wp_impressum_policy_google_plus" <?= $this->isChecked("wp_impressum_policy_google_plus") ?>>
+                        <label for="impressum_manager_policy_google_plus">
+                            <input id="impressum_manager_policy_google_plus" type="checkbox"
+                                   name="impressum_manager_policy_google_plus" <?= checked("on", get_option("impressum_manager_policy_google_plus"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von <b>Google +1</b> in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -1243,9 +1313,9 @@ class WP_Impressum_Config
                         <?= _e("Datenschutzerklärung für Twitter") ?>
                     </th>
                     <td>
-                        <label for="wp_impressum_policy_twitter">
-                            <input id="wp_impressum_policy_twitter" type="checkbox"
-                                   name="wp_impressum_policy_twitter" <?= $this->isChecked("wp_impressum_policy_twitter") ?>>
+                        <label for="impressum_manager_policy_twitter">
+                            <input id="impressum_manager_policy_twitter" type="checkbox"
+                                   name="impressum_manager_policy_twitter" <?= checked("on", get_option("impressum_manager_policy_twitter"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von Twitter Elementen in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -1256,7 +1326,7 @@ class WP_Impressum_Config
                     </th>
                     <td>
                         <textarea style="width:500px; height: 200px;"
-                                  name="wp_impressum_extra_field"><?= get_option("wp_impressum_extra_field") ?></textarea>
+                                  name="impressum_manager_extra_field"><?= get_option("impressum_manager_extra_field") ?></textarea>
                     </td>
                 </tr>
                 </tbody>
@@ -1264,12 +1334,5 @@ class WP_Impressum_Config
             <?php submit_button(__("Impressum aktualisieren")); ?>
         </form>
     <?php
-    }
-
-    private function isChecked($key)
-    {
-        if (strlen(get_option($key)) > 0) {
-            echo "checked=checked";
-        }
     }
 }
