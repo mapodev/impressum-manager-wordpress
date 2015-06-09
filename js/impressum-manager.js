@@ -2,6 +2,7 @@
     $(document).ready(function() {
         $(".nav-tab").click(function() {
             triggerTab(this, $(this).attr("id"));
+            console.log("test");
         });
 
         function triggerTab(o,name) {

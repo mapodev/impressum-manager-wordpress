@@ -394,13 +394,13 @@ class Impressum_Manager_Admin
             </div>
 
             <div class="fields-tab tab" style="display:none;">
-                <?php require_once(IMPRESSUMMANAGER__PLUGIN_DIR . "views/fields-tab.php") ?>
+                <?php include(plugin_dir_path(__FILE__) . "admin/views/fields-tab.php") ?>
             </div>
 	        <div class="settings2-tab tab" style="display:none;">
-		        <?php require_once(IMPRESSUMMANAGER__PLUGIN_DIR . "views/settings-tab.php") ?>
+		        <?php include(plugin_dir_path(__FILE__) . "admin/views/settings-tab.php") ?>
 	        </div>
 	        <div class="preview-tab tab" style="display:none;">
-		        <?php require_once(IMPRESSUMMANAGER__PLUGIN_DIR . "views/preview-tab.php") ?>
+		        <?php include(plugin_dir_path(__FILE__) . "admin/views/preview-tab.php") ?>
 	        </div>
         <?php } ?>
         </div>
