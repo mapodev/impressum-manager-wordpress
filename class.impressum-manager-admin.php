@@ -371,7 +371,7 @@ class Impressum_Manager_Admin
         </script>
         <div class="wrap">
             <h2>Impressum Manager</h2>
-            <small>Version: <?= IMPRESSUMMANAGER_VERSION ?></small>
+            <small>Version: <?= IMPRESSUM_MANAGER_VERSION ?></small>
             |
             <small><a href="javascript:void(0);" id="delete_options">Delete options</a></small>
             <br><br>
