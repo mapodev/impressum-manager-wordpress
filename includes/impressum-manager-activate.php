@@ -30,9 +30,9 @@ function impressum_manager_install_activate() {
 }
 
 function impressum_manager_insert_data() {
-	require_once plugin_dir_path(__FILE__) . "../admin/class.plugin-config.php";
+	require_once plugin_dir_path(__FILE__) . "../class.impressum-manager-admin.php";
 
-	$conf = Impressum_Manager_Config::get_instance();
+	$conf = Impressum_Manager_Admin::get_instance();
 	$domain = $conf->get_slug();
 
     $impressum_key = array();
