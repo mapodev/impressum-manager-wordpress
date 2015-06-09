@@ -29,68 +29,51 @@
 if (!defined('WPINC')) {
     die;
 }
+define( 'IMPRESSUMMANAGER_VERSION', '0.4.1' );
+define( 'IMPRESSUMMANAGER__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'IMPRESSUMMANAGER__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
-register_activation_hook(__FILE__, 'impressum_manager_activate_plugin');
-register_deactivation_hook(__FILE__, 'impressum_manager_deactivate_plugin');
+register_activation_hook( __FILE__, array( 'Impressum_Manager', 'plugin_activation' ) );
+register_deactivation_hook( __FILE__, array( 'Impressum_Manager', 'plugin_deactivation' ) );
+register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "impressum_manager_goodybye");
 
-add_action('admin_notices', 'impressum_manager_installation_notice');
+require_once( IMPRESSUMMANAGER__PLUGIN_DIR . 'class.impressum-manager.php' );
+require_once( IMPRESSUMMANAGER__PLUGIN_DIR . 'classes/class.impressum.php');
+require_once( IMPRESSUMMANAGER__PLUGIN_DIR . 'admin/class.plugin-config.php');
+require_once( IMPRESSUMMANAGER__PLUGIN_DIR . 'wrapper.php' );
 
-function impressum_manager_installation_notice()
-{
-    $request = $_SERVER['REQUEST_URI'];
-    if (strpos($request, Impressum_Manager_Config::get_instance()->get_slug()) !== false) {
-        // indside impressum
-    } else {
-        if (get_option("impressum_manager_notice") === false && get_option("impressum_manager_name_company") === false) {
-            $class = "error";
-            $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . Impressum_Manager_Config::get_instance()->get_slug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
-            echo "<div class=\"$class\"> <p>$message</p></div>";
-        }
-    }
+add_action( 'init', array( 'Impressum_Manager', 'init' ) );
+
+
+
+if ( is_admin() ) {
+	require_once( IMPRESSUMMANAGER__PLUGIN_DIR . 'class.impressum-manager-admin.php' );
+	add_action( 'init', array( 'Impressum_Manager_Admin', 'init' ) );
 }
 
-
-require_once(plugin_dir_path(__FILE__) . 'classes/impressum.class.php');
-
-function impressum_manager_activate_plugin()
+function impressum_manager_goodybye()
 {
-    require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-activate.php';
-    impressum_manager_install_activate();
+	?>
+	Goodbye!
+<?php
 }
 
-function impressum_manager_deactivate_plugin()
-{
-    require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-deactivate.php';
-    impressum_manager_deactivate();
-}
-
-function impressum_manager_load_translations()
-{
-    require plugin_dir_path(__FILE__) . 'admin/plugin-config.class.php';
-    $conf = Impressum_Manager_Config::get_instance();
-    // Load translations
-    $plugin_dir = basename(dirname(__FILE__));
-    load_plugin_textdomain($conf->get_slug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
-}
-
-add_action('init', "impressum_manager_load_translations");
-
+/*
 function impressum_manager_content_shortcode($atts)
 {
     $im = new ImpressumManager();
     return $im->content();
 }
 
-function impressum_manager_goodybye()
-{
-    ?>
-    Goodbye!
-<?php
-}
-
-register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "impressum_manager_goodybye");
-
 // Some Logic that does not to be included in the classes
+
+add_filter('attachment_fields_to_edit', 'impressum_manager_field_credit', 10, 2);
+
+add_filter('attachment_fields_to_save', 'impressum_manager_field_credit_save', 10, 2);
+
+// Instead of creating a shortcode, hook to the_posts
+add_action('the_posts', 'impressum_manager_metashortcode');
+
 
 // Fields for credentials which will be summed up in the impressum
 function impressum_manager_field_credit($form_fields, $post)
@@ -104,8 +87,6 @@ function impressum_manager_field_credit($form_fields, $post)
     return $form_fields;
 }
 
-add_filter('attachment_fields_to_edit', 'impressum_manager_field_credit', 10, 2);
-
 function impressum_manager_field_credit_save($post, $attachment)
 {
     if (isset($attachment['plugin-image-credential']))
@@ -113,8 +94,6 @@ function impressum_manager_field_credit_save($post, $attachment)
 
     return $post;
 }
-
-add_filter('attachment_fields_to_save', 'impressum_manager_field_credit_save', 10, 2);
 
 // Function to hook to "the_posts" (just edit the two variables)
 function impressum_manager_metashortcode($posts)
@@ -177,9 +156,6 @@ function impressum_manager_metashortcode_shortcode_to_wphead($posts, $shortcode,
         add_action('wp_head', $callback_function);
 
     return $posts;
-}
-
-// Instead of creating a shortcode, hook to the_posts
-add_action('the_posts', 'impressum_manager_metashortcode');
+}*/
 
 ?>

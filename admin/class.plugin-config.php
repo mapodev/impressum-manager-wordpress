@@ -5,7 +5,6 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 class Impressum_Manager_Config
 {
 
-    private $version;
     private $slug;
 
     private $_countries = array(
@@ -254,7 +253,6 @@ class Impressum_Manager_Config
 
     public function __construct()
     {
-        $this->version = "0.4.1";
         $this->slug = "impressum-manager";
 
         if (array_key_exists("dismiss", $_REQUEST)) {
@@ -271,6 +269,14 @@ class Impressum_Manager_Config
             add_action('wp_ajax_impressum_manager_delete_options', array($this, 'delete_callback'));
         }
     }
+
+	public static function get_instance()
+	{
+		if (self::$instance == null) {
+			self::$instance = new Impressum_Manager_Config();
+		}
+		return self::$instance;
+	}
 
     /**
      * ajax response for DEV options
@@ -321,13 +327,7 @@ class Impressum_Manager_Config
     }
 
 
-    public static function get_instance()
-    {
-        if (self::$instance == null) {
-            self::$instance = new Impressum_Manager_Config();
-        }
-        return self::$instance;
-    }
+
 
     /**
      * @return mixed
@@ -336,15 +336,6 @@ class Impressum_Manager_Config
     {
         return $this->slug;
     }
-
-    /**
-     * @return mixed
-     */
-    public function get_version()
-    {
-        return $this->version;
-    }
-
     public function show()
     {
         ?>
@@ -368,7 +359,7 @@ class Impressum_Manager_Config
         </script>
         <div class="wrap">
             <h2>Impressum Manager</h2>
-            <small>Version: <?= $this->version ?></small>
+            <small>Version: <?= IMPRESSUMMANAGER_VERSION ?></small>
             |
             <small><a href="javascript:void(0);" id="delete_options">Delete options</a></small>
             <br><br>
@@ -1182,6 +1173,8 @@ class Impressum_Manager_Config
         }
 
         ?>
+
+
         <form action="options-general.php">
             <table class="form-table">
                 <input type="hidden" name="page"
