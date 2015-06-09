@@ -4,6 +4,12 @@
 
 ?>
 
+<script>
+    (function ($) {
+
+    }(jQuery));
+</script>
+
 <h3><?= __("Update Impressum Fields") ?></h3>
 
 <select>
@@ -11,14 +17,22 @@
 </select>
 
 <select>
-    <option><?= __("Kontakt") ?></option>
-    <option><?= __("Haftungsausschluss") ?></option>
-    <option><?= __("Datenschutz Google") ?></option>
-    <option><?= __("Datenschutz Analytics") ?></option>
-    <option><?= __("Datenschutz Google Plus") ?></option>
-    <option><?= __("Datenschutz Facebook") ?></option>
-</select>
+<?php
 
+global $wpdb;
+$table_name = $wpdb->prefix . "impressum_manager_content";
+
+$lang_tags = $wpdb->get_results(
+    "SELECT *
+	FROM $table_name
+	WHERE lang = 'DE'"
+);
+
+foreach ($lang_tags as $tag) {
+    echo "<option value=".$tag->impressum_key.">" .$tag->impressum_key . "</option>";
+}
+?>
+</select>
 <table>
     <tr>
         <td><textarea style="min-height: 800px; min-width: 700px;"></textarea></td>
