@@ -18,9 +18,6 @@ function impressum_manager_install_activate() {
 	  `impressum_value` TEXT NULL
 	) $charset_collate;";
 
-
-    error_log($sql);
-
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta( $sql );
 

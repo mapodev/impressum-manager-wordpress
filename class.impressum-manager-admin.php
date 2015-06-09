@@ -266,32 +266,33 @@ class Impressum_Manager_Admin
         if (is_admin()) {
             add_action('admin_init', array($this, 'admin_init'));
             add_action('admin_menu', array($this, 'add_menu'));
-	        add_action('admin_notices',array($this, 'installation_notice'));
+            add_action('admin_notices', array($this, 'installation_notice'));
             add_action('wp_ajax_impressum_manager_delete_options', array($this, 'delete_callback'));
+            add_action('wp_ajax_impressum_manager_get_impressum_field', array($this, 'editor_ajax_callback'));
         }
     }
 
-	public static function installation_notice()
-	{
-		$request = $_SERVER['REQUEST_URI'];
-		if (strpos($request, Impressum_Manager_Admin::get_instance()->get_slug()) !== false) {
-			// indside impressum
-		} else {
-			if (get_option("impressum_manager_notice") === false && get_option("impressum_manager_name_company") === false) {
-				$class = "error";
-				$message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . Impressum_Manager_Admin::get_instance()->get_slug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
-				echo "<div class=\"$class\"> <p>$message</p></div>";
-			}
-		}
-	}
+    public static function installation_notice()
+    {
+        $request = $_SERVER['REQUEST_URI'];
+        if (strpos($request, Impressum_Manager_Admin::get_instance()->get_slug()) !== false) {
+            // indside impressum
+        } else {
+            if (get_option("impressum_manager_notice") === false && get_option("impressum_manager_name_company") === false) {
+                $class = "error";
+                $message = sprintf(__("Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen."), "<a href='options-general.php?page=" . Impressum_Manager_Admin::get_instance()->get_slug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>");
+                echo "<div class=\"$class\"> <p>$message</p></div>";
+            }
+        }
+    }
 
-	public static function get_instance()
-	{
-		if (self::$instance == null) {
-			self::$instance = new Impressum_Manager_Admin();
-		}
-		return self::$instance;
-	}
+    public static function get_instance()
+    {
+        if (self::$instance == null) {
+            self::$instance = new Impressum_Manager_Admin();
+        }
+        return self::$instance;
+    }
 
     /**
      * ajax response for DEV options
@@ -301,6 +302,24 @@ class Impressum_Manager_Admin
     {
         echo "OK";
         require_once plugin_dir_path(__FILE__) . "uninstall.php";
+        die();
+    }
+
+    function editor_ajax_callback()
+    {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . "impressum_manager_content";
+
+        $key = esc_attr($_POST['key']);
+
+        $result = $wpdb->get_var(
+            "SELECT impressum_value
+              FROM $table_name
+              WHERE impressum_key = '$key'");
+
+        echo $result;
+
         die();
     }
 
@@ -348,6 +367,7 @@ class Impressum_Manager_Admin
     {
         return $this->slug;
     }
+
     public function show()
     {
         ?>
@@ -381,8 +401,8 @@ class Impressum_Manager_Admin
             <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
                 <a class="nav-tab nav-tab-active" id="settings-tab" href="javascript:void(0);"><?= __("General") ?></a>
                 <a class="nav-tab" id="fields-tab" href="javascript:void(0);"><?= __("Impressum Fields") ?></a>
-	            <a class="nav-tab" id="settings2-tab" href="javascript:void(0);"><?= __("New Settings") ?></a>
-	            <a class="nav-tab" id="preview-tab" href="javascript:void(0);"><?= __("Preview") ?></a>
+                <a class="nav-tab" id="settings2-tab" href="javascript:void(0);"><?= __("New Settings") ?></a>
+                <a class="nav-tab" id="preview-tab" href="javascript:void(0);"><?= __("Preview") ?></a>
             </h2>
 
             <div class="settings-tab tab">
@@ -396,12 +416,12 @@ class Impressum_Manager_Admin
             <div class="fields-tab tab" style="display:none;">
                 <?php include(plugin_dir_path(__FILE__) . "admin/views/fields-tab.php") ?>
             </div>
-	        <div class="settings2-tab tab" style="display:none;">
-		        <?php include(plugin_dir_path(__FILE__) . "admin/views/settings-tab.php") ?>
-	        </div>
-	        <div class="preview-tab tab" style="display:none;">
-		        <?php include(plugin_dir_path(__FILE__) . "admin/views/preview-tab.php") ?>
-	        </div>
+            <div class="settings2-tab tab" style="display:none;">
+                <?php include(plugin_dir_path(__FILE__) . "admin/views/settings-tab.php") ?>
+            </div>
+            <div class="preview-tab tab" style="display:none;">
+                <?php include(plugin_dir_path(__FILE__) . "admin/views/preview-tab.php") ?>
+            </div>
         <?php } ?>
         </div>
     <?php
@@ -911,7 +931,7 @@ class Impressum_Manager_Admin
                     <td>
                         <label for="impressum_manager_policy_facebook">
                             <input id="impressum_manager_policy_facebook" type="checkbox"
-                                   name="impressum_manager_policy_facebook" <?= checked("on",get_option("impressum_manager_policy_facebook"), false) ?>>
+                                   name="impressum_manager_policy_facebook" <?= checked("on", get_option("impressum_manager_policy_facebook"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von Facebook Elementen in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -923,7 +943,7 @@ class Impressum_Manager_Admin
                     <td>
                         <label for="impressum_manager_policy_google_analytics">
                             <input id="impressum_manager_policy_google_analytics" type="checkbox"
-                                   name="impressum_manager_policy_google_analytics" <?= checked("on",get_option("impressum_manager_policy_google_analytics"), false) ?>>
+                                   name="impressum_manager_policy_google_analytics" <?= checked("on", get_option("impressum_manager_policy_google_analytics"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von <b>Google Analytics</b> in dein Impressum ein.", $this->slug) ?>
                         </label>
                         <br><br>
@@ -935,7 +955,7 @@ class Impressum_Manager_Admin
                         <br><br>
                         <label for="impressum_manager_policy_google_plus">
                             <input id="impressum_manager_policy_google_plus" type="checkbox"
-                                   name="impressum_manager_policy_google_plus" <?= checked("on",get_option("impressum_manager_policy_google_plus"), false)?>>
+                                   name="impressum_manager_policy_google_plus" <?= checked("on", get_option("impressum_manager_policy_google_plus"), false) ?>>
                             <?= __("Füge eine Datenschutzerklärung für die Nutzung von <b>Google +1</b> in dein Impressum ein.", $this->slug) ?>
                         </label>
                     </td>
@@ -1131,33 +1151,33 @@ class Impressum_Manager_Admin
         register_setting("impressum-manager-policy_group", "impressum_manager_noindex");
         register_setting("impressum-manager-policy_group", "impressum_manager_show_email_as_image");
 
-	    register_setting("impressum-manager-settings-group", "impressum_manager_person");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_form_of_organization");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_name_company");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_address");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_address_extra");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_place");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_zip");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_country");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_fax");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_email");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_disclaimer");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_phone");
+        register_setting("impressum-manager-settings-group", "impressum_manager_person");
+        register_setting("impressum-manager-settings-group", "impressum_manager_form_of_organization");
+        register_setting("impressum-manager-settings-group", "impressum_manager_name_company");
+        register_setting("impressum-manager-settings-group", "impressum_manager_address");
+        register_setting("impressum-manager-settings-group", "impressum_manager_address_extra");
+        register_setting("impressum-manager-settings-group", "impressum_manager_place");
+        register_setting("impressum-manager-settings-group", "impressum_manager_zip");
+        register_setting("impressum-manager-settings-group", "impressum_manager_country");
+        register_setting("impressum-manager-settings-group", "impressum_manager_fax");
+        register_setting("impressum-manager-settings-group", "impressum_manager_email");
+        register_setting("impressum-manager-settings-group", "impressum_manager_disclaimer");
+        register_setting("impressum-manager-settings-group", "impressum_manager_phone");
 
-	    register_setting("impressum-manager-settings-group", "impressum_manager_authorized_person");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_vat");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_register");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_registenr");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_state");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_state_rules");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_chamber");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_image_source");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_responsible_chamber");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_responsible_persons");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_press_content");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_allowness");
-	    register_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession_checked");
+        register_setting("impressum-manager-settings-group", "impressum_manager_authorized_person");
+        register_setting("impressum-manager-settings-group", "impressum_manager_vat");
+        register_setting("impressum-manager-settings-group", "impressum_manager_register");
+        register_setting("impressum-manager-settings-group", "impressum_manager_registenr");
+        register_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession");
+        register_setting("impressum-manager-settings-group", "impressum_manager_state");
+        register_setting("impressum-manager-settings-group", "impressum_manager_state_rules");
+        register_setting("impressum-manager-settings-group", "impressum_manager_chamber");
+        register_setting("impressum-manager-settings-group", "impressum_manager_image_source");
+        register_setting("impressum-manager-settings-group", "impressum_manager_responsible_chamber");
+        register_setting("impressum-manager-settings-group", "impressum_manager_responsible_persons");
+        register_setting("impressum-manager-settings-group", "impressum_manager_press_content");
+        register_setting("impressum-manager-settings-group", "impressum_manager_allowness");
+        register_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession_checked");
     }
 
     private function config_view()

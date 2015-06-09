@@ -6,7 +6,20 @@
 
 <script>
     (function ($) {
+        $(document).ready(function() {
+            $("#impressum_change").change(function () {
+                var data = {
+                    'action': 'impressum_manager_get_impressum_field',
+                    key: $(this).val()
+                };
 
+                console.log(data);
+
+                $.post(ajaxurl, data, function(response) {
+                    $("#editor").text(response);
+                });
+            });
+        });
     }(jQuery));
 </script>
 
@@ -16,7 +29,7 @@
     <option>DE</option>
 </select>
 
-<select>
+<select id="impressum_change">
 <?php
 
 global $wpdb;
@@ -35,7 +48,7 @@ foreach ($lang_tags as $tag) {
 </select>
 <table>
     <tr>
-        <td><textarea style="min-height: 800px; min-width: 700px;"></textarea></td>
+        <td><textarea style="min-height: 800px; min-width: 700px;" id="editor"></textarea></td>
         <td style="vertical-align: top;">
             <table>
                 <tr>
