@@ -29,7 +29,7 @@
 if (!defined('WPINC')) {
     die;
 }
-define( 'IMPRESSUMMANAGER_VERSION', '0.4.1' );
+define( 'IMPRESSUMMANAGER_VERSION', '0.4.2' );
 define( 'IMPRESSUMMANAGER__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'IMPRESSUMMANAGER__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
