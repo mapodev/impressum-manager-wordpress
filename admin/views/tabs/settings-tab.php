@@ -80,6 +80,45 @@ if ($person == 1) {
 	<?php settings_fields('impressum-manager-policy_group'); ?>
 	<?php do_settings_sections('impressum-manager-policy_group'); ?>
 
+
+	<table class="form-table">
+		<tbody>
+		<!--tr>
+                    <th scope="row"><?= __("Language", $this->slug) ?></th>
+                    <td>
+                        <select name="impressum_manager_language_of_impressum" style="width: 340px">
+                            <option>Wähle dein Land ...</option>
+                            <option value="DE" <?php
+		if (get_option("impressum_manager_language_of_impressum") == "DE") {
+			echo "selected=selected";
+		}
+		?>>Deutsch
+                            </option>
+                        </select><br><br>
+                        <?= __("Wähle die Sprache für dein Impressum", $this->slug) ?>
+                    </td>
+                </tr-->
+		<tr>
+			<th scope="row"><?= __("No Index", $this->slug) ?></th>
+			<td>
+				<label for="impressum_manager_noindex">
+					<input id="impressum_manager_noindex" type="checkbox"
+					       name="impressum_manager_noindex" <?= checked("on", get_option("impressum_manager_noindex"), false) ?>>
+					<?= __("Lass die Impressum Seite nicht von Suchmaschinen indexieren.", $this->slug) ?>
+				</label>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row"><?= __("E-Mail as Image", $this->slug) ?></th>
+			<td>
+				<label for="impressum_manager_show_email_as_image">
+					<input id="impressum_manager_show_email_as_image" type="checkbox"
+					       name="impressum_manager_show_email_as_image" <?= checked("on", get_option("impressum_manager_show_email_as_image"), false) ?>>
+					<?= __("Show E-Mail as Image to prevent Spam.", $this->slug) ?>
+				</label>
+			</td>
+		</tr>
+	</table>
 	<table class="form-table">
 		<tr valign="top">
 			<th scope="row" colspan="2"><b><?= __("Art der Person", $this->slug) ?></b></th>
@@ -415,7 +454,7 @@ if ($person == 1) {
 			<td>
 				<label for="impressum_manager_disclaimer">
 					<input id="impressum_manager_disclaimer" type="checkbox"
-					       name="impressum_manager_disclaimer" <?= checked("on", get_option("impressum_manager_disclaimer"), false) ?>>>
+					       name="impressum_manager_disclaimer" <?= checked("on", get_option("impressum_manager_disclaimer"), false) ?>>
 					<?= __("Füge einen Disclaimer in dein Impressum ein.", $this->slug) ?>
 				</label>
 			</td>
@@ -482,7 +521,7 @@ if ($person == 1) {
 		</tr>
 		<tr>
 			<th>
-				<!--<?= __("Zusatzfeld", $this->slug) ?>-->
+				<?= __("Zusatzfeld", $this->slug) ?>
 			</th>
 			<td>
                         <textarea style="width:500px; height: 200px;"

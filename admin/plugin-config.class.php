@@ -1127,7 +1127,33 @@ class Impressum_Manager_Config
         register_setting("impressum-manager-policy_group", "impressum_manager_noindex");
         register_setting("impressum-manager-policy_group", "impressum_manager_show_email_as_image");
 
+	    register_setting("impressum-manager-policy_group", "impressum_manager_person");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_form_of_organization");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_name_company");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_address");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_address_extra");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_place");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_zip");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_country");
 	    register_setting("impressum-manager-policy_group", "impressum_manager_fax");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_email");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_disclaimer");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_phone");
+
+	    register_setting("impressum-manager-policy_group", "impressum_manager_authorized_person");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_vat");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_register");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_registenr");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_regulated_profession");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_state");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_state_rules");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_chamber");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_image_source");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_responsible_chamber");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_responsible_persons");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_press_content");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_allowness");
+	    register_setting("impressum-manager-policy_group", "impressum_manager_regulated_profession_checked");
     }
 
     private function config_view()
