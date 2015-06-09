@@ -29,25 +29,25 @@
 if (!defined('WPINC')) {
     die;
 }
-define( 'IMPRESSUMMANAGER_VERSION', '0.4.2' );
-define( 'IMPRESSUMMANAGER__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'IMPRESSUMMANAGER__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define('IMPRESSUMMANAGER_VERSION', '0.4.2');
+define('IMPRESSUM_MANAGER_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('IMPRESSUM_MANAGER_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
-register_activation_hook( __FILE__, array( 'Impressum_Manager', 'plugin_activation' ) );
-register_deactivation_hook( __FILE__, array( 'Impressum_Manager', 'plugin_deactivation' ) );
+register_activation_hook(__FILE__, array('Impressum_Manager', 'plugin_activation'));
+register_deactivation_hook(__FILE__, array('Impressum_Manager', 'plugin_deactivation'));
 register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "impressum_manager_goodybye");
 
-require_once( IMPRESSUMMANAGER__PLUGIN_DIR . 'class.impressum-manager.php' );
-require_once( IMPRESSUMMANAGER__PLUGIN_DIR . 'class.impressum-manager-admin.php' );
-require_once( IMPRESSUMMANAGER__PLUGIN_DIR . 'classes/class.impressum.php');
-require_once( IMPRESSUMMANAGER__PLUGIN_DIR . 'wrapper.php' );
+require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'class.impressum-manager.php');
+require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'class.impressum-manager-admin.php');
+require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'classes/class.impressum.php');
+require_once(IMPRESSUM_MANAGER_PLUGIN_DIR. 'wrapper.php');
 
-add_action( 'init', array( 'Impressum_Manager', 'init' ) );
+add_action('init', array('Impressum_Manager', 'init'));
 
 function impressum_manager_goodybye()
 {
-	?>
-	Goodbye!
+    ?>
+    Goodbye!
 <?php
 }
 

@@ -77,10 +77,8 @@ if ($person == 1) {
 
 
 <form method="post" action="options.php">
-	<?php settings_fields('impressum-manager-policy_group'); ?>
-	<?php do_settings_sections('impressum-manager-policy_group'); ?>
-
-
+	<?php settings_fields('impressum-manager-settings-group'); ?>
+	<?php do_settings_sections('impressum-manager-settings-group'); ?>
 	<table class="form-table">
 		<tbody>
 		<!--tr>
