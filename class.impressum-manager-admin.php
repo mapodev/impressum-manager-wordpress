@@ -307,8 +307,8 @@ class Impressum_Manager_Admin
     public function admin_init()
     {
         $this->register_settings();
-        wp_enqueue_style('impressum_manager_style', plugins_url('../css/impressum-manager.min.css', __FILE__));
-        wp_enqueue_script('impressum_manager_script', plugins_url('../js/impressum-manager.min.js', __FILE__));
+        wp_enqueue_style('impressum_manager_style', plugins_url('css/impressum-manager.min.css', __FILE__));
+        wp_enqueue_script('impressum_manager_script', plugins_url('js/impressum-manager.min.js', __FILE__));
         wp_enqueue_script('jquery');
     }
 
