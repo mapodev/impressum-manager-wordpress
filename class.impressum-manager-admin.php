@@ -345,8 +345,6 @@ class Impressum_Manager_Admin {
 		return $url;
 	}
 
-
-
 	public function show() {
 
 		// comment in/out for start page test
@@ -361,7 +359,6 @@ class Impressum_Manager_Admin {
 		if ( get_option( 'impressum_manager_skip_start' ) == true || isset( $_GET['skip_start_temp'] ) && $_GET['skip_start_temp'] == 'true') {
 			$skip_start = true;
 		}
-
 
 		if ( $skip_start == false ) {
 			include( plugin_dir_path( __FILE__ ) . "admin/views/start.php" );

@@ -398,7 +398,6 @@ if ($person == 1) {
 				</small>
 			</td>
 		</tr>
-
 	<table>
 		<tr>
 			<td>
