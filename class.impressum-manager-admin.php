@@ -309,7 +309,7 @@ class Impressum_Manager_Admin {
 	}
 
 	public function add_menu() {
-		$hook = add_options_page( "Impressum Manager", 'Impressum Manager', 'manage_options', 'Impressum_Manager_Admin', array(
+		$hook = add_options_page( "Impressum Manager", 'Impressum Manager', 'manage_options', SLUG, array(
 			'Impressum_Manager_Admin',
 			'show'
 		), 99.5 );
@@ -345,10 +345,12 @@ class Impressum_Manager_Admin {
 		return $url;
 	}
 
+
+
 	public function show() {
 
 		// comment in/out for start page test
-		self::save_option( 'impressum_manager_skip_start', false );
+		//self::save_option( 'impressum_manager_skip_start', false );
 
 		$skip_start = false;
 
@@ -359,6 +361,7 @@ class Impressum_Manager_Admin {
 		if ( get_option( 'impressum_manager_skip_start' ) == true || isset( $_GET['skip_start_temp'] ) && $_GET['skip_start_temp'] == 'true') {
 			$skip_start = true;
 		}
+
 
 		if ( $skip_start == false ) {
 			include( plugin_dir_path( __FILE__ ) . "admin/views/start.php" );

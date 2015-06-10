@@ -14,11 +14,7 @@
 </script>
 <br>
 
-<?php
-$option_url = Impressum_Manager_Admin::get_page_url();
-?>
-
-<form action="<?= $option_url ?>&view=tutorial&skip_start_temp=true&step=2" method="post">
+<form action="<?= Impressum_Manager_Admin::get_page_url() ?>&view=tutorial&skip_start_temp=true&step=2" method="post">
 	<table class="form-table">
 		<tr valign="top">
 			<th scope="row" colspan="2"><b><?= __("Art der Person", SLUG) ?></b></th>
@@ -184,13 +180,6 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 	</table>
 		<table>
 		<tr>
-			<td>
-				<a href="options-general.php?page=<?= SLUG ?>">
-					<input type="button" class="button button-secondary"
-					       value="<?= __("Zurück zu den Einstellungen", SLUG) ?>"
-					       style="margin-top: 5px">
-				</a>
-			</td>
 			<td>
 				<?= submit_button(__("Nächster Schritt", SLUG)) ?>
 			</td>

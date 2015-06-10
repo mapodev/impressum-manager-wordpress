@@ -36,7 +36,6 @@ class ImpressumManager
     {
         $domain = SLUG;
 
-
 	    self::$_format_address = "";
 	    self::$_format_contact = "";
 	    self::$_format_contact_telephone = "";

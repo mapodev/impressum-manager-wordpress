@@ -9,10 +9,6 @@ if ( $person == 1 ) {
 
 ?>
 
-<?php
-$option_url = Impressum_Manager_Admin::get_page_url();
-?>
-
 <script type="text/javascript">
 	(function ($) {
 		$(document).ready(function () {
@@ -59,7 +55,7 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 	}(jQuery));
 </script>
 
-<form action="<?= $option_url ?>&view=tutorial&skip_start_temp=true&step=3" method="post">
+<form action="<?= Impressum_Manager_Admin::get_page_url() ?>&view=tutorial&skip_start_temp=true&step=3" method="post">
 	<table class="form-table" <?= $cssDef ?>>
 		<tr valign="top">
 			<th scope="row" colspan="2"><b><?= __( "Vertretungsberechtigte Persone(n)", SLUG ) ?></b>
