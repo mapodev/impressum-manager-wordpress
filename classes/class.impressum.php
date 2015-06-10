@@ -34,8 +34,7 @@ class ImpressumManager
 
     function __construct()
     {
-        $conf = Impressum_Manager_Admin::get_instance();
-        $domain = $conf->get_slug();
+        $domain = SLUG;
 
 
 	    self::$_format_address = "";
@@ -220,8 +219,7 @@ class ImpressumManager
 
     private function register($register_chamber, $registernr, $register)
     {
-        $conf = Impressum_Manager_Admin::get_instance();
-        $domain = $conf->get_slug();
+        $domain = SLUG;
 
         switch ($register) {
             case 1:
@@ -280,8 +278,7 @@ class ImpressumManager
 
     private function vat($vat, $profession, $state, $rules, $chamber)
     {
-        $conf = Impressum_Manager_Admin::get_instance();
-        $domain = $conf->get_slug();
+        $domain = SLUG;
 
         $result = "";
         if (!empty($vat)) $result .= sprintf(self::$_format_vat, $vat);

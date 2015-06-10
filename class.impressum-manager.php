@@ -36,7 +36,7 @@ class Impressum_Manager {
 	{
 		/*require plugin_dir_path(__FILE__) . 'admin/class.plugin-config.php';*/
 		$plugin_dir = basename(dirname(__FILE__));
-		load_plugin_textdomain(Impressum_Manager_Admin::get_instance()->get_slug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
+		load_plugin_textdomain(SLUG, 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
 	}
 
 	// SHORTCODE CODE

@@ -263,7 +263,7 @@ class Impressum_Manager_Admin {
 
 	public static function installation_notice() {
 		$request = $_SERVER['REQUEST_URI'];
-		if ( strpos( $request, Impressum_Manager_Admin::get_instance()->get_slug() ) !== false ) {
+		if ( strpos( $request, SLUG ) !== false ) {
 			// indside impressum
 		} else {
 			if ( get_option( "impressum_manager_notice" ) === false && get_option( "impressum_manager_name_company" ) === false ) {
@@ -274,13 +274,15 @@ class Impressum_Manager_Admin {
 		}
 	}
 
+	/*
 	public static function get_instance() {
 		if ( self::$instance == null ) {
 			self::$instance = new Impressum_Manager_Admin();
 		}
 
 		return self::$instance;
-	}
+	} *
+	 */
 
 	/**
 	 * ajax response for DEV options

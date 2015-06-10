@@ -29,8 +29,7 @@ function impressum_manager_install_activate() {
 function impressum_manager_insert_data() {
 	require_once plugin_dir_path(__FILE__) . "../class.impressum-manager-admin.php";
 
-	$conf = Impressum_Manager_Admin::get_instance();
-	$domain = $conf->get_slug();
+	$domain = SLUG;
 
     $impressum_key = array();
 	$impressum_key['address_header'] = $_format_address = __("<h2>Angaben gemäß § 5 TMG:</h2>", $domain);
