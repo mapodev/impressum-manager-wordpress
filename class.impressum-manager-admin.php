@@ -6,9 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Impressum_Manager_Admin {
 
-	private $slug;
-
-	private $_countries = array(
+	public static $_countries = array(
 		"DE" => "Germany",
 		"GB" => "United Kingdom",
 		"US" => "United States",
@@ -253,22 +251,17 @@ class Impressum_Manager_Admin {
 	private static $instance = null;
 
 	public function __construct() {
-		$this->slug = "impressum-manager";
 
 		if ( array_key_exists( "dismiss", $_REQUEST ) ) {
-			if ( get_option( "impressum_manager_notice" ) === false ) {
-				add_option( "impressum_manager_notice", "dismissed" );
-			} else {
-				update_option( "impressum_manager_notice", "dismissed" );
-			}
+			self::save_option("impressum_manager_notice","dismiss");
 		}
 
 		if ( is_admin() ) {
-			add_action( 'admin_init', array( $this, 'admin_init' ) );
-			add_action( 'admin_menu', array( $this, 'add_menu' ) );
-			add_action( 'admin_notices', array( $this, 'installation_notice' ) );
-			add_action( 'wp_ajax_impressum_manager_delete_options', array( $this, 'delete_callback' ) );
-			add_action( 'wp_ajax_impressum_manager_get_impressum_field', array( $this, 'editor_ajax_callback' ) );
+			add_action( 'admin_init', array( 'Impressum_Manager_Admin', 'admin_init' ) );
+			add_action( 'admin_menu', array( 'Impressum_Manager_Admin', 'add_menu' ) );
+			add_action( 'admin_notices', array( 'Impressum_Manager_Admin', 'installation_notice' ) );
+			add_action( 'wp_ajax_impressum_manager_delete_options', array( 'Impressum_Manager_Admin', 'delete_callback' ) );
+			add_action( 'wp_ajax_impressum_manager_get_impressum_field', array( 'Impressum_Manager_Admin', 'editor_ajax_callback' ) );
 		}
 	}
 
@@ -321,18 +314,18 @@ class Impressum_Manager_Admin {
 	}
 
 	public function admin_init() {
-		$this->register_settings();
+		self::register_settings();
 		wp_enqueue_style( 'impressum_manager_style', plugins_url( 'css/impressum-manager.min.css', __FILE__ ) );
 		wp_enqueue_script( 'impressum_manager_script', plugins_url( 'js/impressum-manager.min.js', __FILE__ ) );
 		wp_enqueue_script( 'jquery' );
 	}
 
 	public function add_menu() {
-		$hook = add_options_page( "Impressum Manager", 'Impressum Manager', 'manage_options', $this->get_slug(), array(
-			$this,
+		$hook = add_options_page( "Impressum Manager", 'Impressum Manager', 'manage_options', 'Impressum_Manager_Admin', array(
+			'Impressum_Manager_Admin',
 			'show'
 		), 99.5 );
-		add_action( 'load-' . $hook, array( $this, 'add_help_tab' ) );
+		add_action( 'load-' . $hook, array( 'Impressum_Manager_Admin', 'add_help_tab' ) );
 	}
 
 	public function add_help_tab() {
@@ -361,7 +354,7 @@ class Impressum_Manager_Admin {
 	 * @return mixed
 	 */
 	public function get_slug() {
-		return $this->slug;
+		return SLUG;
 	}
 
 	public static function get_page_url() {
@@ -407,17 +400,17 @@ class Impressum_Manager_Admin {
 			case 2:
 
 				if ( array_key_exists( "submit", $_REQUEST ) ) {
-					$this->save_option( "impressum_manager_person", $_POST["impressum_manager_person"] );
-					$this->save_option( "impressum_manager_form_of_organization", $_POST["impressum_manager_form_of_organization"] );
-					$this->save_option( "impressum_manager_name_company", $_POST["impressum_manager_name_company"] );
-					$this->save_option( "impressum_manager_address", $_POST["impressum_manager_address"] );
-					$this->save_option( "impressum_manager_address_extra", $_POST["impressum_manager_address_extra"] );
-					$this->save_option( "impressum_manager_place", $_POST["impressum_manager_place"] );
-					$this->save_option( "impressum_manager_zip", $_POST["impressum_manager_zip"] );
-					$this->save_option( "impressum_manager_country", $_POST["impressum_manager_country"] );
-					$this->save_option( "impressum_manager_fax", $_POST["impressum_manager_fax"] );
-					$this->save_option( "impressum_manager_email", $_POST["impressum_manager_email"] );
-					$this->save_option( "impressum_manager_phone", $_POST["impressum_manager_phone"] );
+					self::save_option( "impressum_manager_person", $_POST["impressum_manager_person"] );
+					self::save_option( "impressum_manager_form_of_organization", $_POST["impressum_manager_form_of_organization"] );
+					self::save_option( "impressum_manager_name_company", $_POST["impressum_manager_name_company"] );
+					self::save_option( "impressum_manager_address", $_POST["impressum_manager_address"] );
+					self::save_option( "impressum_manager_address_extra", $_POST["impressum_manager_address_extra"] );
+					self::save_option( "impressum_manager_place", $_POST["impressum_manager_place"] );
+					self::save_option( "impressum_manager_zip", $_POST["impressum_manager_zip"] );
+					self::save_option( "impressum_manager_country", $_POST["impressum_manager_country"] );
+					self::save_option( "impressum_manager_fax", $_POST["impressum_manager_fax"] );
+					self::save_option( "impressum_manager_email", $_POST["impressum_manager_email"] );
+					self::save_option( "impressum_manager_phone", $_POST["impressum_manager_phone"] );
 				}
 
 				include( plugin_dir_path( __FILE__ ) . "admin/views/tutorial/page2.php" );
@@ -426,20 +419,20 @@ class Impressum_Manager_Admin {
 			case 3:
 
 				if ( array_key_exists( "submit", $_REQUEST ) ) {
-					$this->save_option( "impressum_manager_authorized_person", $_POST["impressum_manager_authorized_person"] );
-					$this->save_option( "impressum_manager_vat", $_POST["impressum_manager_vat"] );
-					$this->save_option( "impressum_manager_register", $_POST["impressum_manager_register"] );
-					$this->save_option( "impressum_manager_registenr", $_POST["impressum_manager_registenr"] );
-					$this->save_option( "impressum_manager_regulated_profession", $_POST["impressum_manager_regulated_profession"] );
-					$this->save_option( "impressum_manager_state", $_POST["impressum_manager_state"] );
-					$this->save_option( "impressum_manager_state_rules", $_POST["impressum_manager_state_rules"] );
-					$this->save_option( "impressum_manager_chamber", $_POST["impressum_manager_chamber"] );
-					$this->save_option( "impressum_manager_image_source", $_POST["impressum_manager_image_source"] );
-					$this->save_option( "impressum_manager_responsible_chamber", $_POST["impressum_manager_responsible_chamber"] );
-					$this->save_option( "impressum_manager_responsible_persons", $_POST["impressum_manager_responsible_persons"] );
-					$this->save_option( "impressum_manager_press_content", $_POST["impressum_manager_press_content"] );
-					$this->save_option( "impressum_manager_allowness", $_POST["impressum_manager_allowness"] );
-					$this->save_option( "impressum_manager_regulated_profession_checked", $_POST['impressum_manager_regulated_profession_checked'] );
+					self::save_option( "impressum_manager_authorized_person", $_POST["impressum_manager_authorized_person"] );
+					self::save_option( "impressum_manager_vat", $_POST["impressum_manager_vat"] );
+					self::save_option( "impressum_manager_register", $_POST["impressum_manager_register"] );
+					self::save_option( "impressum_manager_registenr", $_POST["impressum_manager_registenr"] );
+					self::save_option( "impressum_manager_regulated_profession", $_POST["impressum_manager_regulated_profession"] );
+					self::save_option( "impressum_manager_state", $_POST["impressum_manager_state"] );
+					self::save_option( "impressum_manager_state_rules", $_POST["impressum_manager_state_rules"] );
+					self::save_option( "impressum_manager_chamber", $_POST["impressum_manager_chamber"] );
+					self::save_option( "impressum_manager_image_source", $_POST["impressum_manager_image_source"] );
+					self::save_option( "impressum_manager_responsible_chamber", $_POST["impressum_manager_responsible_chamber"] );
+					self::save_option( "impressum_manager_responsible_persons", $_POST["impressum_manager_responsible_persons"] );
+					self::save_option( "impressum_manager_press_content", $_POST["impressum_manager_press_content"] );
+					self::save_option( "impressum_manager_allowness", $_POST["impressum_manager_allowness"] );
+					self::save_option( "impressum_manager_regulated_profession_checked", $_POST['impressum_manager_regulated_profession_checked'] );
 				}
 
 				include( plugin_dir_path( __FILE__ ) . "admin/views/tutorial/page3.php" );
@@ -504,7 +497,7 @@ class Impressum_Manager_Admin {
 	<?php
 	}
 
-	private function register_settings() {
+	public static function register_settings() {
 		register_setting( "impressum-manager-policy_group", "impressum_manager_disclaimer" );
 		register_setting( "impressum-manager-policy_group", "impressum_manager_set_impressum" );
 		register_setting( "impressum-manager-policy_group", "impressum_manager_language_of_impressum" );
@@ -549,7 +542,7 @@ class Impressum_Manager_Admin {
 		register_setting( "impressum-manager-settings-group", "impressum_manager_regulated_profession_checked" );
 	}
 
-	private function save_option( $name, $val ) {
+	public static function save_option( $name, $val ) {
 		if ( get_option( $name ) !== false ) {
 			update_option( $name, $val );
 		} else {

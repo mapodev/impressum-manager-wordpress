@@ -32,6 +32,8 @@ if (!defined('WPINC')) {
 define('IMPRESSUM_MANAGER_VERSION', '0.4.2');
 define('IMPRESSUM_MANAGER_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('IMPRESSUM_MANAGER_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('SLUG', 'Impressum_Manager');
+
 
 register_activation_hook(__FILE__, array('Impressum_Manager', 'plugin_activation'));
 register_deactivation_hook(__FILE__, array('Impressum_Manager', 'plugin_deactivation'));

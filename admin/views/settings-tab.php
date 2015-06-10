@@ -81,7 +81,7 @@ if ($person == 1) {
 	<?php do_settings_sections('impressum-manager-settings-group'); ?>
 	<table class="form-table">
 		<tr valign="top">
-			<th scope="row" colspan="2"><b><?= __("Art der Person", $this->slug) ?></b></th>
+			<th scope="row" colspan="2"><b><?= __("Art der Person", SLUG) ?></b></th>
 		</tr>
 		<tr valign="top">
 			<td width="5"><input type="radio" id="person_1" name="impressum_manager_person"
@@ -113,15 +113,15 @@ if ($person == 1) {
 				<select name="impressum_manager_form_of_organization">
 					<?php
 					$forms_of_organization = array(
-						__("Einzelunternehmen", $this->slug),
-						__("Stille Gesellschaft", $this->slug),
-						__("Offene Handelsgesellschaft (OHG)", $this->slug),
-						__("Kommanditgesellschaft (KG)", $this->slug),
-						__("Gesellschaft bürgerlichen Rechts (GdR)", $this->slug),
-						__("Aktiengesellschaft (AG)", $this->slug),
-						__("Kommanditgesellschaft auf Aktien (KGaA)", $this->slug),
-						__("Gesellschaft mit beschränkter Haftung (GmbH)", $this->slug),
-						__("Genossenschaft (eG)", $this->slug)
+						__("Einzelunternehmen", SLUG),
+						__("Stille Gesellschaft", SLUG),
+						__("Offene Handelsgesellschaft (OHG)", SLUG),
+						__("Kommanditgesellschaft (KG)", SLUG),
+						__("Gesellschaft bürgerlichen Rechts (GdR)", SLUG),
+						__("Aktiengesellschaft (AG)", SLUG),
+						__("Kommanditgesellschaft auf Aktien (KGaA)", SLUG),
+						__("Gesellschaft mit beschränkter Haftung (GmbH)", SLUG),
+						__("Genossenschaft (eG)", SLUG)
 					);
 
 					$idx = 1;
@@ -140,28 +140,28 @@ if ($person == 1) {
 			</td>
 		</tr>
 		<tr valign="top">
-			<th scope="row" colspan="2"><b><?= __("Angaben zur Organisation", $this->slug) ?></b></th>
+			<th scope="row" colspan="2"><b><?= __("Angaben zur Organisation", SLUG) ?></b></th>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<input type="text" style="width: 340px" name="impressum_manager_name_company"
 				       title="Company Name"
 				       value="<?= get_option("impressum_manager_name_company") ?>"><br>
-				<small id="full_name"><?= __("Vollständiger Name", $this->slug) ?></small>
+				<small id="full_name"><?= __("Vollständiger Name", SLUG) ?></small>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<input type="text" name="impressum_manager_address" title="Address" style="width: 340px"
 				       value="<?= get_option("impressum_manager_address") ?>"><br>
-				<small><?= __("Straße & Hausnummer", $this->slug) ?></small>
+				<small><?= __("Straße & Hausnummer", SLUG) ?></small>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<input type="text" name="impressum_manager_address_extra" title="Address Extra"
 				       style="width: 340px" value="<?= get_option("impressum_manager_address_extra") ?>"><br>
-				<small><?= __("Adresszusatz", $this->slug) ?></small>
+				<small><?= __("Adresszusatz", SLUG) ?></small>
 			</td>
 		</tr>
 		<tr>
@@ -188,7 +188,7 @@ if ($person == 1) {
 					<option value="no_land_choosen"><?= __("Wähle dein Land ...") ?></option>
 					<?php
 
-					foreach ($this->_countries as $country_code => $country_name) {
+					foreach (Impressum_Manager_Admin::$_countries as $country_code => $country_name) {
 						if (get_option("impressum_manager_country") == $country_code) {
 							$s = "selected=selected";
 						} else {
@@ -197,7 +197,7 @@ if ($person == 1) {
 
 						?>
 						<option
-							value="<?= $country_code ?>" <?= $s ?>><?= __($country_name, $this->slug) ?></option>
+							value="<?= $country_code ?>" <?= $s ?>><?= __($country_name, SLUG) ?></option>
 					<?php
 					}
 
@@ -208,7 +208,7 @@ if ($person == 1) {
 		</tr>
 		<tr>
 			<th colspan="2">
-				<b><?= __("Telefonnummer (inkl. Vorwahl)", $this->slug) ?></b>
+				<b><?= __("Telefonnummer (inkl. Vorwahl)", SLUG) ?></b>
 			</th>
 		</tr>
 		<tr>
@@ -220,7 +220,7 @@ if ($person == 1) {
 		</tr>
 		<tr>
 			<th colspan="2">
-				<b><?= __("Faxnummer (optional)", $this->slug) ?></b>
+				<b><?= __("Faxnummer (optional)", SLUG) ?></b>
 			</th>
 		</tr>
 		<tr>
@@ -231,7 +231,7 @@ if ($person == 1) {
 		</tr>
 		<tr>
 			<th colspan="2">
-				<b><?= __("E-Mail Adresse", $this->slug) ?></b>
+				<b><?= __("E-Mail Adresse", SLUG) ?></b>
 			</th>
 		</tr>
 		<tr>
@@ -251,20 +251,20 @@ if ($person == 1) {
 -->
 	<table class="form-table" <?= $cssDef ?>>
 		<tr valign="top">
-			<th scope="row" colspan="2"><b><?= __("Vertretungsberechtigte Persone(n)", $this->slug) ?></b>
+			<th scope="row" colspan="2"><b><?= __("Vertretungsberechtigte Persone(n)", SLUG) ?></b>
 			</th>
 		</tr>
 		<tr valign="top">
 			<td colspan="2">
                         <textarea name="impressum_manager_authorized_person"
                                   style="width: 340px; height: 225px;"><?= get_option("impressum_manager_authorized_person") ?></textarea><br>
-				<small><?= __("Namen und Vornamen", $this->slug) ?></small>
+				<small><?= __("Namen und Vornamen", SLUG) ?></small>
 			</td>
 		</tr>
 	</table>
 	<table class="form-table">
 		<tr valign="top" <?= $cssDef ?>>
-			<th scope="row" colspan="2"><b><?= __("Umsatzsteuer ID", $this->slug) ?></b></th>
+			<th scope="row" colspan="2"><b><?= __("Umsatzsteuer ID", SLUG) ?></b></th>
 		</tr>
 		<tr valign="top" <?= $cssDef ?>>
 			<td colspan="2">
@@ -273,18 +273,18 @@ if ($person == 1) {
 			</td>
 		</tr>
 		<tr valign="top" <?= $cssDef ?>>
-			<th scope="row" colspan="2"><b><?= __("Register", $this->slug) ?></b></th>
+			<th scope="row" colspan="2"><b><?= __("Register", SLUG) ?></b></th>
 		</tr>
 		<tr valign="top" <?= $cssDef ?>>
 			<td colspan="2">
 				<select name="impressum_manager_register">
 					<?php
 					$registerDescr = array(
-						__("Kein Register", $this->slug),
-						__("Genossenschaftsregister", $this->slug),
-						__("Handelsregister", $this->slug),
-						__("Partnerschaftsregister", $this->slug),
-						__("Vereinsregister", $this->slug)
+						__("Kein Register", SLUG),
+						__("Genossenschaftsregister", SLUG),
+						__("Handelsregister", SLUG),
+						__("Partnerschaftsregister", SLUG),
+						__("Vereinsregister", SLUG)
 					);
 
 					$idx = 1;
@@ -309,7 +309,7 @@ if ($person == 1) {
 		</tr>
 
 		<tr valign="top" <?= $cssDef ?>>
-			<th scope="row" colspan="2"><b><?= __("Registernummer", $this->slug) ?></b></th>
+			<th scope="row" colspan="2"><b><?= __("Registernummer", SLUG) ?></b></th>
 		</tr>
 		<tr valign="top" <?= $cssDef ?>>
 			<td colspan="2">
@@ -323,7 +323,7 @@ if ($person == 1) {
 		<tr valign="top">
 			<th scope="row" colspan="2"><input type="checkbox" id="regulated_profession"
 			                                   name="impressum_manager_regulated_profession_checked" <?= checked("on", get_option("impressum_manager_regulated_profession_checked"), false) ?>><label
-					for="regulated_profession"><b><?= __("Reglementierter Beruf", $this->slug) ?></b></label>
+					for="regulated_profession"><b><?= __("Reglementierter Beruf", SLUG) ?></b></label>
 			</th>
 		</tr>
 		<tr valign="top" class="hide_regulated_profession">
@@ -332,14 +332,14 @@ if ($person == 1) {
 				       title="Regulated profession"
 				       style="width: 340px"
 				       value="<?= get_option("impressum_manager_regulated_profession") ?>"><br>
-				<small><?= __("Gesetzliche Berufsbezeichnung", $this->slug) ?></small>
+				<small><?= __("Gesetzliche Berufsbezeichnung", SLUG) ?></small>
 			</td>
 		</tr>
 		<tr valign="top" class="hide_regulated_profession">
 			<td colspan="2">
 				<input type="text" name="impressum_manager_state" title="State"
 				       style="width: 340px" value="<?= get_option("impressum_manager_state") ?>"><br>
-				<small><?= __("Staat, in dem die Berufsbezeichnung verliehen wurde", $this->slug) ?></small>
+				<small><?= __("Staat, in dem die Berufsbezeichnung verliehen wurde", SLUG) ?></small>
 			</td>
 		</tr>
 		<tr valign="top" class="hide_regulated_profession">
@@ -347,38 +347,38 @@ if ($person == 1) {
 				<input type="text" name="impressum_manager_state_rules" title="State rules"
 				       style="width: 340px"
 				       value="<?= get_option("impressum_manager_state_rules") ?>"><br>
-				<small><?= __("Berfusrechtliche Regelungen (Bezeichnung)", $this->slug) ?></small>
+				<small><?= __("Berfusrechtliche Regelungen (Bezeichnung)", SLUG) ?></small>
 			</td>
 		</tr>
 		<tr valign="top" class="hide_regulated_profession">
 			<td colspan="2">
 				<input type="text" name="impressum_manager_chamber" title="Chamber"
 				       style="width: 340px" value="<?= get_option("impressum_manager_chamber") ?>"><br>
-				<small><?= __("Kammer, der Sie angehören", $this->slug) ?></small>
+				<small><?= __("Kammer, der Sie angehören", SLUG) ?></small>
 			</td>
 		</tr>
 		<tr valign="top">
 			<th scope="row" colspan="2"><input type="checkbox" id="allowness"
 			                                   name="impressum_manager_allowness" <?= checked("on", get_option("impressum_manager_allowness"), false) ?>><label
-					for="allowness"><b><?= __("Behördliche Zuslassung", $this->slug) ?></b></label></th>
+					for="allowness"><b><?= __("Behördliche Zuslassung", SLUG) ?></b></label></th>
 		</tr>
 		<tr valign="top" id="allowness_textarea">
 			<td colspan="2">
                         <textarea name="impressum_manager_responsible_chamber"
                                   style="width: 340px; height: 225px;"><?= get_option("impressum_manager_responsible_chamber") ?></textarea><br>
-				<small><?= __("Zuständige Aufsichtsbehörde", $this->slug) ?></small>
+				<small><?= __("Zuständige Aufsichtsbehörde", SLUG) ?></small>
 			</td>
 		</tr>
 	</table>
 	<table class="form-table">
 		<tr valign="top">
-			<th scope="row" colspan="2"><b><?= __("Bildquellen", $this->slug) ?></b></th>
+			<th scope="row" colspan="2"><b><?= __("Bildquellen", SLUG) ?></b></th>
 		</tr>
 		<tr valign="top">
 			<td colspan="2">
                         <textarea name="impressum_manager_image_source"
                                   style="width: 340px; height: 225px;"><?= get_option("impressum_manager_image_source") ?></textarea><br>
-				<small><?= __("z.B. Max Mustermann, http://www.fotolia.com", $this->slug) ?></small>
+				<small><?= __("z.B. Max Mustermann, http://www.fotolia.com", SLUG) ?></small>
 			</td>
 		</tr>
 
@@ -386,7 +386,7 @@ if ($person == 1) {
 			<th scope="row" colspan="2"><input type="checkbox" id="press_content"
 			                                   name="impressum_manager_press_content"  <?= checked("on", get_option("impressum_manager_press_content"), false) ?>
 				<label
-					for="press_content"><b><?= __("journalistisch-redaktionelle Inhalte", $this->slug) ?></b></label>
+					for="press_content"><b><?= __("journalistisch-redaktionelle Inhalte", SLUG) ?></b></label>
 			</th>
 		</tr>
 		<tr valign="top" id="press_content_textarea">
@@ -394,7 +394,7 @@ if ($person == 1) {
                         <textarea name="impressum_manager_responsible_persons"
                                   style="width: 340px; height: 225px;"><?= get_option("impressum_manager_responsible_persons") ?></textarea><br>
 				<small><?= __("Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die
-                                        Verantwortungen entsprechend mit angeben.", $this->slug) ?>
+                                        Verantwortungen entsprechend mit angeben.", SLUG) ?>
 				</small>
 			</td>
 		</tr>

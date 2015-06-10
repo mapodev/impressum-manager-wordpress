@@ -21,7 +21,7 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 <form action="<?= $option_url ?>&view=tutorial&skip_start_temp=true&step=2" method="post">
 	<table class="form-table">
 		<tr valign="top">
-			<th scope="row" colspan="2"><b><?= __("Art der Person", $this->slug) ?></b></th>
+			<th scope="row" colspan="2"><b><?= __("Art der Person", SLUG) ?></b></th>
 		</tr>
 		<tr valign="top">
 			<td width="5"><input type="radio" id="person_1" name="impressum_manager_person"
@@ -53,15 +53,15 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 				<select name="impressum_manager_form_of_organization">
 					<?php
 					$forms_of_organization = array(
-						__("Einzelunternehmen", $this->slug),
-						__("Stille Gesellschaft", $this->slug),
-						__("Offene Handelsgesellschaft (OHG)", $this->slug),
-						__("Kommanditgesellschaft (KG)", $this->slug),
-						__("Gesellschaft bürgerlichen Rechts (GdR)", $this->slug),
-						__("Aktiengesellschaft (AG)", $this->slug),
-						__("Kommanditgesellschaft auf Aktien (KGaA)", $this->slug),
-						__("Gesellschaft mit beschränkter Haftung (GmbH)", $this->slug),
-						__("Genossenschaft (eG)", $this->slug)
+						__("Einzelunternehmen", SLUG),
+						__("Stille Gesellschaft", SLUG),
+						__("Offene Handelsgesellschaft (OHG)", SLUG),
+						__("Kommanditgesellschaft (KG)", SLUG),
+						__("Gesellschaft bürgerlichen Rechts (GdR)", SLUG),
+						__("Aktiengesellschaft (AG)", SLUG),
+						__("Kommanditgesellschaft auf Aktien (KGaA)", SLUG),
+						__("Gesellschaft mit beschränkter Haftung (GmbH)", SLUG),
+						__("Genossenschaft (eG)", SLUG)
 					);
 
 					$idx = 1;
@@ -80,28 +80,28 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 			</td>
 		</tr>
 		<tr valign="top">
-			<th scope="row" colspan="2"><b><?= __("Angaben zur Organisation", $this->slug) ?></b></th>
+			<th scope="row" colspan="2"><b><?= __("Angaben zur Organisation", SLUG) ?></b></th>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<input type="text" style="width: 340px" name="impressum_manager_name_company"
 				       title="Company Name"
 				       value="<?= get_option("impressum_manager_name_company") ?>"><br>
-				<small id="full_name"><?= __("Vollständiger Name", $this->slug) ?></small>
+				<small id="full_name"><?= __("Vollständiger Name", SLUG) ?></small>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<input type="text" name="impressum_manager_address" title="Address" style="width: 340px"
 				       value="<?= get_option("impressum_manager_address") ?>"><br>
-				<small><?= __("Straße & Hausnummer", $this->slug) ?></small>
+				<small><?= __("Straße & Hausnummer", SLUG) ?></small>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<input type="text" name="impressum_manager_address_extra" title="Address Extra"
 				       style="width: 340px" value="<?= get_option("impressum_manager_address_extra") ?>"><br>
-				<small><?= __("Adresszusatz", $this->slug) ?></small>
+				<small><?= __("Adresszusatz", SLUG) ?></small>
 			</td>
 		</tr>
 		<tr>
@@ -128,7 +128,7 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 					<option value="no_land_choosen"><?= __("Wähle dein Land ...") ?></option>
 					<?php
 
-					foreach ($this->_countries as $country_code => $country_name) {
+					foreach (Impressum_Manager_Admin::$_countries as $country_code => $country_name) {
 						if (get_option("impressum_manager_country") == $country_code) {
 							$s = "selected=selected";
 						} else {
@@ -137,7 +137,7 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 
 						?>
 						<option
-							value="<?= $country_code ?>" <?= $s ?>><?= __($country_name, $this->slug) ?></option>
+							value="<?= $country_code ?>" <?= $s ?>><?= __($country_name, SLUG) ?></option>
 					<?php
 					}
 
@@ -148,7 +148,7 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 		</tr>
 		<tr>
 			<th colspan="2">
-				<b><?= __("Telefonnummer (inkl. Vorwahl)", $this->slug) ?></b>
+				<b><?= __("Telefonnummer (inkl. Vorwahl)", SLUG) ?></b>
 			</th>
 		</tr>
 		<tr>
@@ -160,7 +160,7 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 		</tr>
 		<tr>
 			<th colspan="2">
-				<b><?= __("Faxnummer (optional)", $this->slug) ?></b>
+				<b><?= __("Faxnummer (optional)", SLUG) ?></b>
 			</th>
 		</tr>
 		<tr>
@@ -171,7 +171,7 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 		</tr>
 		<tr>
 			<th colspan="2">
-				<b><?= __("E-Mail Adresse", $this->slug) ?></b>
+				<b><?= __("E-Mail Adresse", SLUG) ?></b>
 			</th>
 		</tr>
 		<tr>
@@ -187,12 +187,12 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 			<td>
 				<a href="options-general.php?page=<?= Impressum_Manager_Admin::get_instance()->get_slug() ?>">
 					<input type="button" class="button button-secondary"
-					       value="<?= __("Zurück zu den Einstellungen", $this->slug) ?>"
+					       value="<?= __("Zurück zu den Einstellungen", SLUG) ?>"
 					       style="margin-top: 5px">
 				</a>
 			</td>
 			<td>
-				<?= submit_button(__("Nächster Schritt", $this->slug)) ?>
+				<?= submit_button(__("Nächster Schritt", SLUG)) ?>
 			</td>
 		</tr>
 		</table>
