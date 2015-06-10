@@ -26,6 +26,9 @@ No questions asked yet.
 
 == Changelog ==
 
+= 0.4.2 =
+- temporary release, next version bump will have all new features list
+
 = 0.4.1 =
 - refactoring
 - fixes

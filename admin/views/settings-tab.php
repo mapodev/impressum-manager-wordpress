@@ -77,9 +77,52 @@ if ($person == 1) {
 
 
 <form method="post" action="options.php">
+<<<<<<< HEAD
 	<?php settings_fields('impressum-manager-policy_group'); ?>
 	<?php do_settings_sections('impressum-manager-policy_group'); ?>
 
+=======
+	<?php settings_fields('impressum-manager-settings-group'); ?>
+	<?php do_settings_sections('impressum-manager-settings-group'); ?>
+	<table class="form-table">
+		<tbody>
+		<!--tr>
+                    <th scope="row"><?= __("Language", $this->slug) ?></th>
+                    <td>
+                        <select name="impressum_manager_language_of_impressum" style="width: 340px">
+                            <option>Wähle dein Land ...</option>
+                            <option value="DE" <?php
+		if (get_option("impressum_manager_language_of_impressum") == "DE") {
+			echo "selected=selected";
+		}
+		?>>Deutsch
+                            </option>
+                        </select><br><br>
+                        <?= __("Wähle die Sprache für dein Impressum", $this->slug) ?>
+                    </td>
+                </tr-->
+		<tr>
+			<th scope="row"><?= __("No Index", $this->slug) ?></th>
+			<td>
+				<label for="impressum_manager_noindex">
+					<input id="impressum_manager_noindex" type="checkbox"
+					       name="impressum_manager_noindex" <?= checked("on", get_option("impressum_manager_noindex"), false) ?>>
+					<?= __("Lass die Impressum Seite nicht von Suchmaschinen indexieren.", $this->slug) ?>
+				</label>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row"><?= __("E-Mail as Image", $this->slug) ?></th>
+			<td>
+				<label for="impressum_manager_show_email_as_image">
+					<input id="impressum_manager_show_email_as_image" type="checkbox"
+					       name="impressum_manager_show_email_as_image" <?= checked("on", get_option("impressum_manager_show_email_as_image"), false) ?>>
+					<?= __("Show E-Mail as Image to prevent Spam.", $this->slug) ?>
+				</label>
+			</td>
+		</tr>
+	</table>
+>>>>>>> 0a4c7e8a21ecf99c77992e5373257e7eddaa6182
 	<table class="form-table">
 		<tr valign="top">
 			<th scope="row" colspan="2"><b><?= __("Art der Person", $this->slug) ?></b></th>
