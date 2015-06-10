@@ -185,7 +185,7 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 		<table>
 		<tr>
 			<td>
-				<a href="options-general.php?page=<?= Impressum_Manager_Admin::get_instance()->get_slug() ?>">
+				<a href="options-general.php?page=<?= SLUG ?>">
 					<input type="button" class="button button-secondary"
 					       value="<?= __("Zurück zu den Einstellungen", SLUG) ?>"
 					       style="margin-top: 5px">

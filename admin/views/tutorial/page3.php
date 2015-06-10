@@ -91,7 +91,7 @@ $option_url = Impressum_Manager_Admin::get_page_url();
 	<table>
 		<tr>
 			<td>
-				<a href="options-general.php?page=<?= Impressum_Manager_Admin::get_instance()->get_slug() ?>&view=tutorial&skip_start_temp=true&step=2">
+				<a href="options-general.php?page=<?= SLUG ?>&view=tutorial&skip_start_temp=true&step=2">
 					<input type="button" class="button button-secondary"
 					       value="<?= __( "Schritt zurück", SLUG ) ?>"
 					       style="margin-top: 5px">

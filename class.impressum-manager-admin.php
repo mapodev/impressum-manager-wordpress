@@ -268,21 +268,11 @@ class Impressum_Manager_Admin {
 		} else {
 			if ( get_option( "impressum_manager_notice" ) === false && get_option( "impressum_manager_name_company" ) === false ) {
 				$class   = "error";
-				$message = sprintf( __( "Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen." ), "<a href='options-general.php?page=" . Impressum_Manager_Admin::get_instance()->get_slug() . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>" );
+				$message = sprintf( __( "Dein Wordpress Impressum ist nicht eingerichtet! %s, um deine Webseite rechtssicher zu machen." ), "<a href='options-general.php?page=" . SLUG . "&step=1&&setup=true&dismiss=true'>Lege jetzt dein Impressum an</a>" );
 				echo "<div class=\"$class\"> <p>$message</p></div>";
 			}
 		}
 	}
-
-	/*
-	public static function get_instance() {
-		if ( self::$instance == null ) {
-			self::$instance = new Impressum_Manager_Admin();
-		}
-
-		return self::$instance;
-	} *
-	 */
 
 	/**
 	 * ajax response for DEV options
@@ -348,16 +338,9 @@ class Impressum_Manager_Admin {
 		$screen->set_help_sidebar( '<a href="#">More info!</a>' );
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function get_slug() {
-		return SLUG;
-	}
-
 	public static function get_page_url() {
 
-		$url = admin_url( "options-general.php" ) . "?page=" . Impressum_Manager_Admin::get_instance()->get_slug();
+		$url = admin_url( "options-general.php" ) . "?page=" . SLUG;
 
 		return $url;
 	}
@@ -365,7 +348,7 @@ class Impressum_Manager_Admin {
 	public function show() {
 
 		// comment in/out for start page test
-		// self::save_option( 'impressum_manager_skip_start', false );
+		self::save_option( 'impressum_manager_skip_start', false );
 
 		$skip_start = false;
 
