@@ -248,21 +248,17 @@ class Impressum_Manager_Admin {
 		"ZW" => "Zimbabwe"
 	);
 
-	private static $instance = null;
-
-	public function __construct() {
-
+	public static function init(){
 		if ( array_key_exists( "dismiss", $_REQUEST ) ) {
 			self::save_option("impressum_manager_notice","dismiss");
 		}
 
-		if ( is_admin() ) {
-			add_action( 'admin_init', array( 'Impressum_Manager_Admin', 'admin_init' ) );
-			add_action( 'admin_menu', array( 'Impressum_Manager_Admin', 'add_menu' ) );
-			add_action( 'admin_notices', array( 'Impressum_Manager_Admin', 'installation_notice' ) );
-			add_action( 'wp_ajax_impressum_manager_delete_options', array( 'Impressum_Manager_Admin', 'delete_callback' ) );
-			add_action( 'wp_ajax_impressum_manager_get_impressum_field', array( 'Impressum_Manager_Admin', 'editor_ajax_callback' ) );
-		}
+		add_action( 'admin_init', array( 'Impressum_Manager_Admin', 'admin_init' ) );
+		add_action( 'admin_menu', array( 'Impressum_Manager_Admin', 'add_menu' ) );
+		add_action( 'admin_notices', array( 'Impressum_Manager_Admin', 'installation_notice' ) );
+		add_action( 'wp_ajax_impressum_manager_delete_options', array( 'Impressum_Manager_Admin', 'delete_callback' ) );
+		add_action( 'wp_ajax_impressum_manager_get_impressum_field', array( 'Impressum_Manager_Admin', 'editor_ajax_callback' ) );
+
 	}
 
 	public static function installation_notice() {
