@@ -371,7 +371,7 @@ class Impressum_Manager_Admin {
 		}
 	}
 
-	private function display_tutorial_page() {
+	private static function display_tutorial_page() {
 
 		switch ( @$_GET['step'] ) {
 			case 1:
@@ -400,20 +400,20 @@ class Impressum_Manager_Admin {
 			case 3:
 
 				if ( array_key_exists( "submit", $_REQUEST ) ) {
-					self::save_option( "impressum_manager_authorized_person", $_POST["impressum_manager_authorized_person"] );
-					self::save_option( "impressum_manager_vat", $_POST["impressum_manager_vat"] );
-					self::save_option( "impressum_manager_register", $_POST["impressum_manager_register"] );
-					self::save_option( "impressum_manager_registenr", $_POST["impressum_manager_registenr"] );
-					self::save_option( "impressum_manager_regulated_profession", $_POST["impressum_manager_regulated_profession"] );
-					self::save_option( "impressum_manager_state", $_POST["impressum_manager_state"] );
-					self::save_option( "impressum_manager_state_rules", $_POST["impressum_manager_state_rules"] );
-					self::save_option( "impressum_manager_chamber", $_POST["impressum_manager_chamber"] );
-					self::save_option( "impressum_manager_image_source", $_POST["impressum_manager_image_source"] );
-					self::save_option( "impressum_manager_responsible_chamber", $_POST["impressum_manager_responsible_chamber"] );
-					self::save_option( "impressum_manager_responsible_persons", $_POST["impressum_manager_responsible_persons"] );
-					self::save_option( "impressum_manager_press_content", $_POST["impressum_manager_press_content"] );
-					self::save_option( "impressum_manager_allowness", $_POST["impressum_manager_allowness"] );
-					self::save_option( "impressum_manager_regulated_profession_checked", $_POST['impressum_manager_regulated_profession_checked'] );
+					self::save_option( "impressum_manager_authorized_person", @$_POST["impressum_manager_authorized_person"] );
+					self::save_option( "impressum_manager_vat", @$_POST["impressum_manager_vat"] );
+					self::save_option( "impressum_manager_register", @$_POST["impressum_manager_register"] );
+					self::save_option( "impressum_manager_registenr", @$_POST["impressum_manager_registenr"] );
+					self::save_option( "impressum_manager_regulated_profession", @$_POST["impressum_manager_regulated_profession"] );
+					self::save_option( "impressum_manager_state", @$_POST["impressum_manager_state"] );
+					self::save_option( "impressum_manager_state_rules", @$_POST["impressum_manager_state_rules"] );
+					self::save_option( "impressum_manager_chamber", @$_POST["impressum_manager_chamber"] );
+					self::save_option( "impressum_manager_image_source", @$_POST["impressum_manager_image_source"] );
+					self::save_option( "impressum_manager_responsible_chamber", @$_POST["impressum_manager_responsible_chamber"] );
+					self::save_option( "impressum_manager_responsible_persons", @$_POST["impressum_manager_responsible_persons"] );
+					self::save_option( "impressum_manager_press_content", @$_POST["impressum_manager_press_content"] );
+					self::save_option( "impressum_manager_allowness", @$_POST["impressum_manager_allowness"] );
+					self::save_option( "impressum_manager_regulated_profession_checked", @$_POST['impressum_manager_regulated_profession_checked'] );
 				}
 
 				include( plugin_dir_path( __FILE__ ) . "admin/views/tutorial/page3.php" );
@@ -440,7 +440,7 @@ class Impressum_Manager_Admin {
 		}
 	}
 
-	private function display_config_page() {
+	private static function display_config_page() {
 		?>
 		<script>
 			(function ($) {
