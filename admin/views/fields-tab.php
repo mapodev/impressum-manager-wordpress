@@ -7,19 +7,29 @@
 <script>
     (function ($) {
         $(document).ready(function () {
+
+            tinymce.init({
+                mode : "exact",
+                elements: "editor",
+                theme : "simple"
+            });
+
             $("#impressum_change").change(function () {
                 var data = {
                     'action': 'impressum_manager_get_impressum_field',
                     key: $(this).val()
                 };
 
-                console.log(data);
-
                 $.post(ajaxurl, data, function (response) {
-                    $("#editor").text(response);
+                    $("#editor").val(response);
+                    setText(response);
                 });
             });
         });
+
+        function setText(text) {
+            tinymce.editors[0].setContent(text);
+        }
     }(jQuery));
 </script>
 
@@ -48,7 +58,7 @@
     </select>
 <table>
     <tr>
-        <td><textarea style="min-height: 800px; min-width: 700px;" id="editor"></textarea></td>
+        <td><?php wp_editor( "", "editor"); ?></td>
         <td style="vertical-align: top;">
             <table>
                 <tr>

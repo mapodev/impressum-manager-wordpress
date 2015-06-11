@@ -278,13 +278,13 @@ class Impressum_Manager_Admin {
 	 * ajax response for DEV options
 	 * TODO: Delete before release to Wordpress
 	 */
-	function delete_callback() {
+	public static function delete_callback() {
 		echo "OK";
 		require_once plugin_dir_path( __FILE__ ) . "uninstall.php";
 		die();
 	}
 
-	function editor_ajax_callback() {
+	public static function editor_ajax_callback() {
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . "impressum_manager_content";
@@ -306,6 +306,7 @@ class Impressum_Manager_Admin {
 		wp_enqueue_style( 'impressum_manager_style', plugins_url( 'css/impressum-manager.min.css', __FILE__ ) );
 		wp_enqueue_script( 'impressum_manager_script', plugins_url( 'js/impressum-manager.min.js', __FILE__ ) );
 		wp_enqueue_script( 'jquery' );
+        wp_enqueue_script('tiny_mce');
 	}
 
 	public static function add_menu() {
