@@ -1,11 +1,18 @@
 (function ($) {
-    $(document).ready(function() {
-        $(".nav-tab").click(function() {
+    $(document).ready(function () {
+
+        var hash = window.location.hash.substring(1);
+
+        $(".nav-tab").click(function () {
             triggerTab(this, $(this).attr("id"));
             console.log("test");
         });
 
-        function triggerTab(o,name) {
+        if (hash.length) {
+            $("#"+hash).click();
+        }
+
+        function triggerTab(o, name) {
             $(".tab").hide();
             $(".nav-tab").removeClass("nav-tab-active");
             $(o).addClass("nav-tab-active");

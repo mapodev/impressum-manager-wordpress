@@ -452,11 +452,7 @@ class Impressum_Manager_Admin {
 							'delete': true
 						};
 
-						console.log(data);
-
-						$.post(ajaxurl, data, function (response) {
-							console.log(respnse);
-						});
+						$.post(ajaxurl, data, function (response) {});
 					});
 				});
 			}(jQuery));
@@ -472,10 +468,10 @@ class Impressum_Manager_Admin {
 				?>
 				<h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
 					<a class="nav-tab nav-tab-active" id="settings-tab"
-					   href="javascript:void(0);"><?= __( "General" ) ?></a>
-					<a class="nav-tab" id="fields-tab" href="javascript:void(0);"><?= __( "Impressum Fields" ) ?></a>
-					<a class="nav-tab" id="settings2-tab" href="javascript:void(0);"><?= __( "Kontaktdaten" ) ?></a>
-					<a class="nav-tab" id="preview-tab" href="javascript:void(0);"><?= __( "Preview" ) ?></a>
+					   href="#settings-tab"><?= __( "General" ) ?></a>
+					<a class="nav-tab" id="fields-tab" href="#fields-tab"><?= __( "Impressum Fields" ) ?></a>
+					<a class="nav-tab" id="settings2-tab" href="#settings2-tab"><?= __( "Kontaktdaten" ) ?></a>
+					<a class="nav-tab" id="preview-tab" href="#preview-tab"><?= __( "Preview" ) ?></a>
 				</h2>
 
 				<div class="settings-tab tab">
