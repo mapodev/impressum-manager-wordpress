@@ -381,17 +381,17 @@ class Impressum_Manager_Admin {
 			case 2:
 
 				if ( array_key_exists( "submit", $_REQUEST ) ) {
-					self::save_option( "impressum_manager_person", $_POST["impressum_manager_person"] );
-					self::save_option( "impressum_manager_form_of_organization", $_POST["impressum_manager_form_of_organization"] );
-					self::save_option( "impressum_manager_name_company", $_POST["impressum_manager_name_company"] );
-					self::save_option( "impressum_manager_address", $_POST["impressum_manager_address"] );
-					self::save_option( "impressum_manager_address_extra", $_POST["impressum_manager_address_extra"] );
-					self::save_option( "impressum_manager_place", $_POST["impressum_manager_place"] );
-					self::save_option( "impressum_manager_zip", $_POST["impressum_manager_zip"] );
-					self::save_option( "impressum_manager_country", $_POST["impressum_manager_country"] );
-					self::save_option( "impressum_manager_fax", $_POST["impressum_manager_fax"] );
-					self::save_option( "impressum_manager_email", $_POST["impressum_manager_email"] );
-					self::save_option( "impressum_manager_phone", $_POST["impressum_manager_phone"] );
+					self::save_option( "impressum_manager_person", @$_POST["impressum_manager_person"] );
+					self::save_option( "impressum_manager_form_of_organization", @$_POST["impressum_manager_form_of_organization"] );
+					self::save_option( "impressum_manager_name_company", @$_POST["impressum_manager_name_company"] );
+					self::save_option( "impressum_manager_address", @$_POST["impressum_manager_address"] );
+					self::save_option( "impressum_manager_address_extra", @$_POST["impressum_manager_address_extra"] );
+					self::save_option( "impressum_manager_place", @$_POST["impressum_manager_place"] );
+					self::save_option( "impressum_manager_zip", @$_POST["impressum_manager_zip"] );
+					self::save_option( "impressum_manager_country", @$_POST["impressum_manager_country"] );
+					self::save_option( "impressum_manager_fax", @$_POST["impressum_manager_fax"] );
+					self::save_option( "impressum_manager_email", @$_POST["impressum_manager_email"] );
+					self::save_option( "impressum_manager_phone", @$_POST["impressum_manager_phone"] );
 				}
 
 				include( plugin_dir_path( __FILE__ ) . "admin/views/tutorial/page2.php" );
@@ -421,14 +421,14 @@ class Impressum_Manager_Admin {
 
 			case 4:
 				if ( array_key_exists("submit", $_REQUEST)) {
-					self::save_option( "impressum_manager_disclaimer", $_POST["impressum_manager_disclaimer"] );
-					self::save_option( "impressum_manager_general_privacy_policy", $_POST["impressum_manager_general_privacy_policy"] );
-					self::save_option( "impressum_manager_policy_facebook", $_POST["impressum_manager_policy_facebook"] );
-					self::save_option( "impressum_manager_policy_google_analytics", $_POST["impressum_manager_policy_google_analytics"] );
-					self::save_option( "impressum_manager_policy_google_adsense", $_POST["impressum_manager_policy_google_adsense"] );
-					self::save_option( "impressum_manager_policy_google_plus", $_POST["impressum_manager_policy_google_plus"] );
-					self::save_option( "impressum_manager_policy_twitter", $_POST["impressum_manager_policy_twitter"] );
-					self::save_option( "impressum_manager_extra_field", $_POST["impressum_manager_extra_field"] );
+					self::save_option( "impressum_manager_disclaimer", @$_POST["impressum_manager_disclaimer"] );
+					self::save_option( "impressum_manager_general_privacy_policy", @$_POST["impressum_manager_general_privacy_policy"] );
+					self::save_option( "impressum_manager_policy_facebook", @$_POST["impressum_manager_policy_facebook"] );
+					self::save_option( "impressum_manager_policy_google_analytics", @$_POST["impressum_manager_policy_google_analytics"] );
+					self::save_option( "impressum_manager_policy_google_adsense", @$_POST["impressum_manager_policy_google_adsense"] );
+					self::save_option( "impressum_manager_policy_google_plus", @$_POST["impressum_manager_policy_google_plus"] );
+					self::save_option( "impressum_manager_policy_twitter", @$_POST["impressum_manager_policy_twitter"] );
+					self::save_option( "impressum_manager_extra_field", @$_POST["impressum_manager_extra_field"] );
 				}
 
 				include( plugin_dir_path( __FILE__ ) . "admin/views/tutorial/page4.php" );
