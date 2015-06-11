@@ -1,38 +1,44 @@
-<form action="options-general.php">
-	<table class="form-table">
-		<input type="hidden" name="page"
-		       value="<?= SLUG ?>">
-		<input type="hidden" name="view" value="tutorial"/>
-		<input type="hidden" name="step" value="1"/>
-		<input type="hidden" name="skip_start_temp" value="true">
-		<tbody>
-		<tr>
-			<th>
-				<?= __( "Impressum Konfiguration" ) ?>
-			</th>
-			<td>
-				<input class="button" type="submit" value="<?= _e( 'Impressum konfigurieren' ) ?>">
-			</td>
-		</tr>
-		</tbody>
-	</table>
-</form>
-<form action="options-general.php">
-	<table class="form-table">
-		<input type="hidden" name="page"
-		       value="<?= SLUG ?>">
-		<input type="hidden" name="view" value="config">
-		<input type="hidden" name="skip_start" value="true">
-		<input type="hidden" name="tut_finished" value="true">
-		<tbody>
-		<tr>
-			<th>
-				<?= __( "Überspringen" ) ?>
-			</th>
-			<td>
-				<input class="button" type="submit" value="<?= _e( 'Überspringen' ) ?>">
-			</td>
-		</tr>
-		</tbody>
-	</table>
-</form>
+<?php
+/*
+
+http://www.davidjrush.com/blog/2011/12/simple-jquery-tooltip/
+
+Zu den Einstellungen <großer zwischenraum> schritt zurück <zwischenraum> nächster schritt
+
+*/
+?>
+
+<div class="impressum-manager-start-wrap">
+	<p><?php esc_html_e( 'Willkommen bei Impressum-Manager. Dieses plugin hilft dir deine Webseite(n) rechtsicher zu machen ...', SLUG ); ?></p>
+
+	<p><?php esc_html_e( 'HÄCKCHENTEXT', SLUG ); ?></p>
+
+	<div class="box primary">
+		<div>
+			<strong><?php esc_html_e( 'In 4 Schritten zur rechtssicheren Webseite', SLUG ); ?></strong><br>
+			<p><?php esc_html_e( 'Mit dem Impressum-Manager kannst du deine Webseite schnell rechtssicher machen, indem du ...', SLUG ); ?></p>
+		</div>
+		<form action="<?php Impressum_Manager_Admin::get_page_url()?>" class="right">
+			<input type="hidden" name="page" value="<?= SLUG ?>">
+			<input type="hidden" name="view" value="tutorial"/>
+			<input type="hidden" name="step" value="1"/>
+			<input type="hidden" name="skip_start_temp" value="true">
+			<input class="button button-primary" type="submit"
+			       value="<?= _e( 'Impressum konfigurieren' ) ?>">
+		</form>
+	</div>
+	<div class="box secondary">
+		<div>
+			<strong><?php esc_html_e( 'Später Konfigurieren', SLUG ); ?></strong><br>
+			<p><?php esc_html_e( 'Das Impressum lässt sich auch jederzeit später konfigureren. Wenn du erst die Einstellungen sehen möchstest, klicke hier auf den Button.', SLUG ); ?></p>
+		</div>
+		<form action="<?php Impressum_Manager_Admin::get_page_url()?>" class="right">
+			<input type="hidden" name="page" value="<?= SLUG ?>">
+			<input type="hidden" name="view" value="config">
+			<input type="hidden" name="skip_start" value="true">
+			<input type="hidden" name="tut_finished" value="true">
+			<input class="button button-secondary" type="submit" value="<?= _e( 'Zu den Einstellungen' ) ?>">
+
+		</form>
+	</div>
+</div>

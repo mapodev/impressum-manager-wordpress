@@ -1,30 +1,12 @@
 <?php
 Impressum_Manager_Admin::save_option("impressum_manager_notice","dismissed");
 
-$impressummanager_settings[] = $impressummanager_language = @$_POST['impressum_manager_language_of_impressum'];
-$impressummanager_settings[] = $general_privacy_policy = @$_POST['impressum_manager_general_privacy_policy'];
-$impressummanager_settings[] = $disclaimer = @$_POST['impressum_manager_disclaimer'];
-$impressummanager_settings[] = $policy_facebook = @$_POST['impressum_manager_policy_facebook'];
-$impressummanager_settings[] = $policy_google_analytics = @$_POST['impressum_manager_policy_google_analytics'];
-$impressummanager_settings[] = $policy_google_adsense = @$_POST['impressum_manager_policy_google_adsense'];
-$impressummanager_settings[] = $policy_google_plus = @$_POST['impressum_manager_policy_google_plus'];
-$impressummanager_settings[] = $policy_google_twitter = @$_POST['impressum_manager_policy_twitter'];
-$impressummanager_settings[] = $extra_field = @$_POST['impressum_manager_extra_field'];
-
 if (@$_GET['tut_finished'] == true && array_key_exists("submit", $_REQUEST)) {
-	Impressum_Manager_Admin::save_option("impressum_manager_language_of_impressum", $impressummanager_language);
-	Impressum_Manager_Admin::save_option("impressum_manager_general_privacy_policy", $general_privacy_policy);
-	Impressum_Manager_Admin::save_option("impressum_manager_disclaimer", $disclaimer);
-	Impressum_Manager_Admin::save_option("impressum_manager_policy_facebook", $policy_facebook);
-	Impressum_Manager_Admin::save_option("impressum_manager_policy_google_analytics", $policy_google_analytics);
-	Impressum_Manager_Admin::save_option("impressum_manager_policy_google_adsense", $policy_google_adsense);
-	Impressum_Manager_Admin::save_option("impressum_manager_policy_google_plus", $policy_google_plus);
-	Impressum_Manager_Admin::save_option("impressum_manager_policy_twitter", $policy_google_twitter);
-	Impressum_Manager_Admin::save_option("impressum_manager_extra_field", $extra_field);
+	Impressum_Manager_Admin::save_option("impressum_manager_noindex", @$_POST['impressum_manager_noindex']);
+	Impressum_Manager_Admin::save_option("impressum_manager_show_email_as_image", @$_POST['impressum_manager_show_email_as_image']);
 }
 
 ?>
-
 
 <form action="options-general.php">
 	<table class="form-table">

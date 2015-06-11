@@ -348,7 +348,7 @@ class Impressum_Manager_Admin {
 	public function show() {
 
 		// comment in/out for start page test
-		//self::save_option( 'impressum_manager_skip_start', false );
+		self::save_option( 'impressum_manager_skip_start', false );
 
 		$skip_start = false;
 
@@ -418,6 +418,22 @@ class Impressum_Manager_Admin {
 
 				include( plugin_dir_path( __FILE__ ) . "admin/views/tutorial/page3.php" );
 				break;
+
+			case 4:
+				if ( array_key_exists("submit", $_REQUEST)) {
+					self::save_option( "impressum_manager_disclaimer", $_POST["impressum_manager_disclaimer"] );
+					self::save_option( "impressum_manager_general_privacy_policy", $_POST["impressum_manager_general_privacy_policy"] );
+					self::save_option( "impressum_manager_policy_facebook", $_POST["impressum_manager_policy_facebook"] );
+					self::save_option( "impressum_manager_policy_google_analytics", $_POST["impressum_manager_policy_google_analytics"] );
+					self::save_option( "impressum_manager_policy_google_adsense", $_POST["impressum_manager_policy_google_adsense"] );
+					self::save_option( "impressum_manager_policy_google_plus", $_POST["impressum_manager_policy_google_plus"] );
+					self::save_option( "impressum_manager_policy_twitter", $_POST["impressum_manager_policy_twitter"] );
+					self::save_option( "impressum_manager_extra_field", $_POST["impressum_manager_extra_field"] );
+				}
+
+				include( plugin_dir_path( __FILE__ ) . "admin/views/tutorial/page4.php" );
+				break;
+
 
 			default:
 				self::show();

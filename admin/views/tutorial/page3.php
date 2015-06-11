@@ -1,4 +1,4 @@
-<form action="<?= Impressum_Manager_Admin::get_page_url() ?>&view=config&skip_start=true&tut_finished=true" method="post">
+<form action="<?= Impressum_Manager_Admin::get_page_url() ?>&view=tutorial&skip_start_temp=true&step=4" method="post">
 	<table class="form-table">
 		<tbody>
 		<tr>
@@ -94,7 +94,7 @@
 				</a>
 			</td>
 			<td>
-				<?= submit_button( __( "Daten speichern", SLUG ) ) ?>
+				<?= submit_button( __( "Nächster Schritt", SLUG ) ) ?>
 			</td>
 		</tr>
 	</table>
