@@ -12,6 +12,20 @@
 		});
 	}(jQuery));
 </script>
+
+<script>
+	(function($) {
+		$(document).ready(function () {
+			$("span.question").hover(function () {
+				$(this).append('<div class="tooltip"><p>This is a tooltip. It is typically used to explain something to a user without taking up space on the page.</p></div>');
+			}, function () {
+				$("div.tooltip").remove();
+			});
+		});
+	}(jQuery));
+</script>
+
+<p>This sentence needs more of an explanation for the user. <span class="question">?</span></p>
 <br>
 
 <form action="<?= Impressum_Manager_Admin::get_page_url() ?>&view=tutorial&skip_start_temp=true&step=2" method="post">
