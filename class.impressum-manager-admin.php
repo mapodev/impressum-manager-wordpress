@@ -301,14 +301,14 @@ class Impressum_Manager_Admin {
 		die();
 	}
 
-	public function admin_init() {
+	public static function admin_init() {
 		self::register_settings();
 		wp_enqueue_style( 'impressum_manager_style', plugins_url( 'css/impressum-manager.min.css', __FILE__ ) );
 		wp_enqueue_script( 'impressum_manager_script', plugins_url( 'js/impressum-manager.min.js', __FILE__ ) );
 		wp_enqueue_script( 'jquery' );
 	}
 
-	public function add_menu() {
+	public static function add_menu() {
 		$hook = add_options_page( "Impressum Manager", 'Impressum Manager', 'manage_options', SLUG, array(
 			'Impressum_Manager_Admin',
 			'show'
@@ -316,7 +316,7 @@ class Impressum_Manager_Admin {
 		add_action( 'load-' . $hook, array( 'Impressum_Manager_Admin', 'add_help_tab' ) );
 	}
 
-	public function add_help_tab() {
+	public static function add_help_tab() {
 		$screen = get_current_screen();
 
 		$tabs = array(
@@ -345,7 +345,7 @@ class Impressum_Manager_Admin {
 		return $url;
 	}
 
-	public function show() {
+	public static function show() {
 
 		// comment in/out for start page test
 		self::save_option( 'impressum_manager_skip_start', false );
