@@ -2,8 +2,13 @@
 
 defined('ABSPATH') or die('No script kiddies please!');
 
+
+define(ADDRESS_HEADER, 'address_header');
+define(ADRESS_CONTACT, 'address_contact');
+define(ADDRESS_TELEPHONE, 'adress_telephone');
 class ImpressumManager
 {
+
 
     private static $_format_address;
     private static $_format_representant;
