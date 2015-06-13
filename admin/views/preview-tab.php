@@ -2,4 +2,5 @@
 $im = new ImpressumManager();
 echo $im->content();
 
+
 ?>

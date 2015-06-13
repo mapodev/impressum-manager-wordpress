@@ -248,16 +248,19 @@ class Impressum_Manager_Admin {
 		"ZW" => "Zimbabwe"
 	);
 
-	public static function init(){
+	public static function init() {
 		if ( array_key_exists( "dismiss", $_REQUEST ) ) {
-			self::save_option("impressum_manager_notice","dismiss");
+			self::save_option( "impressum_manager_notice", "dismiss" );
 		}
 
 		add_action( 'admin_init', array( 'Impressum_Manager_Admin', 'admin_init' ) );
 		add_action( 'admin_menu', array( 'Impressum_Manager_Admin', 'add_menu' ) );
 		add_action( 'admin_notices', array( 'Impressum_Manager_Admin', 'installation_notice' ) );
 		add_action( 'wp_ajax_impressum_manager_delete_options', array( 'Impressum_Manager_Admin', 'delete_callback' ) );
-		add_action( 'wp_ajax_impressum_manager_get_impressum_field', array( 'Impressum_Manager_Admin', 'editor_ajax_callback' ) );
+		add_action( 'wp_ajax_impressum_manager_get_impressum_field', array(
+			'Impressum_Manager_Admin',
+			'editor_ajax_callback'
+		) );
 
 	}
 
@@ -283,30 +286,35 @@ class Impressum_Manager_Admin {
 		require_once plugin_dir_path( __FILE__ ) . "uninstall.php";
 		die();
 	}
-
+	
 	public static function editor_ajax_callback() {
+		$key = esc_attr( $_POST['key'] );
+
+		echo self::get_db_content( $key );
+
+		die();
+	}
+
+	public static function get_db_content( $key ) {
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . "impressum_manager_content";
-
-		$key = esc_attr( $_POST['key'] );
 
 		$result = $wpdb->get_var(
 			"SELECT impressum_value
               FROM $table_name
               WHERE impressum_key = '$key'" );
 
-		echo $result;
-
-		die();
+		return $result;
 	}
+
 
 	public static function admin_init() {
 		self::register_settings();
 		wp_enqueue_style( 'impressum_manager_style', plugins_url( 'css/impressum-manager.min.css', __FILE__ ) );
 		wp_enqueue_script( 'impressum_manager_script', plugins_url( 'js/impressum-manager.min.js', __FILE__ ) );
 		wp_enqueue_script( 'jquery' );
-        wp_enqueue_script('tiny_mce');
+		wp_enqueue_script( 'tiny_mce' );
 	}
 
 	public static function add_menu() {
@@ -318,25 +326,59 @@ class Impressum_Manager_Admin {
 	}
 
 	public static function add_help_tab() {
-		$screen = get_current_screen();
+		$current_screen = get_current_screen();
 
-		$tabs = array(
-			array(
-				'title'   => 'All About Books',
-				'id'      => 'cjr-books-about',
-				'content' => '<p>Books are pretty awesome...</p>'
-			),
-			array(
-				'title' => 'More About Books',
-				'id'    => 'cjr-books-more'
-			)
+		$start_overview_tab = array(
+			'title'   => __( 'Overview', SLUG ),
+			'id'      => 'start_overview',
+			'content' => '<p>' . esc_html__( '...', SLUG ) . '</p>'
 		);
 
-		foreach ( $tabs as $tab ) {
-			$screen->add_help_tab( $tab );
+		$start_tut_tab = array(
+			'title'   => __( 'Tutorial', SLUG ),
+			'id'      => 'start_tutorial',
+			'content' => '<p>' . esc_html__( '...', SLUG ) . '</p>'
+		);
+
+		$start_settings_tab = array(
+			'title'   => __( 'Settings', SLUG ),
+			'id'      => 'start_settings',
+			'content' => '<p>' . esc_html__( '...', SLUG ) . '</p>'
+		);
+
+		if ( isset( $_GET['view'] ) && $_GET['view'] == 'tutorial' ) {
+			$current_screen->add_help_tab(
+				$start_overview_tab
+			);
+		} elseif ( isset( $_GET['view'] ) && $_GET['view'] == 'config' ) {
+			$current_screen->add_help_tab(
+				$start_overview_tab
+			);
+
+			$current_screen->add_help_tab(
+				$start_overview_tab
+			);
+		} else {
+			// start page
+			$current_screen->add_help_tab(
+				$start_overview_tab
+			);
+
+			$current_screen->add_help_tab(
+				$start_tut_tab
+			);
+
+			$current_screen->add_help_tab(
+				$start_settings_tab
+			);
 		}
 
-		$screen->set_help_sidebar( '<a href="#">More info!</a>' );
+		$current_screen->set_help_sidebar(
+			'<p><strong>' . esc_html__( 'For more information:', SLUG ) . '</strong></p>' .
+			'<p><a href="#" target="_blank">' . esc_html__( 'FAQ', SLUG ) . '</a></p>' .
+			'<p><a href="#" target="_blank">' . esc_html__( 'Support', SLUG ) . '</a></p>'
+
+		);
 	}
 
 	public static function get_page_url() {
@@ -349,7 +391,7 @@ class Impressum_Manager_Admin {
 	public static function show() {
 
 		// comment in/out for start page test
-		self::save_option( 'impressum_manager_skip_start', false );
+		//self::save_option( 'impressum_manager_skip_start', false );
 
 		$skip_start = false;
 
@@ -357,7 +399,7 @@ class Impressum_Manager_Admin {
 			self::save_option( 'impressum_manager_skip_start', true );
 		}
 
-		if ( get_option( 'impressum_manager_skip_start' ) == true || isset( $_GET['skip_start_temp'] ) && $_GET['skip_start_temp'] == 'true') {
+		if ( get_option( 'impressum_manager_skip_start' ) == true || isset( $_GET['skip_start_temp'] ) && $_GET['skip_start_temp'] == 'true' ) {
 			$skip_start = true;
 		}
 
@@ -421,7 +463,7 @@ class Impressum_Manager_Admin {
 				break;
 
 			case 4:
-				if ( array_key_exists("submit", $_REQUEST)) {
+				if ( array_key_exists( "submit", $_REQUEST ) ) {
 					self::save_option( "impressum_manager_disclaimer", @$_POST["impressum_manager_disclaimer"] );
 					self::save_option( "impressum_manager_general_privacy_policy", @$_POST["impressum_manager_general_privacy_policy"] );
 					self::save_option( "impressum_manager_policy_facebook", @$_POST["impressum_manager_policy_facebook"] );
@@ -452,7 +494,8 @@ class Impressum_Manager_Admin {
 							'delete': true
 						};
 
-						$.post(ajaxurl, data, function (response) {});
+						$.post(ajaxurl, data, function (response) {
+						});
 					});
 				});
 			}(jQuery));
