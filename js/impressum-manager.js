@@ -9,7 +9,17 @@
         });
 
         if (hash.length) {
-            $("#"+hash).click();
+            hash = hash.replace("-j","");
+            triggerTab($("#" + hash), hash);
+        } else {
+            triggerTab($("#settings-tab"), "settings-tab");
+        }
+
+        // prevent jumping to bottom onLoad
+        if (location.hash) {
+            setTimeout(function () {
+                window.scrollTo(0, 0);
+            }, 1);
         }
 
         function triggerTab(o, name) {

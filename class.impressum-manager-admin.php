@@ -510,14 +510,13 @@ class Impressum_Manager_Admin {
 			if ( ! array_key_exists( "setup", $_GET ) ) {
 				?>
 				<h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
-					<a class="nav-tab nav-tab-active" id="settings-tab"
-					   href="#settings-tab"><?= __( "General" ) ?></a>
-					<a class="nav-tab" id="fields-tab" href="#fields-tab"><?= __( "Impressum Fields" ) ?></a>
-					<a class="nav-tab" id="settings2-tab" href="#settings2-tab"><?= __( "Kontaktdaten" ) ?></a>
-					<a class="nav-tab" id="preview-tab" href="#preview-tab"><?= __( "Preview" ) ?></a>
+					<a class="nav-tab nav-tab-active" id="settings-tab" href="#settings-tab-j"><?= __( "General" ) ?></a>
+					<a class="nav-tab" id="fields-tab" href="#fields-tab-j"><?= __( "Impressum Fields" ) ?></a>
+					<a class="nav-tab" id="settings2-tab" href="#settings2-tab-j"><?= __( "Kontaktdaten" ) ?></a>
+					<a class="nav-tab" id="preview-tab" href="#preview-tab-j"><?= __( "Preview" ) ?></a>
 				</h2>
 
-				<div class="settings-tab tab">
+				<div class="settings-tab tab" style="display: none;">
 					<?php include( plugin_dir_path( __FILE__ ) . "admin/views/general-tab.php" ) ?>
 				</div>
 				<div class="fields-tab tab" style="display:none;">
