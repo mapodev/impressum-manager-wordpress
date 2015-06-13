@@ -286,7 +286,7 @@ class Impressum_Manager_Admin {
 		require_once plugin_dir_path( __FILE__ ) . "uninstall.php";
 		die();
 	}
-	
+
 	public static function editor_ajax_callback() {
 		$key = esc_attr( $_POST['key'] );
 
