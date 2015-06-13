@@ -16,11 +16,7 @@ class Impressum_Manager {
 		self::$initiated = true;
 
 		add_action('the_posts', array( 'Impressum_Manager', 'metashortcode'));
-
-		add_filter('attachment_fields_to_edit', array( 'Impressum_Manager', 'impressum_manager_field_credit'), 10, 2);
-		add_filter('attachment_fields_to_save', array( 'Impressum_Manager', 'impressum_manager_field_credit_save'), 10, 2);
-
-	}
+    }
 
 	public static function plugin_activation() {
 		require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-activate.php';
@@ -45,25 +41,6 @@ class Impressum_Manager {
 	{
 		$im = new ImpressumManager();
 		return $im->content();
-	}
-
-	public static function field_credit($form_fields, $post)
-	{
-		$form_fields['plugin-image-credential'] = array(
-			'label' => __('Urheber vom Bild'),
-			'input' => 'text',
-			'value' => get_post_meta($post->ID, 'impressum_manager_image_credential', true)
-		);
-
-		return $form_fields;
-	}
-
-	public static function field_credit_save($post, $attachment)
-	{
-		if (isset($attachment['plugin-image-credential']))
-			update_post_meta($post['ID'], 'impressum_manager_image_credential', $attachment['plugin-image-credential']);
-
-		return $post;
 	}
 
 // Function to hook to "the_posts" (just edit the two variables)
