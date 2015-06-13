@@ -88,30 +88,83 @@ if (!empty($_POST) && isset($_POST['submit'])) {
                 <table>
                     <tr>
                         <td>%%NAME%%</td>
+                        <td><?=__("Vollständiger Name")?></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>%%STREET%%</td>
+                        <td><?=__("Straße & Hausnummer")?></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>%%ADDRESSEXTRA%%</td>
+                        <td><?=__("Vollständiger Name")?></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>%%PLACE%%</td>
+                        <td><?=__("Ort")?></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>%%ZIP%%</td>
+                        <td><?=__("PLZ")?></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>%%COUNTRY%%</td>
+                        <td><?=__("Land")?></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>%%PHONE%%</td>
+                        <td><?=__("Telefonnummer (inkl. Vorwahl")?></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>%%FAX%%</td>
+                        <td><?=__("Faxnummer")?></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>%%EMAIL%%</td>
+                        <td><?=__("E-Mail Adresse")?></td>
+                    </tr>
+                    <tr>
+                        <td>%%AUTHORISEDPERSON%%</td>
+                        <td><?=__("Vertretungsberechtigte Persone(n)")?></td>
+                    </tr>
+                    <tr>
+                        <td>%%VAT%%</td>
+                        <td><?=__("Umsatzsteuer ID")?></td>
+                    </tr>
+                    <tr>
+                        <td>%%REGISTER%%</td>
+                        <td><?=__("Register")?></td>
+                    </tr>
+                    <tr>
+                        <td>%%REGISTERNUMBER%%</td>
+                        <td><?=__("Registernummer")?></td>
+                    </tr>
+                    <tr>
+                        <td>%%REGULATEDPROFESSION%%</td>
+                        <td><?=__("Gesetzliche Berufsbezeichnung")?></td>
+                    </tr>
+                    <tr>
+                        <td>%%STATE%%</td>
+                        <td><?=__("Staat, in dem die Berufsbezeichnung verliehen wurde")?></td>
+                    </tr>
+                    <tr>
+                        <td>%%STATERULES%%</td>
+                        <td><?=__("Berfusrechtliche Regelungen (Bezeichnung)")?></td>
+                    </tr>
+                    <tr>
+                        <td>%%CHAMBER%%</td>
+                        <td><?=__("Kammer, der Sie angehören")?></td>
+                    </tr>
+                    <tr>
+                        <td>%%RESPONSIBLECHAMBER%%</td>
+                        <td><?=__("Gesetzliche Berufsbezeichnung")?></td>
+                    </tr>
+                    <tr>
+                        <td>%%IMAGESOURCE%%</td>
+                        <td><?=__("Bildquellen")?></td>
+                    </tr>
+                    <tr>
+                        <td>%%RESPONSIBLEPERSONS%%</td>
+                        <td><?=__("Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die Verantwortungen entsprechend mit angeben.")?></td>
                     </tr>
                 </table>
             </td>
