@@ -83,7 +83,7 @@ if (!empty($_POST) && isset($_POST['submit'])) {
     </select>
     <table>
         <tr>
-            <td><?php wp_editor("", "editor"); ?></td>
+            <td style="vertical-align: top"><?php wp_editor("", "editor"); ?></td>
             <td style="vertical-align: top;">
                 <table>
                     <tr>
