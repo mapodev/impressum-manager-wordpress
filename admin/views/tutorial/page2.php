@@ -196,6 +196,7 @@ if ( $person == 1 ) {
 					for="press_content"><b><?= __( "journalistisch-redaktionelle Inhalte", SLUG ) ?></b></label>
 			</th>
 		</tr>
+
 		<tr valign="top" id="press_content_textarea">
 			<td colspan="2">
                         <textarea name="impressum_manager_responsible_persons"

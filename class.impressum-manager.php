@@ -40,7 +40,7 @@ class Impressum_Manager {
 	public static function content_shortcode($atts)
 	{
 		$im = new ImpressumManager();
-		return $im->content();
+		return $im->get_whole_impressum();
 	}
 
 // Function to hook to "the_posts" (just edit the two variables)

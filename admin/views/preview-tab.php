@@ -1,4 +1,10 @@
 <?php
 $im = new ImpressumManager();
-echo $im->content();
+echo $im->get_whole_impressum();
+
+
+
+
 ?>
+
+
