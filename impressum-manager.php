@@ -40,15 +40,15 @@ register_deactivation_hook(__FILE__, array('Impressum_Manager', 'plugin_deactiva
 register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "impressum_manager_goodybye");
 
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'class.impressum-manager.php');
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'classes/class.impressum.php');
+require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/class.impressum.php');
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'wrapper.php');
 
 add_action('init', array('Impressum_Manager', 'init'));
 
-if (is_admin()) {
+//if (is_admin()) {
     require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'class.impressum-manager-admin.php');
     add_action('init', array('Impressum_Manager_Admin', 'init'));
-}
+//}
 
 function impressum_manager_goodybye()
 {

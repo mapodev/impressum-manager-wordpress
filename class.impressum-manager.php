@@ -43,11 +43,11 @@ class Impressum_Manager
 
     // SHORTCODE CODE
 
-    public static function content_shortcode($atts)
-    {
-        $im = new ImpressumManager();
-        return $im->get_whole_impressum();
-    }
+	public static function content_shortcode($atts)
+	{
+		$im = new Impressum();
+		return $im->get_whole_impressum();
+	}
 
     // Function to hook to "the_posts" (just edit the two variables)
     public static function metashortcode($posts)

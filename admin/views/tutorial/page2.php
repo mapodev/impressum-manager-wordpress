@@ -58,12 +58,11 @@ if ( $person == 1 ) {
 <form action="<?= Impressum_Manager_Admin::get_page_url() ?>&view=tutorial&skip_start_temp=true&step=3" method="post">
 	<table class="form-table" <?= $cssDef ?>>
 		<tr valign="top">
-			<th scope="row" colspan="2"><b><?= __( "Vertretungsberechtigte Persone(n)", SLUG ) ?></b>
+			<th scope="row"><b><?= __( "Vertretungsberechtigte Persone(n)", SLUG ) ?></b>
 			</th>
-		</tr>
-		<tr valign="top">
-			<td colspan="2">
-                        <textarea name="impressum_manager_authorized_person"
+
+			<td>
+                <textarea name="impressum_manager_authorized_person"
                                   style="width: 340px; height: 225px;"><?= get_option( "impressum_manager_authorized_person" ) ?></textarea><br>
 				<small><?= __( "Namen und Vornamen", SLUG ) ?></small>
 			</td>
@@ -71,19 +70,15 @@ if ( $person == 1 ) {
 	</table>
 	<table class="form-table">
 		<tr valign="top" <?= $cssDef ?>>
-			<th scope="row" colspan="2"><b><?= __( "Umsatzsteuer ID", SLUG ) ?></b></th>
-		</tr>
-		<tr valign="top" <?= $cssDef ?>>
-			<td colspan="2">
+			<th scope="row"><b><?= __( "Umsatzsteuer ID", SLUG ) ?></b></th>
+			<td>
 				<input type="text" name="impressum_manager_vat" title="VAT" style="width: 340px"
 				       value="<?= get_option( "impressum_manager_vat" ) ?>">
 			</td>
 		</tr>
 		<tr valign="top" <?= $cssDef ?>>
-			<th scope="row" colspan="2"><b><?= __( "Register", SLUG ) ?></b></th>
-		</tr>
-		<tr valign="top" <?= $cssDef ?>>
-			<td colspan="2">
+			<th scope="row"><b><?= __( "Register", SLUG ) ?></b></th>
+			<td>
 				<select name="impressum_manager_register">
 					<?php
 					$registerDescr = array(
@@ -114,12 +109,9 @@ if ( $person == 1 ) {
 				</select>
 			</td>
 		</tr>
-
 		<tr valign="top" <?= $cssDef ?>>
-			<th scope="row" colspan="2"><b><?= __( "Registernummer", SLUG ) ?></b></th>
-		</tr>
-		<tr valign="top" <?= $cssDef ?>>
-			<td colspan="2">
+			<th scope="row"><b><?= __( "Registernummer", SLUG ) ?></b></th>
+			<td>
 				<input type="text" name="impressum_manager_registenr" title="Registernummer"
 				       style="width: 340px"
 				       value="<?= get_option( "impressum_manager_registenr" ) ?>">
@@ -128,49 +120,43 @@ if ( $person == 1 ) {
 	</table>
 	<table class="form-table">
 		<tr valign="top">
-			<th scope="row" colspan="2"><input type="checkbox" id="regulated_profession"
+			<th scope="row"><input type="checkbox" id="regulated_profession"
 			                                   name="impressum_manager_regulated_profession_checked" <?= checked( "on", get_option( "impressum_manager_regulated_profession_checked" ), false ) ?>><label
 					for="regulated_profession"><b><?= __( "Reglementierter Beruf", SLUG ) ?></b></label>
 			</th>
-		</tr>
-		<tr valign="top" class="hide_regulated_profession">
-			<td colspan="2">
+
+
+			<td class="hide_regulated_profession">
 				<input type="text" name="impressum_manager_regulated_profession"
 				       title="Regulated profession"
 				       style="width: 340px"
 				       value="<?= get_option( "impressum_manager_regulated_profession" ) ?>"><br>
 				<small><?= __( "Gesetzliche Berufsbezeichnung", SLUG ) ?></small>
-			</td>
-		</tr>
-		<tr valign="top" class="hide_regulated_profession">
-			<td colspan="2">
+				<br>
 				<input type="text" name="impressum_manager_state" title="State"
 				       style="width: 340px" value="<?= get_option( "impressum_manager_state" ) ?>"><br>
 				<small><?= __( "Staat, in dem die Berufsbezeichnung verliehen wurde", SLUG ) ?></small>
-			</td>
-		</tr>
-		<tr valign="top" class="hide_regulated_profession">
-			<td colspan="2">
+				<br>
 				<input type="text" name="impressum_manager_state_rules" title="State rules"
 				       style="width: 340px"
 				       value="<?= get_option( "impressum_manager_state_rules" ) ?>"><br>
 				<small><?= __( "Berfusrechtliche Regelungen (Bezeichnung)", SLUG ) ?></small>
-			</td>
-		</tr>
-		<tr valign="top" class="hide_regulated_profession">
-			<td colspan="2">
+				<br>
+				<input type="text" name="impressum_manager_state_rules" title="State rules"
+				       style="width: 340px"
+				       value="<?= get_option( "impressum_manager_state_rules" ) ?>"><br>
+				<small><?= __( "Berfusrechtliche Regelungen (Bezeichnung)", SLUG ) ?></small>
+				<br>
 				<input type="text" name="impressum_manager_chamber" title="Chamber"
 				       style="width: 340px" value="<?= get_option( "impressum_manager_chamber" ) ?>"><br>
 				<small><?= __( "Kammer, der Sie angehören", SLUG ) ?></small>
+				<br>
 			</td>
-		</tr>
 		<tr valign="top">
-			<th scope="row" colspan="2"><input type="checkbox" id="allowness"
+			<th scope="row"><input type="checkbox" id="allowness"
 			                                   name="impressum_manager_allowness" <?= checked( "on", get_option( "impressum_manager_allowness" ), false ) ?>><label
 					for="allowness"><b><?= __( "Behördliche Zuslassung", SLUG ) ?></b></label></th>
-		</tr>
-		<tr valign="top" id="allowness_textarea">
-			<td colspan="2">
+			<td id="allowness_textarea">
                         <textarea name="impressum_manager_responsible_chamber"
                                   style="width: 340px; height: 225px;"><?= get_option( "impressum_manager_responsible_chamber" ) ?></textarea><br>
 				<small><?= __( "Zuständige Aufsichtsbehörde", SLUG ) ?></small>
@@ -179,10 +165,8 @@ if ( $person == 1 ) {
 	</table>
 	<table class="form-table">
 		<tr valign="top">
-			<th scope="row" colspan="2"><b><?= __( "Bildquellen", SLUG ) ?></b></th>
-		</tr>
-		<tr valign="top">
-			<td colspan="2">
+			<th scope="row" ><b><?= __( "Bildquellen", SLUG ) ?></b></th>
+			<td >
                         <textarea name="impressum_manager_image_source"
                                   style="width: 340px; height: 225px;"><?= get_option( "impressum_manager_image_source" ) ?></textarea><br>
 				<small><?= __( "z.B. Max Mustermann, http://www.fotolia.com", SLUG ) ?></small>
@@ -190,15 +174,12 @@ if ( $person == 1 ) {
 		</tr>
 
 		<tr valign="top">
-			<th scope="row" colspan="2"><input type="checkbox" id="press_content"
+			<th scope="row" ><input type="checkbox" id="press_content"
 			                                   name="impressum_manager_press_content" <?= checked( "on", get_option( "impressum_manager_press_content" ), false ) ?>
 				<label
 					for="press_content"><b><?= __( "journalistisch-redaktionelle Inhalte", SLUG ) ?></b></label>
 			</th>
-		</tr>
-
-		<tr valign="top" id="press_content_textarea">
-			<td colspan="2">
+			<td id="press_content_textarea">
                         <textarea name="impressum_manager_responsible_persons"
                                   style="width: 340px; height: 225px;"><?= get_option( "impressum_manager_responsible_persons" ) ?></textarea><br>
 				<small><?= __( "Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die

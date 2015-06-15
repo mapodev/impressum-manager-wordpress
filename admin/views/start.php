@@ -39,7 +39,7 @@ Zu den Einstellungen <großer zwischenraum> schritt zurück <zwischenraum> näch
 		</div>
 		<form action="<?php Impressum_Manager_Admin::get_page_url() ?>" class="right">
 			<input type="hidden" name="page" value="<?= SLUG ?>">
-			<input type="hidden" name="view" value="config">
+			<input type="hidden" name="view" value="import-impressum">
 			<input type="hidden" name="skip_start" value="true">
 			<input type="hidden" name="tut_finished" value="true">
 			<input class="button button-primary" type="submit" value="<?= _e( 'Impressum einbinden' ) ?>">
