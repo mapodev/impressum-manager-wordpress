@@ -39,7 +39,7 @@ class Impressum_Manager {
 
 	public static function content_shortcode($atts)
 	{
-		$im = new ImpressumManager();
+		$im = new Impressum();
 		return $im->get_whole_impressum();
 	}
 

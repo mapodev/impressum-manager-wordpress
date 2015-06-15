@@ -34,8 +34,7 @@ define( POLICY_GOOGLE_PLUS, 'policy_google_plus' );
 define( POLICY_TWITTER, 'policy_twitter' );
 define( POLICY_END, 'policy_end' );
 
-class ImpressumManager {
-
+class Impressum {
 
 	private static $_format_contact;
 	private static $_format_contact_telephone;
@@ -171,7 +170,6 @@ class ImpressumManager {
 
 		return $result;
 	}
-
 
 	private function get_contact() {
 		$result = "";

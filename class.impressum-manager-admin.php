@@ -442,6 +442,8 @@ class Impressum_Manager_Admin
             include(plugin_dir_path(__FILE__) . "admin/views/start.php");
         } elseif (isset($_GET['view']) && $_GET['view'] == 'tutorial') {
             self::display_tutorial_page();
+        } elseif (isset($_GET['view']) && $_GET['view'] == 'import-impressum') {
+	        self::display_import_impressum_page();
         } elseif (isset($_GET['view']) && $_GET['view'] == 'config') {
             self::display_config_page();
         } else {
@@ -518,6 +520,10 @@ class Impressum_Manager_Admin
                 self::show();
         }
     }
+
+	private static function display_import_impressum_page(){
+		include(plugin_dir_path(__FILE__) . "admin/views/import-impressum.php");
+	}
 
     private static function display_config_page()
     {
