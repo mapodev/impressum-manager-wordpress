@@ -115,7 +115,7 @@ class Impressum {
 
 		$impressum .= self::$_plugin_by;
 
-		return $impressum;
+		return do_shortcode($impressum);
 	}
 
 	public function get_impressum() {

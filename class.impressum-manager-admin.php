@@ -277,8 +277,6 @@ class Impressum_Manager_Admin
             'value' => get_post_meta($post->ID, 'impressum_manager_image_credential', true)
         );
 
-        error_log(var_export($form_fields, true));
-
         return $form_fields;
     }
 

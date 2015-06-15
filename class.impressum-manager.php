@@ -160,8 +160,7 @@ class Impressum_Manager
 
             if(empty($result)) $result = "";
 
-            echo $result;
-            return "";
+            return $result;
         }
 
 		$im = new Impressum();
