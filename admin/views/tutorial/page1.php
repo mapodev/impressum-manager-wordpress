@@ -19,10 +19,9 @@
 
 		<tr valign="top">
 			<th scope="row"><b><?= __( "Art der Person", SLUG ) ?></b></th>
-
 			<td>
 				<fieldset>
-					<label title="test">
+					<label>
 						<input type="radio" id="person_1" name="impressum_manager_person"
 						       value="1" <?php
 						if ( get_option( "impressum_manager_person" ) == '1' ) {
@@ -31,8 +30,8 @@
 						?>>
 						<span>Privatperson</span>
 					</label>
-
-					<label title="test">
+					<br>
+					<label>
 						<input type="radio" id="person_2" name="impressum_manager_person"
 						       value="2" <?php
 						if ( get_option( "impressum_manager_person" ) == '2' ) {
@@ -48,7 +47,6 @@
 	<table class="form-table">
 		<tr valign="top" class="rechtsform">
 			<th scope="row" style="width: 300px"><b><?= __( "Rechtsform" ) ?></b></th>
-
 			<td>
 				<select name="impressum_manager_form_of_organization">
 					<?php
@@ -87,19 +85,19 @@
 				<fieldset>
 					<input type="text" style="width: 340px" name="impressum_manager_name_company"
 					       title="Company Name"
-					       value="<?= get_option( "impressum_manager_name_company" ) ?>"><br>
+					       value="<?= get_option( "impressum_manager_name_company" ) ?>">
+					<br>
 					<small id="full_name"><?= __( "Vollständiger Name", SLUG ) ?></small>
-
-
+					<br>
 					<input type="text" name="impressum_manager_address" title="Address" style="width: 340px"
-					       value="<?= get_option( "impressum_manager_address" ) ?>"><br>
+					       value="<?= get_option( "impressum_manager_address" ) ?>">
+					<br>
 					<small><?= __( "Straße & Hausnummer", SLUG ) ?></small>
-
-
+					<br>
 					<input type="text" name="impressum_manager_address_extra" title="Address Extra"
 					       style="width: 340px" value="<?= get_option( "impressum_manager_address_extra" ) ?>"><br>
 					<small><?= __( "Adresszusatz", SLUG ) ?></small>
-
+					<br>
 					<table>
 						<tr >
 							<td style="padding: 0;"><input type="text" name="impressum_manager_place"
@@ -114,7 +112,6 @@
 							</td>
 						</tr>
 					</table>
-
 
 					<select name="impressum_manager_country" style="width: 340px">
 						<option value="no_land_choosen"><?= __( "Wähle dein Land ..." ) ?></option>
@@ -140,35 +137,29 @@
 			</td>
 		</tr>
 		<tr>
-			<th colspan="2">
+			<th >
 				<b><?= __( "Telefonnummer (inkl. Vorwahl)", SLUG ) ?></b>
 			</th>
-		</tr>
-		<tr>
-			<td colspan="2">
+			<td >
 				<input type="text" name="impressum_manager_phone" title="Phone Number"
 				       style="width: 340px"
 				       value="<?= get_option( "impressum_manager_phone" ) ?>">
 			</td>
 		</tr>
 		<tr>
-			<th colspan="2">
+			<th>
 				<b><?= __( "Faxnummer (optional)", SLUG ) ?></b>
 			</th>
-		</tr>
-		<tr>
-			<td colspan="2">
+			<td>
 				<input type="text" name="impressum_manager_fax" title="Fax Number" style="width: 340px"
 				       value="<?= get_option( "impressum_manager_fax" ) ?>">
 			</td>
 		</tr>
 		<tr>
-			<th colspan="2">
+			<th>
 				<b><?= __( "E-Mail Adresse", SLUG ) ?></b>
 			</th>
-		</tr>
-		<tr>
-			<td colspan="2">
+			<td>
 				<input type="text" name="impressum_manager_email" title="E-Mail Address"
 				       style="width: 340px"
 				       value="<?= get_option( "impressum_manager_email" ) ?>">
