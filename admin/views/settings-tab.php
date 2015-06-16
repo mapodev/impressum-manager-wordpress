@@ -307,7 +307,16 @@ if ($person == 1) {
 				</select>
 			</td>
 		</tr>
-
+		<tr valign="top" <?= $cssDef ?>>
+			<th scope="row" colspan="2"><b><?= __("Registergericht", SLUG) ?></b></th>
+		</tr>
+		<tr valign="top" <?= $cssDef ?>>
+			<td colspan="2">
+				<input type="text" name="impressum_manager_register_court" title="Registergericht"
+				       style="width: 340px"
+				       value="<?= get_option("impressum_manager_register_court") ?>">
+			</td>
+		</tr>
 		<tr valign="top" <?= $cssDef ?>>
 			<th scope="row" colspan="2"><b><?= __("Registernummer", SLUG) ?></b></th>
 		</tr>
@@ -355,6 +364,13 @@ if ($person == 1) {
 				<input type="text" name="impressum_manager_chamber" title="Chamber"
 				       style="width: 340px" value="<?= get_option("impressum_manager_chamber") ?>"><br>
 				<small><?= __("Kammer, der Sie angehören", SLUG) ?></small>
+			</td>
+		</tr>
+		<tr valign="top" class="hide_regulated_profession">
+			<td colspan="2">
+				<input type="text" name="impressum_manager_rules_link" title="Ruleslink"
+				       style="width: 340px" value="<?= get_option("impressum_manager_rules_link") ?>"><br>
+				<small><?= __("URL zu gesetzl. Regelungen", SLUG) ?></small>
 			</td>
 		</tr>
 		<tr valign="top">

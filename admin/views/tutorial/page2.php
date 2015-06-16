@@ -142,11 +142,6 @@ if ( $person == 1 ) {
 				       value="<?= get_option( "impressum_manager_state_rules" ) ?>"><br>
 				<small><?= __( "Berfusrechtliche Regelungen (Bezeichnung)", SLUG ) ?></small>
 				<br>
-				<input type="text" name="impressum_manager_state_rules" title="State rules"
-				       style="width: 340px"
-				       value="<?= get_option( "impressum_manager_state_rules" ) ?>"><br>
-				<small><?= __( "Berfusrechtliche Regelungen (Bezeichnung)", SLUG ) ?></small>
-				<br>
 				<input type="text" name="impressum_manager_chamber" title="Chamber"
 				       style="width: 340px" value="<?= get_option( "impressum_manager_chamber" ) ?>"><br>
 				<small><?= __( "Kammer, der Sie angehören", SLUG ) ?></small>

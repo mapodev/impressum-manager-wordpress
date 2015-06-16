@@ -607,14 +607,23 @@ class Impressum_Manager_Admin
         register_setting("impressum-manager-settings-group", "impressum_manager_authorized_person");
         register_setting("impressum-manager-settings-group", "impressum_manager_vat");
         register_setting("impressum-manager-settings-group", "impressum_manager_register");
+	    register_setting("impressum-manager-settings-group", "impressum_manager_register_court");
         register_setting("impressum-manager-settings-group", "impressum_manager_registenr");
+
         register_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession");
         register_setting("impressum-manager-settings-group", "impressum_manager_state");
         register_setting("impressum-manager-settings-group", "impressum_manager_state_rules");
         register_setting("impressum-manager-settings-group", "impressum_manager_chamber");
-        register_setting("impressum-manager-settings-group", "impressum_manager_image_source");
+	    register_setting("impressum-manager-settings-group", "impressum_manager_rules_link");
+
+
+	    register_setting("impressum-manager-settings-group", "impressum_manager_image_source");
         register_setting("impressum-manager-settings-group", "impressum_manager_responsible_chamber");
+
+
         register_setting("impressum-manager-settings-group", "impressum_manager_responsible_persons");
+
+
         register_setting("impressum-manager-settings-group", "impressum_manager_press_content");
         register_setting("impressum-manager-settings-group", "impressum_manager_allowness");
         register_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession_checked");

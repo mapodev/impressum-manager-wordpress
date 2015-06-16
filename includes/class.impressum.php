@@ -91,16 +91,34 @@ class Impressum {
 	public function get_whole_impressum() {
 		$impressum = "";
 
-		$impressum = $this->get_address();
+		$impressum .= "<h2>Angaben gemäß § 5 TMG:</h2>";
 
-		$impressum .= $this->get_contact();
+		$impressum .= $this->get_address();
 
 		$impressum .= $this->get_authorized_person();
+
+		$impressum .= $this->get_contact();
 
 		$impressum .= $this->get_register();
 
 		$impressum .= $this->get_vat();
 
+		$impressum .= $this->get_regulatory_authority();
+
+		/*
+Angaben zur Berufshaftpflichtversicherung:
+
+Name und Sitz der Gesellschaft:
+
+Beispiel Versicherung AG
+Musterweg 10
+90210 Musterstadt
+
+Geltungsraum der Versicherung: Deutschland
+		 */
+
+
+		// <<<<<<<<<<<<ab hier weiter durchgucken>>>>>>>>>>>>>>
 		$impressum .= $this->get_responsible_person();
 
 		$impressum .= $this->get_credits();
@@ -115,37 +133,17 @@ class Impressum {
 
 		$impressum .= self::$_plugin_by;
 
-		return do_shortcode($impressum);
+		return do_shortcode( $impressum );
 	}
 
 	public function get_impressum() {
 		return self::get_whole_impressum();
 	}
 
-	/*
-	public function get_contact() {
-		$result = "";
-
-		$result = $this->get_address();
-
-		$result .= $this->contact();
-
-		return $result;
-	}
-
-	public function get_disclaimer() {
-		$result = "";
-
-		return $result;
-	}
-
-	public function get_privacy_policy() {
-
-	}
-	*/
-
 	private function get_address() {
-		$result        = "";
+
+		$result = "";
+
 		$name          = get_option( "impressum_manager_name_company" );
 		$address       = get_option( "impressum_manager_address" );
 		$address_extra = get_option( "impressum_manager_address_extra" );
@@ -162,38 +160,54 @@ class Impressum {
 			$result .= $address_extra . "<br>";
 		}
 		if ( ! empty( $zip ) ) {
-			$result .= $zip . "<br>";
+			$result .= $zip . " ";
 		}
 		if ( ! empty( $place ) ) {
-			$result .= $place . "<br>";
+			$result .= $place;
+		}
+
+		if ( strlen( $result ) > 0 ) {
+			$result = "<p>" . $result . "</p>";
 		}
 
 		return $result;
 	}
 
 	private function get_contact() {
-		$result = "";
+
+		$result    = "";
 		$telephone = get_option( "impressum_manager_phone" );
 		$fax       = get_option( "impressum_manager_fax" );
 		$email     = get_option( "impressum_manager_email" );
 
 		if ( ! empty( $telephone ) ) {
-			$result .= str_replace( "%s", $telephone, Impressum_Manager_Admin::get_db_content( ADDRESS_TELEPHONE ) ) . "<br>";
+			$result .= "<tr><td>Telefon: </td><td>$telephone</td></tr>";
 		}
 		if ( ! empty( $fax ) ) {
-			$result .= str_replace( "%s", $fax, Impressum_Manager_Admin::get_db_content( ADDRESS_TELEFAX ) ) . "<br>";
+			$result .= "<tr><td>Telefax: </td><td>$fax</td></tr>";
 		}
 
 		if ( ! empty( $email ) && get_option( "impressum_manager_show_email_as_image" ) == "on" ) {
-			$email = sprintf( "<img src='" . plugin_dir_url( __FILE__ ) . "../includes/email-as-image.php?text=" . $email . "'>" );
-		}
-
-		if ( ! empty( $email ) ) {
-			$result .= str_replace( "%s", $email, Impressum_Manager_Admin::get_db_content( ADDRESS_EMAIL ) ) . "<br>";
+			$result .= "<tr><td>E-Mail: </td><td>" . sprintf( "<img src='" . plugin_dir_url( __FILE__ ) . "../includes/email-as-image.php?text=" . $email . "'>" ) . "</td></tr>";
+		} elseif ( ! empty( $email ) ) {
+			$result .= "<tr><td>E-Mail: </td><td>$email</td></tr>";
 		}
 
 		if ( strlen( $result ) > 0 ) {
-			$result = Impressum_Manager_Admin::get_db_content( ADDRESS_HEADER ) . Impressum_Manager_Admin::get_db_content( ADRESS_CONTACT ) . $result;
+			$result .= "<h2>Kontakt:</h2>" . "<table>" . $result . "</table>";
+		}
+
+		return $result;
+	}
+
+	private function get_authorized_person() {
+
+		$result = "";
+
+		$authorized_person = nl2br( get_option( "impressum_manager_authorized_person" ) );
+
+		if ( ! empty( $authorized_person ) ) {
+			$result .= "<h2>Vertreten durch:</h2>" . "<p>" . $authorized_person . "</p>";
 		}
 
 		return $result;
@@ -201,9 +215,9 @@ class Impressum {
 
 	private function get_register() {
 
-		$register   = get_option( "impressum_manager_register" );
-		$registernr = get_option( "impressum_manager_registenr" );
-		$chamber    = get_option( "impressum_manager_chamber" );
+		$register       = get_option( "impressum_manager_register" );
+		$register_court = get_option( "impressum_manager_register_court" );
+		$registernr     = get_option( "impressum_manager_registenr" );
 
 		switch ( $register ) {
 			case 1:
@@ -226,22 +240,24 @@ class Impressum {
 				break;
 		}
 
-		if ( ( empty( $register ) || $register == 1 ) && empty( $registernr ) && empty( $register_chamber ) ) {
+		if ( ( empty( $register ) || $register == 1 ) && empty( $registernr ) && empty( $register_court ) ) {
 			return "";
 		}
 
-		$result = self::$_format_register;
+		$result = "";
+		$result .= "<h2>Registereintrag:</h2>";
 		$result .= "<p>";
 
 		if ( ! empty( $register ) && $register != 1 ) {
-			$result .= sprintf( self::$_format_register_registered_in, $register_registered_in );
+			$result .= $register_registered_in . "<br>";
+		}
+		if ( ! empty( $register_court ) ) {
+			$result .= $register_court . "<br>";
 		}
 		if ( ! empty( $registernr ) ) {
-			$result .= sprintf( self::$_format_register_registernr, $registernr );
+			$result .= $registernr;
 		}
-		if ( ! empty( $register_chamber ) ) {
-			$result .= sprintf( self::$_format_register_chamber, $register_chamber );
-		}
+
 		$result .= "</p>";
 
 		return $result;
@@ -295,64 +311,90 @@ class Impressum {
 		return $result;
 	}
 
-	private function get_authorized_person() {
+	private function get_vat() {
+
 
 		$result = "";
 
-		$authorized_person = nl2br(get_option( "impressum_manager_authorized_person" ));
+		$vat = get_option( "impressum_manager_vat" );
 
-		if(!empty($authorized_person))
-		{
-			$result .= Impressum_Manager_Admin::get_db_content( REPRESENTED_BY ) . $authorized_person . "<br>";
+		if ( ! empty( $vat ) ) {
+			$result .= "<h2>Umsatzsteuer-ID:</h2>" . "<p>Umsatzsteuer-Identifikationsnummer gemäß §27 a Umsatzsteuergesetz:<br />" . $vat . "</p>";
 		}
 
 		return $result;
 	}
 
-	// journalistics
+	private function get_regulatory_authority() {
+
+		/*
+		 <h2>Aufsichtsbehörde:</h2>
+		<p>Landratsamt Musterstadt</p>
+		<p>Berufsbezeichnung: gesetzl. Berufsbezeichnung:<br />
+		Zuständige Kammer: Kammer:<br />
+		Verliehen durch: Land:<br />
+		Es gelten folgende berufsrechtliche Regelungen: Regelungen:<br />
+        Regelungen einsehbar unter: <a href="http://www.link.com" target="_blank" title="http://www.link.com">http://www.link.com</a></p>
+		 */
+
+		$result = "";
+
+		$profession = get_option( "impressum_manager_regulated_profession" );
+		$state      = get_option( "impressum_manager_state" );
+		$chamber    = get_option( "impressum_manager_chamber" );
+		$rules      = get_option( "impressum_manager_state_rules" );
+		$rules_link = get_option( "impressum_manager_rules_link" );
+
+		if ( strlen( get_option( "impressum_manager_regulated_profession_checked" ) ) > 0 ) {
+
+			$result .= "<h2>Aufsichtsbehörde:</h2>";
+
+			$result .= "<p>Landratsamt Musterstadt <<< fehlt!!!!!!!!!!!!!!!!!!</p>";
+
+			$result .= "<p>";
+
+			if ( ! empty( $profession ) ) {
+				$result .= __( "Berufsbezeichnung", SLUG ) . ": " . $profession . "<br>";
+			}
+			if ( ! empty( $chamber ) ) {
+				$result .= __( "Zuständige Kammer", SLUG ) . ": " . $chamber . "<br>";
+			}
+			if ( ! empty( $state ) ) {
+				$result .= __( "Verliehen durch", SLUG ) . ": " . $state . "<br>";
+			}
+			if ( ! empty( $rules ) ) {
+				$result .= __( "Es gelten folgende berufsrechtliche Regelungen", SLUG ) . ":" . $rules . "<br>";
+			}
+			if ( ! empty( $rules_link ) ) {
+				if ( ! preg_match( "~^(?:f|ht)tps?://~i", $rules_link ) ) {
+					$rules_link = "http://" . $rules_link;
+				}
+				$result .= __( "Regelungen einsehbar unter", SLUG ) . ": " . "<a href='" . $rules_link . "'  target='_blank'>" . $rules_link . "</a>" . "<br>";
+			}
+
+			$result .= "</p>";
+		}
+
+		return $result;
+	}
+
+	// Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:#
+	// journalistisch-redaktionelle Inhalte
 	private function get_responsible_person() {
 
 		$result = "";
 
-		$responsible_person = nl2br(get_option( "impressum_manager_responsible_persons" ));
+		// TODO:
 
-		if(!empty($responsible_person))
-		{
-			$result .= Impressum_Manager_Admin::get_db_content( RESPONSIBLE_PERSON ) .$responsible_person . "<br>";
+		$responsible_persons = nl2br( get_option( "impressum_manager_responsible_persons" ) );
+
+		if ( ! empty( $responsible_persons ) ) {
+			$result .= "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: <br>" . $responsible_persons . "<br>";
 		}
 
 		return $result;
 	}
 
-	private function get_vat() {
-
-		$vat        = get_option( "impressum_manager_vat" );
-		$profession = get_option( "impressum_manager_regulated_profession" );
-		$state      = get_option( "impressum_manager_state" );
-		$rules      = get_option( "impressum_manager_state_rules" );
-		$chamber    = get_option( "impressum_manager_chamber" );
-
-		$result = "";
-		if ( ! empty( $vat ) ) {
-			$result .= sprintf( self::$_format_vat, $vat );
-		}
-		if ( strlen( get_option( "impressum_manager_regulated_profession_checked" ) ) > 0 ) {
-			if ( ! empty( $profession ) ) {
-				$result .= __( "Berufsbezeichnung:", SLUG ) . " " . $profession . "<br>";
-			}
-			if ( ! empty( $chamber ) ) {
-				$result .= __( "Zuständige Kammer:", SLUG ) . " " . $chamber . "<br>";
-			}
-			if ( ! empty( $state ) ) {
-				$result .= __( "Verliehen durch:", SLUG ) . " " . $state . "<br>";
-			}
-			if ( ! empty( $rules ) ) {
-				$result .= __( "Es gelten folgende berufsrechtliche Regelungen:", SLUG ) . " " . $rules . "<br>";
-			}
-		}
-
-		return $result;
-	}
 
 	private function get_disclaimer() {
 		$result = "";
