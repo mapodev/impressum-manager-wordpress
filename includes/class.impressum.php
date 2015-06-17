@@ -37,54 +37,12 @@ define(POLICY_END, 'policy_end');
 class Impressum
 {
 
-    private static $_format_contact;
-    private static $_format_contact_telephone;
-    private static $_format_contact_telefax;
-    private static $_format_contact_email;
-    private static $_format_register;
-    private static $_format_register_registered_in;
-    private static $_format_register_registernr;
-    private static $_format_register_chamber;
-    private static $_format_vat;
-    private static $_format_office;
-    private static $_format_image_soruce;
-    private static $_format_journalistic_content;
-    private static $_disclaimer;
-    private static $_privacy_policy_head;
-    private static $_privacy_policy_general;
-    private static $_privacy_policy_facebook;
-    private static $_privacy_policy_analytics;
-    private static $_privacy_policy_adsense;
-    private static $_privacy_policy_plus;
-    private static $_privacy_policy_twitter;
-    private static $_privacy_policy_end;
+
     private static $_source;
     private static $_plugin_by;
 
     function __construct()
     {
-
-        self::$_format_contact = "";
-        self::$_format_contact_telephone = "";
-        self::$_format_contact_telefax = "";
-        self::$_format_contact_email = "";
-        self::$_format_register = "";
-        self::$_format_register_registered_in = "";
-        self::$_format_register_registernr = "";
-        self::$_format_register_chamber = "";
-        self::$_format_vat = "";
-        self::$_format_office = "";
-        self::$_format_image_soruce = "";
-        self::$_format_journalistic_content = "";
-        self::$_disclaimer = "";
-        self::$_privacy_policy_head = "";
-        self::$_privacy_policy_general = "";
-        self::$_privacy_policy_facebook = "";
-        self::$_privacy_policy_analytics = "";
-        self::$_privacy_policy_adsense = "";
-        self::$_privacy_policy_plus = "";
-        self::$_privacy_policy_twitter = "";
-        self::$_privacy_policy_end = "";
 
         self::$_source = __("<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG);
         self::$_plugin_by = __("<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG);
@@ -93,8 +51,6 @@ class Impressum
     public function get_whole_impressum()
     {
         $impressum = "";
-
-        $impressum .= "<h2>Angaben gemäß § 5 TMG:</h2>";
 
         $impressum .= $this->get_address();
 
@@ -106,7 +62,6 @@ class Impressum
 
         $impressum .= $this->get_vat();
 
-        // noch nicht fertig?
         $impressum .= $this->get_regulatory_authority();
 
         /*
@@ -121,26 +76,20 @@ Musterweg 10
 Geltungsraum der Versicherung: Deutschland
          */
 
-
-        // <<<<<<<<<<<<ab hier weiter durchgucken>>>>>>>>>>>>>>
-
         $impressum .= $this->get_responsible_person();
 
-        // DONE
         $impressum .= $this->get_credits();
 
-        // anscheinend schon gemacht? übersehe ich was?
         $impressum .= $this->get_disclaimer();
 
-        // anscheinend schon gemacht? übersehe ich was?
         $impressum .= $this->get_privacy_policy();
 
-        // anscheinend schon gemacht? übersehe ich was?
         $impressum .= $this->get_extra_field();
 
-        $impressum .= self::$_source;
+	    if(!empty($impressum)){
 
-        $impressum .= self::$_plugin_by;
+		    $impressum = "<h2>Angaben gemäß § 5 TMG:</h2>" . $impressum . self::$_source . self::$_plugin_by;
+	    }
 
         return do_shortcode($impressum);
     }
@@ -277,61 +226,6 @@ Geltungsraum der Versicherung: Deutschland
         return $result;
     }
 
-    private function get_credits()
-    {
-
-        $image_source = get_option("impressum_manager_image_source");
-
-        $creds = array();
-        $i = 0;
-
-        $result = "";
-
-        $post_types = get_post_types('', 'names');
-
-        foreach ($post_types as $post_type) {
-            $args = array(
-                'post_type' => $post_type,
-                'numberposts' => -1,
-                'post_status' => null
-            );
-
-            $posts = get_posts($args);
-
-            foreach ($posts as $post) {
-                $args = array(
-                    'post_type' => 'attachment',
-                    'numberposts' => -1,
-                    'post_status' => null,
-                    'post_parent' => $post->ID
-                );
-
-                $attachments = get_posts($args);
-                if ($attachments) {
-                    foreach ($attachments as $attachment) {
-                        $creds[$i++] = trim(strip_tags(get_post_meta($attachment->ID, 'impressum_manager_image_credential', true)));
-                    }
-                }
-            }
-        }
-
-        $result = self::$_format_image_soruce;
-        $creds = array_unique($creds);
-        foreach ($creds as $credit) {
-            $result .= $credit . "<br>";
-        }
-
-        if ($image_source !== false) {
-            $result .= nl2br($image_source);
-        }
-
-        if (!empty ($result)) {
-            $result = __("<h2>Bildquellen</h2>", SLUG) . " " . $result;
-        }
-
-        return $result;
-    }
-
     private function get_vat()
     {
 
@@ -350,16 +244,6 @@ Geltungsraum der Versicherung: Deutschland
     private function get_regulatory_authority()
     {
 
-        /*
-         <h2>Aufsichtsbehörde:</h2>
-        <p>Landratsamt Musterstadt</p>
-        <p>Berufsbezeichnung: gesetzl. Berufsbezeichnung:<br />
-        Zuständige Kammer: Kammer:<br />
-        Verliehen durch: Land:<br />
-        Es gelten folgende berufsrechtliche Regelungen: Regelungen:<br />
-        Regelungen einsehbar unter: <a href="http://www.link.com" target="_blank" title="http://www.link.com">http://www.link.com</a></p>
-         */
-
         $result = "";
 
         $profession = get_option("impressum_manager_regulated_profession");
@@ -372,7 +256,7 @@ Geltungsraum der Versicherung: Deutschland
 
             $result .= "<h2>Aufsichtsbehörde:</h2>";
 
-            $result .= "<p>Landratsamt Musterstadt <<< fehlt!!!!!!!!!!!!!!!!!!</p>";
+            $result .= "<p>Landratsamt Musterstadt <<< Behördliche Zulassung (Sofern Sie für die Ausübung Ihrer Tätigkeit einer behördlichen Zulassung bedürfen, so geben Sie zuständige Aufsichtsbehörde an!)</p>";
 
             $result .= "<p>";
 
@@ -386,7 +270,7 @@ Geltungsraum der Versicherung: Deutschland
                 $result .= __("Verliehen durch", SLUG) . ": " . $state . "<br>";
             }
             if (!empty($rules)) {
-                $result .= __("Es gelten folgende berufsrechtliche Regelungen", SLUG) . ":" . $rules . "<br>";
+                $result .= __("Es gelten folgende berufsrechtliche Regelungen", SLUG) . ": " . $rules . "<br>";
             }
             if (!empty($rules_link)) {
                 if (!preg_match("~^(?:f|ht)tps?://~i", $rules_link)) {
@@ -401,7 +285,6 @@ Geltungsraum der Versicherung: Deutschland
         return $result;
     }
 
-    // Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:#
     // journalistisch-redaktionelle Inhalte
     private function get_responsible_person()
     {
@@ -410,12 +293,65 @@ Geltungsraum der Versicherung: Deutschland
         $responsible_persons = nl2br(get_option("impressum_manager_responsible_persons"));
 
         if (!empty($responsible_persons)) {
-            $result = __("Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:", SLUG) . "<br>" . $responsible_persons . "<br>";
+            $result = __("<h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</h2>", SLUG) . $responsible_persons . "<br>";
         }
 
         return $result;
     }
 
+	private function get_credits()
+	{
+
+		$image_source = get_option("impressum_manager_image_source");
+
+		$creds = array();
+		$i = 0;
+
+		$result = "";
+
+		$post_types = get_post_types('', 'names');
+
+		foreach ($post_types as $post_type) {
+			$args = array(
+				'post_type' => $post_type,
+				'numberposts' => -1,
+				'post_status' => null
+			);
+
+			$posts = get_posts($args);
+
+			foreach ($posts as $post) {
+				$args = array(
+					'post_type' => 'attachment',
+					'numberposts' => -1,
+					'post_status' => null,
+					'post_parent' => $post->ID
+				);
+
+				$attachments = get_posts($args);
+				if ($attachments) {
+					foreach ($attachments as $attachment) {
+						$creds[$i++] = trim(strip_tags(get_post_meta($attachment->ID, 'impressum_manager_image_credential', true)));
+					}
+				}
+			}
+		}
+
+		$creds = array_unique($creds);
+		foreach ($creds as $credit) {
+			$result .= $credit . "<br>";
+		}
+
+		if ($image_source !== false) {
+			$result .= nl2br($image_source);
+		}
+
+		if (!empty ($result)) {
+			$result = __("<h2>Quellenangaben für die verwendeten Bilder und Grafiken:</h2>", SLUG) . $result;
+		}
+
+		return $result;
+	}
 
     private function get_disclaimer()
     {

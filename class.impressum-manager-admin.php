@@ -483,6 +483,7 @@ class Impressum_Manager_Admin
                     self::save_option("impressum_manager_vat", @$_POST["impressum_manager_vat"]);
                     self::save_option("impressum_manager_register", @$_POST["impressum_manager_register"]);
                     self::save_option("impressum_manager_registenr", @$_POST["impressum_manager_registenr"]);
+	                self::save_option("impressum_manager_register_court", @$_POST["impressum_manager_register_court"]);
                     self::save_option("impressum_manager_regulated_profession", @$_POST["impressum_manager_regulated_profession"]);
                     self::save_option("impressum_manager_state", @$_POST["impressum_manager_state"]);
                     self::save_option("impressum_manager_state_rules", @$_POST["impressum_manager_state_rules"]);
