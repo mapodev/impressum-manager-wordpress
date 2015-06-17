@@ -15,13 +15,6 @@
             triggerTab($("#settings-tab"), "settings-tab");
         }
 
-        // prevent jumping to bottom onLoad
-        if (location.hash) {
-            setTimeout(function () {
-                window.scrollTo(0, 0);
-            }, 1);
-        }
-
         function triggerTab(o, name) {
             $(".tab").hide();
             $(".nav-tab").removeClass("nav-tab-active");

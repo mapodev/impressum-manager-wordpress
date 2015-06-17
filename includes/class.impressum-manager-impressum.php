@@ -3,52 +3,41 @@
 defined('ABSPATH') or die('No script kiddies please!');
 
 
-define(ADDRESS_HEADER, 'address_header');
-define(ADRESS_CONTACT, 'address_contact');
-define(ADDRESS_TELEPHONE, 'address_telephone');
-define(ADDRESS_TELEFAX, 'address_telefax');
-define(ADDRESS_EMAIL, 'address_email');
-
-define(REGISTER_HEADER, 'register_header');
-define(REGISTER_ENTRY, 'register_entry');
-define(REGISTER_NUMBER, 'register_number');
-define(REGISTER_CHAMBER, 'register_chamber');
-
-define(VAT, 'vat');
-define(CONTROL_CHAMBER, 'control_chamber');
-define(IMAGE_SOURCES, 'image_sources');
-
+@define(ADDRESS_HEADER, 'address_header');
+@define(ADRESS_CONTACT, 'address_contact');
+@define(ADDRESS_TELEPHONE, 'address_telephone');
+@define(ADDRESS_TELEFAX, 'address_telefax');
+@define(ADDRESS_EMAIL, 'address_email');
+@define(REGISTER_HEADER, 'register_header');
+@define(REGISTER_ENTRY, 'register_entry');
+@define(REGISTER_NUMBER, 'register_number');
+@define(REGISTER_CHAMBER, 'register_chamber');
+@define(VAT, 'vat');
+@define(CONTROL_CHAMBER, 'control_chamber');
+@define(IMAGE_SOURCES, 'image_sources');
 // authorized persons
-define(REPRESENTED_BY, 'represented_by');
+@define(REPRESENTED_BY, 'represented_by');
 // TODO: typo responsible_person!
-define(RESPONSIBLE_PERSON, 'responsibile_person');
-
-define(DISCLAIMER, 'disclaimer');
-
-define(POLICY_HEADER, 'policy_header');
-define(POLICY_GENERAL, 'policy_general');
-define(POLICY_FACEBOOK, 'policy_facebook');
-define(POLICY_ANALYTICS, 'policy_analytics');
-define(POLICY_ADSENSE, 'policy_adsense');
-define(POLICY_GOOGLE_PLUS, 'policy_google_plus');
-define(POLICY_TWITTER, 'policy_twitter');
-define(POLICY_END, 'policy_end');
+@define(RESPONSIBLE_PERSON, 'responsibile_person');
+@define(DISCLAIMER, 'disclaimer');
+@define(POLICY_HEADER, 'policy_header');
+@define(POLICY_GENERAL, 'policy_general');
+@define(POLICY_FACEBOOK, 'policy_facebook');
+@define(POLICY_ANALYTICS, 'policy_analytics');
+@define(POLICY_ADSENSE, 'policy_adsense');
+@define(POLICY_GOOGLE_PLUS, 'policy_google_plus');
+@define(POLICY_TWITTER, 'policy_twitter');
+@define(POLICY_END, 'policy_end');
 
 class Impressum_Manager_Impressum
 {
 
 
-    public $_source;
-    public $_plugin_by;
-
-    function __construct()
+    public function get_impressum()
     {
         $_source = __("<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG);
         $_plugin_by = __("<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG);
-    }
 
-    public function get_impressum()
-    {
         $impressum = "";
 
         $impressum .= $this->get_address();
