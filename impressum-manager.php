@@ -16,7 +16,7 @@
  * Plugin Name:       Impressum Manager
  * Plugin URI:        http://www.plugin.com
  * Description:       Impressum Generator for your wordpress copy. Manages all points for creating an Impressum.
- * Version:           0.4.1
+ * Version:           0.5.0
  * Author:            Marcin Poholski, Christian Jäger
  * Author URI:        http://www.mapo-dev.com
  * License:           GPL-2.0+
@@ -29,7 +29,7 @@
 if (!defined('WPINC')) {
     die;
 }
-define('IMPRESSUM_MANAGER_VERSION', '0.4.2');
+define('IMPRESSUM_MANAGER_VERSION', '0.5.0');
 define('IMPRESSUM_MANAGER_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('IMPRESSUM_MANAGER_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SLUG', 'impressum-manager');
