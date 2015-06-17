@@ -13,9 +13,9 @@
 	}(jQuery));
 </script>
 
-
 <tr valign="top">
-	<th scope="row"><b><?= __( "Art der Person", SLUG ) ?></b></th>
+	<th scope="row"><b><?= __( "Art der Person", SLUG ) . " " ?>
+	</th>
 	<td>
 		<fieldset>
 			<label>
@@ -41,7 +41,7 @@
 	</td>
 </tr>
 <tr valign="top" class="rechtsform">
-	<th scope="row" style="width: 300px"><b><?= __( "Rechtsform" ) ?></b></th>
+	<th scope="row"><b><?= __( "Rechtsform" ) ?></b></th>
 	<td>
 		<select name="impressum_manager_form_of_organization">
 			<?php
@@ -78,37 +78,32 @@
 
 	<td>
 		<fieldset>
-			<input type="text" style="width: 340px" name="impressum_manager_name_company"
+			<input type="text" name="impressum_manager_name_company"
 			       title="Company Name"
 			       value="<?= get_option( "impressum_manager_name_company" ) ?>">
 			<br>
 			<small id="full_name"><?= __( "Vollständiger Name", SLUG ) ?></small>
 			<br>
-			<input type="text" name="impressum_manager_address" title="Address" style="width: 340px"
+			<input type="text" name="impressum_manager_address" title="Address"
 			       value="<?= get_option( "impressum_manager_address" ) ?>">
 			<br>
 			<small><?= __( "Straße & Hausnummer", SLUG ) ?></small>
 			<br>
 			<input type="text" name="impressum_manager_address_extra" title="Address Extra"
-			       style="width: 340px" value="<?= get_option( "impressum_manager_address_extra" ) ?>"><br>
+			       value="<?= get_option( "impressum_manager_address_extra" ) ?>"><br>
 			<small><?= __( "Adresszusatz", SLUG ) ?></small>
 			<br>
-			<table>
-				<tr >
-					<td style="padding: 0;"><input type="text" name="impressum_manager_place"
-					                               title="Place"
-					                               value="<?= get_option( "impressum_manager_place" ) ?>"><br>
-						<small><?= __( "Ort" ) ?></small>
-					</td>
-					<td style="padding: 0;"><input type="text" name="impressum_manager_zip"
-					                               title="ZIP Code"
-					                               value="<?= get_option( "impressum_manager_zip" ) ?>"><br>
-						<small><?= __( "PLZ" ) ?></small>
-					</td>
-				</tr>
-			</table>
-
-			<select name="impressum_manager_country" style="width: 340px">
+			<input type="text" name="impressum_manager_place"
+			       title="Place"
+			       value="<?= get_option( "impressum_manager_place" ) ?>"><br>
+			<small><?= __( "Ort" ) ?></small>
+			<br>
+			<input type="text" name="impressum_manager_zip"
+			       title="ZIP Code"
+			       value="<?= get_option( "impressum_manager_zip" ) ?>"><br>
+			<small><?= __( "PLZ" ) ?></small>
+			<br>
+			<select name="impressum_manager_country">
 				<option value="no_land_choosen"><?= __( "Wähle dein Land ..." ) ?></option>
 				<?php
 
@@ -132,12 +127,12 @@
 	</td>
 </tr>
 <tr>
-	<th >
+	<th>
 		<b><?= __( "Telefonnummer (inkl. Vorwahl)", SLUG ) ?></b>
 	</th>
-	<td >
+	<td>
 		<input type="text" name="impressum_manager_phone" title="Phone Number"
-		       style="width: 340px"
+
 		       value="<?= get_option( "impressum_manager_phone" ) ?>">
 	</td>
 </tr>
@@ -146,7 +141,7 @@
 		<b><?= __( "Faxnummer (optional)", SLUG ) ?></b>
 	</th>
 	<td>
-		<input type="text" name="impressum_manager_fax" title="Fax Number" style="width: 340px"
+		<input type="text" name="impressum_manager_fax" title="Fax Number"
 		       value="<?= get_option( "impressum_manager_fax" ) ?>">
 	</td>
 </tr>
@@ -156,7 +151,7 @@
 	</th>
 	<td>
 		<input type="text" name="impressum_manager_email" title="E-Mail Address"
-		       style="width: 340px"
+
 		       value="<?= get_option( "impressum_manager_email" ) ?>">
 	</td>
 </tr>

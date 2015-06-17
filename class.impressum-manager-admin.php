@@ -547,6 +547,15 @@ class Impressum_Manager_Admin
             <small>Version: <?= IMPRESSUM_MANAGER_VERSION ?></small>
             |
             <small><a href="javascript:void(0);" id="delete_options">Delete options</a></small>
+	        <form action="options-general.php">
+			        <input type="hidden" name="page"
+			               value="<?= SLUG ?>">
+			        <input type="hidden" name="view" value="tutorial"/>
+			        <input type="hidden" name="step" value="1"/>
+			        <input type="hidden" name="skip_start_temp" value="true">
+
+					        <input class="button" type="submit" value="<?= _e('Impressum konfigurieren') ?>">
+	        </form>
             <br><br>
             <?php
             if (!array_key_exists("setup", $_GET)) {

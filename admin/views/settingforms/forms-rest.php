@@ -49,7 +49,7 @@
 	</th>
 	<td>
                 <textarea name="impressum_manager_authorized_person"
-                          style="width: 340px; height: 225px;"><?= get_option( "impressum_manager_authorized_person" ) ?></textarea><br>
+                          ><?= get_option( "impressum_manager_authorized_person" ) ?></textarea><br>
 		<small><?= __( "Namen und Vornamen", SLUG ) ?></small>
 	</td>
 </tr>
@@ -57,7 +57,7 @@
 <tr valign="top">
 	<th scope="row"><b><?= __( "Umsatzsteuer ID", SLUG ) ?></b></th>
 	<td>
-		<input type="text" name="impressum_manager_vat" title="VAT" style="width: 340px"
+		<input type="text" name="impressum_manager_vat" title="VAT"
 		       value="<?= get_option( "impressum_manager_vat" ) ?>">
 	</td>
 </tr>
@@ -99,7 +99,7 @@
 	<th scope="row"><b><?= __( "Registergericht", SLUG ) ?></b></th>
 	<td>
 		<input type="text" name="impressum_manager_register_court" title="Registergericht"
-		       style="width: 340px"
+
 		       value="<?= get_option( "impressum_manager_register_court" ) ?>">
 	</td>
 </tr>
@@ -107,7 +107,7 @@
 	<th scope="row"><b><?= __( "Registernummer", SLUG ) ?></b></th>
 	<td>
 		<input type="text" name="impressum_manager_registenr" title="Registernummer"
-		       style="width: 340px"
+
 		       value="<?= get_option( "impressum_manager_registenr" ) ?>">
 	</td>
 </tr>
@@ -119,28 +119,35 @@
 			for="regulated_profession"><b><?= __( "Reglementierter Beruf", SLUG ) ?></b></label>
 	</th>
 	<td class="hide_regulated_profession">
-		<input type="text" name="impressum_manager_regulated_profession"
-		       title="Regulated profession"
-		       style="width: 340px"
-		       value="<?= get_option( "impressum_manager_regulated_profession" ) ?>"><br>
-		<small><?= __( "Gesetzliche Berufsbezeichnung", SLUG ) ?></small>
+		<fieldset>
+			<input type="text" name="impressum_manager_regulated_profession"
+			       title="Regulated profession"
 
-		<input type="text" name="impressum_manager_state" title="State"
-		       style="width: 340px" value="<?= get_option( "impressum_manager_state" ) ?>"><br>
-		<small><?= __( "Staat, in dem die Berufsbezeichnung verliehen wurde", SLUG ) ?></small>
+			       value="<?= get_option( "impressum_manager_regulated_profession" ) ?>">
+			<br>
+			<small><?= __( "Gesetzliche Berufsbezeichnung", SLUG ) ?></small>
+			<br>
+			<input type="text" name="impressum_manager_state" title="State"
+			       value="<?= get_option( "impressum_manager_state" ) ?>">
+			<br>
+			<small><?= __( "Staat, in dem die Berufsbezeichnung verliehen wurde", SLUG ) ?></small>
+			<br>
+			<input type="text" name="impressum_manager_state_rules" title="State rules"
 
-		<input type="text" name="impressum_manager_state_rules" title="State rules"
-		       style="width: 340px"
-		       value="<?= get_option( "impressum_manager_state_rules" ) ?>"><br>
-		<small><?= __( "Berfusrechtliche Regelungen (Bezeichnung)", SLUG ) ?></small>
-
-		<input type="text" name="impressum_manager_chamber" title="Chamber"
-		       style="width: 340px" value="<?= get_option( "impressum_manager_chamber" ) ?>"><br>
-		<small><?= __( "Kammer, der Sie angehören", SLUG ) ?></small>
-
-		<input type="text" name="impressum_manager_rules_link" title="Ruleslink"
-		       style="width: 340px" value="<?= get_option( "impressum_manager_rules_link" ) ?>"><br>
-		<small><?= __( "URL zu gesetzl. Regelungen", SLUG ) ?></small>
+			       value="<?= get_option( "impressum_manager_state_rules" ) ?>">
+			<br>
+			<small><?= __( "Berfusrechtliche Regelungen (Bezeichnung)", SLUG ) ?></small>
+			<br>
+			<input type="text" name="impressum_manager_chamber" title="Chamber"
+			       value="<?= get_option( "impressum_manager_chamber" ) ?>">
+			<br>
+			<small><?= __( "Kammer, der Sie angehören", SLUG ) ?></small>
+			<br>
+			<input type="text" name="impressum_manager_rules_link" title="Ruleslink"
+			       value="<?= get_option( "impressum_manager_rules_link" ) ?>">
+			<br>
+			<small><?= __( "URL zu gesetzl. Regelungen", SLUG ) ?></small>
+		</fieldset>
 	</td>
 </tr>
 
@@ -151,7 +158,7 @@
 
 	<td id="allowness_textarea">
                         <textarea name="impressum_manager_responsible_chamber"
-                                  style="width: 340px; height: 225px;"><?= get_option( "impressum_manager_responsible_chamber" ) ?></textarea><br>
+                                  ><?= get_option( "impressum_manager_responsible_chamber" ) ?></textarea><br>
 		<small><?= __( "Zuständige Aufsichtsbehörde", SLUG ) ?></small>
 	</td>
 </tr>
@@ -161,7 +168,7 @@
 	<th scope="row"><b><?= __( "Bildquellen", SLUG ) ?></b></th>
 	<td>
                         <textarea name="impressum_manager_image_source"
-                                  style="width: 340px; height: 225px;"><?= get_option( "impressum_manager_image_source" ) ?></textarea><br>
+                                  ><?= get_option( "impressum_manager_image_source" ) ?></textarea><br>
 		<small><?= __( "z.B. Max Mustermann, http://www.fotolia.com", SLUG ) ?></small>
 	</td>
 </tr>
@@ -172,9 +179,9 @@
 		<label
 			for="press_content"><b><?= __( "journalistisch-redaktionelle Inhalte", SLUG ) ?></b></label>
 	</th>
-	<td  id="press_content_textarea">
+	<td id="press_content_textarea">
                         <textarea name="impressum_manager_responsible_persons"
-                                  style="width: 340px; height: 225px;"><?= get_option( "impressum_manager_responsible_persons" ) ?></textarea><br>
+                                  ><?= get_option( "impressum_manager_responsible_persons" ) ?></textarea><br>
 		<small><?= __( "Vor-, Nachname inkl. Anschrift angeben. Bei mehreren Verantwortlichen die
                                         Verantwortungen entsprechend mit angeben.", SLUG ) ?>
 		</small>

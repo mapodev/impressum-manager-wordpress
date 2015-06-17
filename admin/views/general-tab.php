@@ -7,26 +7,6 @@ if (@$_GET['tut_finished'] == true && array_key_exists("submit", $_REQUEST)) {
 }
 
 ?>
-
-<form action="options-general.php">
-	<table class="form-table">
-		<input type="hidden" name="page"
-		       value="<?= SLUG ?>">
-		<input type="hidden" name="view" value="tutorial"/>
-		<input type="hidden" name="step" value="1"/>
-		<input type="hidden" name="skip_start_temp" value="true">
-		<tbody>
-		<tr>
-			<th>
-				<?= __("Impressum konfigurieren") ?>
-			</th>
-			<td>
-				<input class="button" type="submit" value="<?= _e('Impressum konfigurieren') ?>">
-			</td>
-		</tr>
-		</tbody>
-	</table>
-</form>
 <form method="post" action="options.php">
 	<?php settings_fields('impressum-manager-policy_group'); ?>
 	<?php do_settings_sections('impressum-manager-policy_group'); ?>
