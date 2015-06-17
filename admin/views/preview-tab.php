@@ -4,7 +4,5 @@ if(!shortcode_exists('impressum_manager')) {
     add_shortcode("impressum_manager", array('Impressum_Manager', 'content_shortcode'));
 }
 
-$im = new Impressum();
-echo $im->get_whole_impressum();
-
+echo do_shortcode('[impressum_manager]')
 ?>

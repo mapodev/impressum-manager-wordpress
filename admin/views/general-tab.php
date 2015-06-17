@@ -12,8 +12,8 @@ if (@$_GET['tut_finished'] == true && array_key_exists("submit", $_REQUEST)) {
 	<?php do_settings_sections('impressum-manager-policy_group'); ?>
 	<table class="form-table">
 		<tbody>
-		<?php include(plugin_dir_path(__FILE__) . "settingforms/forms-impressum-config.php"); ?>
-		<?php include(plugin_dir_path(__FILE__) . "settingforms/forms-disclaimer.php"); ?>
+		<?php Form_Factory::get_impressum_config() ?>
+		<?php Form_Factory::get_disclaimer(); ?>
 		</tbody>
 	</table>
 	<?php submit_button(__("Impressum aktualisieren")); ?>

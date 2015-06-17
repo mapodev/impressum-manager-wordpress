@@ -40,8 +40,9 @@ register_deactivation_hook(__FILE__, array('Impressum_Manager', 'plugin_deactiva
 register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "impressum_manager_goodybye");
 
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'class.impressum-manager.php');
+require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'admin/views/class.form-factory.php');
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/class.impressum.php');
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'wrapper.php');
+require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/class.impressum-editor.php');
 
 add_action('init', array('Impressum_Manager', 'init'));
 

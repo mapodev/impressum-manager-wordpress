@@ -163,8 +163,7 @@ class Impressum_Manager
             return $result;
         }
 
-		$im = new Impressum();
-		return $im->get_whole_impressum();
+		return Impressum_Editor::get_impressum();
 	}
 
     // Function to hook to "the_posts" (just edit the two variables)

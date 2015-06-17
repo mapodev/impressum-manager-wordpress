@@ -1,7 +1,7 @@
 <form action="<?= Impressum_Manager_Admin::get_page_url() ?>&view=tutorial&skip_start_temp=true&step=4" method="post">
 	<table class="form-table">
 		<tbody>
-		<?php include(plugin_dir_path(__FILE__) . "../settingforms/forms-disclaimer.php"); ?>
+		<?php Form_Factory::get_disclaimer() ?>
 		</tbody>
 	</table>
 	<table>

@@ -471,6 +471,7 @@ class Impressum_Manager_Admin
                     self::save_option("impressum_manager_fax", @$_POST["impressum_manager_fax"]);
                     self::save_option("impressum_manager_email", @$_POST["impressum_manager_email"]);
                     self::save_option("impressum_manager_phone", @$_POST["impressum_manager_phone"]);
+	                self::save_option("impressum_manager_authorized_person", @$_POST["impressum_manager_authorized_person"]);
                 }
 
                 include(plugin_dir_path(__FILE__) . "admin/views/tutorial/page2.php");
@@ -479,21 +480,33 @@ class Impressum_Manager_Admin
             case 3:
 
                 if (array_key_exists("submit", $_REQUEST)) {
-                    self::save_option("impressum_manager_authorized_person", @$_POST["impressum_manager_authorized_person"]);
                     self::save_option("impressum_manager_vat", @$_POST["impressum_manager_vat"]);
+
                     self::save_option("impressum_manager_register", @$_POST["impressum_manager_register"]);
                     self::save_option("impressum_manager_registenr", @$_POST["impressum_manager_registenr"]);
 	                self::save_option("impressum_manager_register_court", @$_POST["impressum_manager_register_court"]);
+
+	                self::save_option("impressum_manager_regulated_profession_checked", @$_POST['impressum_manager_regulated_profession_checked']);
                     self::save_option("impressum_manager_regulated_profession", @$_POST["impressum_manager_regulated_profession"]);
                     self::save_option("impressum_manager_state", @$_POST["impressum_manager_state"]);
                     self::save_option("impressum_manager_state_rules", @$_POST["impressum_manager_state_rules"]);
                     self::save_option("impressum_manager_chamber", @$_POST["impressum_manager_chamber"]);
+	                self::save_option("impressum_manager_rules_link", @$_POST["impressum_manager_rules_link"]);
+
+	                self::save_option("impressum_manager_responsible_persons", @$_POST["impressum_manager_responsible_persons"]);
+
                     self::save_option("impressum_manager_image_source", @$_POST["impressum_manager_image_source"]);
-                    self::save_option("impressum_manager_responsible_chamber", @$_POST["impressum_manager_responsible_chamber"]);
-                    self::save_option("impressum_manager_responsible_persons", @$_POST["impressum_manager_responsible_persons"]);
+
+
                     self::save_option("impressum_manager_press_content", @$_POST["impressum_manager_press_content"]);
-                    self::save_option("impressum_manager_allowness", @$_POST["impressum_manager_allowness"]);
-                    self::save_option("impressum_manager_regulated_profession_checked", @$_POST['impressum_manager_regulated_profession_checked']);
+
+	                self::save_option("impressum_manager_professional_liability_insurance_checked", @$_POST["impressum_manager_professional_liability_insurance_checked"]);
+	                self::save_option("impressum_manager_name_and_adress", @$_POST["impressum_manager_name_and_adress"]);
+	                self::save_option("impressum_manager_space_of_appliance", @$_POST['impressum_manager_space_of_appliance']);
+
+	                self::save_option("impressum_manager_surveillance_authority", @$_POST['impressum_manager_surveillance_authority']);
+
+
                 }
 
                 include(plugin_dir_path(__FILE__) . "admin/views/tutorial/page3.php");
@@ -620,23 +633,25 @@ class Impressum_Manager_Admin
 	    register_setting("impressum-manager-settings-group", "impressum_manager_register_court");
         register_setting("impressum-manager-settings-group", "impressum_manager_registenr");
 
+	    register_setting("impressum-manager-settings-group", "impressum_manager_surveillance_authority");
+
+	    register_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession_checked");
         register_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession");
         register_setting("impressum-manager-settings-group", "impressum_manager_state");
         register_setting("impressum-manager-settings-group", "impressum_manager_state_rules");
         register_setting("impressum-manager-settings-group", "impressum_manager_chamber");
 	    register_setting("impressum-manager-settings-group", "impressum_manager_rules_link");
 
-
 	    register_setting("impressum-manager-settings-group", "impressum_manager_image_source");
-        register_setting("impressum-manager-settings-group", "impressum_manager_responsible_chamber");
-
 
         register_setting("impressum-manager-settings-group", "impressum_manager_responsible_persons");
 
-
         register_setting("impressum-manager-settings-group", "impressum_manager_press_content");
-        register_setting("impressum-manager-settings-group", "impressum_manager_allowness");
-        register_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession_checked");
+
+	    register_setting("impressum-manager-settings-group", "impressum_manager_professional_liability_insurance_checked");
+	    register_setting("impressum-manager-settings-group", "impressum_manager_name_and_adress");
+	    register_setting("impressum-manager-settings-group", "impressum_manager_space_of_appliance");
+
     }
 
     public static function save_option($name, $val)
