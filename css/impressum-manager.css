@@ -152,10 +152,12 @@ div.tooltip p {
 }
 
 h2.logo {
+    margin-top: 30px;
     padding: 30px;
-    background: #1A3140 url('img/logo.png') no-repeat 20px center;
-    background-size: 185px 33px;
-    height: 33px;
-    text-indent: -9999em;
+    background: #1A3140 no-repeat 20px center;
+    height: 23px;
     margin-right: 10px;
+    font-family: "Times New Roman", "Bitstream Charter", Times, serif;
+    color: #fff;
+    font-size: 4em;
 }
