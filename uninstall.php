@@ -69,6 +69,15 @@ delete_option("impressum_manager_id");
 delete_option("impressum_manager_policy_google_plus");
 delete_option("impressum_manager_policy_twitter");
 delete_option("impressum_manager_onboarding_conf");
+delete_option("impressum_manager_register_court");
+delete_option("impressum_manager_surveillance_authority");
+delete_option("impressum_manager_rules_link");
+delete_option("impressum_manager_professional_liability_insurance_checked");
+delete_option("impressum_manager_name_and_adress");
+delete_option("impressum_manager_space_of_appliance");
+delete_option("impressum_manager_noindex");
+delete_option("impressum_manager_show_email_as_image");
+delete_option("impressum_manager_policy_google_adsense");
 
 unregister_setting("plugin-policy_group", "impressum_manager_disclaimer");
 unregister_setting("plugin-policy_group", "impressum_manager_set_impressum");
