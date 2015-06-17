@@ -38,7 +38,7 @@
 global $wpdb;
 
 if (!empty($_POST) && isset($_POST['submit'])) {
-    $val = html_entity_decode(esc_attr(@$_POST['editor']));
+    $val = html_entity_decode(nl2br(esc_attr(@$_POST['editor'])));
     $key = esc_attr(@$_POST['impressum_key']);
     $lang = esc_attr(@$_POST['lang']);
 
