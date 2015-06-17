@@ -15,74 +15,192 @@ class Impressum_Manager {
 	private static function init_hooks() {
 		self::$initiated = true;
 
-		add_action('the_posts', array( 'Impressum_Manager', 'metashortcode'));
-
-		add_filter('attachment_fields_to_edit', array( 'Impressum_Manager', 'impressum_manager_field_credit'), 10, 2);
-		add_filter('attachment_fields_to_save', array( 'Impressum_Manager', 'impressum_manager_field_credit_save'), 10, 2);
-
+		add_action( 'the_posts', array( 'Impressum_Manager', 'metashortcode' ) );
+		add_shortcode( "impressum_manager_setting", array( 'Impressum_Manager', 'var_shortcode' ) );
 	}
 
 	public static function plugin_activation() {
-		require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-activate.php';
+		require_once plugin_dir_path( __FILE__ ) . 'includes/impressum-manager-activate.php';
 		impressum_manager_install_activate();
 	}
 
-	public static function plugin_deactivation( ) {
-		require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-deactivate.php';
+	public static function plugin_deactivation() {
+		require_once plugin_dir_path( __FILE__ ) . 'includes/impressum-manager-deactivate.php';
 		impressum_manager_deactivate();
 	}
 
-	public static function load_translations()
-	{
+	public static function load_translations() {
 		/*require plugin_dir_path(__FILE__) . 'admin/class.plugin-config.php';*/
-		$plugin_dir = basename(dirname(__FILE__));
-		load_plugin_textdomain(Impressum_Manager_Admin::get_instance()->get_slug(), 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
+		$plugin_dir = basename( dirname( __FILE__ ) );
+		load_plugin_textdomain( SLUG, 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages' );
 	}
 
 	// SHORTCODE CODE
 
-	public static function content_shortcode($atts)
-	{
-		$im = new ImpressumManager();
-		return $im->content();
-	}
+	public static function content_shortcode( $atts ) {
+		if ( ! empty( $atts ) ) {
 
-	public static function field_credit($form_fields, $post)
-	{
-		$form_fields['plugin-image-credential'] = array(
-			'label' => __('Urheber vom Bild'),
-			'input' => 'text',
-			'value' => get_post_meta($post->ID, 'impressum_manager_image_credential', true)
-		);
+			$vals = strtolower( $atts["type"]);
 
-		return $form_fields;
-	}
+			$result = "";
+			switch ( true ) {
+				case ( $vals == "datenschutz" || $vals=="privacy_policy"):
+					$result = Impressum_Manager_Factory::create_privacy_policy();
+					break;
+				case ($vals == "haftungsausschluss" || $vals == "disclaimer"): //
+					$result = Impressum_Manager_Factory::create_disclaimer();
+					break;
+				case ($vals == "kontakt" || $vals == "contact"):
+					$result = Impressum_Manager_Factory::create_contact();
+					break;
+				case ($vals == "bildquellen" || $vals == "image sources"):
+					$result = Impressum_Manager_Factory::create_image_sources();
+					break;
+				default:
+					break;
+			}
+/*
+			switch ( strtolower( $atts["var"] ) ) {
+				case "company name":
+					$result = get_option( "impressum_manager_name_company" );
+					break;
+				case "address":
+					$result = get_option( "impressum_manager_address" );
+					break;
+				case "address axtra":
+					$result = get_option( "impressum_manager_address_extra" );
+					break;
+				case "place":
+					$result = get_option( "impressum_manager_place" );
+					break;
+				case "zip":
+					$result = get_option( "impressum_manager_zip" );
+					break;
+				case "county":
+					$result = get_option( "impressum_manager_country" );
+					break;
+				case "fax":
+					$result = get_option( "impressum_manager_fax" );
+					break;
+				case "email":
+					$result = get_option( "impressum_manager_email" );
+					break;
+				case "phone":
+					$result = get_option( "impressum_manager_phone" );
+					break;
+				case "authorized person":
+					$result = get_option( "impressum_manager_authorized_person" );
+					break;
+				case "vat":
+					$result = get_option( "impressum_manager_vat" );
+					break;
+				case "register number":
+					$result = get_option( "impressum_manager_registenr" );
+					break;
+				case "regulated profession":
+					$result = get_option( "impressum_manager_regulated_profession" );
+					break;
+				case "state":
+					$result = get_option( "impressum_manager_state" );
+					break;
+				case "state rules":
+					$result = get_option( "impressum_manager_state_rules" );
+					break;
+				case "responsible persons":
+					$result = get_option( "impressum_manager_responsible_persons" );
+					break;
+				case "responsible chamber":
+					$result = get_option( "impressum_manager_responsible_chamber" );
+					break;
+				case "image source":
+					$result = get_option( "impressum_manager_image_source" );
+					break;
+				case "register": {
+					$nr = get_option( "impressum_manager_register" );
+					switch ( $nr ) {
+						case 1:
+							$result = __( "Kein Register" );
+							break;
+						case 2:
+							$result = __( "Genossenschaftsregister" );
+							break;
+						case 3:
+							$result = __( "Handelsregister" );
+							break;
+						case 4:
+							$result = __( "Partnerschaftsregister" );
+							break;
+						case 5:
+							$result = __( "Vereinsregister" );
+							break;
+					}
+				};
+					break;
+				case "form": {
+					$form = get_option( "impressum_manager_form_of_organization" );
+					switch ( $form ) {
+						case 1:
+							$result = __( "Einzelunternehmen" );
+							break;
+						case 2:
+							$result = __( "Stille Gesellschaft" );
+							break;
+						case 3:
+							$result = __( "Offene Handelsgesellschaft (OHG)" );
+							break;
+						case 4:
+							$result = __( "Kommanditgesellschaft (KG)" );
+							break;
+						case 5:
+							$result = __( "Gesellschaft bürgerlichen Rechts (GdR)" );
+							break;
+						case 6:
+							$result = __( "Aktiengesellschaft (AG)" );
+							break;
+						case 7:
+							$result = __( "Kommanditgesellschaft auf Aktien (KGaA)" );
+							break;
+						case 8:
+							$result = __( "Gesellschaft mit beschränkter Haftung (GmbH)" );
+							break;
+						case 9:
+							$result = __( "Genossenschaft (eG)" );
+							break;
+					}
+				};
 
-	public static function field_credit_save($post, $attachment)
-	{
-		if (isset($attachment['plugin-image-credential']))
-			update_post_meta($post['ID'], 'impressum_manager_image_credential', $attachment['plugin-image-credential']);
+					break;
+			}
+*/
+			if ( empty( $result ) ) {
+				$result = "";
+			}
 
-		return $post;
+			return $result;
+		}
+
+		return Impressum_Manager_Factory::create_impressum();
 	}
 
 // Function to hook to "the_posts" (just edit the two variables)
-	public static function metashortcode($posts)
-	{
-		$shortcode = 'impressum_manager';
+	public
+	static function metashortcode(
+		$posts
+	) {
+		$shortcode         = 'impressum_manager';
 		$callback_function = self::metashortcode_setmeta();
 
-		return self::metashortcode_shortcode_to_wphead($posts, $shortcode, $callback_function);
+		return self::metashortcode_shortcode_to_wphead( $posts, $shortcode, $callback_function );
 	}
 
-// To execute when shortcode is found
-	public static function metashortcode_setmeta()
-	{
+	// To execute when shortcode is found
+	public static function metashortcode_setmeta() {
 		echo '<meta name="robots" content="noindex,nofollow">';
 	}
 
-// look for shortcode in the content and apply expected behaviour (don't edit!)
-	public static function metashortcode_shortcode_to_wphead($posts, $shortcode, $callback_function) {
+
+	// look for shortcode in the content and apply expected behaviour (don't edit!)
+	public static function metashortcode_shortcode_to_wphead( $posts, $shortcode, $callback_function ) {
 		if ( empty( $posts ) ) {
 			return $posts;
 		}
@@ -119,7 +237,7 @@ class Impressum_Manager {
 						remove_action( 'wp_head', array( 'wp_meta_robots_plugin', 'add_meta_robots_tag' ) );
 					}
 				}
-				add_shortcode( $shortcode,  array( 'Impressum_Manager','content_shortcode') );
+				add_shortcode( $shortcode, array( 'Impressum_Manager', 'content_shortcode' ) );
 				$found = true;
 				break;
 			}

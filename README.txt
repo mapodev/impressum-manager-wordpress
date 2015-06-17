@@ -26,6 +26,13 @@ No questions asked yet.
 
 == Changelog ==
 
+= 0.5.0 =
+- new onboarding screen GUI
+- new code architecture
+- new design for
+- wysiwyg editor for disclaimer and policy text
+- preview tab
+
 = 0.4.2 =
 - temporary release, next version bump will have all new features list
 

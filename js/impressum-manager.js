@@ -1,15 +1,38 @@
 (function ($) {
-    $(document).ready(function() {
-        $(".nav-tab").click(function() {
+    $(document).ready(function () {
+
+        var hash = window.location.hash.substring(1);
+
+        $(".nav-tab").click(function () {
             triggerTab(this, $(this).attr("id"));
             console.log("test");
         });
 
-        function triggerTab(o,name) {
+        if (hash.length) {
+            hash = hash.replace("-j","");
+            triggerTab($("#" + hash), hash);
+        } else {
+            triggerTab($("#settings-tab"), "settings-tab");
+        }
+
+        // prevent jumping to bottom onLoad
+        if (location.hash) {
+            setTimeout(function () {
+                window.scrollTo(0, 0);
+            }, 1);
+        }
+
+        function triggerTab(o, name) {
             $(".tab").hide();
             $(".nav-tab").removeClass("nav-tab-active");
             $(o).addClass("nav-tab-active");
             $("." + name).addClass("nav-tab-active").show();
         }
+
+        $("span.question").hover(function () {
+            $(this).append('<div class="tooltip"><p>This is a tooltip. It is typically used to explain something to a user without taking up space on the page.</p></div>');
+        }, function () {
+            $("div.tooltip").remove();
+        });
     });
 }(jQuery));
