@@ -408,12 +408,32 @@ class Impressum_Manager_Form_Factory
     public static function get_register()
     {
 
-        echo '' ?>
+        ?>
+
+        <script>
+            (function ($) {
+                $(document).ready(function() {
+                    triggerShowOfRegisterStuff();
+
+                    $("#impressum_manager_register").change(function() {
+                        triggerShowOfRegisterStuff();
+                    });
+
+                    function triggerShowOfRegisterStuff() {
+                        if (1 == $("#impressum_manager_register").val()) {
+                            $(".hide_register").hide();
+                        } else {
+                            $(".hide_register").show();
+                        }
+                    }
+                });
+            }(jQuery));
+        </script>
 
         <tr valign="top">
             <th scope="row"><b><?= __("Register", SLUG) ?></b></th>
             <td>
-                <select name="impressum_manager_register">
+                <select name="impressum_manager_register" id="impressum_manager_register">
                     <?php
                     $registerDescr = array(
                         __("Kein Register", SLUG),
@@ -443,7 +463,7 @@ class Impressum_Manager_Form_Factory
                 </select>
             </td>
         </tr>
-        <tr valign="top">
+        <tr valign="top" class="hide_register">
             <th scope="row"><b><?= __("Registergericht", SLUG) ?></b></th>
             <td>
                 <input type="text" name="impressum_manager_register_court" title="Registergericht"
@@ -451,7 +471,7 @@ class Impressum_Manager_Form_Factory
                        value="<?= get_option("impressum_manager_register_court") ?>">
             </td>
         </tr>
-        <tr valign="top">
+        <tr valign="top" class="hide_register">
             <th scope="row"><b><?= __("Registernummer", SLUG) ?></b></th>
             <td>
                 <input type="text" name="impressum_manager_registenr" title="Registernummer"
@@ -465,7 +485,7 @@ class Impressum_Manager_Form_Factory
     public static function get_surveillance_authority()
     {
         // Sofern Sie für die Ausübung Ihrer Tätigkeit einer behördlichen Zulassung bedürfen, so geben Sie zuständige Aufsichtsbehörde an!
-        echo '' ?>
+        ?>
 
         <tr valign="top">
             <th scope="row"><b><?= __("Aufsichtsbehörde: ", SLUG) ?></b></th>
@@ -482,7 +502,7 @@ class Impressum_Manager_Form_Factory
     public static function get_regulated_profession()
     {
 
-        echo '' ?>
+        ?>
 
         <script>
             (function ($) {
@@ -548,7 +568,7 @@ class Impressum_Manager_Form_Factory
     public static function get_image_sources()
     {
 
-        echo '' ?>
+        ?>
 
         <tr valign="top">
             <th scope="row"><b><?= __("Bildquellen", SLUG) ?></b></th>
