@@ -42,7 +42,7 @@ register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "impressum_
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'class.impressum-manager.php');
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/views/class.impressum-manager-form-factory.php');
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/class.impressum-manager-impressum.php');
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/class.impressum-manager-generator.php');
+require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/class.impressum-manager-factory.php');
 
 add_action('init', array('Impressum_Manager', 'init'));
 

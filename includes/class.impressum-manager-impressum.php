@@ -37,15 +37,15 @@ define( POLICY_END, 'policy_end' );
 class Impressum_Manager_Impressum {
 
 
-	private static $_source;
-	private static $_plugin_by;
+	public $_source;
+	public $_plugin_by;
 
 	function __construct() {
-		self::$_source    = __( "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG );
-		self::$_plugin_by = __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG );
+		$_source    = __( "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG );
+		$_plugin_by = __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG );
 	}
 
-	public function get_whole_impressum() {
+	public function get_impressum() {
 		$impressum = "";
 
 		$impressum .= $this->get_address();
@@ -64,7 +64,7 @@ class Impressum_Manager_Impressum {
 
 		$impressum .= $this->get_responsible_person();
 
-		$impressum .= $this->get_credits();
+		$impressum .= $this->get_image_sources();
 
 		$impressum .= $this->get_disclaimer();
 
@@ -73,17 +73,13 @@ class Impressum_Manager_Impressum {
 		$impressum .= $this->get_extra_field();
 
 		if ( ! empty( $impressum ) ) {
-			$impressum = "<h2>Angaben gemäß § 5 TMG:</h2>" . $impressum . "<br><br>" . self::$_source . self::$_plugin_by;
+			$impressum = "<h2>Angaben gemäß § 5 TMG:</h2>" . $impressum . "<br><br>" . $_source . $_plugin_by;
 		}
 
 		return do_shortcode( $impressum );
 	}
 
-	public function get_impressum() {
-		return self::get_whole_impressum();
-	}
-
-	private function get_address() {
+	public function get_address() {
 
 		$result = "";
 
@@ -116,7 +112,7 @@ class Impressum_Manager_Impressum {
 		return $result;
 	}
 
-	private function get_contact() {
+	public function get_contact() {
 
 		$result    = "";
 		$telephone = get_option( "impressum_manager_phone" );
@@ -143,7 +139,7 @@ class Impressum_Manager_Impressum {
 		return $result;
 	}
 
-	private function get_authorized_person() {
+	public function get_authorized_person() {
 
 		$result = "";
 
@@ -156,7 +152,7 @@ class Impressum_Manager_Impressum {
 		return $result;
 	}
 
-	private function get_register() {
+	public function get_register() {
 
 		$register       = get_option( "impressum_manager_register" );
 		$register_court = get_option( "impressum_manager_register_court" );
@@ -206,7 +202,7 @@ class Impressum_Manager_Impressum {
 		return $result;
 	}
 
-	private function get_vat() {
+	public function get_vat() {
 
 
 		$result = "";
@@ -220,7 +216,7 @@ class Impressum_Manager_Impressum {
 		return $result;
 	}
 
-	private function get_regulatory_authority() {
+	public function get_regulatory_authority() {
 
 		$result = "";
 
@@ -267,7 +263,7 @@ class Impressum_Manager_Impressum {
 		return $result;
 	}
 
-	private function get_professional_liability_insurance() {
+	public function get_professional_liability_insurance() {
 
 		$result = "";
 
@@ -288,7 +284,7 @@ class Impressum_Manager_Impressum {
 	}
 
 	// journalistisch-redaktionelle Inhalte
-	private function get_responsible_person() {
+	public function get_responsible_person() {
 		$result = "";
 
 		$responsible_persons = nl2br( get_option( "impressum_manager_responsible_persons" ) );
@@ -300,7 +296,7 @@ class Impressum_Manager_Impressum {
 		return $result;
 	}
 
-	private function get_credits() {
+	public function get_image_sources() {
 
 		$image_source = get_option( "impressum_manager_image_source" );
 
@@ -353,7 +349,7 @@ class Impressum_Manager_Impressum {
 		return $result;
 	}
 
-	private function get_disclaimer() {
+	public function get_disclaimer() {
 		$result = "";
 
 		if ( get_option( "impressum_manager_disclaimer" ) == true ) {
@@ -363,7 +359,7 @@ class Impressum_Manager_Impressum {
 		return $result;
 	}
 
-	private function get_privacy_policy() {
+	public function get_privacy_policy() {
 
 		$result = "";
 
@@ -393,7 +389,7 @@ class Impressum_Manager_Impressum {
 		return $result;
 	}
 
-	private function get_extra_field() {
+	public function get_extra_field() {
 		$result = "";
 
 		$extra_field = get_option( "impressum_manager_extra_field" );
