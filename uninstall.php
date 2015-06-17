@@ -78,6 +78,9 @@ delete_option("impressum_manager_space_of_appliance");
 delete_option("impressum_manager_noindex");
 delete_option("impressum_manager_show_email_as_image");
 delete_option("impressum_manager_policy_google_adsense");
+delete_option("impressum_manager_skip_start");
+
+
 
 unregister_setting("plugin-policy_group", "impressum_manager_disclaimer");
 unregister_setting("plugin-policy_group", "impressum_manager_set_impressum");

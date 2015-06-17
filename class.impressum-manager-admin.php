@@ -422,10 +422,6 @@ class Impressum_Manager_Admin
 
     public static function show()
     {
-
-        // comment in/out for start page test
-        //self::save_option( 'impressum_manager_skip_start', false );
-
         $skip_start = false;
 
         if (isset($_GET['skip_start']) && $_GET['skip_start'] == 'true' || isset($_GET['tut_finished']) && $_GET['tut_finished'] == 'true') {
@@ -437,7 +433,7 @@ class Impressum_Manager_Admin
         }
 
         if ($skip_start == false) {
-            include(plugin_dir_path(__FILE__) . "admin/views/start.php");
+            include(plugin_dir_path(__FILE__) . "includes/views/impressum-manager-start.php");
         } elseif (isset($_GET['view']) && $_GET['view'] == 'tutorial') {
             self::display_tutorial_page();
         } elseif (isset($_GET['view']) && $_GET['view'] == 'import-impressum') {
@@ -454,7 +450,7 @@ class Impressum_Manager_Admin
 
         switch (@$_GET['step']) {
             case 1:
-                include(plugin_dir_path(__FILE__) . "admin/views/tutorial/page1.php");
+                include(plugin_dir_path(__FILE__) . "includes/views/tutorial/impressum-manager-tutorial-page1.php");
                 break;
 
             case 2:
@@ -474,7 +470,7 @@ class Impressum_Manager_Admin
 	                self::save_option("impressum_manager_authorized_person", @$_POST["impressum_manager_authorized_person"]);
                 }
 
-                include(plugin_dir_path(__FILE__) . "admin/views/tutorial/page2.php");
+                include(plugin_dir_path(__FILE__) . "includes/views/tutorial/impressum-manager-tutorial-page2.php");
                 break;
 
             case 3:
@@ -509,7 +505,7 @@ class Impressum_Manager_Admin
 
                 }
 
-                include(plugin_dir_path(__FILE__) . "admin/views/tutorial/page3.php");
+                include(plugin_dir_path(__FILE__) . "includes/views/tutorial/impressum-manager-tutorial-page3.php");
                 break;
 
             case 4:
@@ -524,7 +520,7 @@ class Impressum_Manager_Admin
                     self::save_option("impressum_manager_extra_field", @$_POST["impressum_manager_extra_field"]);
                 }
 
-                include(plugin_dir_path(__FILE__) . "admin/views/tutorial/page4.php");
+                include(plugin_dir_path(__FILE__) . "includes/views/tutorial/impressum-manager-tutorial-page4.php");
                 break;
 
 
@@ -534,7 +530,7 @@ class Impressum_Manager_Admin
     }
 
 	private static function display_import_impressum_page(){
-		include(plugin_dir_path(__FILE__) . "admin/views/import-impressum.php");
+		include(plugin_dir_path(__FILE__) . "includes/views/impressum-manager-import-impressum.php");
 	}
 
     private static function display_config_page()
@@ -581,16 +577,16 @@ class Impressum_Manager_Admin
                 </h2>
 
                 <div class="settings-tab tab" style="display: none;">
-                    <?php include(plugin_dir_path(__FILE__) . "admin/views/general-tab.php") ?>
+                    <?php include(plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-general-tab.php") ?>
                 </div>
                 <div class="fields-tab tab" style="display:none;">
-                    <?php include(plugin_dir_path(__FILE__) . "admin/views/fields-tab.php") ?>
+                    <?php include(plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-fields-tab.php") ?>
                 </div>
                 <div class="settings2-tab tab" style="display:none;">
-                    <?php include(plugin_dir_path(__FILE__) . "admin/views/settings-tab.php") ?>
+                    <?php include(plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-settings-tab.php") ?>
                 </div>
                 <div class="preview-tab tab" style="display:none;">
-                    <?php include(plugin_dir_path(__FILE__) . "admin/views/preview-tab.php") ?>
+                    <?php include(plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-preview-tab.php") ?>
                 </div>
             <?php } ?>
         </div>

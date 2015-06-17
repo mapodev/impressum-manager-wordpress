@@ -34,7 +34,7 @@ define( POLICY_GOOGLE_PLUS, 'policy_google_plus' );
 define( POLICY_TWITTER, 'policy_twitter' );
 define( POLICY_END, 'policy_end' );
 
-class Impressum {
+class Impressum_Manager_Impressum {
 
 
 	private static $_source;
@@ -131,7 +131,7 @@ class Impressum {
 		}
 
 		if ( ! empty( $email ) && get_option( "impressum_manager_show_email_as_image" ) == "on" ) {
-			$result .= "<tr><td>E-Mail: </td><td>" . sprintf( "<img src='" . plugin_dir_url( __FILE__ ) . "../includes/email-as-image.php?text=" . $email . "'>" ) . "</td></tr>";
+			$result .= "<tr><td>E-Mail: </td><td>" . sprintf( "<img src='" . plugin_dir_url( __FILE__ ) . "../includes/impressum-manager-email-as-image.php?text=" . $email . "'>" ) . "</td></tr>";
 		} elseif ( ! empty( $email ) ) {
 			$result .= "<tr><td>E-Mail: </td><td>$email</td></tr>";
 		}

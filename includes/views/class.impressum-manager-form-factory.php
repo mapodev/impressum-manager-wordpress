@@ -1,6 +1,6 @@
 <?php
 
-class Form_Factory {
+class Impressum_Manager_Form_Factory {
 
 	// overall configs
 

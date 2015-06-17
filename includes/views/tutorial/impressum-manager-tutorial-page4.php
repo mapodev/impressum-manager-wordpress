@@ -1,7 +1,7 @@
 <form action="<?= Impressum_Manager_Admin::get_page_url() ?>&view=config&skip_start=true&tut_finished=true" method="post">
 	<table class="form-table">
 		<tbody>
-		<?php Form_Factory::get_impressum_config() ?>
+		<?php Impressum_Manager_Form_Factory::get_impressum_config() ?>
 		</tbody>
 	</table>
 	<table>

@@ -6,7 +6,7 @@
  * Time: 12:26
  */
 
-class Impressum_Editor {
+class Impressum_Manager_Generator {
 
 	public static function get_impressum(){
 
@@ -14,7 +14,7 @@ class Impressum_Editor {
 		$impressum_imported = true;
 
 		if($impressum_configured==true) {
-			$impressum = new Impressum();
+			$impressum = new Impressum_Manager_Impressum();
 		}elseif($impressum_imported==true){
 
 		}else{
