@@ -360,15 +360,15 @@ class Impressum_Manager_Admin
         $current_screen = get_current_screen();
 
         $start_overview_tab = array(
-            'title' => __('Overview', SLUG),
-            'id' => 'start_overview',
-            'content' => '<p>' . esc_html__('...', SLUG) . '</p>'
+            'title' => __('Shortcodes', SLUG),
+            'id' => 'shortcodes',
+            'content' => '<p>' . __("Um das Impressum in einem Beitrag oder in einer Seite einzufügen, musst du einen Shortcode benutzen. Der Shortcode lautet:<br><br> <b>[impressum_manager]</b><br><br>Hierzu gibt es zusätzliche Parameter. Der Type Paramter erlaubt es dir Teilstücke vom Impressum wiederzugeben. Hierbei kannst du <ul><li>Datenschutz</li><li>Haftungsausschluss</li><li>Kontakt</li><li>Bildquellen</li></ul> verwenden. Dabei wird dein Shortcode folgendermaßen aussehen:<br><br><b>[impressum type=\"datenschutz\"]</b><br><br>", SLUG) . '</p>'
         );
 
         $start_tut_tab = array(
-            'title' => __('Tutorial', SLUG),
+            'title' => __('Variablen', SLUG),
             'id' => 'start_tutorial',
-            'content' => '<p>' . esc_html__('...', SLUG) . '</p>'
+            'content' => '<p>' . __("Es gibt die Möglichkeit die gespeicherten Werte in den Settings überall auf der Webseite mit einem Shortcode aufzurufen. Der Shortcode lautet wie folgt: <br><br><b>[impressum_manager var=\"VARIABLE\"]</b><br><br>Jedoch muss das Wort Variable mit eines der folgenden Werten ersetzt werden: 1231242132131", SLUG) . '</p>'
         );
 
         $start_settings_tab = array(
@@ -377,36 +377,21 @@ class Impressum_Manager_Admin
             'content' => '<p>' . esc_html__('...', SLUG) . '</p>'
         );
 
-        if (isset($_GET['view']) && $_GET['view'] == 'tutorial') {
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
-        } elseif (isset($_GET['view']) && $_GET['view'] == 'config') {
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
+        $current_screen->add_help_tab(
+            $start_overview_tab
+        );
 
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
-        } else {
-            // start page
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
+        $current_screen->add_help_tab(
+            $start_tut_tab
+        );
 
-            $current_screen->add_help_tab(
-                $start_tut_tab
-            );
-
-            $current_screen->add_help_tab(
-                $start_settings_tab
-            );
-        }
+        $current_screen->add_help_tab(
+            $start_settings_tab
+        );
 
         $current_screen->set_help_sidebar(
             '<p><strong>' . esc_html__('For more information:', SLUG) . '</strong></p>' .
-            '<p><a href="#" target="_blank">' . esc_html__('FAQ', SLUG) . '</a></p>' .
+            '<p><a href="http://www.impressum-manager.com/faq/" target="_blank">' . esc_html__('FAQ', SLUG) . '</a></p>' .
             '<p><a href="#" target="_blank">' . esc_html__('Support', SLUG) . '</a></p>'
 
         );
