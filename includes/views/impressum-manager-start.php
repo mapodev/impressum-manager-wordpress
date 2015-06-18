@@ -39,8 +39,8 @@ Zu den Einstellungen <großer zwischenraum> schritt zurück <zwischenraum> näch
         <strong>Bestätigung des Warnhinweises</strong><br>
 
         <p><?= __('Ich weiß, dass ich die Nutzung der Impressum, Datenschutz und Haftungsauschluss Inhalte ' .
-                'auf eigene Gefahr verwende. Das Wordpress Plugin von http://www.impressum-manager.com/ nutzt die Texte von' .
-                ' e-recht24.de und mir ist bewusst, dass diese Impressum Manager und eRecht24 keine Gewährleistung auf Schadenersatz anbieten,' .
+                'auf eigene Gefahr verwende. ' .
+                'Mir ist bewusst, dass Impressum Manager keine Gewährleistung auf Schadenersatz anbietet,' .
                 ' sofern rechtliche Schäden bzgl. meiner Webseite durch die Nutzung von dem Impressum Manager Wordpress Plugin entstanden sind. ', SLUG); ?></p>
 
         <p id="willing_text"><input type="checkbox" name="willing_to"
