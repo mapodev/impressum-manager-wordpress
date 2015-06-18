@@ -65,21 +65,6 @@ Zu den Einstellungen <großer zwischenraum> schritt zurück <zwischenraum> näch
     </div>
     <div class="box secondary">
         <div>
-            <strong><?= __('Vorhandenes Impressum benutzen', SLUG); ?></strong><br>
-
-            <p><?= __('Wenn du schon ein Impressum besitzt, kannst du es hier einbinden.', SLUG); ?></p>
-        </div>
-        <form action="<?php Impressum_Manager_Admin::get_page_url() ?>" class="right">
-            <input type="hidden" name="page" value="<?= SLUG ?>">
-            <input type="hidden" name="view" value="import-impressum">
-            <input type="hidden" name="skip_start" value="true">
-            <input type="hidden" name="tut_finished" value="true">
-            <input class="button button-primary" type="submit" value="<?= _e('Impressum einbinden') ?>"
-                   id="setup_existing">
-        </form>
-    </div>
-    <div class="box primary">
-        <div>
             <strong><?= __('Später Konfigurieren', SLUG); ?></strong><br>
 
             <p><?= __('Das Impressum lässt sich auch jederzeit später konfigureren. Wenn du erst die Einstellungen sehen möchstest, klicke hier auf den Button.', SLUG); ?></p>
