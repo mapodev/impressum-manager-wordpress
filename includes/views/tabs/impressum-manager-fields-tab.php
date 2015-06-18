@@ -78,7 +78,10 @@ if (!empty($_POST) && isset($_POST['submit'])) {
         }
         ?>
     </select>
+    <br><br>
+    <div style="max-width: 782px">
 	<?php wp_editor("", "editor"); ?>
+    </div>
 
     <? submit_button(__("Update")) ?>
 </form>
