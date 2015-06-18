@@ -1,6 +1,7 @@
 <?php
 
-// PHP
+// workaround for visual tab not working, when loading on text editor
+add_filter('wp_default_editor', create_function('', 'return "tinymce";'));
 
 ?>
 
@@ -8,7 +9,7 @@
     (function ($) {
         $(document).ready(function () {
 
-            tinymce.init({
+            tinyMCE.init({
                 mode: "exact",
                 elements: "editor",
                 theme: "simple"
@@ -22,14 +23,10 @@
 
                 $.post(ajaxurl, data, function (response) {
                     $("#editor").val(response);
-                    setText(response);
+                    tinymce.editors[0].setContent(response);
                 });
             });
         });
-
-        function setText(text) {
-            tinymce.editors[0].setContent(text);
-        }
     }(jQuery));
 </script>
 
