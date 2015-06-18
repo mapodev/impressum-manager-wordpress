@@ -153,7 +153,6 @@ class Impressum_Manager_Form_Factory
             <th scope="row"><b><?= __("Art der Person", SLUG) . " " ?>
             </th>
             <td>
-                <fieldset>
                     <label>
                         <input type="radio" id="person_1" name="impressum_manager_person"
                                value="1" <?php
@@ -171,7 +170,7 @@ class Impressum_Manager_Form_Factory
                         }?>>
                         <span><?= __("Juristische Person (z.B. Firma, Verein, Organisation, Einrichtung)") ?></span>
                     </label>
-                </fieldset>
+
             </td>
         </tr>
 
@@ -223,7 +222,7 @@ class Impressum_Manager_Form_Factory
         <tr valign="top">
             <th scope="row"><b><?= __("Angaben zur Organisation", SLUG) ?></b></th>
             <td>
-                <fieldset>
+
                     <input type="text" name="impressum_manager_name_company"
                            title="Company Name"
                            value="<?= get_option("impressum_manager_name_company") ?>">
@@ -269,7 +268,6 @@ class Impressum_Manager_Form_Factory
                         ?>
                     </select><br>
                     <small>Land</small>
-                </fieldset>
             </td>
         </tr>
 
@@ -412,10 +410,10 @@ class Impressum_Manager_Form_Factory
 
         <script>
             (function ($) {
-                $(document).ready(function() {
+                $(document).ready(function () {
                     triggerShowOfRegisterStuff();
 
-                    $("#impressum_manager_register").change(function() {
+                    $("#impressum_manager_register").change(function () {
                         triggerShowOfRegisterStuff();
                     });
 
@@ -530,35 +528,34 @@ class Impressum_Manager_Form_Factory
                     for="regulated_profession"><b><?= __("Reglementierter Beruf", SLUG) ?></b></label>
             </th>
             <td class="hide_regulated_profession">
-                <fieldset>
-                    <input type="text" name="impressum_manager_regulated_profession"
-                           title="Regulated profession"
 
-                           value="<?= get_option("impressum_manager_regulated_profession") ?>">
-                    <br>
-                    <small><?= __("Gesetzliche Berufsbezeichnung", SLUG) ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_state" title="State"
-                           value="<?= get_option("impressum_manager_state") ?>">
-                    <br>
-                    <small><?= __("Staat, in dem die Berufsbezeichnung verliehen wurde", SLUG) ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_state_rules" title="State rules"
+                <input type="text" name="impressum_manager_regulated_profession"
+                       title="Regulated profession"
 
-                           value="<?= get_option("impressum_manager_state_rules") ?>">
-                    <br>
-                    <small><?= __("Berfusrechtliche Regelungen (Bezeichnung)", SLUG) ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_chamber" title="Chamber"
-                           value="<?= get_option("impressum_manager_chamber") ?>">
-                    <br>
-                    <small><?= __("Kammer, der Sie angehören", SLUG) ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_rules_link" title="Ruleslink"
-                           value="<?= get_option("impressum_manager_rules_link") ?>">
-                    <br>
-                    <small><?= __("URL zu gesetzl. Regelungen", SLUG) ?></small>
-                </fieldset>
+                       value="<?= get_option("impressum_manager_regulated_profession") ?>">
+                <br>
+                <small><?= __("Gesetzliche Berufsbezeichnung", SLUG) ?></small>
+                <br>
+                <input type="text" name="impressum_manager_state" title="State"
+                       value="<?= get_option("impressum_manager_state") ?>">
+                <br>
+                <small><?= __("Staat, in dem die Berufsbezeichnung verliehen wurde", SLUG) ?></small>
+                <br>
+                <input type="text" name="impressum_manager_state_rules" title="State rules"
+
+                       value="<?= get_option("impressum_manager_state_rules") ?>">
+                <br>
+                <small><?= __("Berfusrechtliche Regelungen (Bezeichnung)", SLUG) ?></small>
+                <br>
+                <input type="text" name="impressum_manager_chamber" title="Chamber"
+                       value="<?= get_option("impressum_manager_chamber") ?>">
+                <br>
+                <small><?= __("Kammer, der Sie angehören", SLUG) ?></small>
+                <br>
+                <input type="text" name="impressum_manager_rules_link" title="Ruleslink"
+                       value="<?= get_option("impressum_manager_rules_link") ?>">
+                <br>
+                <small><?= __("URL zu gesetzl. Regelungen", SLUG) ?></small>
             </td>
         </tr>
 
