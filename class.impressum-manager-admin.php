@@ -359,55 +359,40 @@ class Impressum_Manager_Admin
     {
         $current_screen = get_current_screen();
 
-        $start_overview_tab = array(
+        $start_shortcode_tab = array(
             'title' => __('Shortcodes', SLUG),
             'id' => 'shortcodes',
             'content' => '<p>' . __("Um das Impressum in einem Beitrag oder in einer Seite einzufügen, musst du einen Shortcode benutzen. Der Shortcode lautet:<br><br> <b>[impressum_manager]</b><br><br>Hierzu gibt es zusätzliche Parameter. Der Type Paramter erlaubt es dir Teilstücke vom Impressum wiederzugeben. Hierbei kannst du <ul><li>Datenschutz</li><li>Haftungsausschluss</li><li>Kontakt</li><li>Bildquellen</li></ul> verwenden. Dabei wird dein Shortcode folgendermaßen aussehen:<br><br><b>[impressum type=\"datenschutz\"]</b><br><br>", SLUG) . '</p>'
         );
 
-        $start_tut_tab = array(
+        $start_variable_tab = array(
             'title' => __('Variablen', SLUG),
             'id' => 'start_tutorial',
-            'content' => '<p>' . __("Es gibt die Möglichkeit die gespeicherten Werte in den Settings überall auf der Webseite mit einem Shortcode aufzurufen. Der Shortcode lautet wie folgt: <br><br><b>[impressum_manager var=\"VARIABLE\"]</b><br><br>Jedoch muss das Wort Variable mit eines der folgenden Werten ersetzt werden: 1231242132131", SLUG) . '</p>'
+            'content' => '<p>' . __("Es gibt die Möglichkeit die gespeicherten Werte in den Settings überall auf der Webseite mit einem Shortcode aufzurufen. Der Shortcode lautet wie folgt: <br><br><b>[impressum_manager var=\"VARIABLE\"]</b><br><br>Jedoch muss das Wort Variable mit eines der folgenden Werten ersetzt werden: <br><ul><li>company name</li><li>address</li><li>address axtra</li><li>place</li><li>zip</li><li>county</li><li>fax</li><li>email</li><li>phone</li><li>authorized person</li><li>vat</li><li>register number</li><li>regulated profession</li><li>state</li><li>state rules</li><li>responsible persons</li><li>responsible chamber</li><li>image source</li><li>register</li><li>form</li></ul>", SLUG) . '</p>'
         );
 
         $start_settings_tab = array(
             'title' => __('Settings', SLUG),
             'id' => 'start_settings',
-            'content' => '<p>' . esc_html__('...', SLUG) . '</p>'
+            'content' => '<p>' . __('Im Impressum Manager ist es möglich, Teile von dem Datenschutz bzw. Impressum Inahlte ein- und auszublenden. Mit den Häckchen in der Einestellungsseite kannst du die jeweiligen Bereiche ein- und ausschalten.', SLUG) . '</p>'
         );
 
-        if (isset($_GET['view']) && $_GET['view'] == 'tutorial') {
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
-        } elseif (isset($_GET['view']) && $_GET['view'] == 'config') {
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
+        // start page
+        $current_screen->add_help_tab(
+            $start_shortcode_tab
+        );
 
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
-        } else {
-            // start page
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
+        $current_screen->add_help_tab(
+            $start_variable_tab
+        );
 
-            $current_screen->add_help_tab(
-                $start_tut_tab
-            );
-
-            $current_screen->add_help_tab(
-                $start_settings_tab
-            );
-        }
-
+        $current_screen->add_help_tab(
+            $start_settings_tab
+        );
         $current_screen->set_help_sidebar(
             '<p><strong>' . esc_html__('For more information:', SLUG) . '</strong></p>' .
             '<p><a href="http://www.impressum-manager.com/faq/" target="_blank">' . esc_html__('FAQ', SLUG) . '</a></p>' .
-            '<p><a href="#" target="_blank">' . esc_html__('Support', SLUG) . '</a></p>'
+            '<p><a href="mailto:support@impressum-manager.com">' . esc_html__('Support',SLUG) . '</a></p>'
 
         );
     }

@@ -1,6 +1,5 @@
 <?php
 
-
 class Impressum_Manager
 {
 

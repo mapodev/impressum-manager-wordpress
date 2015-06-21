@@ -22,7 +22,6 @@
 .ui-state-default, .ui-widget-content .ui-state-default {
     border: 1px solid #d3d3d3;
     border-bottom-color: #F1F1F1;
-    /* background-color: #e6e6e6; */
     background-color: #DFEFFC;
     color: #555555;
     outline: none;
@@ -152,7 +151,7 @@ div.tooltip p {
 }
 
 h2.logo {
-    margin-top: 30px;
+    margin-top: 55px;
     padding: 30px;
     background: #1A3140 no-repeat 20px center;
     height: 23px;
