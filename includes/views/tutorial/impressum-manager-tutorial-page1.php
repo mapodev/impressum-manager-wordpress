@@ -10,9 +10,9 @@
 		<?php Impressum_Manager_Form_Factory::get_authorized_persons(); ?>
 		</tbody>
 		<tr>
-			<td>
+			<th>
 				<?= submit_button( __( "Nächster Schritt", SLUG ) ) ?>
-			</td>
+			</th>
 		</tr>
 	</table>
 </form>
