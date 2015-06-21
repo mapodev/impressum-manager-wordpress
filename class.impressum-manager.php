@@ -10,7 +10,6 @@ class Impressum_Manager
     {
         if (!self::$initiated) {
             self::init_hooks();
-            self::load_translations();
         }
     }
 
@@ -36,9 +35,7 @@ class Impressum_Manager
 
     public static function load_translations()
     {
-        /*require plugin_dir_path(__FILE__) . 'admin/class.plugin-config.php';*/
-        $plugin_dir = basename(dirname(__FILE__));
-        load_plugin_textdomain(SLUG, 'wp-content/plugins/' . $plugin_dir . '/languages', $plugin_dir . '/languages');
+        load_plugin_textdomain(SLUG, false, dirname( plugin_basename( __FILE__ ) ) . '/languages');
     }
 
     // SHORTCODE
@@ -183,7 +180,7 @@ class Impressum_Manager
         return Impressum_Manager_Factory::create_impressum();
     }
 
-// Function to hook to "the_posts" (just edit the two variables)
+    // Function to hook to "the_posts" (just edit the two variables)
     public
     static function metashortcode(
         $posts

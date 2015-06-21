@@ -46,10 +46,10 @@ require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/class.impressum-manager-fa
 
 add_action('init', array('Impressum_Manager', 'init'));
 
-//if (is_admin()) {
-    require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'class.impressum-manager-admin.php');
-    add_action('init', array('Impressum_Manager_Admin', 'init'));
-//}
+require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'class.impressum-manager-admin.php');
+add_action('init', array('Impressum_Manager_Admin', 'init'));
+
+add_action('plugins_loaded', array('Impressum_Manager', 'load_translations'));
 
 function impressum_manager_goodybye()
 {
