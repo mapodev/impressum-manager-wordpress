@@ -563,17 +563,17 @@ class Impressum_Manager_Admin
 			        <input type="hidden" name="step" value="1"/>
 			        <input type="hidden" name="skip_start_temp" value="true">
 
-					        <input class="button" type="submit" value="<?= _e('Impressum konfigurieren') ?>">
+					        <input class="button" type="submit" value="<?= _e('Impressum konfigurieren', SLUG) ?>">
 	        </form>
             <br><br>
             <?php
             if (!array_key_exists("setup", $_GET)) {
                 ?>
                 <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
-                    <a class="nav-tab nav-tab-active" id="settings-tab" href="#settings-tab-j"><?= __("General") ?></a>
-                    <a class="nav-tab" id="fields-tab" href="#fields-tab-j"><?= __("Impressum Fields") ?></a>
-                    <a class="nav-tab" id="settings2-tab" href="#settings2-tab-j"><?= __("Kontaktdaten") ?></a>
-                    <a class="nav-tab" id="preview-tab" href="#preview-tab-j"><?= __("Preview") ?></a>
+                    <a class="nav-tab nav-tab-active" id="settings-tab" href="#settings-tab-j"><?= __("General", SLUG) ?></a>
+                    <a class="nav-tab" id="fields-tab" href="#fields-tab-j"><?= __("Impressum Fields", SLUG) ?></a>
+                    <a class="nav-tab" id="settings2-tab" href="#settings2-tab-j"><?= __("Kontaktdaten", SLUG) ?></a>
+                    <a class="nav-tab" id="preview-tab" href="#preview-tab-j"><?= __("Preview", SLUG) ?></a>
                 </h2>
 
                 <div class="settings-tab tab" style="display: none;">
