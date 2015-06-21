@@ -159,7 +159,7 @@ class Impressum_Manager_Form_Factory
                     if (get_option('impressum_manager_person') == 1) {
                         echo "checked=checked";
                     }?>
-                    <span>Privatperson</span>
+                    <span><?=__("Privatperson")?></span>
                 </label>
                 <br>
                 <label>

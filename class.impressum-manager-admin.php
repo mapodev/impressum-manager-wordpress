@@ -482,7 +482,7 @@ class Impressum_Manager_Admin
                     self::save_option("impressum_manager_press_content", @$_POST["impressum_manager_press_content"]);
 
 	                self::save_option("impressum_manager_professional_liability_insurance_checked", @$_POST["impressum_manager_professional_liability_insurance_checked"]);
-	                self::save_option("impressum_manager_name_and_adress", @$_POST["impressum_manager_name_and_adress"]);
+	                self::save_option("impressum_manager_name_and_adress", nl2br(@$_POST["impressum_manager_name_and_adress"]));
 	                self::save_option("impressum_manager_space_of_appliance", @$_POST['impressum_manager_space_of_appliance']);
 
 	                self::save_option("impressum_manager_surveillance_authority", @$_POST['impressum_manager_surveillance_authority']);
