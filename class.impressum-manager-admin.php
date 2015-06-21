@@ -377,17 +377,32 @@ class Impressum_Manager_Admin
             'content' => '<p>' . esc_html__('...', SLUG) . '</p>'
         );
 
-        $current_screen->add_help_tab(
-            $start_overview_tab
-        );
+        if (isset($_GET['view']) && $_GET['view'] == 'tutorial') {
+            $current_screen->add_help_tab(
+                $start_overview_tab
+            );
+        } elseif (isset($_GET['view']) && $_GET['view'] == 'config') {
+            $current_screen->add_help_tab(
+                $start_overview_tab
+            );
 
-        $current_screen->add_help_tab(
-            $start_tut_tab
-        );
+            $current_screen->add_help_tab(
+                $start_overview_tab
+            );
+        } else {
+            // start page
+            $current_screen->add_help_tab(
+                $start_overview_tab
+            );
 
-        $current_screen->add_help_tab(
-            $start_settings_tab
-        );
+            $current_screen->add_help_tab(
+                $start_tut_tab
+            );
+
+            $current_screen->add_help_tab(
+                $start_settings_tab
+            );
+        }
 
         $current_screen->set_help_sidebar(
             '<p><strong>' . esc_html__('For more information:', SLUG) . '</strong></p>' .
