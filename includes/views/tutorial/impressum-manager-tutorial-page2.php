@@ -1,5 +1,5 @@
 <form action="<?= Impressum_Manager_Admin::get_page_url() ?>&view=tutorial&skip_start_temp=true&step=3" method="post">
-	<table class="form-table">
+	<table class="form-table" id="settings-options">
 		<tbody>
 		<?php Impressum_Manager_Form_Factory::get_register(); ?>
 		<?php Impressum_Manager_Form_Factory::get_vat(); ?>

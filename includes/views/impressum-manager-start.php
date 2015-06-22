@@ -39,8 +39,8 @@ Zu den Einstellungen <großer zwischenraum> schritt zurück <zwischenraum> näch
         <strong>Bestätigung des Warnhinweises</strong><br>
 
         <p><?= __('Ich weiß, dass ich die Nutzung der Impressum, Datenschutz und Haftungsauschluss Inhalte ' .
-                'auf eigene Gefahr verwende. Das Wordpress Plugin von http://www.impressum-manager.com/ nutzt die Texte von' .
-                ' e-recht24.de und mir ist bewusst, dass diese Impressum Manager und eRecht24 keine Gewährleistung auf Schadenersatz anbieten,' .
+                'auf eigene Gefahr verwende. ' .
+                'Mir ist bewusst, dass Impressum Manager keine Gewährleistung auf Schadenersatz anbietet,' .
                 ' sofern rechtliche Schäden bzgl. meiner Webseite durch die Nutzung von dem Impressum Manager Wordpress Plugin entstanden sind. ', SLUG); ?></p>
 
         <p id="willing_text"><input type="checkbox" name="willing_to"
@@ -64,21 +64,6 @@ Zu den Einstellungen <großer zwischenraum> schritt zurück <zwischenraum> näch
         </form>
     </div>
     <div class="box secondary">
-        <div>
-            <strong><?= __('Vorhandenes Impressum benutzen', SLUG); ?></strong><br>
-
-            <p><?= __('Wenn du schon ein Impressum besitzt, kannst du es hier einbinden.', SLUG); ?></p>
-        </div>
-        <form action="<?php Impressum_Manager_Admin::get_page_url() ?>" class="right">
-            <input type="hidden" name="page" value="<?= SLUG ?>">
-            <input type="hidden" name="view" value="import-impressum">
-            <input type="hidden" name="skip_start" value="true">
-            <input type="hidden" name="tut_finished" value="true">
-            <input class="button button-primary" type="submit" value="<?= _e('Impressum einbinden') ?>"
-                   id="setup_existing">
-        </form>
-    </div>
-    <div class="box primary">
         <div>
             <strong><?= __('Später Konfigurieren', SLUG); ?></strong><br>
 

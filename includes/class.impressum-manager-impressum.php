@@ -17,8 +17,7 @@ defined('ABSPATH') or die('No script kiddies please!');
 @define(IMAGE_SOURCES, 'image_sources');
 // authorized persons
 @define(REPRESENTED_BY, 'represented_by');
-// TODO: typo responsible_person!
-@define(RESPONSIBLE_PERSON, 'responsibile_person');
+@define(RESPONSIBLE_PERSON, 'responsible_person');
 @define(DISCLAIMER, 'disclaimer');
 @define(POLICY_HEADER, 'policy_header');
 @define(POLICY_GENERAL, 'policy_general');

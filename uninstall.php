@@ -1,30 +1,5 @@
 <?php
 
-/**
- * Fired when the plugin is uninstalled.
- *
- * When populating this file, consider the following flow
- * of control:
- *
- * - This method should be static
- * - Check if the $_REQUEST content actually is the plugin name
- * - Run an admin referrer check to make sure it goes through authentication
- * - Verify the output of $_GET makes sense
- * - Repeat with other user roles. Best directly by using the links/query string parameters.
- * - Repeat things for multisite. Once for a single site in the network, once sitewide.
- *
- * This file may be updated more in future version of the Boilerplate; however, this is the
- * general skeleton and outline for how the file should work.
- *
- * For more information, see the following discussion:
- * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
- *
- * @link       http://www.mapo-dev.com
- * @since      0.1.0
- *
- * @package    impressum_manager_Plugin
- */
-
 // If uninstall not called from WordPress, then exit.
 //if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 //    exit;
@@ -80,16 +55,55 @@ delete_option("impressum_manager_show_email_as_image");
 delete_option("impressum_manager_policy_google_adsense");
 delete_option("impressum_manager_skip_start");
 
+unregister_setting("impressum-manager-policy_group", "impressum_manager_disclaimer");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_set_impressum");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_language_of_impressum");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_general_privacy_policy");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_policy_facebook");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_policy_google_analytics");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_policy_google_adsense");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_policy_twitter");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_policy_google_plus");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_page");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_disabled");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_extra_field");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_noindex");
+unregister_setting("impressum-manager-policy_group", "impressum_manager_show_email_as_image");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_person");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_form_of_organization");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_name_company");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_address");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_address_extra");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_place");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_zip");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_country");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_fax");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_email");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_disclaimer");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_phone");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_authorized_person");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_vat");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_register");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_register_court");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_registenr");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_surveillance_authority");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession_checked");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_state");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_state_rules");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_chamber");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_rules_link");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_image_source");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_responsible_persons");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_press_content");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_professional_liability_insurance_checked");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_name_and_adress");
+unregister_setting("impressum-manager-settings-group", "impressum_manager_space_of_appliance");
+
+global $wpdb;
+// delete table
+$table_name = $wpdb->prefix . "impressum_manager_content";
+$sql = "DROP TABLE IF EXISTS {$table_name};";
+$e = $wpdb->query($sql);
 
 
-unregister_setting("plugin-policy_group", "impressum_manager_disclaimer");
-unregister_setting("plugin-policy_group", "impressum_manager_set_impressum");
-unregister_setting("plugin-policy_group", "impressum_manager_language_of_impressum");
-unregister_setting("plugin-policy_group", "impressum_manager_general_privacy_policy");
-unregister_setting("plugin-policy_group", "impressum_manager_policy_facebook");
-unregister_setting("plugin-policy_group", "impressum_manager_policy_google_analytics");
-unregister_setting("plugin-policy_group", "impressum_manager_policy_google_adsense");
-unregister_setting("plugin-policy_group", "impressum_manager_policy_twitter");
-unregister_setting("plugin-policy_group", "impressum_manager_policy_google_plus");
-
-// no databases used, finishing

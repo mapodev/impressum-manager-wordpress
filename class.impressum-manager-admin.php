@@ -359,55 +359,40 @@ class Impressum_Manager_Admin
     {
         $current_screen = get_current_screen();
 
-        $start_overview_tab = array(
-            'title' => __('Overview', SLUG),
-            'id' => 'start_overview',
-            'content' => '<p>' . esc_html__('...', SLUG) . '</p>'
+        $start_shortcode_tab = array(
+            'title' => __('Shortcodes', SLUG),
+            'id' => 'shortcodes',
+            'content' => '<p>' . __("Um das Impressum in einem Beitrag oder in einer Seite einzufügen, musst du einen Shortcode benutzen. Der Shortcode lautet:<br><br> <b>[impressum_manager]</b><br><br>Hierzu gibt es zusätzliche Parameter. Der Type Paramter erlaubt es dir Teilstücke vom Impressum wiederzugeben. Hierbei kannst du <ul><li>Datenschutz</li><li>Haftungsausschluss</li><li>Kontakt</li><li>Bildquellen</li></ul> verwenden. Dabei wird dein Shortcode folgendermaßen aussehen:<br><br><b>[impressum type=\"datenschutz\"]</b><br><br>", SLUG) . '</p>'
         );
 
-        $start_tut_tab = array(
-            'title' => __('Tutorial', SLUG),
+        $start_variable_tab = array(
+            'title' => __('Variablen', SLUG),
             'id' => 'start_tutorial',
-            'content' => '<p>' . esc_html__('...', SLUG) . '</p>'
+            'content' => '<p>' . __("Es gibt die Möglichkeit die gespeicherten Werte in den Settings überall auf der Webseite mit einem Shortcode aufzurufen. Der Shortcode lautet wie folgt: <br><br><b>[impressum_manager var=\"VARIABLE\"]</b><br><br>Jedoch muss das Wort Variable mit eines der folgenden Werten ersetzt werden: <br><ul><li>company name</li><li>address</li><li>address axtra</li><li>place</li><li>zip</li><li>county</li><li>fax</li><li>email</li><li>phone</li><li>authorized person</li><li>vat</li><li>register number</li><li>regulated profession</li><li>state</li><li>state rules</li><li>responsible persons</li><li>responsible chamber</li><li>image source</li><li>register</li><li>form</li></ul>", SLUG) . '</p>'
         );
 
         $start_settings_tab = array(
             'title' => __('Settings', SLUG),
             'id' => 'start_settings',
-            'content' => '<p>' . esc_html__('...', SLUG) . '</p>'
+            'content' => '<p>' . __('Im Impressum Manager ist es möglich, Teile von dem Datenschutz bzw. Impressum Inahlte ein- und auszublenden. Mit den Häckchen in der Einestellungsseite kannst du die jeweiligen Bereiche ein- und ausschalten.', SLUG) . '</p>'
         );
 
-        if (isset($_GET['view']) && $_GET['view'] == 'tutorial') {
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
-        } elseif (isset($_GET['view']) && $_GET['view'] == 'config') {
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
+        // start page
+        $current_screen->add_help_tab(
+            $start_shortcode_tab
+        );
 
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
-        } else {
-            // start page
-            $current_screen->add_help_tab(
-                $start_overview_tab
-            );
+        $current_screen->add_help_tab(
+            $start_variable_tab
+        );
 
-            $current_screen->add_help_tab(
-                $start_tut_tab
-            );
-
-            $current_screen->add_help_tab(
-                $start_settings_tab
-            );
-        }
-
+        $current_screen->add_help_tab(
+            $start_settings_tab
+        );
         $current_screen->set_help_sidebar(
             '<p><strong>' . esc_html__('For more information:', SLUG) . '</strong></p>' .
-            '<p><a href="#" target="_blank">' . esc_html__('FAQ', SLUG) . '</a></p>' .
-            '<p><a href="#" target="_blank">' . esc_html__('Support', SLUG) . '</a></p>'
+            '<p><a href="http://www.impressum-manager.com/faq/" target="_blank">' . esc_html__('FAQ', SLUG) . '</a></p>' .
+            '<p><a href="mailto:support@impressum-manager.com">' . esc_html__('Support',SLUG) . '</a></p>'
 
         );
     }
@@ -494,7 +479,7 @@ class Impressum_Manager_Admin
                     self::save_option("impressum_manager_press_content", @$_POST["impressum_manager_press_content"]);
 
 	                self::save_option("impressum_manager_professional_liability_insurance_checked", @$_POST["impressum_manager_professional_liability_insurance_checked"]);
-	                self::save_option("impressum_manager_name_and_adress", @$_POST["impressum_manager_name_and_adress"]);
+	                self::save_option("impressum_manager_name_and_adress", nl2br(@$_POST["impressum_manager_name_and_adress"]));
 	                self::save_option("impressum_manager_space_of_appliance", @$_POST['impressum_manager_space_of_appliance']);
 
 	                self::save_option("impressum_manager_surveillance_authority", @$_POST['impressum_manager_surveillance_authority']);
@@ -560,17 +545,17 @@ class Impressum_Manager_Admin
 			        <input type="hidden" name="step" value="1"/>
 			        <input type="hidden" name="skip_start_temp" value="true">
 
-					        <input class="button" type="submit" value="<?= _e('Impressum konfigurieren') ?>">
+					        <input class="button" type="submit" value="<?= _e('Impressum konfigurieren', SLUG) ?>">
 	        </form>
             <br><br>
             <?php
             if (!array_key_exists("setup", $_GET)) {
                 ?>
                 <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
-                    <a class="nav-tab nav-tab-active" id="settings-tab" href="#settings-tab-j"><?= __("General") ?></a>
-                    <a class="nav-tab" id="fields-tab" href="#fields-tab-j"><?= __("Impressum Fields") ?></a>
-                    <a class="nav-tab" id="settings2-tab" href="#settings2-tab-j"><?= __("Kontaktdaten") ?></a>
-                    <a class="nav-tab" id="preview-tab" href="#preview-tab-j"><?= __("Preview") ?></a>
+                    <a class="nav-tab nav-tab-active" id="settings-tab" href="#settings-tab-j"><?= __("General", SLUG) ?></a>
+                    <a class="nav-tab" id="fields-tab" href="#fields-tab-j"><?= __("Impressum Fields", SLUG) ?></a>
+                    <a class="nav-tab" id="settings2-tab" href="#settings2-tab-j"><?= __("Kontaktdaten", SLUG) ?></a>
+                    <a class="nav-tab" id="preview-tab" href="#preview-tab-j"><?= __("Preview", SLUG) ?></a>
                 </h2>
 
                 <div class="settings-tab tab" style="display: none;">

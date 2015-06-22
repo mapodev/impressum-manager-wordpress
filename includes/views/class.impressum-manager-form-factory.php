@@ -153,25 +153,24 @@ class Impressum_Manager_Form_Factory
             <th scope="row"><b><?= __("Art der Person", SLUG) . " " ?>
             </th>
             <td>
-                <fieldset>
-                    <label>
-                        <input type="radio" id="person_1" name="impressum_manager_person"
-                               value="1" <?php
-                        if (get_option('impressum_manager_person') == 1) {
-                            echo "checked=checked";
-                        }?>
-                        <span>Privatperson</span>
-                    </label>
-                    <br>
-                    <label>
-                        <input type="radio" id="person_2" name="impressum_manager_person"
-                               value="2" <?php
-                        if (get_option('impressum_manager_person') == 2) {
-                            echo "checked=checked";
-                        }?>>
-                        <span><?= __("Juristische Person (z.B. Firma, Verein, Organisation, Einrichtung)") ?></span>
-                    </label>
-                </fieldset>
+                <label>
+                    <input type="radio" id="person_1" name="impressum_manager_person"
+                           value="1" <?php
+                    if (get_option('impressum_manager_person') == 1) {
+                        echo "checked=checked";
+                    }?>
+                    <span><?=__("Privatperson")?></span>
+                </label>
+                <br>
+                <label>
+                    <input type="radio" id="person_2" name="impressum_manager_person"
+                           value="2" <?php
+                    if (get_option('impressum_manager_person') == 2) {
+                        echo "checked=checked";
+                    }?>>
+                    <span><?= __("Juristische Person (z.B. Firma, Verein, Organisation, Einrichtung)") ?></span>
+                </label>
+
             </td>
         </tr>
 
@@ -223,53 +222,52 @@ class Impressum_Manager_Form_Factory
         <tr valign="top">
             <th scope="row"><b><?= __("Angaben zur Organisation", SLUG) ?></b></th>
             <td>
-                <fieldset>
-                    <input type="text" name="impressum_manager_name_company"
-                           title="Company Name"
-                           value="<?= get_option("impressum_manager_name_company") ?>">
-                    <br>
-                    <small id="full_name"><?= __("Vollständiger Name", SLUG) ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_address" title="Address"
-                           value="<?= get_option("impressum_manager_address") ?>">
-                    <br>
-                    <small><?= __("Straße & Hausnummer", SLUG) ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_address_extra" title="Address Extra"
-                           value="<?= get_option("impressum_manager_address_extra") ?>"><br>
-                    <small><?= __("Adresszusatz", SLUG) ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_place"
-                           title="Place"
-                           value="<?= get_option("impressum_manager_place") ?>"><br>
-                    <small><?= __("Ort") ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_zip"
-                           title="ZIP Code"
-                           value="<?= get_option("impressum_manager_zip") ?>"><br>
-                    <small><?= __("PLZ") ?></small>
-                    <br>
-                    <select name="impressum_manager_country">
-                        <option value="no_land_choosen"><?= __("Wähle dein Land ...") ?></option>
-                        <?php
 
-                        foreach (Impressum_Manager_Admin::$_countries as $country_code => $country_name) {
-                            if (get_option("impressum_manager_country") == $country_code) {
-                                $s = "selected=selected";
-                            } else {
-                                $s = "";
-                            }
+                <input type="text" name="impressum_manager_name_company"
+                       title="Company Name"
+                       value="<?= get_option("impressum_manager_name_company") ?>">
+                <br>
+                <small id="full_name"><?= __("Vollständiger Name", SLUG) ?></small>
+                <br>
+                <input type="text" name="impressum_manager_address" title="Address"
+                       value="<?= get_option("impressum_manager_address") ?>">
+                <br>
+                <small><?= __("Straße & Hausnummer", SLUG) ?></small>
+                <br>
+                <input type="text" name="impressum_manager_address_extra" title="Address Extra"
+                       value="<?= get_option("impressum_manager_address_extra") ?>"><br>
+                <small><?= __("Adresszusatz", SLUG) ?></small>
+                <br>
+                <input type="text" name="impressum_manager_place"
+                       title="Place"
+                       value="<?= get_option("impressum_manager_place") ?>"><br>
+                <small><?= __("Ort") ?></small>
+                <br>
+                <input type="text" name="impressum_manager_zip"
+                       title="ZIP Code"
+                       value="<?= get_option("impressum_manager_zip") ?>"><br>
+                <small><?= __("PLZ") ?></small>
+                <br>
+                <select name="impressum_manager_country">
+                    <option value="no_land_choosen"><?= __("Wähle dein Land ...") ?></option>
+                    <?php
 
-                            ?>
-                            <option
-                                value="<?= $country_code ?>" <?= $s ?>><?= __($country_name, SLUG) ?></option>
-                        <?php
+                    foreach (Impressum_Manager_Admin::$_countries as $country_code => $country_name) {
+                        if (get_option("impressum_manager_country") == $country_code) {
+                            $s = "selected=selected";
+                        } else {
+                            $s = "";
                         }
 
                         ?>
-                    </select><br>
-                    <small>Land</small>
-                </fieldset>
+                        <option
+                            value="<?= $country_code ?>" <?= $s ?>><?= __($country_name, SLUG) ?></option>
+                    <?php
+                    }
+
+                    ?>
+                </select><br>
+                <small>Land</small>
             </td>
         </tr>
 
@@ -307,19 +305,17 @@ class Impressum_Manager_Form_Factory
                     for="professional_liability_insurance"><b><?= __("Berufshaftpflichtversicherung", SLUG) ?></b></label>
             </th>
             <td class="hide_professional_liability_insurance">
-                <fieldset>
-                    <textarea name="impressum_manager_name_and_adress"
-                        ><?= get_option("impressum_manager_name_and_adress") ?></textarea>
-                    <br>
-                    <small><?= __("Name und Anschrift", SLUG) ?>
-                    </small>
-                    <br>
-                    <input type="text" name="impressum_manager_space_of_appliance" title="State"
-                           value="<?= get_option("impressum_manager_space_of_appliance") ?>">
-                    <br>
-                    <small><?= __("Geltungsraum", SLUG) ?></small>
-                    <br>
-                </fieldset>
+                <textarea name="impressum_manager_name_and_adress"
+                    ><?= get_option("impressum_manager_name_and_adress") ?></textarea>
+                <br>
+                <small><?= __("Name und Anschrift", SLUG) ?>
+                </small>
+                <br>
+                <input type="text" name="impressum_manager_space_of_appliance" title="State"
+                       value="<?= get_option("impressum_manager_space_of_appliance") ?>">
+                <br>
+                <small><?= __("Geltungsraum", SLUG) ?></small>
+                <br>
             </td>
         </tr> <?php
     }
@@ -412,10 +408,10 @@ class Impressum_Manager_Form_Factory
 
         <script>
             (function ($) {
-                $(document).ready(function() {
+                $(document).ready(function () {
                     triggerShowOfRegisterStuff();
 
-                    $("#impressum_manager_register").change(function() {
+                    $("#impressum_manager_register").change(function () {
                         triggerShowOfRegisterStuff();
                     });
 
@@ -530,35 +526,34 @@ class Impressum_Manager_Form_Factory
                     for="regulated_profession"><b><?= __("Reglementierter Beruf", SLUG) ?></b></label>
             </th>
             <td class="hide_regulated_profession">
-                <fieldset>
-                    <input type="text" name="impressum_manager_regulated_profession"
-                           title="Regulated profession"
 
-                           value="<?= get_option("impressum_manager_regulated_profession") ?>">
-                    <br>
-                    <small><?= __("Gesetzliche Berufsbezeichnung", SLUG) ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_state" title="State"
-                           value="<?= get_option("impressum_manager_state") ?>">
-                    <br>
-                    <small><?= __("Staat, in dem die Berufsbezeichnung verliehen wurde", SLUG) ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_state_rules" title="State rules"
+                <input type="text" name="impressum_manager_regulated_profession"
+                       title="Regulated profession"
 
-                           value="<?= get_option("impressum_manager_state_rules") ?>">
-                    <br>
-                    <small><?= __("Berfusrechtliche Regelungen (Bezeichnung)", SLUG) ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_chamber" title="Chamber"
-                           value="<?= get_option("impressum_manager_chamber") ?>">
-                    <br>
-                    <small><?= __("Kammer, der Sie angehören", SLUG) ?></small>
-                    <br>
-                    <input type="text" name="impressum_manager_rules_link" title="Ruleslink"
-                           value="<?= get_option("impressum_manager_rules_link") ?>">
-                    <br>
-                    <small><?= __("URL zu gesetzl. Regelungen", SLUG) ?></small>
-                </fieldset>
+                       value="<?= get_option("impressum_manager_regulated_profession") ?>">
+                <br>
+                <small><?= __("Gesetzliche Berufsbezeichnung", SLUG) ?></small>
+                <br>
+                <input type="text" name="impressum_manager_state" title="State"
+                       value="<?= get_option("impressum_manager_state") ?>">
+                <br>
+                <small><?= __("Staat, in dem die Berufsbezeichnung verliehen wurde", SLUG) ?></small>
+                <br>
+                <input type="text" name="impressum_manager_state_rules" title="State rules"
+
+                       value="<?= get_option("impressum_manager_state_rules") ?>">
+                <br>
+                <small><?= __("Berfusrechtliche Regelungen (Bezeichnung)", SLUG) ?></small>
+                <br>
+                <input type="text" name="impressum_manager_chamber" title="Chamber"
+                       value="<?= get_option("impressum_manager_chamber") ?>">
+                <br>
+                <small><?= __("Kammer, der Sie angehören", SLUG) ?></small>
+                <br>
+                <input type="text" name="impressum_manager_rules_link" title="Ruleslink"
+                       value="<?= get_option("impressum_manager_rules_link") ?>">
+                <br>
+                <small><?= __("URL zu gesetzl. Regelungen", SLUG) ?></small>
             </td>
         </tr>
 
