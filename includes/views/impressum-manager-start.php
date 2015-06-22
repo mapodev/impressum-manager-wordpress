@@ -1,14 +1,3 @@
-<?php
-/*
-
-http://www.davidjrush.com/blog/2011/12/simple-jquery-tooltip/
-
-Zu den Einstellungen <großer zwischenraum> schritt zurück <zwischenraum> nächster schritt
-
-*/
-
-?>
-
 <script>
     (function ($) {
         $(document).ready(function () {
