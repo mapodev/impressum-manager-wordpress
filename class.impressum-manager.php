@@ -5,6 +5,11 @@ class Impressum_Manager
 
     private static $initiated = false;
 
+    /**
+     * Initialization of this class
+     *
+     * @since 1.0.0
+     */
     public static function init()
     {
         if (!self::$initiated) {
@@ -12,6 +17,11 @@ class Impressum_Manager
         }
     }
 
+    /**
+     * Initialization of the hooks
+     *
+     * @since 1.0.0
+     */
     private static function init_hooks()
     {
         self::$initiated = true;
@@ -20,24 +30,50 @@ class Impressum_Manager
         add_shortcode("impressum_manager_setting", array('Impressum_Manager', 'var_shortcode'));
     }
 
+    /**
+     * Plugin activation hook
+     *
+     * @since 1.0.0
+     */
     public static function plugin_activation()
     {
         require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-activate.php';
         impressum_manager_install_activate();
     }
 
+    /**
+     * Plugin deactiviation
+     *
+     * @since 1.0.0
+     */
     public static function plugin_deactivation()
     {
         require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-deactivate.php';
         impressum_manager_deactivate();
     }
 
+    /**
+     * Load the translation files.
+     *
+     * @since 1.0.0
+     */
     public static function load_translations()
     {
         load_plugin_textdomain(SLUG, false, dirname( plugin_basename( __FILE__ ) ) . '/languages');
     }
 
-    // SHORTCODE
+    /**
+     * The actual shortcode method. Will return the impressum
+     * contents of a part of the impressum. [impressum_manager]
+     * will return the full impressum. [impresusm_manager type=xxx]
+     * will return the part xxx of the impressum.
+     * [impressum_manager var=xxx] will load a specific variable.
+     *
+     * @since 1.0.0
+     *
+     * @param $atts
+     * @return mixed|string
+     */
     public static function content_shortcode($atts)
     {
         if (!empty($atts)) {
@@ -179,11 +215,16 @@ class Impressum_Manager
         return Impressum_Manager_Factory::create_impressum();
     }
 
-    // Function to hook to "the_posts" (just edit the two variables)
-    public
-    static function metashortcode(
-        $posts
-    )
+    /**
+     * Function to hook to "the_posts". A nice trick to workaround the
+     * shortcode problem.
+     *
+     * @since 1.0.0
+     *
+     * @param $posts
+     * @return mixed
+     */
+    public static function metashortcode($posts)
     {
         $shortcode = 'impressum_manager';
         $callback_function = self::metashortcode_setmeta();
@@ -191,14 +232,27 @@ class Impressum_Manager
         return self::metashortcode_shortcode_to_wphead($posts, $shortcode, $callback_function);
     }
 
-    // To execute when shortcode is found
+    /**
+     * To execute when shortcode is found. Will add
+     * noindex paramter to the page of that impressum
+     * specific page.
+     *
+     * @since 1.0.0
+     */
     public static function metashortcode_setmeta()
     {
         echo '<meta name="robots" content="noindex,nofollow">';
     }
 
-
-    // look for shortcode in the content and apply expected behaviour (don't edit!)
+    /**
+     * Add meta stuff to the wp head before executing shortcode.
+     * Good workaround for the request query.
+     *
+     * @param $posts
+     * @param $shortcode
+     * @param $callback_function
+     * @return mixed
+     */
     public static function metashortcode_shortcode_to_wphead($posts, $shortcode, $callback_function)
     {
         if (empty($posts)) {
