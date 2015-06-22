@@ -417,7 +417,7 @@ class Impressum_Manager_Impressum
         }
 
         if (!empty ($result)) {
-            $result = __("<h2>Quellenangaben für die verwendeten Bilder und Grafiken:</h2>", SLUG) . $result;
+            $result = "<h2>" . __("Quellenangaben für die verwendeten Bilder und Grafiken:", SLUG) . "</h2>" . $result;
         }
 
         return $result;

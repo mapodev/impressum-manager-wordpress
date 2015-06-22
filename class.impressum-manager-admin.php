@@ -657,7 +657,6 @@ class Impressum_Manager_Admin
         register_setting("impressum-manager-policy_group", "impressum_manager_extra_field");
         register_setting("impressum-manager-policy_group", "impressum_manager_noindex");
         register_setting("impressum-manager-policy_group", "impressum_manager_show_email_as_image");
-
         register_setting("impressum-manager-settings-group", "impressum_manager_person");
         register_setting("impressum-manager-settings-group", "impressum_manager_form_of_organization");
         register_setting("impressum-manager-settings-group", "impressum_manager_name_company");
@@ -670,28 +669,21 @@ class Impressum_Manager_Admin
         register_setting("impressum-manager-settings-group", "impressum_manager_email");
         register_setting("impressum-manager-settings-group", "impressum_manager_disclaimer");
         register_setting("impressum-manager-settings-group", "impressum_manager_phone");
-
         register_setting("impressum-manager-settings-group", "impressum_manager_authorized_person");
         register_setting("impressum-manager-settings-group", "impressum_manager_vat");
         register_setting("impressum-manager-settings-group", "impressum_manager_register");
 	    register_setting("impressum-manager-settings-group", "impressum_manager_register_court");
         register_setting("impressum-manager-settings-group", "impressum_manager_registenr");
-
 	    register_setting("impressum-manager-settings-group", "impressum_manager_surveillance_authority");
-
 	    register_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession_checked");
         register_setting("impressum-manager-settings-group", "impressum_manager_regulated_profession");
         register_setting("impressum-manager-settings-group", "impressum_manager_state");
         register_setting("impressum-manager-settings-group", "impressum_manager_state_rules");
         register_setting("impressum-manager-settings-group", "impressum_manager_chamber");
 	    register_setting("impressum-manager-settings-group", "impressum_manager_rules_link");
-
 	    register_setting("impressum-manager-settings-group", "impressum_manager_image_source");
-
         register_setting("impressum-manager-settings-group", "impressum_manager_responsible_persons");
-
         register_setting("impressum-manager-settings-group", "impressum_manager_press_content");
-
 	    register_setting("impressum-manager-settings-group", "impressum_manager_professional_liability_insurance_checked");
 	    register_setting("impressum-manager-settings-group", "impressum_manager_name_and_adress");
 	    register_setting("impressum-manager-settings-group", "impressum_manager_space_of_appliance");
