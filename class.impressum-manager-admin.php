@@ -249,6 +249,14 @@ class Impressum_Manager_Admin
         "ZW" => "Zimbabwe"
     );
 
+    /**
+     * Initialisator for the Admin Interface.
+     * Draws the Option Page for Impressum Manager.
+     * Also starts all kind of hooks, which are needed to run
+     * the plugin.
+     *
+     * @since 1.0.0
+     */
     public static function init()
     {
         if (array_key_exists("dismiss", $_REQUEST)) {
@@ -261,16 +269,26 @@ class Impressum_Manager_Admin
         add_action('admin_init', array('Impressum_Manager_Admin', 'admin_init'));
         add_action('admin_menu', array('Impressum_Manager_Admin', 'add_menu'));
         add_action('admin_notices', array('Impressum_Manager_Admin', 'installation_notice'));
-        add_action('wp_ajax_impressum_manager_delete_options', array('Impressum_Manager_Admin', 'delete_callback'));
         add_action('wp_ajax_impressum_manager_get_impressum_field', array(
             'Impressum_Manager_Admin',
             'editor_ajax_callback'
         ));
     }
 
-    // Fields for credentials which will be summed up in the impressum
+    /**
+     * Used for the Filter for adding an extra field for
+     * image post meta data. Adds an extra field for the
+     * image source values.
+     *
+     * @since 1.0.0
+     *
+     * @param $form_fields
+     * @param $post
+     * @return mixed
+     */
     public static function field_credit($form_fields, $post)
     {
+        // Fields for credentials which will be summed up in the impressum
         $form_fields['impressum-manager-image-credential'] = array(
             'label' => __('Urheber vom Bild'),
             'input' => 'text',
@@ -280,6 +298,15 @@ class Impressum_Manager_Admin
         return $form_fields;
     }
 
+    /**
+     * Save method for the extra field in the image post meta data.
+     *
+     * @since 1.0.0
+     *
+     * @param $post
+     * @param $attachment
+     * @return mixed
+     */
     public static function field_credit_save($post, $attachment)
     {
         if (isset($attachment['impressum-manager-image-credential']))
@@ -288,6 +315,13 @@ class Impressum_Manager_Admin
         return $post;
     }
 
+    /**
+     * After installation a notice bar will be shown
+     * to get into the onboarding of the impressum manager.
+     * Will be dismissed once the onboarding was entered.
+     *
+     * @since 1.0.0
+     */
     public static function installation_notice()
     {
         $request = $_SERVER['REQUEST_URI'];
@@ -303,16 +337,13 @@ class Impressum_Manager_Admin
     }
 
     /**
-     * ajax response for DEV options
-     * TODO: Delete before release to Wordpress
+     * Callback for getting the values
+     * for the editor. Loading the text values with
+     * ajax call. So the text can be load async
+     * into the wysiwyg editor.
+     *
+     * @since 1.0.0
      */
-    public static function delete_callback()
-    {
-        echo "OK";
-        require_once plugin_dir_path(__FILE__) . "uninstall.php";
-        die();
-    }
-
     public static function editor_ajax_callback()
     {
         $key = esc_attr($_POST['key']);
@@ -322,6 +353,14 @@ class Impressum_Manager_Admin
         die();
     }
 
+    /**
+     * Helper method for getting values from the database.
+     *
+     * @since 1.0.0
+     *
+     * @param $key
+     * @return mixed
+     */
     public static function get_db_content($key)
     {
         global $wpdb;
@@ -336,7 +375,12 @@ class Impressum_Manager_Admin
         return $result;
     }
 
-
+    /**
+     * Admin Interface Initialization.
+     * Called by a hook.
+     *
+     * @since 1.0.0
+     */
     public static function admin_init()
     {
         self::register_settings();
@@ -346,6 +390,12 @@ class Impressum_Manager_Admin
         wp_enqueue_script('tiny_mce');
     }
 
+    /**
+     * Adding option page to the settings menu.
+     * Called by a hook.
+     *
+     * @since 1.0.0
+     */
     public static function add_menu()
     {
         $hook = add_options_page("Impressum Manager", 'Impressum Manager', 'manage_options', SLUG, array(
@@ -355,6 +405,12 @@ class Impressum_Manager_Admin
         add_action('load-' . $hook, array('Impressum_Manager_Admin', 'add_help_tab'));
     }
 
+    /**
+     * Adding the help tab on the upper right of the screen.
+     * Contains all the helpful information for the plugin.
+     *
+     * @since 1.0.0
+     */
     public static function add_help_tab()
     {
         $current_screen = get_current_screen();
@@ -396,11 +452,23 @@ class Impressum_Manager_Admin
         );
     }
 
+    /**
+     * Returns the Page Url of the plugin section.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
     public static function get_page_url()
     {
 	    return admin_url("options-general.php") . "?page=" . SLUG;
     }
 
+    /**
+     * Displaying the Admin Interface.
+     *
+     * @since 1.0.0
+     */
     public static function show()
     {
         $skip_start = false;
@@ -424,6 +492,11 @@ class Impressum_Manager_Admin
         }
     }
 
+    /**
+     * Displaying the Tutorial Page
+     *
+     * @since 1.0.0
+     */
     private static function display_tutorial_page()
     {
 
@@ -508,6 +581,11 @@ class Impressum_Manager_Admin
         }
     }
 
+    /**
+     * Displaying the Configurations Page
+     *
+     * @since 1.0.0
+     */
     private static function display_config_page()
     {
         ?>
@@ -568,6 +646,13 @@ class Impressum_Manager_Admin
     <?php
     }
 
+    /**
+     * Registering all the settings for the options.
+     * All the keys will be saved into the options table
+     * in the database.
+     *
+     * @since 1.0.0
+     */
     public static function register_settings()
     {
         register_setting("impressum-manager-policy_group", "impressum_manager_disclaimer");
@@ -625,6 +710,14 @@ class Impressum_Manager_Admin
 
     }
 
+    /**
+     * Helper method for saving an option.
+     *
+     * @since 1.0.0
+     *
+     * @param $name
+     * @param $val
+     */
     public static function save_option($name, $val)
     {
         if (get_option($name) !== false) {
