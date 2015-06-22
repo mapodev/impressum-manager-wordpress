@@ -31,7 +31,15 @@ defined('ABSPATH') or die('No script kiddies please!');
 class Impressum_Manager_Impressum
 {
 
-
+    /**
+     * The Impressum itself. Will be called by the [impressum_manager] shortcode
+     * and draws the complete Impressum, including policy, disclaimer, contact,
+     * image sources and all this stuff. Also includes the brand tag.
+     *
+     * @since 1.0.0
+     *
+     * @return mixed
+     */
     public function get_impressum()
     {
         $_source = __("<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG);
@@ -70,6 +78,15 @@ class Impressum_Manager_Impressum
         return do_shortcode($impressum);
     }
 
+    /**
+     * get_address returns the whole address string, which includes the company or name,
+     * the address itself with the address extra and the place and zip of the company
+     * or person.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
     public function get_address()
     {
 
@@ -104,6 +121,15 @@ class Impressum_Manager_Impressum
         return $result;
     }
 
+    /**
+     * get_contact will return the full contact string which includes the phone, fax and email.
+     * E-Mail will be either shown as string or image. This option can be set in the
+     * settings view.
+     *
+     * @since 1.0.0
+     *
+     * @return string - the contact output
+     */
     public function get_contact()
     {
 
@@ -132,6 +158,13 @@ class Impressum_Manager_Impressum
         return $result;
     }
 
+    /**
+     * Returns all the authorized persons which are set in the settings view.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
     public function get_authorized_person()
     {
 
@@ -146,6 +179,14 @@ class Impressum_Manager_Impressum
         return $result;
     }
 
+    /**
+     * Returns the full register values. To this, the register itself,
+     * the cour and the register number are returned from this function.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
     public function get_register()
     {
 
@@ -197,10 +238,15 @@ class Impressum_Manager_Impressum
         return $result;
     }
 
+    /**
+     * Retuns the value added tax number. Can be set in the settings.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
     public function get_vat()
     {
-
-
         $result = "";
 
         $vat = get_option("impressum_manager_vat");
@@ -212,6 +258,13 @@ class Impressum_Manager_Impressum
         return $result;
     }
 
+    /**
+     * Returns the regulatory authority. Can be set in the general/settings view.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
     public function get_regulatory_authority()
     {
 
@@ -260,6 +313,14 @@ class Impressum_Manager_Impressum
         return $result;
     }
 
+    /**
+     * Returns the professional liability insurance. Will be set in the settings/general view or
+     * in the onboarding process.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
     public function get_professional_liability_insurance()
     {
 
@@ -281,7 +342,13 @@ class Impressum_Manager_Impressum
         return $result;
     }
 
-    // journalistisch-redaktionelle Inhalte
+    /**
+     * Returns all the responsible persons for the website.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
     public function get_responsible_person()
     {
         $result = "";
@@ -295,6 +362,16 @@ class Impressum_Manager_Impressum
         return $result;
     }
 
+    /**
+     * Retuns a nl2br string of all names added to each post image.
+     * Each Image of a post has the possibility to add a name into an extra field
+     * which can be used to credit the image creator. For example the creators of
+     * fotolia.com
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
     public function get_image_sources()
     {
 
@@ -349,6 +426,15 @@ class Impressum_Manager_Impressum
         return $result;
     }
 
+    /**
+     * Returns the disclaimer of the website.
+     * Can be edited in the wysiwyg editor in the impressum fields view.
+     * Standard value is set in the activation hook and saved in the database.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
     public function get_disclaimer()
     {
         $result = "";
@@ -360,6 +446,15 @@ class Impressum_Manager_Impressum
         return $result;
     }
 
+    /**
+     * Returns the privacy policy of the website.
+     * Can be edited in the wysiwyg editor in the impressum fields view.
+     * Standard value is set in the activation hook and saved in the database.
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
     public function get_privacy_policy()
     {
 
@@ -391,6 +486,9 @@ class Impressum_Manager_Impressum
         return $result;
     }
 
+    /**
+     * @return string
+     */
     public function get_extra_field()
     {
         $result = "";
