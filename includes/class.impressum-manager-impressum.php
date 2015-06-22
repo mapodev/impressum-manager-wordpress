@@ -1,32 +1,29 @@
 <?php
 
 defined('ABSPATH') or die('No script kiddies please!');
-
-
-@define(ADDRESS_HEADER, 'address_header');
-@define(ADRESS_CONTACT, 'address_contact');
-@define(ADDRESS_TELEPHONE, 'address_telephone');
-@define(ADDRESS_TELEFAX, 'address_telefax');
-@define(ADDRESS_EMAIL, 'address_email');
-@define(REGISTER_HEADER, 'register_header');
-@define(REGISTER_ENTRY, 'register_entry');
-@define(REGISTER_NUMBER, 'register_number');
-@define(REGISTER_CHAMBER, 'register_chamber');
-@define(VAT, 'vat');
-@define(CONTROL_CHAMBER, 'control_chamber');
-@define(IMAGE_SOURCES, 'image_sources');
-// authorized persons
-@define(REPRESENTED_BY, 'represented_by');
-@define(RESPONSIBLE_PERSON, 'responsible_person');
-@define(DISCLAIMER, 'disclaimer');
-@define(POLICY_HEADER, 'policy_header');
-@define(POLICY_GENERAL, 'policy_general');
-@define(POLICY_FACEBOOK, 'policy_facebook');
-@define(POLICY_ANALYTICS, 'policy_analytics');
-@define(POLICY_ADSENSE, 'policy_adsense');
-@define(POLICY_GOOGLE_PLUS, 'policy_google_plus');
-@define(POLICY_TWITTER, 'policy_twitter');
-@define(POLICY_END, 'policy_end');
+define('ADDRESS_HEADER', 'address_header');
+define('ADRESS_CONTACT', 'address_contact');
+define('ADDRESS_TELEPHONE', 'address_telephone');
+define('ADDRESS_TELEFAX', 'address_telefax');
+define('ADDRESS_EMAIL', 'address_email');
+define('REGISTER_HEADER', 'register_header');
+define('REGISTER_ENTRY', 'register_entry');
+define('REGISTER_NUMBER', 'register_number');
+define('REGISTER_CHAMBER', 'register_chamber');
+define('VAT', 'vat');
+define('CONTROL_CHAMBER', 'control_chamber');
+define('IMAGE_SOURCES', 'image_sources');
+define('REPRESENTED_BY', 'represented_by');
+define('RESPONSIBLE_PERSON', 'responsible_person');
+define('DISCLAIMER', 'disclaimer');
+define('POLICY_HEADER', 'policy_header');
+define('POLICY_GENERAL', 'policy_general');
+define('POLICY_FACEBOOK', 'policy_facebook');
+define('POLICY_ANALYTICS', 'policy_analytics');
+define('POLICY_ADSENSE', 'policy_adsense');
+define('POLICY_GOOGLE_PLUS', 'policy_google_plus');
+define('POLICY_TWITTER', 'policy_twitter');
+define('POLICY_END', 'policy_end');
 
 class Impressum_Manager_Impressum
 {
