@@ -414,10 +414,7 @@ class Impressum_Manager_Admin
 
     public static function get_page_url()
     {
-
-        $url = admin_url("options-general.php") . "?page=" . SLUG;
-
-        return $url;
+	    return admin_url("options-general.php") . "?page=" . SLUG;
     }
 
     public static function show()
