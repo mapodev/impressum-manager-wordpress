@@ -612,20 +612,20 @@ class Impressum_Manager_Admin
                 ?>
                 <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
                     <a class="nav-tab nav-tab-active" id="settings-tab" href="#settings-tab-j"><?= __("General", SLUG) ?></a>
+	                <a class="nav-tab" id="settings2-tab" href="#settings2-tab-j"><?= __("Kontaktdaten", SLUG) ?></a>
                     <a class="nav-tab" id="fields-tab" href="#fields-tab-j"><?= __("Impressum Fields", SLUG) ?></a>
-                    <a class="nav-tab" id="settings2-tab" href="#settings2-tab-j"><?= __("Kontaktdaten", SLUG) ?></a>
                     <a class="nav-tab" id="preview-tab" href="#preview-tab-j"><?= __("Preview", SLUG) ?></a>
                 </h2>
 
                 <div class="settings-tab tab" style="display: none;">
                     <?php include(plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-general-tab.php") ?>
                 </div>
-                <div class="fields-tab tab" style="display:none;">
-                    <?php include(plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-fields-tab.php") ?>
-                </div>
                 <div class="settings2-tab tab" style="display:none;">
                     <?php include(plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-settings-tab.php") ?>
                 </div>
+	            <div class="fields-tab tab" style="display:none;">
+		            <?php include(plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-fields-tab.php") ?>
+	            </div>
                 <div class="preview-tab tab" style="display:none;">
                     <?php include(plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-preview-tab.php") ?>
                 </div>
