@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Impressum Manager\n"
-"POT-Creation-Date: 2015-06-24 20:25+0100\n"
-"PO-Revision-Date: 2015-06-24 20:27+0100\n"
+"POT-Creation-Date: 2015-06-24 21:17+0100\n"
+"PO-Revision-Date: 2015-06-24 21:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -270,12 +270,12 @@ msgid "Lass die Impressum Seite nicht von Suchmaschinen indexieren."
 msgstr "Lass die Impressum Seite nicht von Suchmaschinen indexieren."
 
 #: includes/views/class.impressum-manager-form-factory.php:62
-msgid "E-Mail as Image"
+msgid "E-Mail als Bild"
 msgstr "E-Mail als Bild"
 
 #: includes/views/class.impressum-manager-form-factory.php:67
-msgid "Show E-Mail as Image to prevent Spam."
-msgstr "Zeige die E-Mail als ein Bild um Spam vorzubeugen."
+msgid "Zeige E-Mail als Bild um Spam zu vermeiden"
+msgstr "Zeige E-Mail als Bild um Spam zu vermeiden"
 
 #: includes/views/class.impressum-manager-form-factory.php:81
 msgid "Impressum Inhalt Einstellungen"
@@ -543,7 +543,6 @@ msgstr ""
 "machen, indem du ..."
 
 #: includes/views/impressum-manager-start.php:52
-#: includes/views/tabs/impressum-manager-general-tab.php:17
 msgid "Impressum konfigurieren"
 msgstr "Impressum konfigurieren"
 
@@ -571,7 +570,7 @@ msgstr "Update Impressum Fields"
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: includes/views/tabs/impressum-manager-general-tab.php:32
+#: includes/views/tabs/impressum-manager-general-tab.php:22
 #: includes/views/tabs/impressum-manager-settings-tab.php:23
 msgid "Impressum aktualisieren"
 msgstr "Impressum aktualisieren"
@@ -591,6 +590,9 @@ msgstr "Schritt zurück"
 #: includes/views/tutorial/impressum-manager-tutorial-page4.php:17
 msgid "Impressum speichern"
 msgstr "Impressum speichern"
+
+#~ msgid "Show E-Mail as Image to prevent Spam."
+#~ msgstr "Zeige die E-Mail als ein Bild um Spam vorzubeugen."
 
 #~ msgid ""
 #~ "Es gibt die Möglichkeit die gespeicherten Werte in den Settings überall "

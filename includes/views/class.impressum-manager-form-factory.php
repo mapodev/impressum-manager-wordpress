@@ -59,12 +59,12 @@ public static function get_source_from() {
 		</td>
 	</tr>
 	<tr>
-		<th scope="row"><?= __( "E-Mail as Image", SLUG ) ?></th>
+		<th scope="row"><?= __( "E-Mail als Bild", SLUG ) ?></th>
 		<td>
 			<label for="impressum_manager_show_email_as_image">
 				<input id="impressum_manager_show_email_as_image" type="checkbox"
 				       name="impressum_manager_show_email_as_image" <?= checked( "on", get_option( "impressum_manager_show_email_as_image" ), false ) ?>>
-				<?= __( "Show E-Mail as Image to prevent Spam.", SLUG ) ?>
+				<?= __( "Zeige E-Mail als Bild um Spam zu vermeiden", SLUG ) ?>
 			</label>
 		</td>
 	</tr>
