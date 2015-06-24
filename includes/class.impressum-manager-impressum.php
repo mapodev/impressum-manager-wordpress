@@ -69,7 +69,15 @@ class Impressum_Manager_Impressum
         $impressum .= $this->get_extra_field();
 
         if (!empty($impressum)) {
-            $impressum = "<h2>Angaben gemäß § 5 TMG:</h2>" . $impressum . "<br><br>" . $_source . $_plugin_by;
+            $impressum = "<h2>Angaben gemäß § 5 TMG:</h2>" . $impressum;
+
+	        if(get_option("impressum_manager_source_from") == true){
+		        $impressum = $impressum . $_source;
+	        }
+
+	        if(get_option("impressum_manager_powered_by") == true){
+		        $impressum = $impressum . $_plugin_by;
+	        }
         }
 
         return do_shortcode($impressum);

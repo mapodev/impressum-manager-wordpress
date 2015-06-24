@@ -24,7 +24,14 @@ function impressum_manager_install_activate()
 
     add_option("impressum_manager_db_version", "1.0");
 
+	impressum_manager_pre_set_fields();
+
     impressum_manager_insert_data();
+}
+
+function impressum_manager_pre_set_fields(){
+	Impressum_Manager_Admin::save_option("impressum_manager_powered_by", true);
+	Impressum_Manager_Admin::save_option("impressum_manager_source_from", true);
 }
 
 function impressum_manager_insert_data()

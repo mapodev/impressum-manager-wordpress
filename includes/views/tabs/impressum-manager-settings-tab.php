@@ -1,6 +1,6 @@
 <form method="post" action="options.php">
-	<?php settings_fields( 'impressum-manager-settings-group' ); ?>
-	<?php do_settings_sections( 'impressum-manager-settings-group' ); ?>
+	<?php settings_fields( 'impressum-manager-settings' ); ?>
+	<?php do_settings_sections( 'impressum-manager-settings' ); ?>
 	<table class="form-table" id="settings-options">
 		<?php Impressum_Manager_Form_Factory::get_person_type(); ?>
 		<?php Impressum_Manager_Form_Factory::get_legal_form(); ?>
