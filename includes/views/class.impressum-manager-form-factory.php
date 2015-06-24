@@ -3,7 +3,6 @@
 class Impressum_Manager_Form_Factory {
 
 	// overall configs
-
 	public static function get_powered_by() {
 
 		echo '' ?>
