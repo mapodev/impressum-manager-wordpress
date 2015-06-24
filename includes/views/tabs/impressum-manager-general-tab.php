@@ -7,16 +7,6 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 }
 
 ?>
-<p>
-<form action="<?php Impressum_Manager_Admin::get_page_url() ?>">
-	<input type="hidden" name="page" value="<?= SLUG ?>">
-	<input type="hidden" name="view" value="tutorial"/>
-	<input type="hidden" name="step" value="1"/>
-	<input type="hidden" name="skip_start_temp" value="true">
-	<input class="button button-primary" type="submit" id="configure_impressum"
-	       value="<?= _e('Impressum konfigurieren') ?>">
-</form>
-</p>
 
 <form method="post" action="options.php">
 	<?php settings_fields( 'impressum-manager-settings' ); ?>
