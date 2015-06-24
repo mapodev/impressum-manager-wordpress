@@ -29,7 +29,7 @@ spam mails by parsing the website through a bot.
 
 No questions asked yet.
 
-Questions can be asked anytime at 
+Questions can be asked anytime at info@impressum-manager.com
 
 == Changelog ==
 
