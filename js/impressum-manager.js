@@ -5,7 +5,6 @@
 
         $(".nav-tab").click(function () {
             triggerTab(this, $(this).attr("id"));
-            console.log("test");
         });
 
         if (hash.length) {

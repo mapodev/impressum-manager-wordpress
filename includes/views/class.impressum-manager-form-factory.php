@@ -7,7 +7,7 @@ class Impressum_Manager_Form_Factory {
 
 		echo '' ?>
 		<tr>
-			<th scope="row"><?= __( "Text für powered by", SLUG ) ?></th>
+			<th scope="row"><?= __( "Powered by Link", SLUG ) ?></th>
 			<td>
 				<label for="impressum_manager_powered_by">
 					<input id="impressum_manager_powered_by" type="checkbox"
@@ -16,7 +16,7 @@ class Impressum_Manager_Form_Factory {
 						if ( get_option( 'impressum_manager_powered_by' ) == true ) {
 							echo "checked='checked'";
 						} ?>>
-					<?= __( "Beschreibung für powered by", SLUG ) ?>
+					<?= __( "Blende den Powered By Link von Impressum Manager aus", SLUG ) ?>
 				</label>
 			</td>
 		</tr>
@@ -26,7 +26,7 @@ class Impressum_Manager_Form_Factory {
 public static function get_source_from() {
 	echo '' ?>
 	<tr>
-		<th scope="row"><?= __( "Text für source_from", SLUG ) ?></th>
+		<th scope="row"><?= __( "eRecht24 Link", SLUG ) ?></th>
 		<td>
 			<label for="impressum_manager_source_from">
 				<input id="impressum_manager_source_from" type="checkbox"
@@ -36,7 +36,7 @@ public static function get_source_from() {
 					if ( get_option( 'impressum_manager_source_from' ) == true ) {
 						echo "checked='checked'";
 					} ?>>
-				<?= __( "Beschreibung für source_from", SLUG ) ?>
+				<?= __( "Blende den Link von eRecht24 aus. Vorsicht: Hierbei kann es zu rechtlichen Schäden führen.", SLUG ) ?>
 			</label>
 		</td>
 	</tr>
