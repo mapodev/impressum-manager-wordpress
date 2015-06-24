@@ -616,7 +616,6 @@ class Impressum_Manager_Admin
                     <a class="nav-tab" id="fields-tab" href="#fields-tab-j"><?= __("Impressum Fields", SLUG) ?></a>
                     <a class="nav-tab" id="preview-tab" href="#preview-tab-j"><?= __("Preview", SLUG) ?></a>
                 </h2>
-
                 <div class="settings-tab tab" style="display: none;">
                     <?php include(plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-general-tab.php") ?>
                 </div>
