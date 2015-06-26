@@ -15,9 +15,6 @@ $content = do_shortcode( '[impressum_manager]' );
 ?>
 
 
-
-
-
 <div class="wrap">
 	<h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
 

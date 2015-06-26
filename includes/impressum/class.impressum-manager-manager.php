@@ -18,10 +18,8 @@ class Impressum_Manager_Manager {
 	private function __clone() {
 	}
 
-
-
 	public function get_impressum() {
-		$impressum = new Impressum_Manager_Impressum();
+		$impressum = Impressum_Manager_Factory::create_impressum();
 
 		return $impressum;
 	}
