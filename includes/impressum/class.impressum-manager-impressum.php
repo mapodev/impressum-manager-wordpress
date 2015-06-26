@@ -36,7 +36,7 @@ class Impressum_Manager_Impressum {
 	 *
 	 * @return mixed
 	 */
-	public function get_impressum() {
+	public function get_content() {
 		$_source    = __( "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG );
 		$_plugin_by = __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG );
 

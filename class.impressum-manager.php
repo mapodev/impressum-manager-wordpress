@@ -76,20 +76,24 @@ class Impressum_Manager
      */
     public static function content_shortcode($atts)
     {
+	    $impressum = Impressum_Manager_Manager::getInstance()->get_impressum();
+
         if (!empty($atts)) {
 
             $vals = strtolower($atts["type"]);
             $result = "";
 
+
+
             if (isset($atts['type'])) {
                 if ($vals == "datenschutz" || $vals == "privacy policy") {
-                    $result = Impressum_Manager_Factory::create_privacy_policy();
+                    $result = $impressum->get_privacy_policy();
                 } else if ($vals == "haftungsausschluss" || $vals == "disclaimer") {
-                    $result = Impressum_Manager_Factory::create_disclaimer();
+                    $result = $impressum->get_disclaimer();
                 } else if ($vals == "kontakt" || $vals == "contact") {
-                    $result = Impressum_Manager_Factory::create_contact();
+                    $result = $impressum->get_contact();
                 } else if ($vals == "bildquellen" || $vals == "image sources") {
-                    $result = Impressum_Manager_Factory::create_image_sources();
+                    $result = $impressum->get_image_sources();
                 }
             } else {
 
@@ -212,7 +216,7 @@ class Impressum_Manager
             return $result;
         }
 
-        return Impressum_Manager_Factory::create_impressum();
+        return $impressum->get_content();
     }
 
     /**
