@@ -271,6 +271,10 @@ class Impressum_Manager_Admin {
 			'Impressum_Manager_Admin',
 			'editor_ajax_callback'
 		) );
+        add_action( 'wp_ajax_impressum_manager_get_shortcode_preview', array(
+            'Impressum_Manager_Admin',
+            'shortcode_preview_ajax_callback'
+        ));
 	}
 
 	/**
@@ -342,13 +346,24 @@ class Impressum_Manager_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function editor_ajax_callback() {
-		$key = esc_attr( $_POST['key'] );
+    public static function editor_ajax_callback()
+    {
+        $key = esc_attr($_POST['key']);
 
-		echo self::get_db_content( $key );
+        echo self::get_db_content($key);
 
-		die();
-	}
+        die();
+    }
+
+    public static function shortcode_preview_ajax_callback()
+    {
+        $shortcode = 'impressum_manager';
+        add_shortcode($shortcode, array('Impressum_Manager', 'content_shortcode'));
+
+        $shortcode = esc_attr($_POST['shortcode_key']);
+        echo do_shortcode("[impressum_manager type='{$shortcode}']");
+        die();
+    }
 
 	/**
 	 * Helper method for getting values from the database.
@@ -502,8 +517,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	private
-	static function display_tutorial_page() {
+	private static function display_tutorial_page() {
 
 		switch ( @$_GET['step'] ) {
 			case 1:

@@ -27,7 +27,6 @@ class Impressum_Manager
         self::$initiated = true;
 
         add_action('the_posts', array('Impressum_Manager', 'metashortcode'));
-        add_shortcode("impressum_manager_setting", array('Impressum_Manager', 'var_shortcode'));
     }
 
     /**
@@ -79,10 +78,8 @@ class Impressum_Manager
 	    $impressum = Impressum_Manager_Manager::getInstance()->get_impressum();
         if (!empty($atts)) {
 
-            $vals = strtolower($atts["type"]);
+            $vals = strtolower(@$atts["type"]);
             $result = "";
-
-
 
             if (isset($atts['type'])) {
                 if ($vals == "datenschutz" || $vals == "privacy policy") {

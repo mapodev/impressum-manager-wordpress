@@ -53,13 +53,32 @@ $content = do_shortcode( '[impressum_manager]' );
 	<?php
 	} else {
 		?>
+        <script>
+            (function($){
+                $(document).ready(function() {
+                    $("#impressum_shortcode_preview").change(function() {
+                        var data = {
+                            'action': 'impressum_manager_get_shortcode_preview',
+                            'shortcode_key': $(this).val()
+                        };
+
+                        $.post(ajaxurl, data, function(data) {
+                            $("#impressum-preview-content").html(data);
+                        });
+                    });
+                })
+            }(jQuery));
+        </script>
 		<div class="nbox">
 			<div class="box-preview">
 				<div class="box-preview-header">
 					<h3><?= __( 'Wähle einen shortcode aus und schau dir die Vorschau an! ', SLUG );?></h3><br><br>
 					<?= __( 'Shortcode: ', SLUG ) ?>
-					<select name="impressum_key" id="impressum_change">
-						<!-- ... -->
+					<select name="impressum_shortcode_preview" id="impressum_shortcode_preview">
+						<option value="privacy policy">privacy policy</option>
+                        <option value="disclaimer">disclaimer</option>
+                        <option value="contact">contact</option>
+                        <option value="image sources">image sources</option>
 					</select>
 				</div>
 				<div class="box-preview-buttons">
