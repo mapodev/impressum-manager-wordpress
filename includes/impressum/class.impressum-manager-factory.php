@@ -380,7 +380,10 @@ class Impressum_Manager_Factory {
 
         $query_images = new WP_Query( $query_images_args );
         foreach ( $query_images->posts as $image) {
-            $creds[ $i ++ ] = trim(strip_tags(get_post_meta( $image->ID, 'impressum_manager_image_credential', true )));
+            $cred = trim(strip_tags(get_post_meta( $image->ID, 'impressum_manager_image_credential', true )));
+            if(!empty($cred)) {
+                $creds[ $i ++ ] = $cred;
+            }
         }
 
 		$creds = array_unique( $creds );
