@@ -76,16 +76,19 @@ $content = do_shortcode( '[impressum_manager]' );
 					<?= __( 'Shortcode: ', SLUG ) ?>
 					<select name="impressum_shortcode_preview" id="impressum_shortcode_preview">
 						<?php
+
+						echo "<option value='impressum_manager'>all</option>";
+
 						$impressum = Impressum_Manager_Manager::getInstance()->get_impressum();
+						$it = $impressum->getIterator();
 
-
+						foreach($it as $value) {
+							$shortcode = $value->get_shortcode();
+							$name = $value->get_name();
+							echo "<option value=$shortcode>$name</option>";
+						}
 
 						?>
-
-						<option value="privacy policy">privacy policy</option>
-                        <option value="disclaimer">disclaimer</option>
-                        <option value="contact">contact</option>
-                        <option value="image sources">image sources</option>
 					</select>
 				</div>
 				<div class="box-preview-buttons">

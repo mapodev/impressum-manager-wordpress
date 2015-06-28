@@ -9,6 +9,10 @@ abstract class Impressum_Manager_AImpressum implements IteratorAggregate {
 	abstract function add(Impressum_Manager_AImpressum $unit);
 	abstract function remove(Impressum_Manager_AImpressum $unit);
 	abstract function draw();
+
+	abstract function get_shortcode();
+	abstract function get_name();
+
 	protected abstract function getImpressum();
 
 	protected function set_parent(Impressum_Manager_AImpressum $unit)
@@ -28,7 +32,6 @@ abstract class Impressum_Manager_AImpressum implements IteratorAggregate {
 
 	public function getIterator()
 	{
-		return new Impressum_Manager_Null_Iterator();
+		return new EmptyIterator();
 	}
-
 }

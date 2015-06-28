@@ -37,38 +37,38 @@ class Impressum_Manager_Factory {
 
 		$impressum = new Impressum_Manager_Impressum();
 
-		$impressum->add( new Impressum_Manager_Textunit( 'impressum title', __( "<h2>Angaben gemäß § 5 TMG:</h2>", SLUG ) ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'impressum title', __( "Impressum Titel", SLUG ), __( "<h2>Angaben gemäß § 5 TMG:</h2>", SLUG ) ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'address' , self::get_address() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'address' , __( "address", SLUG ), self::get_address() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'authorized_person' , self::get_authorized_person() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'authorized_person' , __( "authorized person", SLUG ), self::get_authorized_person() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'contact' ,self::get_contact() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'contact' , __( "contact", SLUG ), self::get_contact() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'register' ,self::get_register() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'register' , __( "register", SLUG ), self::get_register() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'vat' ,self::get_vat() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'vat' , __( "vat", SLUG ), self::get_vat() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'regulatory_authority' ,self::get_regulatory_authority() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'regulatory_authority' , __( "regulatory authority", SLUG ), self::get_regulatory_authority() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'professional_liability_insurance' ,self::get_professional_liability_insurance() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'professional_liability_insurance' , __( "professional liability insurance", SLUG ), self::get_professional_liability_insurance() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'responsible_person' ,self::get_responsible_person() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'responsible_person' , __( "responsible person", SLUG ), self::get_responsible_person() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'image_sources' ,self::get_image_sources() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'image_sources' , __( "image sources", SLUG ), self::get_image_sources() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'disclaimer' ,self::get_disclaimer() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'disclaimer' , __( "disclaimer", SLUG ), self::get_disclaimer() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'privacy_policy' ,self::get_privacy_policy() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'privacy_policy' , __( "privacy policy", SLUG ), self::get_privacy_policy() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'extra_field' ,self::get_extra_field() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'extra_field' , __( "extra field", SLUG ), self::get_extra_field() ) );
 
 		if ( get_option( "impressum_manager_source_from" ) == true ) {
-			$impressum->add( new Impressum_Manager_Textunit( 'source', $_source ) );
+			$impressum->add( new Impressum_Manager_Textunit( 'source', __( "source", SLUG ),  $_source ) );
 		}
 
 		if ( get_option( "impressum_manager_powered_by" ) == true ) {
-			$impressum->add( new Impressum_Manager_Textunit( 'plugin by', $_plugin_by ) );
+			$impressum->add( new Impressum_Manager_Textunit( 'plugin by', __( "plugin by", SLUG ),  $_plugin_by ) );
 		}
 
 		return $impressum;

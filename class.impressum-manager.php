@@ -82,16 +82,15 @@ class Impressum_Manager
             $result = "";
 
             if (isset($atts['type'])) {
-                if ($vals == "datenschutz" || $vals == "privacy policy") {
+                if ($vals == "datenschutz" || $vals == "privacy_policy") {
                     //$result = $impressum->get_privacy_policy();
-
-
-
+					$result .= "privacy policy";
                 } else if ($vals == "haftungsausschluss" || $vals == "disclaimer") {
 	                //$result = $impressum->get_disclaimer();
+	                $result .= "disclaimer";
                 } else if ($vals == "kontakt" || $vals == "contact") {
 	                //$result = $impressum->get_contact();
-                } else if ($vals == "bildquellen" || $vals == "image sources") {
+                } else if ($vals == "bildquellen" || $vals == "image_sources") {
 	                //$result = $impressum->get_image_sources();
                 }
             } else {
@@ -215,17 +214,9 @@ class Impressum_Manager
             return $result;
         }
 
+		$result = $impressum->draw();
 
-		$result = "hallo";
-	    $it = $impressum->getIterator();
-	    foreach($it as $key => $value) {
-
-		    $result .= $key;
-		    $result .= $value;
-
-	    }
 	    return $result;
-        //return $impressum->draw();
     }
 
     /**
