@@ -91,8 +91,7 @@ class Impressum_Manager_Factory {
 	 *
 	 * @return string
 	 */
-	private
-	static function get_address() {
+	private static function get_address() {
 
 		$result = "";
 
@@ -378,33 +377,17 @@ class Impressum_Manager_Factory {
 
 		$result = "";
 
-		$post_types = get_post_types( '', 'names' );
+        $query_images_args = array(
+            'post_type' => 'attachment', 'post_mime_type' =>'image', 'post_status' => 'inherit', 'posts_per_page' => -1,
+        );
 
-		foreach ( $post_types as $post_type ) {
-			$args = array(
-				'post_type'   => $post_type,
-				'numberposts' => - 1,
-				'post_status' => null
-			);
-
-			$posts = get_posts( $args );
-
-			foreach ( $posts as $post ) {
-				$args = array(
-					'post_type'   => 'attachment',
-					'numberposts' => - 1,
-					'post_status' => null,
-					'post_parent' => $post->ID
-				);
-
-				$attachments = get_posts( $args );
-				if ( $attachments ) {
-					foreach ( $attachments as $attachment ) {
-						$creds[ $i ++ ] = trim( strip_tags( get_post_meta( $attachment->ID, 'impressum_manager_image_credential', true ) ) );
-					}
-				}
-			}
-		}
+        $query_images = new WP_Query( $query_images_args );
+        foreach ( $query_images->posts as $image) {
+            $cred = trim(strip_tags(get_post_meta( $image->ID, 'impressum_manager_image_credential', true )));
+            if(!empty($cred)) {
+                $creds[ $i ++ ] = $cred;
+            }
+        }
 
 		$creds = array_unique( $creds );
 		foreach ( $creds as $credit ) {
