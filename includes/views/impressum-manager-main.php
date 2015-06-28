@@ -75,6 +75,13 @@ $content = do_shortcode( '[impressum_manager]' );
 					<h3><?= __( 'Wähle einen shortcode aus und schau dir die Vorschau an! ', SLUG );?></h3><br><br>
 					<?= __( 'Shortcode: ', SLUG ) ?>
 					<select name="impressum_shortcode_preview" id="impressum_shortcode_preview">
+						<?php
+						$impressum = Impressum_Manager_Manager::getInstance()->get_impressum();
+
+
+
+						?>
+
 						<option value="privacy policy">privacy policy</option>
                         <option value="disclaimer">disclaimer</option>
                         <option value="contact">contact</option>

@@ -1,12 +1,13 @@
 <?php
 
-abstract class Impressum_Manager_AImpressum {
+
+
+abstract class Impressum_Manager_AImpressum implements IteratorAggregate {
 
 	protected $parent;
 
 	abstract function add(Impressum_Manager_AImpressum $unit);
 	abstract function remove(Impressum_Manager_AImpressum $unit);
-	abstract function get($int);
 	abstract function draw();
 	protected abstract function getImpressum();
 
@@ -23,6 +24,11 @@ abstract class Impressum_Manager_AImpressum {
 	protected function removeParentRef()
 	{
 		$this->parent=null;
+	}
+
+	public function getIterator()
+	{
+		return new Impressum_Manager_Null_Iterator();
 	}
 
 }

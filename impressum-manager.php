@@ -35,11 +35,8 @@ register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "impressum_
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'class.impressum-manager.php');
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/views/class.impressum-manager-form-factory.php');
 
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/class.impressum-manager-aimpressum.php');
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/class.impressum-manager-factory.php');
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/class.impressum-manager-impressum.php');
+// load the impressum manager
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/class.impressum-manager-manager.php');
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/class.impressum-manager-textunit.php');
 
 
 // Init the Impressum stuff

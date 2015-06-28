@@ -84,6 +84,9 @@ class Impressum_Manager
             if (isset($atts['type'])) {
                 if ($vals == "datenschutz" || $vals == "privacy policy") {
                     //$result = $impressum->get_privacy_policy();
+
+
+
                 } else if ($vals == "haftungsausschluss" || $vals == "disclaimer") {
 	                //$result = $impressum->get_disclaimer();
                 } else if ($vals == "kontakt" || $vals == "contact") {
@@ -212,7 +215,17 @@ class Impressum_Manager
             return $result;
         }
 
-        return $impressum->draw();
+
+		$result = "hallo";
+	    $it = $impressum->getIterator();
+	    foreach($it as $key => $value) {
+
+		    $result .= $key;
+		    $result .= $value;
+
+	    }
+	    return $result;
+        //return $impressum->draw();
     }
 
     /**

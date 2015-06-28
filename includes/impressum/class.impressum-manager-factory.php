@@ -1,6 +1,8 @@
 <?php
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
+/*
 define( 'ADDRESS_HEADER', 'address_header' );
 define( 'ADRESS_CONTACT', 'address_contact' );
 define( 'ADDRESS_TELEPHONE', 'address_telephone' );
@@ -15,6 +17,7 @@ define( 'CONTROL_CHAMBER', 'control_chamber' );
 define( 'IMAGE_SOURCES', 'image_sources' );
 define( 'REPRESENTED_BY', 'represented_by' );
 define( 'RESPONSIBLE_PERSON', 'responsible_person' );
+*/
 define( 'DISCLAIMER', 'disclaimer' );
 define( 'POLICY_HEADER', 'policy_header' );
 define( 'POLICY_GENERAL', 'policy_general' );
@@ -27,45 +30,45 @@ define( 'POLICY_END', 'policy_end' );
 
 class Impressum_Manager_Factory {
 
-	public static function create_impressum() {
+	public static function create_generated_impressum() {
 
 		$_source    = __( "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG );
 		$_plugin_by = __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG );
 
 		$impressum = new Impressum_Manager_Impressum();
 
-		$impressum->add( new Impressum_Manager_Textunit( __( "<h2>Angaben gemäß § 5 TMG:</h2>", SLUG ) ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'impressum title', __( "<h2>Angaben gemäß § 5 TMG:</h2>", SLUG ) ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_address() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'address' , self::get_address() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_authorized_person() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'authorized_person' , self::get_authorized_person() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_contact() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'contact' ,self::get_contact() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_register() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'register' ,self::get_register() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_vat() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'vat' ,self::get_vat() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_regulatory_authority() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'regulatory_authority' ,self::get_regulatory_authority() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_professional_liability_insurance() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'professional_liability_insurance' ,self::get_professional_liability_insurance() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_responsible_person() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'responsible_person' ,self::get_responsible_person() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_image_sources() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'image_sources' ,self::get_image_sources() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_disclaimer() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'disclaimer' ,self::get_disclaimer() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_privacy_policy() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'privacy_policy' ,self::get_privacy_policy() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( self::get_extra_field() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'extra_field' ,self::get_extra_field() ) );
 
 		if ( get_option( "impressum_manager_source_from" ) == true ) {
-			$impressum->add( new Impressum_Manager_Textunit( $_source ) );
+			$impressum->add( new Impressum_Manager_Textunit( 'source', $_source ) );
 		}
 
 		if ( get_option( "impressum_manager_powered_by" ) == true ) {
-			$impressum->add( new Impressum_Manager_Textunit( $_plugin_by ) );
+			$impressum->add( new Impressum_Manager_Textunit( 'plugin by', $_plugin_by ) );
 		}
 
 		return $impressum;

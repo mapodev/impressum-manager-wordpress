@@ -1,6 +1,6 @@
 <?php
 
-class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
+class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum implements IteratorAggregate {
 
 	private $units;
 
@@ -52,22 +52,8 @@ class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 		return $this;
 	}
 
-
-	function get($int){
-		if(($int > 0) && ($int <= count($this->units)))
-		{
-			return $this->units[$int-1];
-		}
-		else
-		{
-			return null;
-		}
-	}
-
 	function draw(){
 		$result = "";
-
-
 
 		foreach($this->units as $unit)
 		{
@@ -75,5 +61,11 @@ class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 		}
 		return $result;
 	}
+
+	public function getIterator()
+	{
+		return new Impressum_Manager_Impressum_Iterator($this->units);
+	}
+
 
 }
