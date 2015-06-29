@@ -275,7 +275,21 @@ class Impressum_Manager_Admin {
 			'Impressum_Manager_Admin',
 			'shortcode_preview_ajax_callback'
 		) );
+        add_action( 'wp_ajax_delete_it', array(
+            'Impressum_Manager_Admin',
+            'deletestuff'
+        ) );
 	}
+
+    /*
+     * TODO: DELETE THIS SHIT
+     */
+    public static function deletestuff() {
+        include(plugin_dir_path(__FILE__) . "uninstall.php");
+        echo "lol";
+
+        die();
+    }
 
 	/**
 	 * Used for the Filter for adding an extra field for
