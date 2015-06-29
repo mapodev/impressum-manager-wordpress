@@ -32,9 +32,7 @@ class Impressum_Manager_Factory {
 
 	public static function create_generated_impressum() {
 
-		$impressum = new Impressum_Manager_Impressum( '', '[impressum_manager]' );
-
-		$impressum->add( new Impressum_Manager_Textunit( 'impressum title', __( "Impressum Titel", SLUG ), __( "<h2>Angaben gemäß § 5 TMG:</h2>", SLUG ) ) );
+		$impressum = new Impressum_Manager_Impressum( '', '[impressum_manager]',  __( "Impressum Titel", SLUG ), __( "<h2>Angaben gemäß § 5 TMG:</h2>", SLUG ));
 
 		$impressum->add( new Impressum_Manager_Textunit( 'address', __( "address", SLUG ), self::get_address() ) );
 

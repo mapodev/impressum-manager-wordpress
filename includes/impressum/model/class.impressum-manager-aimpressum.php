@@ -13,6 +13,7 @@ abstract class Impressum_Manager_AImpressum {
 
 	abstract function get_components();
 
-	protected abstract function getImpressum();
+	abstract function getImpressum();
 
+	abstract function is_empty();
 }

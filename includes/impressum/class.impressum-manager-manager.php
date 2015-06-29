@@ -7,7 +7,6 @@ require_once( IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/class.impressum
 
 class Impressum_Manager_Manager {
 
-
 	static private $instance = null;
 
 	static public function getInstance() {
