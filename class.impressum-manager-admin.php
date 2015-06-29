@@ -360,9 +360,11 @@ class Impressum_Manager_Admin {
         $shortcode = 'impressum_manager';
         add_shortcode($shortcode, array('Impressum_Manager', 'content_shortcode'));
 
+	    $shortcode = $_POST["shortcode_key"];
+
         $shortcode = esc_attr($_POST['shortcode_key']);
         echo do_shortcode("[impressum_manager type='{$shortcode}']");
-        die();
+	    die();
     }
 
 	/**

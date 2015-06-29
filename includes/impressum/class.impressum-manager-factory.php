@@ -32,43 +32,40 @@ class Impressum_Manager_Factory {
 
 	public static function create_generated_impressum() {
 
-		$_source    = __( "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG );
-		$_plugin_by = __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG );
-
-		$impressum = new Impressum_Manager_Impressum();
+		$impressum = new Impressum_Manager_Impressum( '', '[impressum_manager]' );
 
 		$impressum->add( new Impressum_Manager_Textunit( 'impressum title', __( "Impressum Titel", SLUG ), __( "<h2>Angaben gemäß § 5 TMG:</h2>", SLUG ) ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'address' , __( "address", SLUG ), self::get_address() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'address', __( "address", SLUG ), self::get_address() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'authorized_person' , __( "authorized person", SLUG ), self::get_authorized_person() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'authorized_person', __( "authorized person", SLUG ), self::get_authorized_person() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'contact' , __( "contact", SLUG ), self::get_contact() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'contact', __( "contact", SLUG ), self::get_contact() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'register' , __( "register", SLUG ), self::get_register() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'register', __( "register", SLUG ), self::get_register() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'vat' , __( "vat", SLUG ), self::get_vat() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'vat', __( "vat", SLUG ), self::get_vat() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'regulatory_authority' , __( "regulatory authority", SLUG ), self::get_regulatory_authority() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'regulatory_authority', __( "regulatory authority", SLUG ), self::get_regulatory_authority() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'professional_liability_insurance' , __( "professional liability insurance", SLUG ), self::get_professional_liability_insurance() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'professional_liability_insurance', __( "professional liability insurance", SLUG ), self::get_professional_liability_insurance() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'responsible_person' , __( "responsible person", SLUG ), self::get_responsible_person() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'responsible_person', __( "responsible person", SLUG ), self::get_responsible_person() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'image_sources' , __( "image sources", SLUG ), self::get_image_sources() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'image_sources', __( "image sources", SLUG ), self::get_image_sources() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'disclaimer' , __( "disclaimer", SLUG ), self::get_disclaimer() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'disclaimer', __( "disclaimer", SLUG ), self::get_disclaimer() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'privacy_policy' , __( "privacy policy", SLUG ), self::get_privacy_policy() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'privacy_policy', __( "privacy policy", SLUG ), self::get_privacy_policy() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'extra_field' , __( "extra field", SLUG ), self::get_extra_field() ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'extra_field', __( "extra field", SLUG ), self::get_extra_field() ) );
 
 		if ( get_option( "impressum_manager_source_from" ) == true ) {
-			$impressum->add( new Impressum_Manager_Textunit( 'source', __( "source", SLUG ),  $_source ) );
+			$impressum->add( new Impressum_Manager_Textunit( 'source', __( "source", SLUG ), __( "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG ) ) );
 		}
 
 		if ( get_option( "impressum_manager_powered_by" ) == true ) {
-			$impressum->add( new Impressum_Manager_Textunit( 'plugin by', __( "plugin by", SLUG ),  $_plugin_by ) );
+			$impressum->add( new Impressum_Manager_Textunit( 'plugin by', __( "plugin by", SLUG ), __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG ) ) );
 		}
 
 		return $impressum;
@@ -377,17 +374,20 @@ class Impressum_Manager_Factory {
 
 		$result = "";
 
-        $query_images_args = array(
-            'post_type' => 'attachment', 'post_mime_type' =>'image', 'post_status' => 'inherit', 'posts_per_page' => -1,
-        );
+		$query_images_args = array(
+			'post_type'      => 'attachment',
+			'post_mime_type' => 'image',
+			'post_status'    => 'inherit',
+			'posts_per_page' => - 1,
+		);
 
-        $query_images = new WP_Query( $query_images_args );
-        foreach ( $query_images->posts as $image) {
-            $cred = trim(strip_tags(get_post_meta( $image->ID, 'impressum_manager_image_credential', true )));
-            if(!empty($cred)) {
-                $creds[ $i ++ ] = $cred;
-            }
-        }
+		$query_images = new WP_Query( $query_images_args );
+		foreach ( $query_images->posts as $image ) {
+			$cred = trim( strip_tags( get_post_meta( $image->ID, 'impressum_manager_image_credential', true ) ) );
+			if ( ! empty( $cred ) ) {
+				$creds[ $i ++ ] = $cred;
+			}
+		}
 
 		$creds = array_unique( $creds );
 		foreach ( $creds as $credit ) {

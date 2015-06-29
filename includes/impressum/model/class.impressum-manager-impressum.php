@@ -2,77 +2,65 @@
 
 class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 
+	private $shortcode;
+	private $name;
 	private $units;
 
-	public function __construct()
-	{
-		$this->units=array();
+	function __construct( $shortcode, $name ) {
+		$this->units     = array();
+		$this->shortcode = $shortcode;
+		$this->name      = $name;
 	}
 
-	function add(Impressum_Manager_AImpressum $unit){
-		array_push($this->units,$unit);
-		$unit->set_parent($this);
+	function add( Impressum_Manager_AImpressum $unit ) {
+		array_push( $this->units, $unit );
 	}
 
-	function remove(Impressum_Manager_AImpressum $unit){
-		if($unit === $this)
-		{
-			for($countA = 0; $countA < count($this->units); $countA++)
-			{
-				$this->safeRemove($this->units[$countA]);
-			}
-			$this->units= array();
-			$this->removeParentRef();
-		}
-		else
-		{
-			for($countB = 0; $countB < count($this->units); $countB++)
-			{
-				if($this->units[$countB] == $unit)
-				{
-					$this->safeRemove($this->units[$countB]);
-					array_splice($this->units, $countB, 1);
-				}
-			}
-		}
-	}
-
-	private function safeRemove(IComponent $safeImp)
-	{
-		if($safeImp->getImpressum())
-		{
-			$safeImp->remove($safeImp);
-		}
-		else
-		{
-			$safeImp->removeParentRef();
-		}
-	}
-	protected function getImpressum(){
+	function getImpressum() {
 		return $this;
 	}
 
-	function draw(){
+	function draw() {
 		$result = "";
 
-		foreach($this->units as $unit)
-		{
+		foreach ( $this->units as $unit ) {
 			$result .= $unit->draw();
 		}
+
 		return $result;
 	}
 
-	public function getIterator()
-	{
-		return new Impressum_Manager_Impressum_Iterator($this->units);
-		//return $this->units;
+	function get_components() {
+		// working without composites!
+		/*
+		$result = array();
+		foreach ( $this->units as $unit ) {
+			$result = array_merge( $result, $unit->get_components() );
+		}
+		*/
+		$result = array();
+		array_push( $result, $this );
+
+		foreach ( $this->units as $unit ) {
+			if ( $unit instanceof Impressum_Manager_Textunit ) {
+				array_push( $result, $unit->get_components() );
+
+			} elseif ( $unit instanceof Impressum_Manager_Impressum ) {
+				$result = array_merge( $result, $unit->get_components() );
+			} else {
+
+			}
+
+		}
+
+		return $result;
 	}
 
-	public function get_name(){
-		return "name";
+	function get_name() {
+		return $this->name;
 	}
 
-	public function get_shortcode(){
-		return "name";
+	function get_shortcode() {
+		return $this->shortcode;
 	}
 }

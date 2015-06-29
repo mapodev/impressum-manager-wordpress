@@ -82,17 +82,14 @@ class Impressum_Manager
             $result = "";
 
             if (isset($atts['type'])) {
-                if ($vals == "datenschutz" || $vals == "privacy_policy") {
-                    //$result = $impressum->get_privacy_policy();
-					$result .= "privacy policy";
-                } else if ($vals == "haftungsausschluss" || $vals == "disclaimer") {
-	                //$result = $impressum->get_disclaimer();
-	                $result .= "disclaimer";
-                } else if ($vals == "kontakt" || $vals == "contact") {
-	                //$result = $impressum->get_contact();
-                } else if ($vals == "bildquellen" || $vals == "image_sources") {
-	                //$result = $impressum->get_image_sources();
-                }
+
+	            $components = $impressum->get_components();
+	            foreach($components as $component){
+		            if($component->get_shortcode() == $vals){
+						$result = $component->draw();
+			            break;
+		            }
+	            }
             } else {
 
                 switch (strtolower($atts["var"])) {

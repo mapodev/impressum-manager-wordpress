@@ -5,8 +5,6 @@ require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/model/class.impr
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/model/class.impressum-manager-textunit.php');
 require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/class.impressum-manager-factory.php');
 
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/iterator/class.impressum-manager-impressum-iterator.php');
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/iterator/class.impressum-manager-null-iterator.php');
 class Impressum_Manager_Manager {
 
 	static private $instance = null;

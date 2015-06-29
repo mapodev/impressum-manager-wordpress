@@ -52,42 +52,39 @@ $content = do_shortcode( '[impressum_manager]' );
 		</div>
 	<?php
 	} else {
-		?>
-        <script>
-            (function($){
-                $(document).ready(function() {
-                    $("#impressum_shortcode_preview").change(function() {
-                        var data = {
-                            'action': 'impressum_manager_get_shortcode_preview',
-                            'shortcode_key': $(this).val()
-                        };
+	?>
+		<script>
+			(function ($) {
+				$(document).ready(function () {
+					$("#impressum_shortcode_preview").change(function () {
+						var data = {
+							'action': 'impressum_manager_get_shortcode_preview',
+							'shortcode_key': $(this).val()
+						};
 
-                        $.post(ajaxurl, data, function(data) {
-                            $("#impressum-preview-content").html(data);
-                        });
-                    });
-                })
-            }(jQuery));
-        </script>
+						$.post(ajaxurl, data, function (data) {
+							$("#impressum-preview-content").html(data);
+						});
+					});
+				})
+			}(jQuery));
+		</script>
 		<div class="nbox">
 			<div class="box-preview">
 				<div class="box-preview-header">
-					<h3><?= __( 'Wähle einen shortcode aus und schau dir die Vorschau an! ', SLUG );?></h3><br><br>
+					<h3><?= __( 'Wähle einen shortcode aus und schau dir die Vorschau an! ', SLUG ); ?></h3><br><br>
 					<?= __( 'Shortcode: ', SLUG ) ?>
 					<select name="impressum_shortcode_preview" id="impressum_shortcode_preview">
 						<?php
 
-						echo "<option value='impressum_manager'>all</option>";
-
 						$impressum = Impressum_Manager_Manager::getInstance()->get_impressum();
-						$it = $impressum->getIterator();
 
-						foreach($it as $value) {
-							$shortcode = $value->get_shortcode();
-							$name = $value->get_name();
+						$components = $impressum->get_components();
+						foreach ( $components as $component ) {
+							$shortcode = $component->get_shortcode();
+							$name      = $component->get_name();
 							echo "<option value=$shortcode>$name</option>";
 						}
-
 						?>
 					</select>
 				</div>
@@ -98,8 +95,8 @@ $content = do_shortcode( '[impressum_manager]' );
 						<input class="button button-primary" type="submit" value="<?= _e( 'Konfigurieren' ) ?>">
 					</form>
 				</div>
+				<hr>
 				<div class="box-preview-content" id="impressum-preview-content">
-					<hr>
 					<?php echo $content ?>
 				</div>
 			</div>
