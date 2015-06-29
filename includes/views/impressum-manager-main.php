@@ -51,6 +51,12 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 				</div>
 			</div>
 		</div>
+	<br>
+		<form action="<?php Impressum_Manager_Admin::get_page_url() ?>#general-tab" class="right">
+			<input type="hidden" name="page" value="<?= SLUG ?>">
+			<input type="hidden" name="view" value="config"/>
+			<input class="button button-secondary" type="submit" id="configure_impressum" value="<?= __( 'Zu den Einstellungen' ) ?>">
+		</form>
 	<?php
 	} else {
 	?>
@@ -94,7 +100,7 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 					<form action="<?php Impressum_Manager_Admin::get_page_url() ?>" style="display:inline">
 						<input type="hidden" name="page" value="<?= SLUG ?>">
 						<input type="hidden" name="view" value="config">
-						<input class="button button-primary" type="submit" value="<?= _e( 'Konfigurieren' ) ?>">
+						<input class="button button-primary" type="submit" value="<?= __( 'Konfigurieren' ) ?>">
 					</form>
 				</div>
 				<hr>
@@ -105,15 +111,7 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 				</div>
 			</div>
 		</div>
-
 		<?php
 	}
 	?>
-	<br>
-	<form action="<?php Impressum_Manager_Admin::get_page_url() ?>#general-tab" class="right">
-		<input type="hidden" name="page" value="<?= SLUG ?>">
-		<input type="hidden" name="view" value="config"/>
-		<input class="button button-secondary" type="submit" id="configure_impressum"
-		       value="<?= __( 'Zu den Einstellungen' ) ?>">
-	</form>
 </div>
