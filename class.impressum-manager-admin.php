@@ -638,6 +638,8 @@ class Impressum_Manager_Admin {
 				   href="#settings-tab-j"><?= __( "Kontaktdaten", SLUG ) ?></a>
 				<a class="nav-tab" id="fields-tab"
 				   href="#fields-tab-j"><?= __( "Impressum Fields", SLUG ) ?></a>
+                <a class="nav-tab" id="import-tab"
+                   href="#import-tab-j"><?=__("Import")?></a>
 
 			</h2>
 
@@ -650,7 +652,9 @@ class Impressum_Manager_Admin {
 			<div class="fields-tab tab">
 				<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-fields-tab.php" ) ?>
 			</div>
-
+            <div class="import-tab tab">
+                <?php include( plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-import-tab.php" ) ?>
+            </div>
 		</div>
 	<?php
 	}
@@ -664,24 +668,24 @@ class Impressum_Manager_Admin {
 	 */
 	public static function register_settings() {
 		// general options
-		register_setting( "impressum-manager-settings", "impressum_manager_noindex" );
-		register_setting( "impressum-manager-settings", "impressum_manager_show_email_as_image" );
-		register_setting( "impressum-manager-settings", "impressum_manager_powered_by" );
-		register_setting( "impressum-manager-settings", "impressum_manager_source_from" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_noindex" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_show_email_as_image" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_powered_by" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_source_from" );
 
 		// impressum - privacy policy options
-		register_setting( "impressum-manager-settings", "impressum_manager_disclaimer" );
-		register_setting( "impressum-manager-settings", "impressum_manager_set_impressum" );
-		register_setting( "impressum-manager-settings", "impressum_manager_language_of_impressum" );
-		register_setting( "impressum-manager-settings", "impressum_manager_general_privacy_policy" );
-		register_setting( "impressum-manager-settings", "impressum_manager_policy_facebook" );
-		register_setting( "impressum-manager-settings", "impressum_manager_policy_google_analytics" );
-		register_setting( "impressum-manager-settings", "impressum_manager_policy_google_adsense" );
-		register_setting( "impressum-manager-settings", "impressum_manager_policy_twitter" );
-		register_setting( "impressum-manager-settings", "impressum_manager_policy_google_plus" );
-		register_setting( "impressum-manager-settings", "impressum_manager_page" );
-		register_setting( "impressum-manager-settings", "impressum_manager_disabled" );
-		register_setting( "impressum-manager-settings", "impressum_manager_extra_field" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_disclaimer" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_set_impressum" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_language_of_impressum" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_general_privacy_policy" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_facebook" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_google_analytics" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_google_adsense" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_twitter" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_google_plus" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_page" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_disabled" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_extra_field" );
 
 		// impressum general options
 		register_setting( "impressum-manager-settings", "impressum_manager_person" );
@@ -715,6 +719,9 @@ class Impressum_Manager_Admin {
 		register_setting( "impressum-manager-settings", "impressum_manager_name_and_adress" );
 		register_setting( "impressum-manager-settings", "impressum_manager_space_of_appliance" );
 
+        register_setting( "impressum-manager-import-tab", "impressum_manager_imported_policy_url" );
+        register_setting( "impressum-manager-import-tab", "impressum_manager_imported_impressum_url" );
+        register_setting( "impressum-manager-import-tab", "impressum_manager_use_imported_impressum" );
 	}
 
 	/**
