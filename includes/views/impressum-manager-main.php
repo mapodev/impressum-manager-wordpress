@@ -105,7 +105,15 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 				</div>
 			</div>
 		</div>
-	<?php
+
+		<?php
 	}
 	?>
+	<br>
+	<form action="<?php Impressum_Manager_Admin::get_page_url() ?>#general-tab" class="right">
+		<input type="hidden" name="page" value="<?= SLUG ?>">
+		<input type="hidden" name="view" value="config"/>
+		<input class="button button-secondary" type="submit" id="configure_impressum"
+		       value="<?= __( 'Zu den Einstellungen' ) ?>">
+	</form>
 </div>
