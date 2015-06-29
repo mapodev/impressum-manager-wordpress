@@ -11,7 +11,7 @@
                 </th>
                 <td>
                     <label for="impressum_manager_use_imported_impressum">
-                        <input type="checkbox" name="impressum_manager_use_imported_impressum">
+                        <input type="checkbox" name="impressum_manager_use_imported_impressum" <?= checked( "on", get_option("impressum_manager_use_imported_impressum"), false)?>>
                         <?=__("Aktivier das importierte Impressum anstatt das generierte Impressum");?>
                     </label>
                 </td>
@@ -21,7 +21,7 @@
                     <?=__("URL zum Impressum")?>
                 </th>
                 <td>
-                    <input type="text" name="impressum_manager_imported_impressum_url">
+                    <input type="text" name="impressum_manager_imported_impressum_url" value="<?=get_option("impressum_manager_imported_impressum_url")?>" placeholder="http://www.">
                 </td>
             </tr>
             <tr>
@@ -29,7 +29,7 @@
                     <?=__("URL zum Datenschutz")?>
                 </th>
                 <td>
-                    <input type="text" name="impressum_manager_imported_policy_url">
+                    <input type="text" name="impressum_manager_imported_policy_url" value="<?=get_option("impressum_manager_imported_policy_url")?>" placeholder="http://www.">
                 </td>
             </tr>
         </tbody>

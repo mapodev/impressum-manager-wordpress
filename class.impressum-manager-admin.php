@@ -719,6 +719,9 @@ class Impressum_Manager_Admin {
 		register_setting( "impressum-manager-settings", "impressum_manager_name_and_adress" );
 		register_setting( "impressum-manager-settings", "impressum_manager_space_of_appliance" );
 
+        register_setting( "impressum-manager-import-tab", "impressum_manager_imported_policy_url" );
+        register_setting( "impressum-manager-import-tab", "impressum_manager_imported_impressum_url" );
+        register_setting( "impressum-manager-import-tab", "impressum_manager_use_imported_impressum" );
 	}
 
 	/**
