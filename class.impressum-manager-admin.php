@@ -271,10 +271,10 @@ class Impressum_Manager_Admin {
 			'Impressum_Manager_Admin',
 			'editor_ajax_callback'
 		) );
-        add_action( 'wp_ajax_impressum_manager_get_shortcode_preview', array(
-            'Impressum_Manager_Admin',
-            'shortcode_preview_ajax_callback'
-        ));
+		add_action( 'wp_ajax_impressum_manager_get_shortcode_preview', array(
+			'Impressum_Manager_Admin',
+			'shortcode_preview_ajax_callback'
+		) );
 	}
 
 	/**
@@ -346,26 +346,24 @@ class Impressum_Manager_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-    public static function editor_ajax_callback()
-    {
-        $key = esc_attr($_POST['key']);
+	public static function editor_ajax_callback() {
+		$key = esc_attr( $_POST['key'] );
 
-        echo self::get_db_content($key);
+		echo self::get_db_content( $key );
 
-        die();
-    }
+		die();
+	}
 
-    public static function shortcode_preview_ajax_callback()
-    {
-        $shortcode = 'impressum_manager';
-        add_shortcode($shortcode, array('Impressum_Manager', 'content_shortcode'));
+	public static function shortcode_preview_ajax_callback() {
+		$shortcode = 'impressum_manager';
+		add_shortcode( $shortcode, array( 'Impressum_Manager', 'content_shortcode' ) );
 
-	    $shortcode = $_POST["shortcode_key"];
+		$shortcode = $_POST["shortcode_key"];
 
-        $shortcode = esc_attr($_POST['shortcode_key']);
-        echo do_shortcode("[impressum_manager type='{$shortcode}']");
-	    die();
-    }
+		$shortcode = esc_attr( $_POST['shortcode_key'] );
+		echo do_shortcode( "[impressum_manager type='{$shortcode}']" );
+		die();
+	}
 
 	/**
 	 * Helper method for getting values from the database.
@@ -633,27 +631,26 @@ class Impressum_Manager_Admin {
 				<input class="button button-primary" type="submit" value="<?= _e( 'Zur Vorschau' ) ?>">
 			</form>
 
-			<?php
-			if ( ! array_key_exists( "setup", $_GET ) ) {
-				?>
-				<h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
-					<a class="nav-tab nav-tab-active" id="settings-tab"
-					   href="#settings-tab-j"><?= __( "General", SLUG ) ?></a>
-					<a class="nav-tab" id="settings2-tab"
-					   href="#settings2-tab-j"><?= __( "Kontaktdaten", SLUG ) ?></a>
-					<a class="nav-tab" id="fields-tab"
-					   href="#fields-tab-j"><?= __( "Impressum Fields", SLUG ) ?></a>
-				</h2>
-				<div class="settings-tab tab" style="display: none;">
-					<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-general-tab.php" ) ?>
-				</div>
-				<div class="settings2-tab tab" style="display:none;">
-					<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-settings-tab.php" ) ?>
-				</div>
-				<div class="fields-tab tab" style="display:none;">
-					<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-fields-tab.php" ) ?>
-				</div>
-			<?php } ?>
+			<h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
+				<a class="nav-tab nav-tab-active" id="general-tab"
+				   href="#general-tab-j"><?= __( "General", SLUG ) ?></a>
+				<a class="nav-tab" id="settings-tab"
+				   href="#settings-tab-j"><?= __( "Kontaktdaten", SLUG ) ?></a>
+				<a class="nav-tab" id="fields-tab"
+				   href="#fields-tab-j"><?= __( "Impressum Fields", SLUG ) ?></a>
+
+			</h2>
+
+			<div class="general-tab tab">
+				<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-general-tab.php" ) ?>
+			</div>
+			<div class="settings-tab tab">
+				<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-settings-tab.php" ) ?>
+			</div>
+			<div class="fields-tab tab">
+				<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-fields-tab.php" ) ?>
+			</div>
+
 		</div>
 	<?php
 	}

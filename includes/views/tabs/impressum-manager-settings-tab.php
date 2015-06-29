@@ -1,7 +1,10 @@
 <form method="post" action="options.php">
-	<?php settings_fields( 'impressum-manager-settings' ); ?>
-	<?php do_settings_sections( 'impressum-manager-settings' ); ?>
+	<?php
+	settings_fields( 'impressum-manager-settings' );
+	do_settings_sections( 'impressum-manager-settings' );
+	?>
 	<table class="form-table" id="settings-options">
+		<tbody>
 		<?php Impressum_Manager_Form_Factory::get_person_type(); ?>
 		<?php Impressum_Manager_Form_Factory::get_legal_form(); ?>
 		<?php Impressum_Manager_Form_Factory::get_organisation(); ?>
@@ -16,14 +19,11 @@
 		<?php Impressum_Manager_Form_Factory::get_image_sources(); ?>
 		<?php Impressum_Manager_Form_Factory::get_surveillance_authority(); ?>
 		<?php Impressum_Manager_Form_Factory::get_regulated_profession(); ?>
+		</tbody>
+	</table>
 
-		<table>
-			<tr>
-				<td>
-					<?php submit_button( __( "Impressum aktualisieren" ) ); ?>
-				</td>
-			</tr>
-		</table>
+	<?php submit_button( __( "Impressum aktualisieren" ) ); ?>
+
 </form>
 
 
