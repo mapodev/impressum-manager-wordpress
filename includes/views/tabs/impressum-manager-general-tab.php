@@ -4,8 +4,8 @@ Impressum_Manager_Admin::save_option( "impressum_manager_notice", "dismissed" );
 
 <form method="post" action="options.php">
 	<?php
-	settings_fields( 'impressum-manager-settings' );
-	do_settings_sections( 'impressum-manager-settings' );
+	settings_fields( 'impressum-manager-general-tab' );
+	do_settings_sections( 'impressum-manager-general-tab' );
 	?>
 	<table class="form-table" id="settings-options">
 		<tbody>

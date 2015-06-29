@@ -668,24 +668,24 @@ class Impressum_Manager_Admin {
 	 */
 	public static function register_settings() {
 		// general options
-		register_setting( "impressum-manager-settings", "impressum_manager_noindex" );
-		register_setting( "impressum-manager-settings", "impressum_manager_show_email_as_image" );
-		register_setting( "impressum-manager-settings", "impressum_manager_powered_by" );
-		register_setting( "impressum-manager-settings", "impressum_manager_source_from" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_noindex" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_show_email_as_image" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_powered_by" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_source_from" );
 
 		// impressum - privacy policy options
-		register_setting( "impressum-manager-settings", "impressum_manager_disclaimer" );
-		register_setting( "impressum-manager-settings", "impressum_manager_set_impressum" );
-		register_setting( "impressum-manager-settings", "impressum_manager_language_of_impressum" );
-		register_setting( "impressum-manager-settings", "impressum_manager_general_privacy_policy" );
-		register_setting( "impressum-manager-settings", "impressum_manager_policy_facebook" );
-		register_setting( "impressum-manager-settings", "impressum_manager_policy_google_analytics" );
-		register_setting( "impressum-manager-settings", "impressum_manager_policy_google_adsense" );
-		register_setting( "impressum-manager-settings", "impressum_manager_policy_twitter" );
-		register_setting( "impressum-manager-settings", "impressum_manager_policy_google_plus" );
-		register_setting( "impressum-manager-settings", "impressum_manager_page" );
-		register_setting( "impressum-manager-settings", "impressum_manager_disabled" );
-		register_setting( "impressum-manager-settings", "impressum_manager_extra_field" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_disclaimer" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_set_impressum" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_language_of_impressum" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_general_privacy_policy" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_facebook" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_google_analytics" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_google_adsense" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_twitter" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_google_plus" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_page" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_disabled" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_extra_field" );
 
 		// impressum general options
 		register_setting( "impressum-manager-settings", "impressum_manager_person" );
