@@ -639,12 +639,6 @@ class Impressum_Manager_Admin {
 		<div class="wrap">
 			<h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
 
-			<form action="<?php Impressum_Manager_Admin::get_page_url() ?>">
-				<input type="hidden" name="page" value="<?= SLUG ?>">
-				<input type="hidden" name="view" value="main">
-				<input class="button button-primary" type="submit" value="<?= _e( 'Zur Vorschau' ) ?>">
-			</form>
-
 			<h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
 				<a class="nav-tab nav-tab-active" id="general-tab"
 				   href="#general-tab-j"><?= __( "General", SLUG ) ?></a>
@@ -654,8 +648,13 @@ class Impressum_Manager_Admin {
 				   href="#fields-tab-j"><?= __( "Impressum Fields", SLUG ) ?></a>
                 <a class="nav-tab" id="import-tab"
                    href="#import-tab-j"><?=__("Import")?></a>
-
 			</h2>
+            <br>
+            <form action="<?php Impressum_Manager_Admin::get_page_url() ?>">
+                <input type="hidden" name="page" value="<?= SLUG ?>">
+                <input type="hidden" name="view" value="main">
+                <input class="button button-secondary" type="submit" value="<?= _e( 'Zur Vorschau' ) ?>">
+            </form>
 
 			<div class="general-tab tab">
 				<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-general-tab.php" ) ?>
