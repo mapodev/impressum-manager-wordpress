@@ -17,8 +17,6 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 <div class="wrap">
 	<h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
 
-
-
 	<?php
 
 	$impressum = Impressum_Manager_Manager::getInstance()->get_impressum();
