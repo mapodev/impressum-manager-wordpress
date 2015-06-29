@@ -74,8 +74,11 @@ class Impressum_Manager_Factory {
 
 	public static function create_imported_impressum() {
 
-        $impressum = file_get_contents(get_option("impressum_manager_imported_impressum_url"));
-        $policy = file_get_contents(get_option("impressum_manager_imported_policy_url"));
+        $impressum = "";
+        $policy = "";
+
+        @$impressum = file_get_contents(get_option("impressum_manager_imported_impressum_url"));
+        @$policy = file_get_contents(get_option("impressum_manager_imported_policy_url"));
 
         $result = $impressum . "<br>" . $policy;
 
