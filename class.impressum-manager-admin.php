@@ -637,7 +637,12 @@ class Impressum_Manager_Admin {
 			}(jQuery));
 		</script>
 		<div class="wrap">
-			<h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
+            <?php if($_GET['view'] != "config") {
+                ?>
+                <h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
+            <?php
+            }
+            ?>
 
 			<h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
 				<a class="nav-tab nav-tab-active" id="general-tab"
