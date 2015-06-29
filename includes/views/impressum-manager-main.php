@@ -34,18 +34,17 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 							<input type="hidden" name="view" value="tutorial"/>
 							<input type="hidden" name="step" value="1"/>
 							<input class="button button-primary" type="submit" id="configure_impressum"
-							       value="<?= _e( 'Impressum generieren' ) ?>">
+							       value="<?= __( 'Impressum generieren' ) ?>">
 						</form>
 						</p>
 						<?= __( 'oder', SLUG ) ?>
 						<p>
 
-						<form action=<?php Impressum_Manager_Admin::get_page_url() ?>>
+						<form action="<?php Impressum_Manager_Admin::get_page_url() ?>#import-tab">
 							<input type="hidden" name="page" value="<?= SLUG ?>">
-							<input type="hidden" name="view" value="tutorial"/>
-							<input type="hidden" name="step" value="1"/>
+                            <input type="hidden" name="view" value="config"/>
 							<input class="button button-primary" type="submit" id="configure_impressum"
-							       value="<?= _e( 'Impressum importieren' ) ?>">
+							       value="<?= __( 'Impressum importieren' ) ?>">
 						</form>
 						</p>
 					</div>
