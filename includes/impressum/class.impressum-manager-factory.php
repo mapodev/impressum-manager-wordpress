@@ -54,18 +54,33 @@ class Impressum_Manager_Factory {
 
 		$impressum->add( new Impressum_Manager_Textunit( 'image_sources', __( "image sources", SLUG ), self::get_image_sources() ) );
 
+		$impressum->add( new Impressum_Manager_Textunit( 'extra_field', __( "extra field", SLUG ), self::get_extra_field() ) );
+
 		$impressum->add( new Impressum_Manager_Textunit( 'disclaimer', __( "disclaimer", SLUG ), self::get_disclaimer() ) );
 
 		$impressum->add( new Impressum_Manager_Textunit( 'privacy_policy', __( "privacy policy", SLUG ), self::get_privacy_policy() ) );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'extra_field', __( "extra field", SLUG ), self::get_extra_field() ) );
 
 		if ( get_option( "impressum_manager_source_from" ) == true ) {
 			$impressum->add( new Impressum_Manager_Textunit( 'source', __( "source", SLUG ), __( "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG ) ) );
 		}
 
 		if ( get_option( "impressum_manager_powered_by" ) == true ) {
-			$impressum->add( new Impressum_Manager_Textunit( 'plugin by', __( "plugin by", SLUG ), __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG ) ) );
+			$impressum->add( new Impressum_Manager_Textunit( 'plugin_by', __( "plugin by", SLUG ), __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG ) ) );
+		}
+
+		return $impressum;
+
+	}
+
+	public static function create_imported_impressum() {
+
+		$impressum = new Impressum_Manager_Impressum( '', '[impressum_manager]' );
+
+		$impressum->add( new Impressum_Manager_Textunit( 'content', __( "Impressum Inhalt", SLUG ), "importiertes impressum content" ) );
+
+		if ( get_option( "impressum_manager_powered_by" ) == true ) {
+			$impressum->add( new Impressum_Manager_Textunit( 'plugin_by', __( "plugin by", SLUG ), __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG ) ) );
 		}
 
 		return $impressum;

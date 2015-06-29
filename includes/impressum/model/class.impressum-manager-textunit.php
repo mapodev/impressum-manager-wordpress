@@ -31,4 +31,8 @@ class Impressum_Manager_Textunit extends Impressum_Manager_AImpressum{
 	function get_components(){
 		return $this;
 	}
+
+	function is_empty(){
+		return empty($text);
+	}
 }
