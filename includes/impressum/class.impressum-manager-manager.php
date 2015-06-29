@@ -2,7 +2,8 @@
 
 require_once( IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/model/class.impressum-manager-aimpressum.php' );
 require_once( IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/model/class.impressum-manager-impressum.php' );
-require_once( IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/model/class.impressum-manager-textunit.php' );
+require_once( IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/model/class.impressum-manager-textunit.php' );;
+require_once( IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/model/class.impressum-manager-text.php' );
 require_once( IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/class.impressum-manager-factory.php' );
 
 class Impressum_Manager_Manager {

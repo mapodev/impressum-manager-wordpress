@@ -32,7 +32,9 @@ class Impressum_Manager_Factory {
 
 	public static function create_generated_impressum() {
 
-		$impressum = new Impressum_Manager_Impressum( '', '[impressum_manager]',  __( "Impressum Titel", SLUG ), __( "<h2>Angaben gemäß § 5 TMG:</h2>", SLUG ));
+		$impressum = new Impressum_Manager_Impressum( '', '[impressum_manager]' );
+
+		$impressum->add( new Impressum_Manager_Text( __( "<h2>Angaben gemäß § 5 TMG:</h2>", SLUG ) ) );
 
 		$impressum->add( new Impressum_Manager_Textunit( 'address', __( "address", SLUG ), self::get_address() ) );
 
@@ -58,13 +60,12 @@ class Impressum_Manager_Factory {
 
 		$impressum->add( new Impressum_Manager_Textunit( 'privacy_policy', __( "privacy policy", SLUG ), self::get_privacy_policy() ) );
 
-
 		if ( get_option( "impressum_manager_source_from" ) == true ) {
-			$impressum->add( new Impressum_Manager_Textunit( 'source', __( "source", SLUG ), __( "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG ) ) );
+			$impressum->add( new Impressum_Manager_Text( __( "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG ) ) );
 		}
 
 		if ( get_option( "impressum_manager_powered_by" ) == true ) {
-			$impressum->add( new Impressum_Manager_Textunit( 'plugin_by', __( "plugin by", SLUG ), __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG ) ) );
+			$impressum->add( new Impressum_Manager_Text( __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG ) ) );
 		}
 
 		return $impressum;

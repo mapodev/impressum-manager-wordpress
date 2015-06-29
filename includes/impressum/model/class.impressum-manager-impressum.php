@@ -5,9 +5,8 @@ class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 	private $shortcode;
 	private $name;
 	private $units;
-	private $text;
 
-	function __construct( $shortcode, $name, $text ) {
+	function __construct( $shortcode, $name) {
 		$this->units     = array();
 		$this->shortcode = $shortcode;
 		$this->name      = $name;
@@ -23,7 +22,7 @@ class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 	}
 
 	function draw() {
-		$result = $this->text;
+		$result = "";
 
 		foreach ( $this->units as $unit ) {
 			$result .= $unit->draw();
@@ -37,10 +36,8 @@ class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 		array_push( $result, $this );
 
 		foreach ( $this->units as $unit ) {
-			if ( $unit instanceof Impressum_Manager_Textunit ) {
-				//if ( ! $unit->is_empty() ) {
-					array_push( $result, $unit->get_components() );
-				//}
+			if ( $unit instanceof Impressum_Manager_Textunit || $unit instanceof Impressum_Manager_Textunit ) {
+				array_push( $result, $unit->get_components() );
 			} elseif ( $unit instanceof Impressum_Manager_Impressum ) {
 				$result = array_merge( $result, $unit->get_components() );
 			} else {
@@ -60,6 +57,10 @@ class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 	}
 
 	function is_empty() {
-		$result = true;
+		$result = false;
+		foreach ( $this->units as $unit ) {
+			$result = $result && !$unit->is_empty();
+		}
+		return $result;
 	}
 }

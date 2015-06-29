@@ -83,7 +83,9 @@ $content = do_shortcode( '[impressum_manager]' );
 						foreach ( $components as $component ) {
 							$shortcode = $component->get_shortcode();
 							$name      = $component->get_name();
-							echo "<option value=$shortcode>$name</option>";
+							if(!$component->is_empty()){
+								echo "<option value=$shortcode>$name</option>";
+							}
 						}
 						?>
 					</select>

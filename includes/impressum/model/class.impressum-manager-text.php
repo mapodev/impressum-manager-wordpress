@@ -1,14 +1,10 @@
 <?php
 
-class Impressum_Manager_Textunit extends Impressum_Manager_AImpressum{
+class Impressum_Manager_Text extends Impressum_Manager_AImpressum{
 
-	private $shortcode;
-	private $name;
 	private $text;
 
-	function __construct($shortcode, $name, $text){
-		$this->shortcode = $shortcode;
-		$this->name = "[impressum_manager type=&quot;" . $name . "&quot;";
+	function __construct($text){
 		$this->text = $text;
 	}
 
@@ -21,7 +17,7 @@ class Impressum_Manager_Textunit extends Impressum_Manager_AImpressum{
 	function getImpressum(){}
 
 	function get_shortcode(){
-		return $this->shortcode;
+		return "";
 	}
 
 	function get_name(){
