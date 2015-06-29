@@ -16,4 +16,6 @@ abstract class Impressum_Manager_AImpressum {
 	abstract function getImpressum();
 
 	abstract function is_empty();
+
+	abstract function has_content();
 }

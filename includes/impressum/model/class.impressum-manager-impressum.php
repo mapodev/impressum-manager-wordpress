@@ -57,10 +57,17 @@ class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 	}
 
 	function is_empty() {
+		return !$this->has_content();
+	}
+
+
+	function has_content() {
 		$result = false;
 		foreach ( $this->units as $unit ) {
-			$result = $result && !$unit->is_empty();
+			if($unit->has_content()){
+				return true;
+			}
 		}
-		return $result;
+		return false;
 	}
 }

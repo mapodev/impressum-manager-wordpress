@@ -29,6 +29,10 @@ class Impressum_Manager_Text extends Impressum_Manager_AImpressum{
 	}
 
 	function is_empty(){
-		return empty($this->text);
+		return true;
+	}
+
+	function has_content(){
+		return false;
 	}
 }

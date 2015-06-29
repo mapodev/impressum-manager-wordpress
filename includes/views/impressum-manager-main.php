@@ -10,7 +10,6 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 	Impressum_Manager_Admin::save_option( "impressum_manager_show_email_as_image", @$_POST['impressum_manager_show_email_as_image'] );
 }
 
-$content = do_shortcode( '[impressum_manager]' );
 
 ?>
 
@@ -18,8 +17,13 @@ $content = do_shortcode( '[impressum_manager]' );
 <div class="wrap">
 	<h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
 
+
+
 	<?php
-	if ( empty( $content ) ) {
+
+	$impressum = Impressum_Manager_Manager::getInstance()->get_impressum();
+
+	if ( ! $impressum->has_content() ) {
 		?>
 		<div class="nbox">
 			<div class="box-empty-outer">
@@ -77,16 +81,15 @@ $content = do_shortcode( '[impressum_manager]' );
 					<select name="impressum_shortcode_preview" id="impressum_shortcode_preview">
 						<?php
 
-						$impressum = Impressum_Manager_Manager::getInstance()->get_impressum();
-
 						$components = $impressum->get_components();
 						foreach ( $components as $component ) {
-							$shortcode = $component->get_shortcode();
-							$name      = $component->get_name();
-							if(!$component->is_empty()){
+							if ( $component->has_content() ) {
+								$shortcode = $component->get_shortcode();
+								$name      = $component->get_name();
 								echo "<option value=$shortcode>$name</option>";
 							}
 						}
+
 						?>
 					</select>
 				</div>
@@ -99,7 +102,9 @@ $content = do_shortcode( '[impressum_manager]' );
 				</div>
 				<hr>
 				<div class="box-preview-content" id="impressum-preview-content">
-					<?php echo $content ?>
+					<?php
+					echo $impressum->draw();
+					?>
 				</div>
 			</div>
 		</div>
