@@ -638,6 +638,8 @@ class Impressum_Manager_Admin {
 				   href="#settings-tab-j"><?= __( "Kontaktdaten", SLUG ) ?></a>
 				<a class="nav-tab" id="fields-tab"
 				   href="#fields-tab-j"><?= __( "Impressum Fields", SLUG ) ?></a>
+                <a class="nav-tab" id="import-tab"
+                   href="#import-tab-j"><?=__("Import")?></a>
 
 			</h2>
 
@@ -650,7 +652,9 @@ class Impressum_Manager_Admin {
 			<div class="fields-tab tab">
 				<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-fields-tab.php" ) ?>
 			</div>
-
+            <div class="import-tab tab">
+                <?php include( plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-import-tab.php" ) ?>
+            </div>
 		</div>
 	<?php
 	}
