@@ -25,9 +25,9 @@ class Impressum_Manager_Manager {
 	}
 
 	public function get_impressum() {
-		$imported_impressum = false;
+		$imported_impressum = get_option("impressum_manager_use_imported_impressum");
 
-		if ( $imported_impressum ) {
+		if ( !empty($imported_impressum) ) {
 			$impressum = Impressum_Manager_Factory::create_imported_impressum();
 		} else {
 			$impressum = Impressum_Manager_Factory::create_generated_impressum();

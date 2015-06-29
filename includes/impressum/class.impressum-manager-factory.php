@@ -74,15 +74,12 @@ class Impressum_Manager_Factory {
 
 	public static function create_imported_impressum() {
 
-		$impressum = new Impressum_Manager_Impressum( '', '[impressum_manager]' );
+        $impressum = file_get_contents(get_option("impressum_manager_imported_impressum_url"));
+        $policy = file_get_contents(get_option("impressum_manager_imported_policy_url"));
 
-		$impressum->add( new Impressum_Manager_Textunit( 'content', __( "Impressum Inhalt", SLUG ), "importiertes impressum content" ) );
+        $result = $impressum . "<br>" . $policy;
 
-		if ( get_option( "impressum_manager_powered_by" ) == true ) {
-			$impressum->add( new Impressum_Manager_Textunit( 'plugin_by', __( "plugin by", SLUG ), __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG ) ) );
-		}
-
-		return $impressum;
+		return $result;
 	}
 
 
