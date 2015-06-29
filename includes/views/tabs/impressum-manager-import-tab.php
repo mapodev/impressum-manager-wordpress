@@ -12,7 +12,7 @@
                 <td>
                     <label for="impressum_manager_use_imported_impressum">
                         <input type="checkbox" name="impressum_manager_use_imported_impressum" <?= checked( "on", get_option("impressum_manager_use_imported_impressum"), false)?>>
-                        <?=__("Aktivier das importierte Impressum anstatt das generierte Impressum");?>
+                        <?=__("Aktiviere das importierte Impressum anstatt das generierte Impressum");?>
                     </label>
                 </td>
             </tr>
