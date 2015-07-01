@@ -469,7 +469,7 @@ class Impressum_Manager_Admin {
 	 */
 	public static function show() {
 		$skip_start = false;
-		self::save_option( "impressum_manager_skip_start", false );
+		//self::save_option( "impressum_manager_skip_start", false );
 
 
 		if ( isset( $_GET['skip_start'] ) && $_GET['skip_start'] == 'true' || isset( $_GET['tut_finished'] ) && $_GET['tut_finished'] == 'true' ) {
