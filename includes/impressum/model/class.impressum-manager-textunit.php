@@ -18,8 +18,6 @@ class Impressum_Manager_Textunit extends Impressum_Manager_AImpressum{
 		return $this->text;
 	}
 
-	function getImpressum(){}
-
 	function get_shortcode(){
 		return $this->shortcode;
 	}

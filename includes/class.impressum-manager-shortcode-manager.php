@@ -37,7 +37,6 @@ class Impressum_Manager_Shortcode_Manager
 	 */
 	public function content_shortcode($atts)
 	{
-
 		$result = "";
 
 		$impressum = Impressum_Manager_Impressum_Manager::getInstance()->get_impressum();

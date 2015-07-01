@@ -24,6 +24,11 @@ class Impressum_Manager_Impressum_Manager {
 	private function __clone() {
 	}
 
+	/**
+	 * Returns the currently created and used impressum.
+	 *
+	 * @return Impressum_Manager_Impressum
+	 */
 	public function get_impressum() {
 		$imported_impressum = get_option("impressum_manager_use_imported_impressum");
 

@@ -38,11 +38,6 @@ class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 		array_push( $this->units, $unit );
 	}
 
-
-	function getImpressum() {
-		return $this;
-	}
-
 	function draw() {
 		$result = "";
 
