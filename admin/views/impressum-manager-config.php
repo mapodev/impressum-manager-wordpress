@@ -1,5 +1,5 @@
 <div class="wrap">
-	<div class="box primary">
+	<div class="box">
 		<div class="box header"><?= __( 'Konfiguriere dein Impressum.', SLUG ); ?></div>
 		<div class="box content"><p>
             <?=__("Hier hast du die Möglichkeit mit einem Klick zu entscheiden, ob du dein importiertes Impressum nutzen möchtest, oder das generierte Impressum von Impressum Manager.", SLUG); ?>
