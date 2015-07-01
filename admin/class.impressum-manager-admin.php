@@ -352,7 +352,7 @@ class Impressum_Manager_Admin {
 	public static function editor_ajax_callback() {
 		$key = esc_attr( $_POST['key'] );
 
-		echo self::get_db_content( $key );
+		echo Impressum_Manager_Database::get_content( $key );
 
 		die();
 	}
@@ -368,27 +368,6 @@ class Impressum_Manager_Admin {
 		die();
 	}
 
-	/**
-	 * Helper method for getting values from the database.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param $key
-	 *
-	 * @return mixed
-	 */
-	public static function get_db_content( $key ) {
-		global $wpdb;
-
-		$table_name = $wpdb->prefix . "impressum_manager_content";
-
-		$result = $wpdb->get_var(
-			"SELECT impressum_value
-              FROM $table_name
-              WHERE impressum_key = '$key'" );
-
-		return $result;
-	}
 
 	/**
 	 * Enqueue the styles.

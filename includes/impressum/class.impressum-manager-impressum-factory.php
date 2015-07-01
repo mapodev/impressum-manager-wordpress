@@ -436,7 +436,7 @@ class Impressum_Manager_Impressum_Factory {
 		$result = "";
 
 		if ( get_option( "impressum_manager_disclaimer" ) == true ) {
-			$result .= Impressum_Manager_Admin::get_db_content( DISCLAIMER );
+			$result .= Impressum_Manager_Database::get_content( DISCLAIMER );
 		}
 
 		return $result;
@@ -456,26 +456,26 @@ class Impressum_Manager_Impressum_Factory {
 		$result = "";
 
 		if ( strlen( get_option( "impressum_manager_general_privacy_policy" ) ) > 0 ) {
-			$result .= Impressum_Manager_Admin::get_db_content( POLICY_GENERAL );
+			$result .= Impressum_Manager_Database::get_content( POLICY_GENERAL );
 		}
 		if ( strlen( get_option( "impressum_manager_policy_facebook" ) ) > 0 ) {
-			$result .= Impressum_Manager_Admin::get_db_content( POLICY_FACEBOOK );
+			$result .= Impressum_Manager_Database::get_content( POLICY_FACEBOOK );
 		}
 		if ( strlen( get_option( "impressum_manager_policy_google_analytics" ) ) > 0 ) {
-			$result .= Impressum_Manager_Admin::get_db_content( POLICY_ANALYTICS );
+			$result .= Impressum_Manager_Database::get_content( POLICY_ANALYTICS );
 		}
 		if ( strlen( get_option( "impressum_manager_policy_google_adsense" ) ) > 0 ) {
-			$result .= Impressum_Manager_Admin::get_db_content( POLICY_ADSENSE );
+			$result .= Impressum_Manager_Database::get_content( POLICY_ADSENSE );
 		}
 		if ( strlen( get_option( "impressum_manager_policy_google_plus" ) ) > 0 ) {
-			$result .= Impressum_Manager_Admin::get_db_content( POLICY_GOOGLE_PLUS );
+			$result .= Impressum_Manager_Database::get_content( POLICY_GOOGLE_PLUS );
 		}
 		if ( strlen( get_option( "impressum_manager_policy_twitter" ) ) > 0 ) {
-			$result .= Impressum_Manager_Admin::get_db_content( POLICY_TWITTER );
+			$result .= Impressum_Manager_Database::get_content( POLICY_TWITTER );
 		}
 
 		if ( strlen( $result ) > 0 ) {
-			$result = Impressum_Manager_Admin::get_db_content( POLICY_HEADER ) . $result . Impressum_Manager_Admin::get_db_content( POLICY_END );
+			$result = Impressum_Manager_Database::get_content( POLICY_HEADER ) . $result . Impressum_Manager_Database::get_content( POLICY_END );
 		}
 
 		return $result;

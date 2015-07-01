@@ -78,13 +78,18 @@ class Impressum_Manager {
 		}
 
 		/**
+		 * Connection to the database.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class.impressum-manager-database.php';
+
+		/**
 		 * The class responsible for shortcodes.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class.impressum-manager-shortcode-manager.php';
+
 		/**
 		 * The class responsible for the impressum.
 		 */
-
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/impressum/class.impressum-manager-impressum-manager.php';
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
