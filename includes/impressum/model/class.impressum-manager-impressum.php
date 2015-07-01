@@ -6,7 +6,29 @@ class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 	private $name;
 	private $units;
 
-	function __construct( $shortcode, $name) {
+	public function get_component_by_atts( $atts ) {
+
+		$result = null;
+
+		if ( isset( $atts['type'] ) ) {
+			$vals = strtolower(@$atts["type"]);
+			$components = $this->get_components();
+			foreach ( $components as $component ) {
+				if ( $component->get_shortcode() == $vals ) {
+					$result = $component;
+					break;
+				}
+			}
+		}else{
+			return $this;
+		}
+
+		return $result;
+
+
+	}
+
+	function __construct( $shortcode, $name ) {
 		$this->units     = array();
 		$this->shortcode = $shortcode;
 		$this->name      = $name;
@@ -57,17 +79,18 @@ class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 	}
 
 	function is_empty() {
-		return !$this->has_content();
+		return ! $this->has_content();
 	}
 
 
 	function has_content() {
 		$result = false;
 		foreach ( $this->units as $unit ) {
-			if($unit->has_content()){
+			if ( $unit->has_content() ) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 }

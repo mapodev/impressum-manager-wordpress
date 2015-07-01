@@ -1,7 +1,4 @@
-<?php if ( ! shortcode_exists( 'impressum_manager' ) ) {
-	require_once IMPRESSUM_MANAGER_PLUGIN_DIR . "class.impressum-manager.php";
-	add_shortcode( "impressum_manager", array( 'Impressum_Manager', 'content_shortcode' ) );
-}
+<?php
 
 Impressum_Manager_Admin::save_option( "impressum_manager_notice", "dismissed" );
 
@@ -9,7 +6,6 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 	Impressum_Manager_Admin::save_option( "impressum_manager_noindex", @$_POST['impressum_manager_noindex'] );
 	Impressum_Manager_Admin::save_option( "impressum_manager_show_email_as_image", @$_POST['impressum_manager_show_email_as_image'] );
 }
-
 
 ?>
 
@@ -35,7 +31,7 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 
 	<?php
 
-	$impressum = Impressum_Manager_Manager::getInstance()->get_impressum();
+	$impressum = Impressum_Manager_Impressum_Manager::getInstance()->get_impressum();
 
 	if ( ! $impressum->has_content() ) {
 		?>

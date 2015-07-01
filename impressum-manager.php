@@ -19,42 +19,53 @@
  */
 
 // If this file is called directly, abort.
-if (!defined('WPINC')) {
-    die;
+if ( ! defined( 'WPINC' ) ) {
+	die;
 }
-define('IMPRESSUM_MANAGER_VERSION', '1.0.0');
-define('IMPRESSUM_MANAGER_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('IMPRESSUM_MANAGER_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('SLUG', 'impressum-manager');
-define('PLUGIN_NAME', 'Impressum-Manager');
-
-register_activation_hook(__FILE__, array('Impressum_Manager', 'plugin_activation'));
-register_deactivation_hook(__FILE__, array('Impressum_Manager', 'plugin_deactivation'));
-register_uninstall_hook(plugin_dir_path(__FILE__) . "uninstall.php", "impressum_manager_goodybye");
-
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'class.impressum-manager.php');
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/views/class.impressum-manager-form-factory.php');
-
-// load the impressum manager
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'includes/impressum/class.impressum-manager-manager.php');
+define( 'IMPRESSUM_MANAGER_VERSION', '1.0.0' );
+define( 'SLUG', 'impressum-manager' );
 
 
-// Init the Impressum stuff
-add_action('init', array('Impressum_Manager', 'init'));
+register_activation_hook( __FILE__, array( 'impressum_manager', 'plugin_activation' ) );
+/**
+ * Plugin activation hook
+ *
+ * @since 1.0.0
+ */
+function impressum_manager_activate() {
+	require_once plugin_dir_path( __FILE__ ) . '/includes/impressum-manager-activate.php';
+	impressum_manager_install_activate();
+}
 
-// load the admin interface for wp-admin
-require_once(IMPRESSUM_MANAGER_PLUGIN_DIR . 'class.impressum-manager-admin.php');
-add_action('init', array('Impressum_Manager_Admin', 'init'));
+register_deactivation_hook( __FILE__, array( 'impressum_manager', 'plugin_deactivation' ) );
+/**
+ * Plugin deactiviation
+ *
+ * @since 1.0.0
+ */
+function impressum_manager_deactivate() {
+	require_once plugin_dir_path( __FILE__ ) . '/includes/impressum-manager-deactivate.php';
+	impressum_manager_deactivate();
+}
 
-// loading language files
-add_action('plugins_loaded', array('Impressum_Manager', 'load_translations'));
-
+register_uninstall_hook( plugin_dir_path( __FILE__ ) . "uninstall.php", "impressum_manager_goodybye" );
 // Uninstall Callback
-function impressum_manager_goodybye()
-{
-    ?>
-    Goodbye!
+function impressum_manager_goodybye() {
+	?>
+	Goodbye!
 <?php
 }
+
+
+require_once( plugin_dir_path( __FILE__ ) . 'includes/class.impressum-manager.php' );
+
+// runs plugin the
+function impressum_manager_run() {
+	$plugin = new Impressum_Manager();
+	$plugin->run();
+}
+
+// run plugin
+impressum_manager_run();
 
 ?>

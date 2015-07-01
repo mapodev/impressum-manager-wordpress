@@ -28,7 +28,7 @@ define( 'POLICY_GOOGLE_PLUS', 'policy_google_plus' );
 define( 'POLICY_TWITTER', 'policy_twitter' );
 define( 'POLICY_END', 'policy_end' );
 
-class Impressum_Manager_Factory {
+class Impressum_Manager_Impressum_Factory {
 
 	public static function create_generated_impressum() {
 
@@ -98,7 +98,7 @@ class Impressum_Manager_Factory {
 
 
 	/**
-	 * get_address returns the whole address string, which includes the company or name,
+	 * get_address returns the whole address string, which admin the company or name,
 	 * the address itself with the address extra and the place and zip of the company
 	 * or person.
 	 *
@@ -140,7 +140,7 @@ class Impressum_Manager_Factory {
 	}
 
 	/**
-	 * get_contact will return the full contact string which includes the phone, fax and email.
+	 * get_contact will return the full contact string which admin the phone, fax and email.
 	 * E-Mail will be either shown as string or image. This option can be set in the
 	 * settings view.
 	 *
@@ -163,7 +163,7 @@ class Impressum_Manager_Factory {
 		}
 
 		if ( ! empty( $email ) && get_option( "impressum_manager_show_email_as_image" ) == "on" ) {
-			$result .= "<tr><td>E-Mail: </td><td>" . sprintf( "<img src='" . plugin_dir_url( __FILE__ ) . "../includes/impressum-manager-email-as-image.php?text=" . $email . "'>" ) . "</td></tr>";
+			$result .= "<tr><td>E-Mail: </td><td>" . sprintf( "<img src='" . plugin_dir_url( __FILE__ ) . "../admin/impressum-manager-email-as-image.php?text=" . $email . "'>" ) . "</td></tr>";
 		} elseif ( ! empty( $email ) ) {
 			$result .= "<tr><td>E-Mail: </td><td>$email</td></tr>";
 		}

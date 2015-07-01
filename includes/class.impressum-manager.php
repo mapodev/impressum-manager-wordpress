@@ -1,311 +1,178 @@
 <?php
 
-class Impressum_Manager
-{
+class Impressum_Manager {
+	/**
+	 * The loader that's responsible for maintaining and registering all hooks that power
+	 * the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      Plugin_Name_Loader $loader Maintains and registers all hooks for the plugin.
+	 */
+	protected $loader;
+	/**
+	 * The unique identifier of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string $plugin_name The string used to uniquely identify this plugin.
+	 */
+	protected $plugin_name;
+	/**
+	 * The current version of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string $version The current version of the plugin.
+	 */
+	protected $version;
 
-    private static $initiated = false;
+	/**
+	 * Define the core functionality of the plugin.
+	 *
+	 * Set the plugin name and the plugin version that can be used throughout the plugin.
+	 * Load the dependencies, define the locale, and set the hooks for the admin area and
+	 * the public-facing side of the site.
+	 *
+	 * @since    1.0.0
+	 */
+	public function __construct() {
+		$this->plugin_name = 'Impressum Manager';
+		$this->version     = '1.0.0';
+		$this->load_dependencies();
+		$this->set_locale();
+		$this->define_hooks();
+	}
 
-    /**
-     * Initialization of this class
-     *
-     * @since 1.0.0
-     */
-    public static function init()
-    {
-        if (!self::$initiated) {
-            self::init_hooks();
-        }
-    }
+	/**
+	 * Load the required dependencies for this plugin.
+	 *
+	 * Include the following files that make up the plugin:
+	 *
+	 * - Plugin_Name_Loader. Orchestrates the hooks of the plugin.
+	 * - Plugin_Name_i18n. Defines internationalization functionality.
+	 * - Plugin_Name_Admin. Defines all hooks for the admin area.
+	 * - Plugin_Name_Public. Defines all hooks for the public side of the site.
+	 *
+	 * Create an instance of the loader which will be used to register the hooks
+	 * with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function load_dependencies() {
 
-    /**
-     * Initialization of the hooks
-     *
-     * @since 1.0.0
-     */
-    private static function init_hooks()
-    {
-        self::$initiated = true;
+		if ( is_admin() ) {
+			/**
+			 * The class responsible for defining all actions that occur in the admin area.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class.impressum-manager-admin.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/views/class.impressum-manager-form-factory.php';
+		}
+		if ( ! is_admin() ) {
+			/**
+			 * The class responsible for defining all actions that occur in the public-facing
+			 * side of the site.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class.impressum-manager-public.php';
+		}
 
-        add_action('the_posts', array('Impressum_Manager', 'metashortcode'));
-    }
+		/**
+		 * The class responsible for shortcodes.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class.impressum-manager-shortcode-manager.php';
+		/**
+		 * The class responsible for the impressum.
+		 */
 
-    /**
-     * Plugin activation hook
-     *
-     * @since 1.0.0
-     */
-    public static function plugin_activation()
-    {
-        require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-activate.php';
-        impressum_manager_install_activate();
-    }
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/impressum/class.impressum-manager-impressum-manager.php';
+		/**
+		 * The class responsible for orchestrating the actions and filters of the
+		 * core plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class.impressum-manager-loader.php';
+		$this->loader = new Impressum_Manager_Loader();
+	}
 
-    /**
-     * Plugin deactiviation
-     *
-     * @since 1.0.0
-     */
-    public static function plugin_deactivation()
-    {
-        require_once plugin_dir_path(__FILE__) . 'includes/impressum-manager-deactivate.php';
-        impressum_manager_deactivate();
-    }
+	/**
+	 * Define the locale for this plugin for internationalization.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function set_locale() {
+		load_plugin_textdomain( SLUG, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+	}
 
-    /**
-     * Load the translation files.
-     *
-     * @since 1.0.0
-     */
-    public static function load_translations()
-    {
-        load_plugin_textdomain(SLUG, false, dirname( plugin_basename( __FILE__ ) ) . '/languages');
-    }
+	/**
+	 * Register all of the hooks of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_hooks() {
+		if ( is_admin() ) {
+			$plugin_admin = new Impressum_Manager_Admin( $this->get_plugin_name(), $this->get_version() );
+			$this->loader->add_filter( 'attachment_fields_to_edit', $plugin_admin, 'field_credit', 10, 2 );
+			$this->loader->add_filter( 'attachment_fields_to_save', $plugin_admin, 'field_credit_save', 10, 2 );
 
-    /**
-     * The actual shortcode method. Will return the impressum
-     * contents of a part of the impressum. [impressum_manager]
-     * will return the full impressum. [impresusm_manager type=xxx]
-     * will return the part xxx of the impressum.
-     * [impressum_manager var=xxx] will load a specific variable.
-     *
-     * @since 1.0.0
-     *
-     * @param $atts
-     * @return mixed|string
-     */
-    public static function content_shortcode($atts)
-    {
-	    $impressum = Impressum_Manager_Manager::getInstance()->get_impressum();
-        if (!empty($atts)) {
+			$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
+			$this->loader->add_action( 'admin_init', $plugin_admin, 'enqueue_style' );
+			$this->loader->add_action( 'admin_init', $plugin_admin, 'enqueue_script' );
 
-            $vals = strtolower(@$atts["type"]);
-            $result = "";
+			$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu' );
+			$this->loader->add_action( 'admin_notices', $plugin_admin, 'installation_notice' );
+			$this->loader->add_action( 'wp_ajax_impressum_manager_get_impressum_field', $plugin_admin, 'editor_ajax_callback' );
+			$this->loader->add_action( 'wp_ajax_impressum_manager_get_shortcode_preview', $plugin_admin, 'shortcode_preview_ajax_callback' );
+			$this->loader->add_action( 'wp_ajax_delete_it', $plugin_admin, 'deletestuff' );
+		}
+		if ( ! is_admin() ) {
+			$plugin_public = new Impressum_Manager_Public( $this->get_plugin_name(), $this->get_version() );
+			$this->loader->add_action( 'init', $plugin_public, 'init' );
+		}
 
-            if (isset($atts['type'])) {
+		$short_code_manager = 'Impressum_Manager_Shortcode_Manager';
+		$this->loader->add_action( 'init', $short_code_manager, 'init' );
+		$this->loader->add_action( 'the_posts', $short_code_manager, 'metashortcode' );
+	}
 
-	            $components = $impressum->get_components();
-	            foreach($components as $component){
-		            if($component->get_shortcode() == $vals){
-						$result = $component->draw();
-			            break;
-		            }
-	            }
-            } else {
+	/**
+	 * Run the loader to execute all of the hooks with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function run() {
+		$this->loader->run();
+	}
 
-                switch (strtolower($atts["var"])) {
-                    case "company name":
-                        $result = get_option("impressum_manager_name_company");
-                        break;
-                    case "address":
-                        $result = get_option("impressum_manager_address");
-                        break;
-                    case "address axtra":
-                        $result = get_option("impressum_manager_address_extra");
-                        break;
-                    case "place":
-                        $result = get_option("impressum_manager_place");
-                        break;
-                    case "zip":
-                        $result = get_option("impressum_manager_zip");
-                        break;
-                    case "county":
-                        $result = get_option("impressum_manager_country");
-                        break;
-                    case "fax":
-                        $result = get_option("impressum_manager_fax");
-                        break;
-                    case "email":
-                        $result = get_option("impressum_manager_email");
-                        break;
-                    case "phone":
-                        $result = get_option("impressum_manager_phone");
-                        break;
-                    case "authorized person":
-                        $result = get_option("impressum_manager_authorized_person");
-                        break;
-                    case "vat":
-                        $result = get_option("impressum_manager_vat");
-                        break;
-                    case "register number":
-                        $result = get_option("impressum_manager_registenr");
-                        break;
-                    case "regulated profession":
-                        $result = get_option("impressum_manager_regulated_profession");
-                        break;
-                    case "state":
-                        $result = get_option("impressum_manager_state");
-                        break;
-                    case "state rules":
-                        $result = get_option("impressum_manager_state_rules");
-                        break;
-                    case "responsible persons":
-                        $result = get_option("impressum_manager_responsible_persons");
-                        break;
-                    case "responsible chamber":
-                        $result = get_option("impressum_manager_responsible_chamber");
-                        break;
-                    case "image source":
-                        $result = get_option("impressum_manager_image_source");
-                        break;
-                    case "register": {
-                        $nr = get_option("impressum_manager_register");
-                        switch ($nr) {
-                            case 1:
-                                $result = __("Kein Register");
-                                break;
-                            case 2:
-                                $result = __("Genossenschaftsregister");
-                                break;
-                            case 3:
-                                $result = __("Handelsregister");
-                                break;
-                            case 4:
-                                $result = __("Partnerschaftsregister");
-                                break;
-                            case 5:
-                                $result = __("Vereinsregister");
-                                break;
-                        }
-                    };
-                        break;
-                    case "form": {
-                        $form = get_option("impressum_manager_form_of_organization");
-                        switch ($form) {
-                            case 1:
-                                $result = __("Einzelunternehmen");
-                                break;
-                            case 2:
-                                $result = __("Stille Gesellschaft");
-                                break;
-                            case 3:
-                                $result = __("Offene Handelsgesellschaft (OHG)");
-                                break;
-                            case 4:
-                                $result = __("Kommanditgesellschaft (KG)");
-                                break;
-                            case 5:
-                                $result = __("Gesellschaft bürgerlichen Rechts (GdR)");
-                                break;
-                            case 6:
-                                $result = __("Aktiengesellschaft (AG)");
-                                break;
-                            case 7:
-                                $result = __("Kommanditgesellschaft auf Aktien (KGaA)");
-                                break;
-                            case 8:
-                                $result = __("Gesellschaft mit beschränkter Haftung (GmbH)");
-                                break;
-                            case 9:
-                                $result = __("Genossenschaft (eG)");
-                                break;
-                        }
-                    };
+	/**
+	 * The name of the plugin used to uniquely identify it within the context of
+	 * WordPress and to define internationalization functionality.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The name of the plugin.
+	 */
+	public function get_plugin_name() {
+		return $this->plugin_name;
+	}
 
-                        break;
-                }
-            }
-            if (empty($result)) {
-                $result = "";
-            }
+	/**
+	 * The reference to the class that orchestrates the hooks with the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    Plugin_Name_Loader    Orchestrates the hooks of the plugin.
+	 */
+	public function get_loader() {
+		return $this->loader;
+	}
 
-            return $result;
-        }
-
-		$result = $impressum->draw();
-
-	    return $result;
-    }
-
-    /**
-     * Function to hook to "the_posts". A nice trick to workaround the
-     * shortcode problem.
-     *
-     * @since 1.0.0
-     *
-     * @param $posts
-     * @return mixed
-     */
-    public static function metashortcode($posts)
-    {
-        $shortcode = 'impressum_manager';
-        $callback_function = self::metashortcode_setmeta();
-
-        return self::metashortcode_shortcode_to_wphead($posts, $shortcode, $callback_function);
-    }
-
-    /**
-     * To execute when shortcode is found. Will add
-     * noindex paramter to the page of that impressum
-     * specific page.
-     *
-     * @since 1.0.0
-     */
-    public static function metashortcode_setmeta()
-    {
-        echo '<meta name="robots" content="noindex,nofollow">';
-    }
-
-    /**
-     * Add meta stuff to the wp head before executing shortcode.
-     * Good workaround for the request query.
-     *
-     * @param $posts
-     * @param $shortcode
-     * @param $callback_function
-     * @return mixed
-     */
-    public static function metashortcode_shortcode_to_wphead($posts, $shortcode, $callback_function)
-    {
-        if (empty($posts)) {
-            return $posts;
-        }
-
-        $show_noindex = get_option("impressum_manager_noindex");
-        $execute_wp_head = false;
-
-        if ($show_noindex !== false && strlen($show_noindex) > 0) {
-            $execute_wp_head = true;
-        }
-
-        $found = false;
-        foreach ($posts as $post) {
-            if (stripos($post->post_content, '[' . $shortcode) !== false) {
-                // remove standard no index
-                if ($execute_wp_head) {
-                    remove_action('wp_head', 'noindex', 1);
-                }
-                // remove others plugin noindex
-                if ($execute_wp_head) {
-                    // Yoast Seo
-                    if (class_exists('WPSEO_Frontend')) {
-                        $wpseo = WPSEO_Frontend::get_instance();
-                        remove_action('wpseo_head', array($wpseo, 'robots'));
-                    }
-
-                    // WP SEO by sergej müller
-                    if (class_exists('wpSEO_Output')) {
-                        remove_action('wpseo_the_robots', array('wpSEO_Output', 'the_robots'));
-                    }
-
-                    // Wordpress Meta Robots
-                    if (class_exists('wp_meta_robots_plugin')) {
-                        remove_action('wp_head', array('wp_meta_robots_plugin', 'add_meta_robots_tag'));
-                    }
-                }
-                add_shortcode($shortcode, array('Impressum_Manager', 'content_shortcode'));
-                $found = true;
-                break;
-            }
-        }
-
-        if ($found && $execute_wp_head) {
-            add_action('wp_head', $callback_function);
-        }
-
-        return $posts;
-    }
-
+	/**
+	 * Retrieve the version number of the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The version number of the plugin.
+	 */
+	public function get_version() {
+		return $this->version;
+	}
 }
-
-
-?>

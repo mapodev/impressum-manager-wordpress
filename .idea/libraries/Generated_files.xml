@@ -8,7 +8,7 @@
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/js/impressum-manager.min.min.js" />
-      <root url="file://$PROJECT_DIR$/js/impressum-manager.min.js" />
+      <root url="file://$PROJECT_DIR$/admin/js/impressum-manager.min.js" />
     </CLASSES>
     <SOURCES />
   </library>

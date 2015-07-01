@@ -19,7 +19,7 @@ function impressum_manager_install_activate()
 	  `impressum_value` TEXT NULL
 	) $charset_collate;";
 
-    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    require_once(ABSPATH . 'wp-admin/admin/upgrade.php');
     dbDelta($sql);
 
     add_option("impressum_manager_db_version", "1.0");
@@ -36,7 +36,7 @@ function impressum_manager_pre_set_fields(){
 
 function impressum_manager_insert_data()
 {
-    require_once plugin_dir_path(__FILE__) . "../class.impressum-manager-admin.php";
+    require_once plugin_dir_path(__FILE__) . "../admin/class.impressum-manager-admin.php";
 
     $impressum_key = array();
 

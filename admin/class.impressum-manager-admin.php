@@ -249,47 +249,36 @@ class Impressum_Manager_Admin {
 	);
 
 	/**
-	 * Initialisator for the Admin Interface.
-	 * Draws the Option Page for Impressum Manager.
-	 * Also starts all kind of hooks, which are needed to run
-	 * the plugin.
+	 * The ID of this plugin.
 	 *
-	 * @since 1.0.0
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string $plugin_name The ID of this plugin.
 	 */
-	public static function init() {
-		if ( array_key_exists( "dismiss", $_REQUEST ) ) {
-			self::save_option( "impressum_manager_notice", "dismiss" );
-		}
+	private $plugin_name;
+	/**
+	 * The version of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string $version The current version of this plugin.
+	 */
+	private $version;
 
-		add_filter( 'attachment_fields_to_edit', array( 'Impressum_Manager_Admin', 'field_credit' ), 10, 2 );
-		add_filter( 'attachment_fields_to_save', array( 'Impressum_Manager_Admin', 'field_credit_save' ), 10, 2 );
-
-		add_action( 'admin_init', array( 'Impressum_Manager_Admin', 'admin_init' ) );
-		add_action( 'admin_menu', array( 'Impressum_Manager_Admin', 'add_menu' ) );
-		add_action( 'admin_notices', array( 'Impressum_Manager_Admin', 'installation_notice' ) );
-		add_action( 'wp_ajax_impressum_manager_get_impressum_field', array(
-			'Impressum_Manager_Admin',
-			'editor_ajax_callback'
-		) );
-		add_action( 'wp_ajax_impressum_manager_get_shortcode_preview', array(
-			'Impressum_Manager_Admin',
-			'shortcode_preview_ajax_callback'
-		) );
-        add_action( 'wp_ajax_delete_it', array(
-            'Impressum_Manager_Admin',
-            'deletestuff'
-        ) );
+	public function __construct( $plugin_name, $version ) {
+		$this->plugin_name = $plugin_name;
+		$this->version     = $version;
 	}
 
-    /*
-     * TODO: DELETE THIS SHIT
-     */
-    public static function deletestuff() {
-        include(plugin_dir_path(__FILE__) . "uninstall.php");
-        echo "lol";
+	/*
+	 * TODO: DELETE THIS SHIT
+	 */
+	public static function deletestuff() {
+		include( plugin_dir_path( __FILE__ ) . "uninstall.php" );
+		echo "lol";
 
-        die();
-    }
+		die();
+	}
 
 	/**
 	 * Used for the Filter for adding an extra field for
@@ -402,14 +391,22 @@ class Impressum_Manager_Admin {
 	}
 
 	/**
-	 * Admin Interface Initialization.
+	 * Enqueue the styles.
 	 * Called by a hook.
 	 *
 	 * @since 1.0.0
 	 */
-	public static function admin_init() {
-		self::register_settings();
+	public static function enqueue_style() {
 		wp_enqueue_style( 'impressum_manager_style', plugins_url( 'css/impressum-manager.min.css', __FILE__ ) );
+	}
+
+	/**
+	 * Enqueue the scrips.
+	 * Called by a hook.
+	 *
+	 * @since 1.0.0
+	 */
+	public static function enqueue_script() {
 		wp_enqueue_script( 'impressum_manager_script', plugins_url( 'js/impressum-manager.min.js', __FILE__ ) );
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'tiny_mce' );
@@ -505,25 +502,16 @@ class Impressum_Manager_Admin {
 		}
 
 		if ( $skip_start == false ) {
-			include( plugin_dir_path( __FILE__ ) . "includes/views/impressum-manager-start.php" );
+			include( plugin_dir_path( __FILE__ ) . "views/impressum-manager-start.php" );
 		} elseif ( isset( $_GET['view'] ) && $_GET['view'] == 'tutorial' ) {
 			self::display_tutorial_page();
 		} elseif ( isset( $_GET['view'] ) && $_GET['view'] == 'config' ) {
-			self::display_config_page();
+			include( plugin_dir_path( __FILE__ ) . "views/impressum-manager-config.php" );
 		} elseif ( isset( $_GET['view'] ) && $_GET['view'] == 'main' ) {
-			self::display_main_page();
+			include( plugin_dir_path( __FILE__ ) . "views/impressum-manager-main.php" );
 		} else {
-			self::display_main_page();
+			include( plugin_dir_path( __FILE__ ) . "views/impressum-manager-main.php" );
 		}
-	}
-
-	/**
-	 * Displaying the Main Page
-	 *
-	 * @since 1.0.0
-	 */
-	private static function display_main_page() {
-		include( plugin_dir_path( __FILE__ ) . "includes/views/impressum-manager-main.php" );
 	}
 
 	/**
@@ -535,7 +523,7 @@ class Impressum_Manager_Admin {
 
 		switch ( @$_GET['step'] ) {
 			case 1:
-				include( plugin_dir_path( __FILE__ ) . "includes/views/tutorial/impressum-manager-tutorial-page1.php" );
+				include( plugin_dir_path( __FILE__ ) . "views/tutorial/impressum-manager-tutorial-page1.php" );
 				break;
 
 			case 2:
@@ -555,7 +543,7 @@ class Impressum_Manager_Admin {
 					self::save_option( "impressum_manager_authorized_person", @$_POST["impressum_manager_authorized_person"] );
 				}
 
-				include( plugin_dir_path( __FILE__ ) . "includes/views/tutorial/impressum-manager-tutorial-page2.php" );
+				include( plugin_dir_path( __FILE__ ) . "views/tutorial/impressum-manager-tutorial-page2.php" );
 				break;
 
 			case 3:
@@ -590,7 +578,7 @@ class Impressum_Manager_Admin {
 
 				}
 
-				include( plugin_dir_path( __FILE__ ) . "includes/views/tutorial/impressum-manager-tutorial-page3.php" );
+				include( plugin_dir_path( __FILE__ ) . "views/tutorial/impressum-manager-tutorial-page3.php" );
 				break;
 
 			case 4:
@@ -605,76 +593,13 @@ class Impressum_Manager_Admin {
 					self::save_option( "impressum_manager_extra_field", @$_POST["impressum_manager_extra_field"] );
 				}
 
-				include( plugin_dir_path( __FILE__ ) . "includes/views/tutorial/impressum-manager-tutorial-page4.php" );
+				include( plugin_dir_path( __FILE__ ) . "views/tutorial/impressum-manager-tutorial-page4.php" );
 				break;
 
 
 			default:
 				self::show();
 		}
-	}
-
-	/**
-	 * Displaying the Configurations Page
-	 *
-	 * @since 1.0.0
-	 */
-	private static function display_config_page() {
-		?>
-		<script>
-			(function ($) {
-				$(document).ready(function () {
-					$("#delete_options").click(function () {
-						var data = {
-							'action': 'impressum_manager_delete_options',
-							'delete': true
-						};
-
-						$.post(ajaxurl, data, function (response) {
-						});
-					});
-				});
-			}(jQuery));
-		</script>
-		<div class="wrap">
-            <?php if($_GET['view'] != "config") {
-                ?>
-                <h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
-            <?php
-            }
-            ?>
-
-			<h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
-				<a class="nav-tab nav-tab-active" id="general-tab"
-				   href="#general-tab-j"><?= __( "General", SLUG ) ?></a>
-				<a class="nav-tab" id="settings-tab"
-				   href="#settings-tab-j"><?= __( "Kontaktdaten", SLUG ) ?></a>
-				<a class="nav-tab" id="fields-tab"
-				   href="#fields-tab-j"><?= __( "Impressum Fields", SLUG ) ?></a>
-                <a class="nav-tab" id="import-tab"
-                   href="#import-tab-j"><?=__("Import")?></a>
-			</h2>
-            <br>
-            <form action="<?php Impressum_Manager_Admin::get_page_url() ?>">
-                <input type="hidden" name="page" value="<?= SLUG ?>">
-                <input type="hidden" name="view" value="main">
-                <input class="button button-secondary" type="submit" value="<?= _e( 'Zur Vorschau' ) ?>">
-            </form>
-
-			<div class="general-tab tab">
-				<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-general-tab.php" ) ?>
-			</div>
-			<div class="settings-tab tab">
-				<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-settings-tab.php" ) ?>
-			</div>
-			<div class="fields-tab tab">
-				<?php include( plugin_dir_path( __FILE__ ) . "includes/views/tabs/impressum-manager-fields-tab.php" ) ?>
-			</div>
-            <div class="import-tab tab">
-                <?php include( plugin_dir_path(__FILE__) . "includes/views/tabs/impressum-manager-import-tab.php" ) ?>
-            </div>
-		</div>
-	<?php
 	}
 
 	/**
@@ -737,9 +662,9 @@ class Impressum_Manager_Admin {
 		register_setting( "impressum-manager-settings", "impressum_manager_name_and_adress" );
 		register_setting( "impressum-manager-settings", "impressum_manager_space_of_appliance" );
 
-        register_setting( "impressum-manager-import-tab", "impressum_manager_imported_policy_url" );
-        register_setting( "impressum-manager-import-tab", "impressum_manager_imported_impressum_url" );
-        register_setting( "impressum-manager-import-tab", "impressum_manager_use_imported_impressum" );
+		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_policy_url" );
+		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_impressum_url" );
+		register_setting( "impressum-manager-import-tab", "impressum_manager_use_imported_impressum" );
 	}
 
 	/**
