@@ -181,3 +181,7 @@ h2.logo {
     color: #777;
     margin-bottom: 5px;
 }
+
+.nav-tab-active, .nav-tab-active:hover {
+    background-color: #fff;
+}
