@@ -142,7 +142,7 @@ public static function get_source_from() {
 	</tr>
 	<tr>
 		<th>
-			<?= _e( "Datenschutzerklärung für Twitter" ) ?>
+			<?= __( "Datenschutzerklärung für Twitter", SLUG ) ?>
 		</th>
 		<td>
 			<label for="impressum_manager_policy_twitter">

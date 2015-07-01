@@ -8,7 +8,7 @@
 		<tbody>
 		<tr>
 			<th>
-				<?= __( "URL zum Impressum" ) ?>
+				<?= __( "URL zum Impressum" , SLUG) ?>
 			</th>
 			<td>
 				<input type="text" name="impressum_manager_imported_impressum_url"
@@ -18,7 +18,7 @@
 		</tr>
 		<tr>
 			<th>
-				<?= __( "URL zum Datenschutz" ) ?>
+				<?= __( "URL zum Datenschutz", SLUG ) ?>
 			</th>
 			<td>
 				<input type="text" name="impressum_manager_imported_policy_url"

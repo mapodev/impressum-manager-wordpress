@@ -24,7 +24,7 @@
             <form action="<?php Impressum_Manager_Admin::get_page_url() ?>">
                 <input type="hidden" name="page" value="<?= SLUG ?>">
                 <input type="hidden" name="view" value="main">
-                <input class="button button-secondary" type="submit" value="<?= _e('Zurück zur Vorschau') ?>">
+                <input class="button button-secondary" type="submit" value="<?= __('Zurück zur Vorschau', SLUG) ?>">
             </form>
         </div>
         <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">

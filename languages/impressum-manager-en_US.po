@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Impressum Manager\n"
 "POT-Creation-Date: 2015-07-01 20:11+0100\n"
-"PO-Revision-Date: 2015-07-01 20:31+0100\n"
+"PO-Revision-Date: 2015-07-01 20:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -145,7 +145,7 @@ msgstr "Impressum Content Settings"
 
 #: admin/views/class.impressum-manager-form-factory.php:85
 msgid "Haftungsausschluss (Disclaimer)"
-msgstr ""
+msgstr "Disclaimer"
 
 #: admin/views/class.impressum-manager-form-factory.php:91
 msgid "Füge einen Disclaimer in dein Impressum ein."
