@@ -268,7 +268,19 @@ class Impressum_Manager_Admin {
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+
+        add_action("admin_init", array($this, 'set_locale'));
 	}
+
+    /**
+     * Define the locale for this plugin for internationalization.
+     *
+     * @since    1.0.0
+     * @access   private
+     */
+    public function set_locale() {
+        load_plugin_textdomain( SLUG, false, dirname( plugin_basename( __FILE__ ) ) . '/../languages' );
+    }
 
 	/**
 	 * Used for the Filter for adding an extra field for

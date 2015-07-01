@@ -40,7 +40,6 @@ class Impressum_Manager {
 		$this->plugin_name = 'Impressum Manager';
 		$this->version     = '1.0.0';
 		$this->load_dependencies();
-		$this->set_locale();
 		$this->define_hooks();
 	}
 
@@ -97,16 +96,6 @@ class Impressum_Manager {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class.impressum-manager-loader.php';
 		$this->loader = new Impressum_Manager_Loader();
-	}
-
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function set_locale() {
-		load_plugin_textdomain( SLUG, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
 
 	/**
