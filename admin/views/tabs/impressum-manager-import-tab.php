@@ -28,5 +28,5 @@
 		</tbody>
 	</table>
 
-	<?php submit_button( __( "Impressum aktualisieren" ) ); ?>
+	<?php submit_button( __( "Impressum aktualisieren", SLUG ) ); ?>
 </form>

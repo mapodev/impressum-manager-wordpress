@@ -16,5 +16,5 @@ Impressum_Manager_Admin::save_option( "impressum_manager_notice", "dismissed" );
 		</tbody>
 	</table>
 
-	<?php submit_button( __( "Impressum aktualisieren" ) ); ?>
+	<?php submit_button( __( "Impressum aktualisieren", SLUG ) ); ?>
 </form>
