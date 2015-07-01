@@ -35,7 +35,7 @@ class Impressum_Manager_Shortcode_Manager
 	 * @param $atts
 	 * @return mixed|string
 	 */
-	public function content_shortcode($atts)
+	public static function content_shortcode($atts)
 	{
 		$result = "";
 
@@ -173,7 +173,7 @@ class Impressum_Manager_Shortcode_Manager
 	 * @param $posts
 	 * @return mixed
 	 */
-	public function metashortcode($posts)
+	public static function metashortcode($posts)
 	{
 		$shortcode = 'impressum_manager';
 		$callback_function = self::metashortcode_setmeta();
@@ -188,7 +188,7 @@ class Impressum_Manager_Shortcode_Manager
 	 *
 	 * @since 1.0.0
 	 */
-	public function metashortcode_setmeta()
+	public static function metashortcode_setmeta()
 	{
 		echo '<meta name="robots" content="noindex,nofollow">';
 	}
@@ -202,7 +202,7 @@ class Impressum_Manager_Shortcode_Manager
 	 * @param $callback_function
 	 * @return mixed
 	 */
-	public function metashortcode_shortcode_to_wphead($posts, $shortcode, $callback_function)
+	public static function metashortcode_shortcode_to_wphead($posts, $shortcode, $callback_function)
 	{
 		if (empty($posts)) {
 			return $posts;
