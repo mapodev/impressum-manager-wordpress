@@ -20,5 +20,21 @@
             $(o).addClass("nav-tab-active");
             $("." + name).addClass("nav-tab-active").show();
         }
+
+        $("#impressum_manager_use_imported_impressum").change(function() {
+            if($(this).attr("checked")) {
+                $("#general-tab").hide();
+                $("#settings-tab").hide();
+                // hide tabs
+                $(".tab").hide();
+                $(".nav-tab").removeClass("nav-tab-active");
+                $(".import-tab").show();
+                $("#import-tab").addClass("nav-tab-active");
+            } else {
+                $("#general-tab").show();
+                $("#settings-tab").show();
+            }
+        });
+
     });
 }(jQuery));

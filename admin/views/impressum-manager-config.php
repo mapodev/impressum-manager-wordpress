@@ -1,31 +1,33 @@
 <div class="wrap">
 	<div class="box primary">
 		<div class="box header"><?= __( 'Konfiguriere dein Impressum.', SLUG ); ?></div>
-		<div class="box content">hallo hallo<br>hier muss ein bisschen blubblerbla text hin..<br>ich kann hier auswählen
-			blabla
-			<br>
+		<div class="box content"><p>
+            <?=__("Hier hast du die Möglichkeit mit einem Klick zu entscheiden, ob du dein importiertes Impressum nutzen möchtest, oder das generierte Impressum von Impressum Manager.", SLUG); ?>
+            </p>
+
 			<table>
 				<tr>
 					<th>
-						<?= __( "Importiertes Impressum nutzen" ) ?>
+						<?= __( "Importiertes Impressum nutzen", SLUG ) ?>
 					</th>
 					<td>
 						<label for="impressum_manager_use_imported_impressum">
-							<input type="checkbox"
+							<input type="checkbox" id="impressum_manager_use_imported_impressum"
 							       name="impressum_manager_use_imported_impressum" <?= checked( "on", get_option( "impressum_manager_use_imported_impressum" ), false ) ?>>
-							<?= __( "Aktiviere das importierte Impressum anstatt das generierte Impressum" ); ?>
+							<?= __( "Aktiviere das importierte Impressum anstatt das generierte Impressum", SLUG ); ?>
 						</label>
 					</td>
 				</tr>
 			</table>
 		</div>
-		<form action="<?php Impressum_Manager_Admin::get_page_url() ?>">
-			<input type="hidden" name="page" value="<?= SLUG ?>">
-			<input type="hidden" name="view" value="main">
-			<input class="button button-secondary" type="submit" value="<?= _e( 'Zurück zur Vorschau' ) ?>">
-		</form>
-
-		<h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
+        <div style="position: relative; float: right;">
+            <form action="<?php Impressum_Manager_Admin::get_page_url() ?>">
+                <input type="hidden" name="page" value="<?= SLUG ?>">
+                <input type="hidden" name="view" value="main">
+                <input class="button button-secondary" type="submit" value="<?= _e('Zurück zur Vorschau') ?>">
+            </form>
+        </div>
+        <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
 			<a class="nav-tab nav-tab-active" id="general-tab"
 			   href="#general-tab-j"><?= __( "General", SLUG ) ?></a>
 			<a class="nav-tab" id="settings-tab"
