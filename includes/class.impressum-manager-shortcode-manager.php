@@ -19,7 +19,7 @@ class Impressum_Manager_Shortcode_Manager
 	private function __clone() {
 	}
 
-	public function init(){
+	public static function init(){
 		add_shortcode("impressum_manager", array('Impressum_Manager_Shortcode_Manager', 'content_shortcode'));
 	}
 
