@@ -10,19 +10,34 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 ?>
 
 <script>
-    (function ($) {
-        $(document).ready(function () {
-            $("#del_but").click(function() {
-                var data =  {
-                    'action': "delete_it",
-                        shit: "do shit"
-                };
-                $.post(ajaxurl, data, function(data) {
-                    console.log(data);
-                })
-            });
-        })
-    }(jQuery));
+	(function ($) {
+		$(document).ready(function () {
+			$("#del_but").click(function () {
+				var data = {
+					'action': "delete_it",
+					shit: "do shit"
+				};
+				$.post(ajaxurl, data, function (data) {
+					console.log(data);
+				})
+			});
+		})
+	}(jQuery));
+</script>
+<script>
+	(function ($) {
+		$(document).ready(function () {
+			$("#delete_options").click(function () {
+				var data = {
+					'action': 'impressum_manager_delete_options',
+					'delete': true
+				};
+
+				$.post(ajaxurl, data, function (response) {
+				});
+			});
+		});
+	}(jQuery));
 </script>
 <button id="del_but">SCHEISS DELETE BUTTON MAN!</button>
 
@@ -35,40 +50,48 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 
 	if ( ! $impressum->has_content() ) {
 		?>
-		<div class="nbox">
-			<div class="box-empty-outer">
-				<div class="box-empty-middle">
-					<div class="box-empty-inner">
-						<p>
+		<div class="box primary" style="text-align: center">
+			<div class="box header"><?= __( "Dein Impressum ist leer!", SLUG ) ?></div>
+			<br>
 
-						<form action=<?php Impressum_Manager_Admin::get_page_url() ?>>
-							<input type="hidden" name="page" value="<?= SLUG ?>">
-							<input type="hidden" name="view" value="tutorial"/>
-							<input type="hidden" name="step" value="1"/>
-							<input class="button button-primary" type="submit" id="configure_impressum"
-							       value="<?= __( 'Impressum generieren' ) ?>">
-						</form>
-						</p>
-						<?= __( 'oder', SLUG ) ?>
-						<p>
+			<div
+				class="box content"><?= __( "Wähle eine der Optionen aus, um dein Impressum zu erstellen.", SLUG ) ?></div>
+			<br>
 
-						<form action="<?php Impressum_Manager_Admin::get_page_url() ?>#import-tab">
-							<input type="hidden" name="page" value="<?= SLUG ?>">
-                            <input type="hidden" name="view" value="config"/>
-							<input class="button button-primary" type="submit" id="configure_impressum"
-							       value="<?= __( 'Impressum importieren' ) ?>">
-						</form>
-						</p>
-					</div>
-				</div>
+			<div class="box content">
+				<p>
+
+				<form action=<?php Impressum_Manager_Admin::get_page_url() ?>>
+					<input type="hidden" name="page" value="<?= SLUG ?>">
+					<input type="hidden" name="view" value="tutorial"/>
+					<input type="hidden" name="step" value="1"/>
+					<input class="button button-primary" type="submit" id="configure_impressum"
+					       value="<?= __( 'Impressum generieren' ) ?>">
+				</form>
+				<br>
+				<?= __( 'oder', SLUG ) ?>
+				<br>
+				<br>
+				<form action="<?php Impressum_Manager_Admin::get_page_url() ?>#import-tab">
+					<input type="hidden" name="page" value="<?= SLUG ?>">
+					<input type="hidden" name="view" value="config"/>
+					<input class="button button-primary" type="submit" id="configure_impressum"
+					       value="<?= __( 'Impressum importieren' ) ?>">
+				</form>
+				</p>
 			</div>
 		</div>
-	<br>
-		<form action="<?php Impressum_Manager_Admin::get_page_url() ?>#general-tab" class="right">
-			<input type="hidden" name="page" value="<?= SLUG ?>">
-			<input type="hidden" name="view" value="config"/>
-			<input class="button button-secondary" type="submit" id="configure_impressum" value="<?= __( 'Zu den Einstellungen' ) ?>">
-		</form>
+		<br>
+		<div style="text-align: center">
+			<p><?= __( 'Alternativ kannst du auch direkt', SLUG ) ?></p>
+			<form action="<?php Impressum_Manager_Admin::get_page_url() ?>#general-tab">
+				<input type="hidden" name="page" value="<?= SLUG ?>">
+				<input type="hidden" name="view" value="config"/>
+				<input class="button button-secondary" type="submit" id="configure_impressum"
+				       value="<?= __( 'zu den Einstellungen' ) ?>">
+			</form>
+			<p>gehen</p>
+		</div>
 	<?php
 	} else {
 	?>
@@ -88,42 +111,42 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 				})
 			}(jQuery));
 		</script>
-		<div class="nbox">
-			<div class="box-preview">
-				<div class="box-preview-header">
-					<h3><?= __( 'Wähle einen shortcode aus und schau dir die Vorschau an! ', SLUG ); ?></h3><br><br>
-					<?= __( 'Shortcode: ', SLUG ) ?>
-					<select name="impressum_shortcode_preview" id="impressum_shortcode_preview">
-						<?php
+		<div class="box primary">
+			<form action="<?php Impressum_Manager_Admin::get_page_url() ?>" class="right" style="display:inline">
+				<input type="hidden" name="page" value="<?= SLUG ?>">
+				<input type="hidden" name="view" value="config">
+				<input class="button button-primary" type="submit" value="<?= __( 'Konfigurieren' ) ?>">
+			</form>
+			<div class="box header"
+			     style="display:inline"><?= __( 'Wähle einen shortcode aus und schau dir die Vorschau an! ', SLUG ); ?></div>
+			<br><br>
 
-						$components = $impressum->get_components();
-						foreach ( $components as $component ) {
-							if ( $component->has_content() ) {
-								$shortcode = $component->get_shortcode();
-								$name      = $component->get_name();
-								echo "<option value=$shortcode>$name</option>";
-							}
-						}
 
-						?>
-					</select>
-				</div>
-				<div class="box-preview-buttons">
-					<form action="<?php Impressum_Manager_Admin::get_page_url() ?>" style="display:inline">
-						<input type="hidden" name="page" value="<?= SLUG ?>">
-						<input type="hidden" name="view" value="config">
-						<input class="button button-primary" type="submit" value="<?= __( 'Konfigurieren' ) ?>">
-					</form>
-				</div>
-				<hr>
-				<div class="box-preview-content" id="impressum-preview-content">
-					<?php
-					echo $impressum->draw();
-					?>
-				</div>
+			<?= __( 'Shortcode: ', SLUG ) ?>
+
+			<select name="impressum_shortcode_preview" id="impressum_shortcode_preview" style="display:inline">
+				<?php
+
+				$components = $impressum->get_components();
+				foreach ( $components as $component ) {
+					if ( $component->has_content() ) {
+						$shortcode = $component->get_shortcode();
+						$name      = $component->get_name();
+						echo "<option value=$shortcode>$name</option>";
+					}
+				}
+
+				?>
+			</select>
+
+			<hr>
+			<div id="impressum-preview-content">
+				<?php
+				echo $impressum->draw();
+				?>
 			</div>
 		</div>
-		<?php
+	<?php
 	}
 	?>
 </div>

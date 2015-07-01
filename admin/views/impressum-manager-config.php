@@ -1,54 +1,54 @@
-<script>
-	(function ($) {
-		$(document).ready(function () {
-			$("#delete_options").click(function () {
-				var data = {
-					'action': 'impressum_manager_delete_options',
-					'delete': true
-				};
-
-				$.post(ajaxurl, data, function (response) {
-				});
-			});
-		});
-	}(jQuery));
-</script>
 <div class="wrap">
-	<?php if ( $_GET['view'] != "config" ) {
-		?>
-		<h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
-	<?php
-	}
-	?>
+	<div class="box primary">
+		<div class="box header"><?= __( 'Konfiguriere dein Impressum.', SLUG ); ?></div>
+		<div class="box content">hallo hallo<br>hier muss ein bisschen blubblerbla text hin..<br>ich kann hier auswählen
+			blabla
+			<br>
+			<table>
+				<tr>
+					<th>
+						<?= __( "Importiertes Impressum nutzen" ) ?>
+					</th>
+					<td>
+						<label for="impressum_manager_use_imported_impressum">
+							<input type="checkbox"
+							       name="impressum_manager_use_imported_impressum" <?= checked( "on", get_option( "impressum_manager_use_imported_impressum" ), false ) ?>>
+							<?= __( "Aktiviere das importierte Impressum anstatt das generierte Impressum" ); ?>
+						</label>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<form action="<?php Impressum_Manager_Admin::get_page_url() ?>">
+			<input type="hidden" name="page" value="<?= SLUG ?>">
+			<input type="hidden" name="view" value="main">
+			<input class="button button-secondary" type="submit" value="<?= _e( 'Zurück zur Vorschau' ) ?>">
+		</form>
 
-	<h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
-		<a class="nav-tab nav-tab-active" id="general-tab"
-		   href="#general-tab-j"><?= __( "General", SLUG ) ?></a>
-		<a class="nav-tab" id="settings-tab"
-		   href="#settings-tab-j"><?= __( "Kontaktdaten", SLUG ) ?></a>
-		<a class="nav-tab" id="fields-tab"
-		   href="#fields-tab-j"><?= __( "Impressum Fields", SLUG ) ?></a>
-		<a class="nav-tab" id="import-tab"
-		   href="#import-tab-j"><?= __( "Import" ) ?></a>
-	</h2>
-	<br>
+		<h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
+			<a class="nav-tab nav-tab-active" id="general-tab"
+			   href="#general-tab-j"><?= __( "General", SLUG ) ?></a>
+			<a class="nav-tab" id="settings-tab"
+			   href="#settings-tab-j"><?= __( "Kontaktdaten", SLUG ) ?></a>
+			<a class="nav-tab" id="fields-tab"
+			   href="#fields-tab-j"><?= __( "Impressum Fields", SLUG ) ?></a>
+			<a class="nav-tab" id="import-tab"
+			   href="#import-tab-j"><?= __( "Import" ) ?></a>
+		</h2>
+		<br>
 
-	<form action="<?php Impressum_Manager_Admin::get_page_url() ?>">
-		<input type="hidden" name="page" value="<?= SLUG ?>">
-		<input type="hidden" name="view" value="main">
-		<input class="button button-secondary" type="submit" value="<?= _e( 'Zur Vorschau' ) ?>">
-	</form>
+		<div class="general-tab tab">
+			<?php include( plugin_dir_path( __FILE__ ) . "/tabs/impressum-manager-general-tab.php" ) ?>
+		</div>
+		<div class="settings-tab tab">
+			<?php include( plugin_dir_path( __FILE__ ) . "/tabs/impressum-manager-settings-tab.php" ) ?>
+		</div>
+		<div class="fields-tab tab">
+			<?php include( plugin_dir_path( __FILE__ ) . "/tabs/impressum-manager-fields-tab.php" ) ?>
+		</div>
+		<div class="import-tab tab">
+			<?php include( plugin_dir_path( __FILE__ ) . "/tabs/impressum-manager-import-tab.php" ) ?>
+		</div>
 
-	<div class="general-tab tab">
-		<?php include( plugin_dir_path( __FILE__ ) . "/tabs/impressum-manager-general-tab.php" ) ?>
-	</div>
-	<div class="settings-tab tab">
-		<?php include( plugin_dir_path( __FILE__ ) . "/tabs/impressum-manager-settings-tab.php" ) ?>
-	</div>
-	<div class="fields-tab tab">
-		<?php include( plugin_dir_path( __FILE__ ) . "/tabs/impressum-manager-fields-tab.php" ) ?>
-	</div>
-	<div class="import-tab tab">
-		<?php include( plugin_dir_path( __FILE__ ) . "/tabs/impressum-manager-import-tab.php" ) ?>
 	</div>
 </div>
