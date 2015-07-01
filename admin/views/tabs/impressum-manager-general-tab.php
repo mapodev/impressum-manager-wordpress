@@ -7,6 +7,7 @@ Impressum_Manager_Admin::save_option( "impressum_manager_notice", "dismissed" );
 	settings_fields( 'impressum-manager-general-tab' );
 	do_settings_sections( 'impressum-manager-general-tab' );
 	?>
+    <input type="hidden" class="hidden_impressum_manager_use_imported_impressum" name="impressum_manager_use_imported_impressum" value="">
 	<table class="form-table" id="settings-options">
 		<tbody>
 		<?php Impressum_Manager_Form_Factory::get_impressum_config() ?>

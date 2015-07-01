@@ -4,6 +4,7 @@
 	settings_fields( 'impressum-manager-settings' );
 	do_settings_sections( 'impressum-manager-settings' );
 	?>
+    <input type="hidden" class="hidden_impressum_manager_use_imported_impressum" name="impressum_manager_use_imported_impressum" value="">
 	<table class="form-table" id="settings-options">
 		<tbody>
 		<?php Impressum_Manager_Form_Factory::get_person_type(); ?>

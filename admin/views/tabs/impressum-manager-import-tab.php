@@ -3,7 +3,7 @@
 	settings_fields( 'impressum-manager-import-tab' );
 	do_settings_sections( 'impressum-manager-import-tab' );
 	?>
-    <input type="hidden" id="hidden_impressum_manager_use_imported_impressum" name="impressum_manager_use_imported_impressum" value="">
+    <input type="hidden" class="hidden_impressum_manager_use_imported_impressum" name="impressum_manager_use_imported_impressum" value="">
 	<table class="form-table" id="settings-options">
 		<tbody>
 		<tr>

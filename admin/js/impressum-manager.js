@@ -41,11 +41,11 @@
                 $(".nav-tab").removeClass("nav-tab-active");
                 $(".import-tab").show();
                 $("#import-tab").addClass("nav-tab-active");
-                $("#hidden_impressum_manager_use_imported_impressum").val("on");
+                $(".hidden_impressum_manager_use_imported_impressum").val("on");
             } else {
                 $("#general-tab").show();
                 $("#settings-tab").show();
-                $("#hidden_impressum_manager_use_imported_impressum").val("");
+                $(".hidden_impressum_manager_use_imported_impressum").val("");
             }
         });
 

@@ -59,6 +59,7 @@ if (!empty($_POST) && isset($_POST['submit'])) {
 
 <h3><?= __("Update Impressum Fields") ?></h3>
 <form action="options-general.php?page=<?= SLUG ?>#fields-tab-j" method="post">
+    <input type="hidden" class="hidden_impressum_manager_use_imported_impressum" name="impressum_manager_use_imported_impressum" value="">
     <select name="lang">
         <option>DE</option>
     </select>
