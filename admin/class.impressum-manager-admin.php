@@ -270,16 +270,6 @@ class Impressum_Manager_Admin {
 		$this->version     = $version;
 	}
 
-	/*
-	 * TODO: DELETE THIS SHIT
-	 */
-	public static function deletestuff() {
-		include( plugin_dir_path( __FILE__ ) . "uninstall.php" );
-		echo "lol";
-
-		die();
-	}
-
 	/**
 	 * Used for the Filter for adding an extra field for
 	 * image post meta data. Adds an extra field for the
@@ -469,8 +459,6 @@ class Impressum_Manager_Admin {
 	 */
 	public static function show() {
 		$skip_start = false;
-		//self::save_option( "impressum_manager_skip_start", false );
-
 
 		if ( isset( $_GET['skip_start'] ) && $_GET['skip_start'] == 'true' || isset( $_GET['tut_finished'] ) && $_GET['tut_finished'] == 'true' ) {
 			self::save_option( 'impressum_manager_skip_start', true );

@@ -9,38 +9,6 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 
 ?>
 
-<script>
-	(function ($) {
-		$(document).ready(function () {
-			$("#del_but").click(function () {
-				var data = {
-					'action': "delete_it",
-					shit: "do shit"
-				};
-				$.post(ajaxurl, data, function (data) {
-					console.log(data);
-				})
-			});
-		})
-	}(jQuery));
-</script>
-<script>
-	(function ($) {
-		$(document).ready(function () {
-			$("#delete_options").click(function () {
-				var data = {
-					'action': 'impressum_manager_delete_options',
-					'delete': true
-				};
-
-				$.post(ajaxurl, data, function (response) {
-				});
-			});
-		});
-	}(jQuery));
-</script>
-<button id="del_but">SCHEISS DELETE BUTTON MAN!</button>
-
 <div class="wrap">
 	<h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
 
