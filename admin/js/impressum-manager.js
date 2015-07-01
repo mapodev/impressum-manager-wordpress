@@ -30,12 +30,19 @@
             $(".import-tab").show();
             $("#import-tab").addClass("nav-tab-active");
             $("#hidden_impressum_manager_use_imported_impressum").val("on");
+            $("#import-tab").show();
+        } else {
+            $("#import-tab").hide();
+            $("#general-tab").show();
+            $("#settings-tab").show();
+
         }
 
         $("#impressum_manager_use_imported_impressum").change(function() {
             if($(this).attr("checked")) {
                 $("#general-tab").hide();
                 $("#settings-tab").hide();
+                $("#import-tab").show();
                 // hide tabs
                 $(".tab").hide();
                 $(".nav-tab").removeClass("nav-tab-active");
@@ -43,7 +50,12 @@
                 $("#import-tab").addClass("nav-tab-active");
                 $(".hidden_impressum_manager_use_imported_impressum").val("on");
             } else {
+                $(".nav-tab").removeClass("nav-tab-active");
+                $("#general-tab").addClass("nav-tab-active");
+                $(".import-tab").hide();
+                $("#import-tab").hide();
                 $("#general-tab").show();
+                $(".general-tab").show();
                 $("#settings-tab").show();
                 $(".hidden_impressum_manager_use_imported_impressum").val("");
             }
