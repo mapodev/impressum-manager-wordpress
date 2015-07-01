@@ -82,7 +82,7 @@ class Impressum_Manager_Impressum_Factory {
 
 		$impressum = new Impressum_Manager_Impressum( '', '[impressum_manager]' );
 
-		$impressum->add( new Impressum_Manager_Textunit( 'imported_impressum', "impressum", $impressum_text ) );
+		$impressum->add( new Impressum_Manager_Textunit( 'imported_impressum', "imported impressum", $impressum_text ) );
 
 		$impressum->add( new Impressum_Manager_Textunit( 'policy', "policy", $policy ) );
 
