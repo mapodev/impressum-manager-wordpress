@@ -69,15 +69,15 @@
     border-radius: 3px;
     margin-bottom: 30px;
     overflow: hidden;
-    padding: 0px
+    padding: 0
 }
 
 .box .button-primary {
-    margin-top: 0px
+    margin-top: 0
 }
 
 .box .button.button-secondary {
-    margin: 0px 0
+    margin: 0
 }
 
 .box.primary {
@@ -160,7 +160,7 @@ h2.logo {
 }
 
 @media screen and (min-width: 782px) {
-    #settings-options input[type=text], #settings-options select {
+    #settings-options input[type=tel], #settings-options input[type=url], #settings-options input[type=email], #settings-options input[type=text], #settings-options select {
         width: 338px
     }
 
@@ -174,10 +174,10 @@ h2.logo {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    line-height: normal;
+    line-height: normal
 }
 
 .box.content {
     color: #777;
-    margin-bottom: 5px;
+    margin-bottom: 5px
 }

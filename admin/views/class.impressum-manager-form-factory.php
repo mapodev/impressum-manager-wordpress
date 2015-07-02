@@ -362,7 +362,7 @@ public static function get_source_from() {
 				<b><?= __( "Telefonnummer (inkl. Vorwahl)", SLUG ) ?></b>
 			</th>
 			<td>
-				<input type="text" name="impressum_manager_phone" title="Phone Number"
+				<input type="tel" name="impressum_manager_phone" title="Phone Number"
 
 				       value="<?= get_option( "impressum_manager_phone" ) ?>">
 			</td>
@@ -391,7 +391,7 @@ public static function get_source_from() {
 				<b><?= __( "E-Mail Adresse", SLUG ) ?></b>
 			</th>
 			<td>
-				<input type="text" name="impressum_manager_email" title="E-Mail Address"
+				<input type="email" name="impressum_manager_email" title="E-Mail Address"
 
 				       value="<?= get_option( "impressum_manager_email" ) ?>">
 			</td>
@@ -577,8 +577,8 @@ public static function get_source_from() {
 				<br>
 				<small><?= __( "Kammer, der Sie angehören", SLUG ) ?></small>
 				<br>
-				<input type="text" name="impressum_manager_rules_link" title="Ruleslink"
-				       value="<?= get_option( "impressum_manager_rules_link" ) ?>">
+				<input type="url" name="impressum_manager_rules_link" title="Ruleslink"
+				       value="<?= get_option( "impressum_manager_rules_link" ) ?>" placeholder="http://www.">
 				<br>
 				<small><?= __( "URL zu gesetzl. Regelungen", SLUG ) ?></small>
 			</td>
