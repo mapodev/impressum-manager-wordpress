@@ -2,9 +2,10 @@
 	<div class="box">
 		<div class="box header"><?= __( 'Konfiguriere dein Impressum.', SLUG ); ?></div>
 		<div class="box content"><p>
-            <?=__("Hier hast du die Möglichkeit mit einem Klick zu entscheiden, ob du dein importiertes Impressum nutzen möchtest, oder das generierte Impressum von Impressum Manager.", SLUG); ?>
-            </p>
+				<?= __( "Hier hast du die Möglichkeit mit einem Klick zu entscheiden, ob du dein importiertes Impressum nutzen möchtest, oder das generierte Impressum von Impressum Manager.", SLUG ); ?>
+			</p>
 
+			<p>
 			<table>
 				<tr>
 					<th>
@@ -19,15 +20,17 @@
 					</td>
 				</tr>
 			</table>
+			</p>
 		</div>
-        <div style="position: relative; float: right;">
-            <form action="<?php Impressum_Manager_Admin::get_page_url() ?>">
-                <input type="hidden" name="page" value="<?= SLUG ?>">
-                <input type="hidden" name="view" value="main">
-                <input class="button button-secondary" type="submit" value="<?= __('Zurück zur Vorschau', SLUG) ?>">
-            </form>
-        </div>
-        <h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
+
+		<div style="position: relative; float: right;">
+			<form action="<?php Impressum_Manager_Admin::get_page_url() ?>">
+				<input type="hidden" name="page" value="<?= SLUG ?>">
+				<input type="hidden" name="view" value="main">
+				<input class="button button-secondary" type="submit" value="<?= __( 'Zurück zur Vorschau', SLUG ) ?>">
+			</form>
+		</div>
+		<h2 class="nav-tab-wrapper" id="impressum-manager-tabs">
 			<a class="nav-tab nav-tab-active" id="general-tab"
 			   href="#general-tab-j"><?= __( "General", SLUG ) ?></a>
 			<a class="nav-tab" id="settings-tab"
