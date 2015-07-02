@@ -169,9 +169,8 @@ class Impressum_Manager_Impressum_Factory {
 		if ( ! empty( $fax ) ) {
 			$result .= "<tr><td>Telefax: </td><td>$fax</td></tr>";
 		}
-
 		if ( ! empty( $email ) && get_option( "impressum_manager_show_email_as_image" ) == "on" ) {
-			$result .= "<tr><td>E-Mail: </td><td>" . sprintf( "<img src='" . plugin_dir_url( __FILE__ ) . "../admin/impressum-manager-email-as-image.php?text=" . $email . "'>" ) . "</td></tr>";
+			$result .= "<tr><td>E-Mail: </td><td>" . sprintf( "<img src='" . plugin_dir_url( __FILE__ ) . "impressum-manager-email-as-image.php?text=" . $email . "'>" ) . "</td></tr>";
 		} elseif ( ! empty( $email ) ) {
 			$result .= "<tr><td>E-Mail: </td><td>$email</td></tr>";
 		}
@@ -427,6 +426,8 @@ class Impressum_Manager_Impressum_Factory {
 		if ( ! empty ( $result ) ) {
 			$result = "<h2>" . __( "Quellenangaben für die verwendeten Bilder und Grafiken:", SLUG ) . "</h2>" . $result;
 		}
+
+		$result = "<p>" . $result . "</p>";
 
 		return $result;
 	}
