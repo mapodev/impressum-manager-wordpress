@@ -76,15 +76,23 @@ class Impressum_Manager_Impressum_Factory {
 
         $impressum_text = "";
         $policy = "";
+		$agb = "";
+		$disclaimer = "";
 
         @$impressum_text = file_get_contents(get_option("impressum_manager_imported_impressum_url"));
         @$policy = file_get_contents(get_option("impressum_manager_imported_policy_url"));
+		@$agb = file_get_contents(get_option("impressum_manager_imported_agb_url"));
+		@$disclaimer = file_get_contents(get_option("impressum_manager_imported_disclaimer_url"));
 
 		$impressum = new Impressum_Manager_Impressum( '', '[impressum_manager]' );
 
 		$impressum->add( new Impressum_Manager_Textunit( 'imported_impressum', "imported impressum", $impressum_text ) );
 
 		$impressum->add( new Impressum_Manager_Textunit( 'policy', "policy", $policy ) );
+
+		$impressum->add( new Impressum_Manager_Textunit( 'agb', "agb", $agb ) );
+
+		$impressum->add( new Impressum_Manager_Textunit( 'disclaimer', "disclaimer", $disclaimer ) );
 
 		return $impressum;
 	}

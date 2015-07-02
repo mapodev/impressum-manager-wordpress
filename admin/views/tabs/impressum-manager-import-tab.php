@@ -25,8 +25,25 @@
 				       value="<?= get_option( "impressum_manager_imported_policy_url" ) ?>" placeholder="http://www.">
 			</td>
 		</tr>
+		<tr>
+			<th>
+				<?= __( "URL zu den AGB", SLUG ) ?>
+			</th>
+			<td>
+				<input type="text" name="impressum_manager_imported_agb_url"
+				       value="<?= get_option( "impressum_manager_imported_agb_url" ) ?>" placeholder="http://www.">
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<?= __( "URL zum Disclaimer", SLUG ) ?>
+			</th>
+			<td>
+				<input type="text" name="impressum_manager_imported_disclaimer_url"
+				       value="<?= get_option( "impressum_manager_imported_disclaimer_url" ) ?>" placeholder="http://www.">
+			</td>
+		</tr>
 		</tbody>
 	</table>
-
 	<?php submit_button( __( "Impressum aktualisieren", SLUG ) ); ?>
 </form>
