@@ -188,7 +188,7 @@ public static function get_source_from() {
 		</script>
 
 		<tr valign="top">
-			<th scope="row"><b><?= __( "Art der Person", SLUG ) . " " ?>
+			<th scope="row"><b><?= __( 'Art der Person', SLUG )?>
 			</th>
 			<td>
 				<label>

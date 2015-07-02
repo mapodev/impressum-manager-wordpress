@@ -13,7 +13,7 @@
 				<input type="hidden" name="view" value="start"/>
 				<input class="button button-secondary" style="float:right;position:relative" type="submit"
 				       id="configure_impressum"
-				       value="<?= __( 'Abbrechen' ) ?>">
+				       value="<?= __( 'Abbrechen',SLUG ) ?>">
 			</form>
 
 

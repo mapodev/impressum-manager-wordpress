@@ -26,7 +26,7 @@
 		<h3><?= __( 'Willkommen bei Impressum-Manager. Dieses Plugin hilft dir deine Webseite(n) rechtsicher zu machen ...', SLUG ); ?></h3>
 
 		<div class="box primary">
-			<div class="box header">Bestätigung des Warnhinweises</div>
+			<div class="box header"><?= __("Bestätigung des Warnhinweises",SLUG)?></div>
 
 			<div class="box content"><?= __( 'Ich weiß, dass ich die Nutzung der Impressum, Datenschutz und Haftungsauschluss Inhalte ' .
 			           'auf eigene Gefahr verwende. ' .
@@ -34,7 +34,7 @@
 			           ' sofern rechtliche Schäden bzgl. meiner Webseite durch die Nutzung von dem Impressum Manager Wordpress Plugin entstanden sind. ', SLUG ); ?></div>
 			<br>
 			<p id="willing_text"><input type="checkbox" name="willing_to"
-			                            id="willing_to"> <?= __( "Ich bestätige hiermit, dass ich das Plugin auf eigene Gefahr nutze." ) ?>
+			                            id="willing_to"> <?= __( "Ich bestätige hiermit, dass ich das Plugin auf eigene Gefahr nutze.",SLUG ) ?>
 			</p>
 
 		</div>
@@ -48,7 +48,7 @@
 				<input type="hidden" name="step" value="1"/>
 				<input type="hidden" name="skip_start_temp" value="true">
 				<input class="button button-primary" type="submit" id="configure_impressum"
-				       value="<?= _e( 'Impressum konfigurieren' ) ?>">
+				       value="<?= __( 'Impressum konfigurieren',SLUG ) ?>">
 			</form>
 		</div>
 		<div class="box secondary">
@@ -60,7 +60,7 @@
 				<input type="hidden" name="view" value="config">
 				<input type="hidden" name="skip_start" value="true">
 				<input type="hidden" name="tut_finished" value="true">
-				<input class="button button-primary" type="submit" value="<?= _e( 'Zu den Einstellungen' ) ?>"
+				<input class="button button-primary" type="submit" value="<?= __( 'Zu den Einstellungen', SLUG ) ?>"
 				       id="skip_tutorial">
 			</form>
 		</div>

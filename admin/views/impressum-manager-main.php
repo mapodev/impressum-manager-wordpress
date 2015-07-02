@@ -34,7 +34,7 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 					<input type="hidden" name="view" value="tutorial"/>
 					<input type="hidden" name="step" value="1"/>
 					<input class="button button-primary" type="submit" id="configure_impressum"
-					       value="<?= __( 'Impressum generieren' ) ?>">
+					       value="<?= __( 'Impressum generieren',SLUG ) ?>">
 				</form>
 				<br>
 				<?= __( 'oder', SLUG ) ?>
@@ -44,21 +44,20 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 					<input type="hidden" name="page" value="<?= SLUG ?>">
 					<input type="hidden" name="view" value="config"/>
 					<input class="button button-primary" type="submit" id="configure_impressum"
-					       value="<?= __( 'Impressum importieren' ) ?>">
+					       value="<?= __( 'Impressum importieren',SLUG ) ?>">
 				</form>
 				</p>
 			</div>
 		</div>
 		<br>
 		<div style="text-align: center">
-			<p><?= __( 'Alternativ kannst du auch direkt', SLUG ) ?></p>
+			<p><?= __( 'Alternativ kannst du auch direkt zu den', SLUG ) ?></p>
 			<form action="<?php Impressum_Manager_Admin::get_page_url() ?>#general-tab">
 				<input type="hidden" name="page" value="<?= SLUG ?>">
 				<input type="hidden" name="view" value="config"/>
 				<input class="button button-secondary" type="submit" id="configure_impressum"
-				       value="<?= __( 'zu den Einstellungen' ) ?>">
+				       value="<?= __('Einstellungen',SLUG ) ?>">
 			</form>
-			<p>gehen</p>
 		</div>
 	<?php
 	} else {
@@ -83,7 +82,7 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 			<form action="<?php Impressum_Manager_Admin::get_page_url() ?>" class="right" style="display:inline">
 				<input type="hidden" name="page" value="<?= SLUG ?>">
 				<input type="hidden" name="view" value="config">
-				<input class="button button-primary" type="submit" value="<?= __( 'Konfigurieren' ) ?>">
+				<input class="button button-primary" type="submit" value="<?= __( 'Konfigurieren',SLUG ) ?>">
 			</form>
 			<div class="box header"
 			     style="display:inline"><?= __( 'Wähle einen shortcode aus und schau dir die Vorschau an! ', SLUG ); ?></div>

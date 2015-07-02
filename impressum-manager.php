@@ -66,4 +66,5 @@ function impressum_manager_run() {
 // run plugin
 impressum_manager_run();
 
-?>
+
+
