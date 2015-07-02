@@ -512,7 +512,7 @@ public static function get_source_from() {
 		?>
 
 		<tr valign="top">
-			<th scope="row"><b><?= __( "Aufsichtsbehörde: ", SLUG ) ?></b></th>
+			<th scope="row"><b><?= __( "Aufsichtsbehörde ", SLUG ) ?></b></th>
 			<td>
 				<input type="text" name="impressum_manager_surveillance_authority" title="surveillance_authority"
 				       value="<?= get_option( "impressum_manager_surveillance_authority" ) ?>">
