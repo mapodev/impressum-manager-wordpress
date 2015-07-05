@@ -180,12 +180,6 @@ class Impressum_Manager_Admin {
 			'content' => '<p>' . __( "Um das Impressum in einem Beitrag oder in einer Seite einzufügen, musst du einen Shortcode benutzen. Der Shortcode lautet:<br><br> <b>[impressum_manager]</b><br><br>Hierzu gibt es zusätzliche Parameter. Der Type Paramter erlaubt es dir Teilstücke vom Impressum wiederzugeben. Hierbei kannst du <ul><li>Datenschutz</li><li>Haftungsausschluss</li><li>Kontakt</li><li>Bildquellen</li></ul> verwenden. Dabei wird dein Shortcode folgendermaßen aussehen:<br><br><b>[impressum type=\"datenschutz\"]</b><br><br>", SLUG ) . '</p>'
 		);
 
-		$help_variable_tab = array(
-			'title'   => __( 'Variablen', SLUG ),
-			'id'      => 'start_tutorial',
-			'content' => '<p>' . __( "Es gibt die Möglichkeit die gespeicherten Werte in den Settings überall auf der Webseite mit einem Shortcode aufzurufen. Der Shortcode lautet wie folgt: <br><br><b>[impressum_manager var=\"VARIABLE\"]</b><br><br>Jedoch muss das Wort Variable mit eines der folgenden Werten ersetzt werden: <br><ul><li>company name</li><li>address</li><li>address axtra</li><li>place</li><li>zip</li><li>county</li><li>fax</li><li>email</li><li>phone</li><li>authorized person</li><li>vat</li><li>register number</li><li>regulated profession</li><li>state</li><li>state rules</li><li>responsible persons</li><li>responsible chamber</li><li>image source</li><li>register</li><li>form</li></ul>", SLUG ) . '</p>'
-		);
-
 		$help_settings_tab = array(
 			'title'   => __( 'Settings', SLUG ),
 			'id'      => 'start_settings',
@@ -194,10 +188,6 @@ class Impressum_Manager_Admin {
 
 		$current_screen->add_help_tab(
 			$help_shortcode_tab
-		);
-
-		$current_screen->add_help_tab(
-			$help_variable_tab
 		);
 
 		$current_screen->add_help_tab(
