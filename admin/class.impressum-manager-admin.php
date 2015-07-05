@@ -186,12 +186,22 @@ class Impressum_Manager_Admin {
 			'content' => '<p>' . __( 'Im Impressum Manager ist es möglich, Teile von dem Datenschutz bzw. Impressum Inhalte ein- und auszublenden. Mit den Häckchen in der Einestellungsseite kannst du die jeweiligen Bereiche ein- und ausschalten.', SLUG ) . '</p>'
 		);
 
+        $help_feedback_tab = array(
+            'title'   => __( 'Feedback', SLUG ),
+            'id'      => 'feedback',
+            'content' => '<p>' . __( 'Schick deine Fragen und Feedback an: <a href="mailto:support@impressum-manager.com">support@impressum-manager.com</a>', SLUG ) . '</p>'
+        );
+
 		$current_screen->add_help_tab(
 			$help_shortcode_tab
 		);
 
 		$current_screen->add_help_tab(
 			$help_settings_tab
+		);
+
+        $current_screen->add_help_tab(
+            $help_feedback_tab
 		);
 		$current_screen->set_help_sidebar(
 			'<p><strong>' . esc_html__( 'For more information:', SLUG ) . '</strong></p>' .

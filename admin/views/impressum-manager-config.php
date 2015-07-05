@@ -1,6 +1,9 @@
 <div class="wrap">
+    <div style="float:right; position: relative; padding: 20px; margin-top: 30px; ">
+        <a href="http://www.impressum-manager.com" target="_blank"><img src="../wp-content/plugins/impressum-manager/admin/images/impressum-manager-ad.png"></a>
+    </div>
 	<div class="box">
-		<div class="box header"><?= __( 'Konfiguriere dein Impressum.', SLUG ); ?></div>
+		<div class="box header"><h2><?= __( 'Konfiguriere dein Impressum.', SLUG ); ?></h2></div>
 		<div class="box content"><p>
 				<?= __( "Hier hast du die Möglichkeit mit einem Klick zu entscheiden, ob du dein importiertes Impressum nutzen möchtest, oder das generierte Impressum von Impressum Manager.", SLUG ); ?>
 			</p>
