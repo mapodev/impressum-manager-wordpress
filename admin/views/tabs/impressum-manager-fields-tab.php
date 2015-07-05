@@ -1,19 +1,14 @@
 <?php
 
 // workaround for visual tab not working, when loading on text editor
-add_filter('wp_default_editor', create_function('', 'return "tinymce";'));
+//add_filter('wp_default_editor', create_function('', 'return "tinymce";'));
 
 ?>
 
 <script>
     (function ($) {
         $(document).ready(function () {
-
-            tinyMCE.init({
-                mode: "exact",
-                elements: "editor",
-                theme: "simple"
-            });
+            
 
             $("#impressum_change").change(function () {
                 var data = {
@@ -23,7 +18,8 @@ add_filter('wp_default_editor', create_function('', 'return "tinymce";'));
 
                 $.post(ajaxurl, data, function (response) {
                     $("#editor").val(response);
-                    tinymce.editors[0].setContent(response);
+                    if(tinymce.editors[0] !== undefined)
+                        tinymce.editors[0].setContent(response);
                 });
             });
         });
@@ -84,5 +80,5 @@ if (!empty($_POST) && isset($_POST['submit'])) {
 	<?php wp_editor("", "editor"); ?>
     </div>
 
-    <? submit_button(__("Update")) ?>
+    <?php submit_button(__("Update")) ?>
 </form>
