@@ -282,29 +282,13 @@ public static function get_source_from() {
 				<input type="text" name="impressum_manager_zip"
 				       title="ZIP Code"
 				       value="<?= get_option( "impressum_manager_zip" ) ?>"><br>
-				<small><?= __( "PLZ" ) ?></small>
-				<br>
-				<select name="impressum_manager_country">
-					<option value="no_land_choosen"><?= __( "Wähle dein Land ..." ) ?></option>
-					<?php
-
-					foreach ( Impressum_Manager_Admin::$_countries as $country_code => $country_name ) {
-						if ( get_option( "impressum_manager_country" ) == $country_code ) {
-							$s = "selected=selected";
-						} else {
-							$s = "";
-						}
-
-						?>
-						<option
-							value="<?= $country_code ?>" <?= $s ?>><?= __( $country_name, SLUG ) ?></option>
-					<?php
-					}
-
-					?>
-				</select><br>
-				<small><?=__("Land", SLUG)?></small>
-			</td>
+                <small><?= __("PLZ") ?></small>
+                <br>
+                <input type="text" name="impressum_manager_country" title="Country"
+                       value="<?= get_option("impressum_manager_country") ?>">
+                <br>
+                <small><?= __("Land", SLUG) ?></small>
+            </td>
 		</tr>
 
 	<?php
