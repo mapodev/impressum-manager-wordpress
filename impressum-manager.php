@@ -25,26 +25,29 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'IMPRESSUM_MANAGER_VERSION', '1.0.0' );
 define( 'SLUG', 'impressum-manager' );
 
+require_once( plugin_dir_path( __FILE__ ) . 'includes/impressum-manager-deactivate.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'includes/impressum-manager-activate.php' );
+
 /**
  * Plugin activation hook
  *
  * @since 1.0.0
  */
-register_activation_hook( require_once( plugin_dir_path( __FILE__ ) . 'includes/impressum-manager-activate.php' ), 'impressum_manager_install_activate' );
+register_activation_hook(__FILE__, 'impressum_manager_install_activate');
 
 /**
  * Plugin deactiviation
  *
  * @since 1.0.0
  */
-register_deactivation_hook( require_once( plugin_dir_path( __FILE__ ) . 'includes/impressum-manager-deactivate.php' ), 'impressum_manager_deactivate' );
+register_deactivation_hook(__FILE__, 'impressum_manager_deactivate');
 
 /**
  * Plugin uninstall
  *
  * @since 1.0.0
  */
-register_uninstall_hook(  plugin_dir_path( __FILE__ ) . 'uninstall.php' , "impressum_manager_goodybye" );
+register_uninstall_hook(__FILE__, "impressum_manager_goodybye");
 
 
 // Uninstall Callback

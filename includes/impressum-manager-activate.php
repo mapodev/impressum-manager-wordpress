@@ -6,7 +6,6 @@
 
 function impressum_manager_install_activate()
 {
-
     global $wpdb;
 
     $table_name = $wpdb->prefix . "impressum_manager_content";
@@ -19,7 +18,7 @@ function impressum_manager_install_activate()
 	  `impressum_value` TEXT NULL
 	) $charset_collate;";
 
-    require_once(ABSPATH . 'wp-admin/admin/upgrade.php');
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta($sql);
 
     add_option("impressum_manager_db_version", "1.0");
