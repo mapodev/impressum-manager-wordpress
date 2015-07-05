@@ -218,7 +218,7 @@ public static function get_source_from() {
 	public static function get_legal_form() {
 		echo '' ?>
 		<tr valign="top" class="rechtsform">
-			<th scope="row"><b><?= __( "Rechtsform" ) ?></b></th>
+			<th scope="row"><b><?= __( "Rechtsform", SLUG ) ?></b></th>
 			<td>
 				<select name="impressum_manager_form_of_organization">
 					<?php
@@ -303,7 +303,7 @@ public static function get_source_from() {
 
 					?>
 				</select><br>
-				<small>Land</small>
+				<small><?=__("Land", SLUG)?></small>
 			</td>
 		</tr>
 

@@ -645,7 +645,10 @@ class Impressum_Manager_Admin {
 		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_impressum_url" );
 		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_agb_url" );
 		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_disclaimer_url" );
+
 		register_setting( "impressum-manager-import-tab", "impressum_manager_use_imported_impressum" );
+		register_setting( "impressum-manager-settings", "impressum_manager_use_imported_impressum" );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_use_imported_impressum" );
 	}
 
 	/**
