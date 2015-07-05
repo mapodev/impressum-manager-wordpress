@@ -8,7 +8,7 @@
 <script>
     (function ($) {
         $(document).ready(function () {
-            
+
 
             $("#impressum_change").change(function () {
                 var data = {

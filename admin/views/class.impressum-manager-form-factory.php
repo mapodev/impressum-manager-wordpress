@@ -277,12 +277,12 @@ public static function get_source_from() {
 				<input type="text" name="impressum_manager_place"
 				       title="Place"
 				       value="<?= get_option( "impressum_manager_place" ) ?>"><br>
-				<small><?= __( "Ort" ) ?></small>
+				<small><?= __( "Ort", SLUG ) ?></small>
 				<br>
 				<input type="text" name="impressum_manager_zip"
 				       title="ZIP Code"
 				       value="<?= get_option( "impressum_manager_zip" ) ?>"><br>
-                <small><?= __("PLZ") ?></small>
+                <small><?= __("PLZ", SLUG) ?></small>
                 <br>
                 <input type="text" name="impressum_manager_country" title="Country"
                        value="<?= get_option("impressum_manager_country") ?>">
