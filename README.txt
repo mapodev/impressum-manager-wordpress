@@ -1,6 +1,6 @@
 === Plugin Name ===
-Contributors: mapo
-Donate link: http://www.mapo-dev.com
+Contributors: Marcin Poholski, Christian Jäger
+Donate link: http://www.impressum-manager.com
 Tags: comments, spam
 Requires at least: 3.0.1
 Tested up to: 4.1.1
@@ -8,23 +8,36 @@ Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-(Currently) German Impressum Generator
+Impressum Generator
 
 == Description ==
 
-Some description will be written here
+The Impressum Manager allows the user to generate the Impressum ( Legal Imprint )
+automatically and to manage it later on with only a few clicks.
+At the moment the imprint is available only in German. Others can follow.
 
-== Installation ==
+The Impressum contains a privacy policy, disclaimer, contact fields and some more stuff.
+The Impressum Manager collects every name of the creator of an image by inserting the name
+in the name credit field in the image interface. Then the Manager sums up the names in the
+image sources so it is not necessary to write down every name of each image.
+The manager will do this automatically.
 
-This section describes how to install the plugin and get it working.
-
-e.g.
+Another option is to have the email represented by an image. This will reduce the
+spam mails by parsing the website through a bot.
 
 == Frequently Asked Questions ==
 
 No questions asked yet.
 
+Questions can be asked anytime at info@impressum-manager.com
+
 == Changelog ==
+
+= 1.0.0 =
+- RELEASE
+- code clean up
+- comments
+- refactoring
 
 = 0.5.0 =
 - new onboarding screen GUI
