@@ -1,9 +1,9 @@
 === Plugin Name ===
 Contributors: Marcin Poholski, Christian Jäger
 Donate link: http://www.impressum-manager.com
-Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 4.1.1
+Tags: impressum, legal policy, terms
+Requires at least: 3.3.0
+Tested up to: 4.2.2
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -29,7 +29,7 @@ spam mails by parsing the website through a bot.
 
 No questions asked yet.
 
-Questions can be asked anytime at info@impressum-manager.com
+Questions can be asked anytime at support@impressum-manager.com
 
 == Changelog ==
 
