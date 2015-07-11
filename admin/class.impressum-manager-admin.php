@@ -110,7 +110,7 @@ class Impressum_Manager_Admin {
 	 * @since 1.0.0
 	 */
 	public static function editor_ajax_callback() {
-		$key = esc_attr( $_POST['key'] );
+		$key = sanitize_text_field( $_POST['key'] );
 
 		echo Impressum_Manager_Database::get_content( $key );
 
@@ -121,9 +121,8 @@ class Impressum_Manager_Admin {
 		$shortcode = 'impressum_manager';
 		add_shortcode( $shortcode, array( 'Impressum_Manager', 'content_shortcode' ) );
 
-		$shortcode = $_POST["shortcode_key"];
+		$shortcode = sanitize_text_field($_POST["shortcode_key"]);
 
-		$shortcode = esc_attr( $_POST['shortcode_key'] );
 		echo do_shortcode( "[impressum_manager type='{$shortcode}']" );
 		die();
 	}
@@ -266,18 +265,18 @@ class Impressum_Manager_Admin {
 			case 2:
 
 				if ( array_key_exists( "submit", $_REQUEST ) ) {
-					self::save_option( "impressum_manager_person", @$_POST["impressum_manager_person"] );
-					self::save_option( "impressum_manager_form_of_organization", @$_POST["impressum_manager_form_of_organization"] );
-					self::save_option( "impressum_manager_name_company", @$_POST["impressum_manager_name_company"] );
-					self::save_option( "impressum_manager_address", @$_POST["impressum_manager_address"] );
-					self::save_option( "impressum_manager_address_extra", @$_POST["impressum_manager_address_extra"] );
-					self::save_option( "impressum_manager_place", @$_POST["impressum_manager_place"] );
-					self::save_option( "impressum_manager_zip", @$_POST["impressum_manager_zip"] );
-					self::save_option( "impressum_manager_country", @$_POST["impressum_manager_country"] );
-					self::save_option( "impressum_manager_fax", @$_POST["impressum_manager_fax"] );
-					self::save_option( "impressum_manager_email", @$_POST["impressum_manager_email"] );
-					self::save_option( "impressum_manager_phone", @$_POST["impressum_manager_phone"] );
-					self::save_option( "impressum_manager_authorized_person", @$_POST["impressum_manager_authorized_person"] );
+					self::save_option( "impressum_manager_person", sanitize_text_field(@$_POST["impressum_manager_person"]) );
+					self::save_option( "impressum_manager_form_of_organization", sanitize_text_field(@$_POST["impressum_manager_form_of_organization"]) );
+					self::save_option( "impressum_manager_name_company", sanitize_text_field(@$_POST["sanitize_text_field(impressum_manager_name_company"]) );
+					self::save_option( "impressum_manager_address", sanitize_text_field(@$_POST["impressum_manager_address"]) );
+					self::save_option( "impressum_manager_address_extra", sanitize_text_field(@$_POST["impressum_manager_address_extra"]) );
+					self::save_option( "impressum_manager_place", sanitize_text_field(@$_POST["impressum_manager_place"]) );
+					self::save_option( "impressum_manager_zip", sanitize_text_field(@$_POST["impressum_manager_zip"]) );
+					self::save_option( "impressum_manager_country", sanitize_text_field(@$_POST["impressum_manager_country"]) );
+					self::save_option( "impressum_manager_fax", sanitize_text_field(@$_POST["impressum_manager_fax"]) );
+					self::save_option( "impressum_manager_email", sanitize_text_field(@$_POST["impressum_manager_email"]) );
+					self::save_option( "impressum_manager_phone", sanitize_text_field(@$_POST["impressum_manager_phone"]) );
+					self::save_option( "impressum_manager_authorized_person", sanitize_text_field(@$_POST["impressum_manager_authorized_person"]) );
 				}
 
 				include( plugin_dir_path( __FILE__ ) . "views/tutorial/impressum-manager-tutorial-page2.php" );
@@ -286,31 +285,31 @@ class Impressum_Manager_Admin {
 			case 3:
 
 				if ( array_key_exists( "submit", $_REQUEST ) ) {
-					self::save_option( "impressum_manager_vat", @$_POST["impressum_manager_vat"] );
+					self::save_option( "impressum_manager_vat", sanitize_text_field(@$_POST["impressum_manager_vat"]) );
 
-					self::save_option( "impressum_manager_register", @$_POST["impressum_manager_register"] );
-					self::save_option( "impressum_manager_registenr", @$_POST["impressum_manager_registenr"] );
-					self::save_option( "impressum_manager_register_court", @$_POST["impressum_manager_register_court"] );
+					self::save_option( "impressum_manager_register", sanitize_text_field(@$_POST["impressum_manager_register"]) );
+					self::save_option( "impressum_manager_registenr", sanitize_text_field(@$_POST["impressum_manager_registenr"]) );
+					self::save_option( "impressum_manager_register_court", sanitize_text_field(@$_POST["impressum_manager_register_court"]) );
 
-					self::save_option( "impressum_manager_regulated_profession_checked", @$_POST['impressum_manager_regulated_profession_checked'] );
-					self::save_option( "impressum_manager_regulated_profession", @$_POST["impressum_manager_regulated_profession"] );
-					self::save_option( "impressum_manager_state", @$_POST["impressum_manager_state"] );
-					self::save_option( "impressum_manager_state_rules", @$_POST["impressum_manager_state_rules"] );
-					self::save_option( "impressum_manager_chamber", @$_POST["impressum_manager_chamber"] );
-					self::save_option( "impressum_manager_rules_link", @$_POST["impressum_manager_rules_link"] );
+					self::save_option( "impressum_manager_regulated_profession_checked", sanitize_text_field(@$_POST['impressum_manager_regulated_profession_checked']) );
+					self::save_option( "impressum_manager_regulated_profession", sanitize_text_field(@$_POST["impressum_manager_regulated_profession"]) );
+					self::save_option( "impressum_manager_state", sanitize_text_field(@$_POST["impressum_manager_state"]) );
+					self::save_option( "impressum_manager_state_rules", sanitize_text_field(@$_POST["impressum_manager_state_rules"]) );
+					self::save_option( "impressum_manager_chamber", sanitize_text_field(@$_POST["impressum_manager_chamber"]) );
+					self::save_option( "impressum_manager_rules_link", sanitize_text_field(@$_POST["impressum_manager_rules_link"]) );
 
-					self::save_option( "impressum_manager_responsible_persons", @$_POST["impressum_manager_responsible_persons"] );
+					self::save_option( "impressum_manager_responsible_persons", sanitize_text_field(@$_POST["impressum_manager_responsible_persons"]) );
 
-					self::save_option( "impressum_manager_image_source", @$_POST["impressum_manager_image_source"] );
+					self::save_option( "impressum_manager_image_source", sanitize_text_field(@$_POST["impressum_manager_image_source"]) );
 
 
-					self::save_option( "impressum_manager_press_content", @$_POST["impressum_manager_press_content"] );
+					self::save_option( "impressum_manager_press_content", sanitize_text_field(@$_POST["impressum_manager_press_content"]) );
 
-					self::save_option( "impressum_manager_professional_liability_insurance_checked", @$_POST["impressum_manager_professional_liability_insurance_checked"] );
-					self::save_option( "impressum_manager_name_and_adress", nl2br( @$_POST["impressum_manager_name_and_adress"] ) );
-					self::save_option( "impressum_manager_space_of_appliance", @$_POST['impressum_manager_space_of_appliance'] );
+					self::save_option( "impressum_manager_professional_liability_insurance_checked", sanitize_text_field(@$_POST["impressum_manager_professional_liability_insurance_checked"]) );
+					self::save_option( "impressum_manager_name_and_adress", nl2br( sanitize_text_field(@$_POST["impressum_manager_name_and_adress"]) ) );
+					self::save_option( "impressum_manager_space_of_appliance", sanitize_text_field(@$_POST['impressum_manager_space_of_appliance']) );
 
-					self::save_option( "impressum_manager_surveillance_authority", @$_POST['impressum_manager_surveillance_authority'] );
+					self::save_option( "impressum_manager_surveillance_authority", sanitize_text_field(@$_POST['impressum_manager_surveillance_authority']) );
 
 
 				}
@@ -320,14 +319,14 @@ class Impressum_Manager_Admin {
 
 			case 4:
 				if ( array_key_exists( "submit", $_REQUEST ) ) {
-					self::save_option( "impressum_manager_disclaimer", @$_POST["impressum_manager_disclaimer"] );
-					self::save_option( "impressum_manager_general_privacy_policy", @$_POST["impressum_manager_general_privacy_policy"] );
-					self::save_option( "impressum_manager_policy_facebook", @$_POST["impressum_manager_policy_facebook"] );
-					self::save_option( "impressum_manager_policy_google_analytics", @$_POST["impressum_manager_policy_google_analytics"] );
-					self::save_option( "impressum_manager_policy_google_adsense", @$_POST["impressum_manager_policy_google_adsense"] );
-					self::save_option( "impressum_manager_policy_google_plus", @$_POST["impressum_manager_policy_google_plus"] );
-					self::save_option( "impressum_manager_policy_twitter", @$_POST["impressum_manager_policy_twitter"] );
-					self::save_option( "impressum_manager_extra_field", @$_POST["impressum_manager_extra_field"] );
+					self::save_option( "impressum_manager_disclaimer", sanitize_text_field(@$_POST["impressum_manager_disclaimer"]) );
+					self::save_option( "impressum_manager_general_privacy_policy", sanitize_text_field(@$_POST["impressum_manager_general_privacy_policy"]) );
+					self::save_option( "impressum_manager_policy_facebook", sanitize_text_field(@$_POST["impressum_manager_policy_facebook"]) );
+					self::save_option( "impressum_manager_policy_google_analytics", sanitize_text_field(@$_POST["impressum_manager_policy_google_analytics"]) );
+					self::save_option( "impressum_manager_policy_google_adsense", sanitize_text_field(@$_POST["impressum_manager_policy_google_adsense"]) );
+					self::save_option( "impressum_manager_policy_google_plus", sanitize_text_field(@$_POST["impressum_manager_policy_google_plus"]) );
+					self::save_option( "impressum_manager_policy_twitter", sanitize_text_field(@$_POST["impressum_manager_policy_twitter"]) );
+					self::save_option( "impressum_manager_extra_field", sanitize_text_field(@$_POST["impressum_manager_extra_field"]) );
 				}
 
 				include( plugin_dir_path( __FILE__ ) . "views/tutorial/impressum-manager-tutorial-page4.php" );
