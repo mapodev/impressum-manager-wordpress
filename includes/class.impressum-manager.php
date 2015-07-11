@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
 class Impressum_Manager {
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power

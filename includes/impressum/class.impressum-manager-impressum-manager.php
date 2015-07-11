@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
 require_once(  plugin_dir_path( __FILE__ ) . '/model/class.impressum-manager-aimpressum.php' );
 require_once(  plugin_dir_path( __FILE__ ) . '/model/class.impressum-manager-impressum.php' );
 require_once(  plugin_dir_path( __FILE__ ) . '/model/class.impressum-manager-textunit.php' );;

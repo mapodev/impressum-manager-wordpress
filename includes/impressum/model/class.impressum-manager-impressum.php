@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
 class Impressum_Manager_Impressum extends Impressum_Manager_AImpressum {
 
 	private $shortcode;

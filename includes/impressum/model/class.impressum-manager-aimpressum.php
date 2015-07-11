@@ -1,6 +1,6 @@
 <?php
 
-
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 abstract class Impressum_Manager_AImpressum {
 

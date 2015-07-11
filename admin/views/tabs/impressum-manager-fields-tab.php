@@ -71,7 +71,7 @@ if (!empty($_POST) && isset($_POST['submit'])) {
         );
 
         foreach ($lang_tags as $tag) {
-            echo "<option value='" . $tag->impressum_key . "''>" . $tag->impressum_key . "</option>";
+            echo "<option value='" . $tag->impressum_key . "''>" . esc_html($tag->impressum_key) . "</option>";
         }
         ?>
     </select>
