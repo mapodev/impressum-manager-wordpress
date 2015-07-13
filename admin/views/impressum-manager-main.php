@@ -8,7 +8,6 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 }
 
 ?>
-
 <div class="wrap">
 	<h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
 
@@ -117,3 +116,6 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 	}
 	?>
 </div>
+
+<?php
+

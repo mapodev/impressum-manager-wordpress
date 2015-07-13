@@ -28,8 +28,6 @@ delete_option("impressum_manager_image_source");
 delete_option("impressum_manager_responsible_chamber");
 delete_option("impressum_manager_responsible_persons");
 delete_option("impressum_manager_disclaimer");
-delete_option("impressum_manager_set_impressum");
-delete_option("impressum_manager_language_of_impressum");
 delete_option("impressum_manager_general_privacy_policy");
 delete_option("impressum_manager_policy_facebook");
 delete_option("impressum_manager_policy_google_analytics");
@@ -39,7 +37,6 @@ delete_option("impressum_manager_press_content");
 delete_option("impressum_manager_disabled");
 delete_option("impressum_manager_notice");
 delete_option("impressum_manager_extra_field");
-delete_option("impressum_manager_page");
 delete_option("impressum_manager_id");
 delete_option("impressum_manager_policy_google_plus");
 delete_option("impressum_manager_policy_twitter");
@@ -58,8 +55,6 @@ delete_option("impressum_manager_policy_google_adsense");
 delete_option("impressum_manager_skip_start");
 
 unregister_setting("impressum-manager-general-tab", "impressum_manager_disclaimer");
-unregister_setting("impressum-manager-general-tab", "impressum_manager_set_impressum");
-unregister_setting("impressum-manager-general-tab", "impressum_manager_language_of_impressum");
 unregister_setting("impressum-manager-general-tab", "impressum_manager_general_privacy_policy");
 unregister_setting("impressum-manager-general-tab", "impressum_manager_policy_facebook");
 unregister_setting("impressum-manager-general-tab", "impressum_manager_policy_google_analytics");
@@ -67,7 +62,6 @@ unregister_setting("impressum-manager-general-tab", "impressum_manager_policy_go
 unregister_setting("impressum-manager-general-tab", "impressum_manager_policy_twitter");
 unregister_setting("impressum-manager-general-tab", "impressum_manager_policy_google_plus");
 
-unregister_setting("impressum-manager-import-tab", "impressum_manager_page");
 unregister_setting("impressum-manager-import-tab", "impressum_manager_disabled");
 unregister_setting("impressum-manager-import-tab", "impressum_manager_extra_field");
 unregister_setting("impressum-manager-import-tab", "impressum_manager_noindex");

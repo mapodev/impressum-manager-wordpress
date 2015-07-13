@@ -1,7 +1,8 @@
 <div class="wrap">
-    <div style="float:right; position: relative; padding: 20px; margin-top: 30px; ">
-        <a href="http://www.impressum-manager.com" target="_blank"><img src="<?=plugins_url("images/impressum-manager-ad.png", dirname(__FILE__) )?>"></a>
-    </div>
+	<div style="float:right; position: relative; padding: 20px; margin-top: 30px; ">
+		<a href="http://www.impressum-manager.com" target="_blank"><img
+				src="<?= plugins_url( "images/impressum-manager-ad.png", dirname( __FILE__ ) ) ?>"></a>
+	</div>
 	<div class="box">
 		<div class="box header"><h2><?= __( 'Konfiguriere dein Impressum.', SLUG ); ?></h2></div>
 		<div class="box content"><p>
@@ -59,4 +60,5 @@
 		</div>
 
 	</div>
+
 </div>
