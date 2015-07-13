@@ -363,49 +363,56 @@ class Impressum_Manager_Admin {
 		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_twitter" );
 		register_setting( "impressum-manager-general-tab", "impressum_manager_policy_google_plus" );
 		register_setting( "impressum-manager-general-tab", "impressum_manager_disabled" );
-		register_setting( "impressum-manager-general-tab", "impressum_manager_extra_field", 'sanitize_options' );
+		register_setting( "impressum-manager-general-tab", "impressum_manager_extra_field", array($this, "my_sanitize_method") );
 
 		// impressum general options
 		register_setting( "impressum-manager-settings", "impressum_manager_person" );
 		register_setting( "impressum-manager-settings", "impressum_manager_form_of_organization" );
-		register_setting( "impressum-manager-settings", "impressum_manager_name_company" );
-		register_setting( "impressum-manager-settings", "impressum_manager_address" );
-		register_setting( "impressum-manager-settings", "impressum_manager_address_extra" );
-		register_setting( "impressum-manager-settings", "impressum_manager_place" );
-		register_setting( "impressum-manager-settings", "impressum_manager_zip" );
-		register_setting( "impressum-manager-settings", "impressum_manager_country" );
-		register_setting( "impressum-manager-settings", "impressum_manager_fax" );
-		register_setting( "impressum-manager-settings", "impressum_manager_email" );
+		register_setting( "impressum-manager-settings", "impressum_manager_name_company", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_address", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_address_extra", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_place", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_zip", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_country", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_fax", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_email", array($this, "my_sanitize_method")  );
 		register_setting( "impressum-manager-settings", "impressum_manager_disclaimer" );
-		register_setting( "impressum-manager-settings", "impressum_manager_phone" );
-		register_setting( "impressum-manager-settings", "impressum_manager_authorized_person" );
-		register_setting( "impressum-manager-settings", "impressum_manager_vat" );
+		register_setting( "impressum-manager-settings", "impressum_manager_phone", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_authorized_person", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_vat", array($this, "my_sanitize_method")  );
 		register_setting( "impressum-manager-settings", "impressum_manager_register" );
-		register_setting( "impressum-manager-settings", "impressum_manager_register_court" );
-		register_setting( "impressum-manager-settings", "impressum_manager_registenr" );
-		register_setting( "impressum-manager-settings", "impressum_manager_surveillance_authority" );
+		register_setting( "impressum-manager-settings", "impressum_manager_register_court", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_registenr", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_surveillance_authority", array($this, "my_sanitize_method")  );
 		register_setting( "impressum-manager-settings", "impressum_manager_regulated_profession_checked" );
-		register_setting( "impressum-manager-settings", "impressum_manager_regulated_profession" );
-		register_setting( "impressum-manager-settings", "impressum_manager_state" );
-		register_setting( "impressum-manager-settings", "impressum_manager_state_rules" );
-		register_setting( "impressum-manager-settings", "impressum_manager_chamber" );
-		register_setting( "impressum-manager-settings", "impressum_manager_rules_link" );
-		register_setting( "impressum-manager-settings", "impressum_manager_image_source" );
-		register_setting( "impressum-manager-settings", "impressum_manager_responsible_persons" );
-		register_setting( "impressum-manager-settings", "impressum_manager_press_content" );
+		register_setting( "impressum-manager-settings", "impressum_manager_regulated_profession", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_state", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_state_rules", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_chamber" , array($this, "my_sanitize_method") );
+		register_setting( "impressum-manager-settings", "impressum_manager_rules_link" , array($this, "my_sanitize_method") );
+		register_setting( "impressum-manager-settings", "impressum_manager_image_source", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_responsible_persons", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_press_content" , array($this, "my_sanitize_method") );
 		register_setting( "impressum-manager-settings", "impressum_manager_professional_liability_insurance_checked" );
-		register_setting( "impressum-manager-settings", "impressum_manager_name_and_adress" );
-		register_setting( "impressum-manager-settings", "impressum_manager_space_of_appliance" );
+		register_setting( "impressum-manager-settings", "impressum_manager_name_and_adress", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-settings", "impressum_manager_space_of_appliance", array($this, "my_sanitize_method")  );
 
-		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_policy_url" );
-		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_impressum_url" );
-		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_agb_url" );
-		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_disclaimer_url" );
+		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_policy_url" , array($this, "my_sanitize_method") );
+		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_impressum_url", array($this, "my_sanitize_method")  );
+		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_agb_url" , array($this, "my_sanitize_method") );
+		register_setting( "impressum-manager-import-tab", "impressum_manager_imported_disclaimer_url", array($this, "my_sanitize_method")  );
 
 		register_setting( "impressum-manager-import-tab", "impressum_manager_use_imported_impressum" );
 		register_setting( "impressum-manager-settings", "impressum_manager_use_imported_impressum" );
 		register_setting( "impressum-manager-general-tab", "impressum_manager_use_imported_impressum" );
 	}
+
+    /**
+     * sanitize settings
+     */
+    public function my_sanitize_method($input) {
+        return sanitize_text_field($input);
+    }
 
 	/**
 	 * Helper method for saving an option.
