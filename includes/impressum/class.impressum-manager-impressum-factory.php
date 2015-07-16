@@ -17,7 +17,6 @@ class Impressum_Manager_Impressum_Factory {
 	public static function create_generated_impressum() {
 
 		$all = new Impressum_Manager_Impressum( '', '[impressum_manager]' );
-		//"[impressum_manager type="" . $name . "&quot;]";
 
 		$impressum = new Impressum_Manager_Impressum( 'impressum', '- [impressum_manager type="impressum"]' );
 
@@ -46,20 +45,11 @@ class Impressum_Manager_Impressum_Factory {
 
 		$privacy_policy_and_disclaimer = new Impressum_Manager_Impressum( 'privacy_policy_and_disclaimer', '- [impressum_manager type="privacy_policy_and_disclaimer"]' );
 
-		$privacy_policy_and_disclaimer->add( new Impressum_Manager_Textunit( 'disclaimer',  '- - [impressum_manager type="privacy_policy_and_disclaimer"]', self::get_disclaimer() ) );
+		$privacy_policy_and_disclaimer->add( new Impressum_Manager_Textunit( 'disclaimer',  '- - [impressum_manager type="disclaimer"]', self::get_disclaimer() ) );
 
 		$privacy_policy_and_disclaimer->add( new Impressum_Manager_Textunit( 'privacy_policy',  '- - [impressum_manager type="privacy_policy"]', self::get_privacy_policy() ) );
 
 
-		if ( get_option( "impressum_manager_source_from" ) == true ) {
-			$impressum->add( new Impressum_Manager_Text( __( "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG ) ) );
-			$privacy_policy_and_disclaimer->add( new Impressum_Manager_Text( __( "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>", SLUG ) ) );
-		}
-
-		if ( get_option( "impressum_manager_powered_by" ) == true ) {
-			$impressum->add( new Impressum_Manager_Text( __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG ) ) );
-			$privacy_policy_and_disclaimer->add( new Impressum_Manager_Text( __( "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>", SLUG ) ) );
-		}
 
 
 		$all->add($impressum);
