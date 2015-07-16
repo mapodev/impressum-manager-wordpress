@@ -3,12 +3,11 @@
 Impressum_Manager_Admin::save_option( "impressum_manager_notice", "dismissed" );
 
 if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) ) {
-	Impressum_Manager_Admin::save_option( "impressum_manager_noindex", @$_POST['impressum_manager_noindex'] );
-	Impressum_Manager_Admin::save_option( "impressum_manager_show_email_as_image", @$_POST['impressum_manager_show_email_as_image'] );
+	Impressum_Manager_Admin::save_option( "impressum_manager_noindex", @sanitize_text_field($_POST['impressum_manager_noindex']) );
+	Impressum_Manager_Admin::save_option( "impressum_manager_show_email_as_image", @sanitize_text_field($_POST['impressum_manager_show_email_as_image']) );
 }
 
 ?>
-
 <div class="wrap">
 	<h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
 
@@ -65,6 +64,15 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 		<script>
 			(function ($) {
 				$(document).ready(function () {
+                    var loaddata = {
+                        'action': 'impressum_manager_get_shortcode_preview',
+                        'shortcode_key': ''
+                    };
+
+                    $.post(ajaxurl, loaddata, function (data) {
+                        $("#impressum-preview-content").html(data);
+                    });
+
 					$("#impressum_shortcode_preview").change(function () {
 						var data = {
 							'action': 'impressum_manager_get_shortcode_preview',
@@ -99,7 +107,7 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 					if ( $component->has_content() ) {
 						$shortcode = $component->get_shortcode();
 						$name      = $component->get_name();
-						echo "<option value=$shortcode>$name</option>";
+						echo "<option value='$shortcode'>$name</option>";
 					}
 				}
 
@@ -117,3 +125,6 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 	}
 	?>
 </div>
+
+<?php
+

@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
 class Impressum_Manager {
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -38,7 +40,7 @@ class Impressum_Manager {
 	 */
 	public function __construct() {
 		$this->plugin_name = 'Impressum Manager';
-		$this->version     = '1.0.0';
+		$this->version     = '1.0.1';
 		$this->load_dependencies();
 		$this->define_hooks();
 	}

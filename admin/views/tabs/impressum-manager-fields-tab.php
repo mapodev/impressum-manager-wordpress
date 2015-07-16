@@ -31,9 +31,9 @@
 global $wpdb;
 
 if (!empty($_POST) && isset($_POST['submit'])) {
-    $val = html_entity_decode(nl2br(esc_attr(@$_POST['editor'])));
-    $key = esc_attr(@$_POST['impressum_key']);
-    $lang = esc_attr(@$_POST['lang']);
+    $val = html_entity_decode(nl2br(sanitize_text_field(@$_POST['editor'])));
+    $key = sanitize_text_field(@$_POST['impressum_key']);
+    $lang = sanitize_text_field(@$_POST['lang']);
 
     $table_name = $wpdb->prefix . "impressum_manager_content";
 
@@ -71,7 +71,7 @@ if (!empty($_POST) && isset($_POST['submit'])) {
         );
 
         foreach ($lang_tags as $tag) {
-            echo "<option value='" . $tag->impressum_key . "''>" . $tag->impressum_key . "</option>";
+            echo "<option value='" . $tag->impressum_key . "''>" . esc_html($tag->impressum_key) . "</option>";
         }
         ?>
     </select>

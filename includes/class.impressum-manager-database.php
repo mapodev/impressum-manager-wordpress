@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
 class Impressum_Manager_Database {
 
 	static private $instance = null;
