@@ -98,7 +98,7 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 					if ( $component->has_content() ) {
 						$shortcode = $component->get_shortcode();
 						$name      = $component->get_name();
-						echo "<option value=$shortcode>$name</option>";
+						echo "<option value='$shortcode'>$name</option>";
 					}
 				}
 
