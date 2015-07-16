@@ -64,6 +64,15 @@ if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) )
 		<script>
 			(function ($) {
 				$(document).ready(function () {
+                    var loaddata = {
+                        'action': 'impressum_manager_get_shortcode_preview',
+                        'shortcode_key': ''
+                    };
+
+                    $.post(ajaxurl, loaddata, function (data) {
+                        $("#impressum-preview-content").html(data);
+                    });
+
 					$("#impressum_shortcode_preview").change(function () {
 						var data = {
 							'action': 'impressum_manager_get_shortcode_preview',
