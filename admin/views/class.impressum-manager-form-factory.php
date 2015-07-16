@@ -328,7 +328,7 @@ public static function get_source_from() {
 			</th>
 			<td class="hide_professional_liability_insurance">
                 <textarea name="impressum_manager_name_and_adress"
-                          placeholder="Beispiel Versicherung AG
+                          title="Beispiel Versicherung AG
 Musterweg 10
 90210 Musterstadt"
 	                ><?= get_option( "impressum_manager_name_and_adress" ) ?></textarea>
@@ -400,8 +400,8 @@ Musterweg 10
 			</th>
 			<td>
                 <textarea name="impressum_manager_authorized_person"
-                          placeholder="Herr Dr. Harry Mustermann
-                          Frau Luise Beispiel"
+                          title="Herr Dr. Harry Mustermann
+Frau Luise Beispiel"
 	                ><?= get_option( "impressum_manager_authorized_person" ) ?></textarea><br>
 				<small><?= __( "Namen und Vornamen", SLUG ) ?></small>
 			</td>
@@ -590,7 +590,7 @@ Musterweg 10
 			<th scope="row"><b><?= __( "Bildquellen", SLUG ) ?></b></th>
 			<td>
                 <textarea name="impressum_manager_image_source"
-                          placeholder="http://www.bildagentur-sonnenschein.de
+                          title="http://www.bildagentur-sonnenschein.de
 Kuno Knipser
 
 http://www.onlineagentur-pusemuckel.de
@@ -638,8 +638,8 @@ Peggy Picture"
 			</th>
 			<td id="press_content_textarea">
                 <textarea name="impressum_manager_responsible_persons"
-                          placeholder="Beate Beispielhaft
-
+                          title="Beate Beispielhaft
+&#10;
 Musterstraße 110
 Gebäude 33
 90210 Musterstadt"
