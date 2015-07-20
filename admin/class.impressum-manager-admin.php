@@ -52,7 +52,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @return mixed
 	 */
-	public static function field_credit( $form_fields, $post ) {
+	public function field_credit( $form_fields, $post ) {
 		// Fields for credentials which will be summed up in the impressum
 		$form_fields['impressum-manager-image-credential'] = array(
 			'label' => __( 'Urheber vom Bild' ),
@@ -73,7 +73,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @return mixed
 	 */
-	public static function field_credit_save( $post, $attachment ) {
+	public function field_credit_save( $post, $attachment ) {
 		if ( isset( $attachment['impressum-manager-image-credential'] ) ) {
 			update_post_meta( $post['ID'], 'impressum_manager_image_credential', $attachment['impressum-manager-image-credential'] );
 		}
@@ -88,7 +88,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function installation_notice() {
+	public function installation_notice() {
 		$request = $_SERVER['REQUEST_URI'];
 		if ( strpos( $request, SLUG ) !== false ) {
 			// indside impressum
@@ -109,7 +109,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function editor_ajax_callback() {
+	public function editor_ajax_callback() {
 		$key = sanitize_text_field( $_POST['key'] );
 
 		echo Impressum_Manager_Database::get_content( $key );
@@ -117,7 +117,7 @@ class Impressum_Manager_Admin {
 		die();
 	}
 
-	public static function shortcode_preview_ajax_callback() {
+	public function shortcode_preview_ajax_callback() {
 		$shortcode = 'impressum_manager';
 		add_shortcode( $shortcode, array( 'Impressum_Manager', 'content_shortcode' ) );
 
@@ -134,7 +134,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function enqueue_style() {
+	public function enqueue_style() {
 		wp_enqueue_style( 'impressum_manager_style', plugins_url( 'css/impressum-manager.min.css', __FILE__ ) );
 	}
 
@@ -144,7 +144,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function enqueue_script() {
+	public function enqueue_script() {
 		wp_enqueue_script( 'impressum_manager_script', plugins_url( 'js/impressum-manager.min.js', __FILE__ ) );
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'tiny_mce' );
@@ -156,7 +156,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function add_menu() {
+	public function add_menu() {
 		$hook = add_options_page( "Impressum Manager", 'Impressum Manager', 'manage_options', SLUG, array(
 			'Impressum_Manager_Admin',
 			'show'
@@ -170,7 +170,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function add_help_tab() {
+	public function add_help_tab() {
 		$current_screen = get_current_screen();
 
 		$help_shortcode_tab = array(
@@ -217,7 +217,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @return string
 	 */
-	public static function get_page_url() {
+	public function get_page_url() {
 		return admin_url( "options-general.php" ) . "?page=" . SLUG;
 	}
 
@@ -226,7 +226,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function show() {
+	public function show() {
 		$skip_start = false;
 
 		if ( isset( $_GET['skip_start'] ) && $_GET['skip_start'] == 'true' || isset( $_GET['tut_finished'] ) && $_GET['tut_finished'] == 'true' ) {
@@ -256,7 +256,7 @@ class Impressum_Manager_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	private static function display_tutorial_page() {
+	private function display_tutorial_page() {
 
 		switch ( @$_GET['step'] ) {
 			case 1:
@@ -328,6 +328,8 @@ class Impressum_Manager_Admin {
 					self::save_option( "impressum_manager_policy_google_plus", sanitize_text_field( @$_POST["impressum_manager_policy_google_plus"] ) );
 					self::save_option( "impressum_manager_policy_twitter", sanitize_text_field( @$_POST["impressum_manager_policy_twitter"] ) );
 					self::save_option( "impressum_manager_extra_field", sanitize_text_field( @$_POST["impressum_manager_extra_field"] ) );
+
+					self::save_option('impressum_manager_use_imported_impressum', false);
 				}
 
 				include( plugin_dir_path( __FILE__ ) . "views/tutorial/impressum-manager-tutorial-page4.php" );
@@ -422,7 +424,7 @@ class Impressum_Manager_Admin {
 	 * @param $name
 	 * @param $val
 	 */
-	public static function save_option( $name, $val ) {
+	public function save_option( $name, $val ) {
 		if ( get_option( $name ) !== false ) {
 			update_option( $name, $val );
 		} else {
