@@ -227,19 +227,8 @@ class Impressum_Manager_Admin {
 	 * @since 1.0.0
 	 */
 	public static function show() {
-		$skip_start = false;
 
-		if ( isset( $_GET['skip_start'] ) && $_GET['skip_start'] == 'true' || isset( $_GET['tut_finished'] ) && $_GET['tut_finished'] == 'true' ) {
-			Impressum_Manager_Database::getInstance()->save_option( 'impressum_manager_skip_start', true );
-		}
-
-		if ( get_option( 'impressum_manager_skip_start' ) == true || isset( $_GET['skip_start_temp'] ) && $_GET['skip_start_temp'] == 'true' ) {
-			$skip_start = true;
-		}
-
-		if ( $skip_start == false ) {
-			include( plugin_dir_path( __FILE__ ) . "views/impressum-manager-start.php" );
-		} elseif ( isset( $_GET['view'] ) && $_GET['view'] == 'tutorial' ) {
+		if ( isset( $_GET['view'] ) && $_GET['view'] == 'tutorial' ) {
 			self::display_tutorial_page();
 		} elseif ( isset( $_GET['view'] ) && $_GET['view'] == 'config' ) {
 			include( plugin_dir_path( __FILE__ ) . "views/impressum-manager-config.php" );
@@ -354,6 +343,9 @@ class Impressum_Manager_Admin {
 	 * @since 1.0.0
 	 */
 	public function register_settings() {
+
+		// general settings of the plugin
+		register_setting("impressum-manager-general-settings","impressum_manager_confirmation");
 
 		// general options
 		register_setting( "impressum-manager-general-tab", "impressum_manager_noindex" );
