@@ -1,12 +1,15 @@
 <?php
 
-Impressum_Manager_Admin::save_option( "impressum_manager_notice", "dismissed" );
+Impressum_Manager_Database::getInstance()->save_option( "impressum_manager_notice", "dismissed" );
+
 
 if ( @$_GET['tut_finished'] == true && array_key_exists( "submit", $_REQUEST ) ) {
-	Impressum_Manager_Admin::save_option( "impressum_manager_noindex", @sanitize_text_field($_POST['impressum_manager_noindex']) );
-	Impressum_Manager_Admin::save_option( "impressum_manager_show_email_as_image", @sanitize_text_field($_POST['impressum_manager_show_email_as_image']) );
-}
+	$db = Impressum_Manager_Database::getInstance();
 
+	$db->save_option('impressum_manager_use_imported_impressum', false);
+	$db->save_option( "impressum_manager_noindex", @sanitize_text_field($_POST['impressum_manager_noindex']) );
+	$db->save_option( "impressum_manager_show_email_as_image", @sanitize_text_field($_POST['impressum_manager_show_email_as_image']) );
+}
 ?>
 <div class="wrap">
 	<h2 class="logo"><?= __( 'Impressum Manager', SLUG ) ?></h2>
