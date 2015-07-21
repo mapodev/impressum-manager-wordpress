@@ -1,9 +1,9 @@
 <?php
 
 // If uninstall not called from WordPress, then exit.
-//if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-//    exit;
-//}
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+    exit;
+}
 
 delete_option("impressum_manager_person");
 delete_option("impressum_manager_form_of_organization");
