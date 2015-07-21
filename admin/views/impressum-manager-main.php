@@ -200,7 +200,7 @@ function show_preview_box() {
 function show_hints_box() {
 	?>
 
-	<div class="box primary">
+	<!--div class="box primary">
 		<div class="box header"><?= __( "Was zu beachten ist", SLUG ) ?></div>
 
 		<div class="box content">
@@ -210,7 +210,7 @@ function show_hints_box() {
 			  <li>y</li>
 			</ul>
 		</div>
-	</div>
+	</div-->
 
 <?php
 }
