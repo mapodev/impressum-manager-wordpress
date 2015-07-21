@@ -29,7 +29,7 @@ if ( get_option( 'impressum_manager_confirmation' ) == false ) {
 
 <?php
 function show_confirmation() {
-	return ?>
+	?>
 	<script>
 		(function ($) {
 			$(document).ready(function () {
