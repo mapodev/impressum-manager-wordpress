@@ -2,7 +2,7 @@
 
 Impressum Manager ([www.impressum-manager.com](http://www.impressum-manager.com)) is a Freemium Wordpress Plugin which manages all kind of aspects for posting an Imprint and Disclaimer.
 
-The latest [stable release](https://wordpress.org/plugins/impressum-manager/) is 1.0.3.
+The latest [stable release](https://wordpress.org/plugins/impressum-manager/) is 1.0.4.
 
 ## Shortcode
 
