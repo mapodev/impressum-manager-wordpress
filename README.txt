@@ -4,7 +4,7 @@ Donate link: http://www.impressum-manager.com
 Tags: impressum, legal policy, terms
 Requires at least: 3.3.0
 Tested up to: 4.2.2
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,9 @@ No questions asked yet.
 Questions can be asked anytime at support@impressum-manager.com
 
 == Changelog ==
+
+= 1.0.5 =
+- hotfix: bug caused not showing preview
 
 = 1.0.4 =
 - hotfix: bug caused calling noindex on every page, sorry.
