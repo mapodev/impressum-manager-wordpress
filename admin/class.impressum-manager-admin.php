@@ -375,7 +375,6 @@ class Impressum_Manager_Admin {
 		register_setting( "impressum-manager-settings", "impressum_manager_country", array($this, "my_sanitize_method")  );
 		register_setting( "impressum-manager-settings", "impressum_manager_fax", array($this, "my_sanitize_method")  );
 		register_setting( "impressum-manager-settings", "impressum_manager_email", array($this, "my_sanitize_method")  );
-		register_setting( "impressum-manager-settings", "impressum_manager_disclaimer" );
 		register_setting( "impressum-manager-settings", "impressum_manager_phone", array($this, "my_sanitize_method")  );
 		register_setting( "impressum-manager-settings", "impressum_manager_authorized_person", array($this, "my_sanitize_method")  );
 		register_setting( "impressum-manager-settings", "impressum_manager_vat", array($this, "my_sanitize_method")  );
