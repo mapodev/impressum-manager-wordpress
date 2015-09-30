@@ -119,7 +119,7 @@ class Impressum_Manager_Admin {
 
 	public static function shortcode_preview_ajax_callback() {
 		$shortcode = 'impressum_manager';
-		add_shortcode( $shortcode, array( 'Impressum_Manager', 'content_shortcode' ) );
+		add_shortcode( $shortcode, array( 'Impressum_Manager_Shortcode_Manager', 'content_shortcode' ) );
 
 		$shortcode = sanitize_text_field( $_POST["shortcode_key"] );
 
