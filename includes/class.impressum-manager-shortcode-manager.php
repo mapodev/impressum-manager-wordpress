@@ -49,16 +49,9 @@ class Impressum_Manager_Shortcode_Manager {
 					$result .= "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>";
 				}
 
-				if ( get_option( "impressum_manager_source_from" ) == true
-				     && ( $atts['type'] == 'disclaimer'
-				          || $atts['type'] == 'privacy_policy'
-				          || $atts['type'] == 'privacy_policy_and_disclaimer'
-				          || $atts['type'] == '' )
-				) {
+				if ( get_option( "impressum_manager_source_from" ) == true) {
 					$result .= "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>";
 				}
-
-
 			} else {
 				switch ( strtolower( $atts["var"] ) ) {
 					case "company name":
@@ -174,6 +167,14 @@ class Impressum_Manager_Shortcode_Manager {
 			}
 		} else {
 			$result = $impressum->draw();
+
+            if ( get_option( "impressum_manager_powered_by" ) == true ) {
+                $result .= "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>";
+            }
+
+            if ( get_option( "impressum_manager_source_from" ) == true) {
+                $result .= "<p>Quelle: <em><a rel=\"nofollow\" href=\"http://www.e-recht24.de/impressum-generator.html\">http://www.e-recht24.de</a></em></p>";
+            }
 		}
 
 		return $result;
