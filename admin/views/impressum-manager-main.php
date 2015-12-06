@@ -209,7 +209,7 @@ function show_preview_box()
                 ?>
             </select>
             <br><br>
-            <input type="text" id="clipboard_input" style="max-width: 500px; width: 100%"/>
+            <input type="text" id="clipboard_input" style="max-width: 500px; width: 100%"/ value="[impressum_manager]">
             <button id="copy_to_clipboard"><?=__("Copy to Clipboard", SLUG)?></button>
             <p id="response_text"></p>
 
