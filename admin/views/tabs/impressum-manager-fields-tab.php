@@ -58,7 +58,10 @@
 </select>
 <br><br>
 <div style="max-width: 782px">
-    <?php wp_editor("", "editor", array('default_post_edit_rows' => 10)); ?>
+    <?php
+    wp_editor("", "editor", array('default_post_edit_rows' => 10, 'tinymce' => array(
+        'height' => 500
+    ))); ?>
 </div>
 
 <p id="save-tinymce-submit">
