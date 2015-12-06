@@ -154,6 +154,11 @@ function show_preview_box()
 
                         $("#clipboard_input").val($("#impressum_shortcode_preview option:selected").text().replace(/-/g, "").trim());
 
+                        $("#copy_to_clipboard").click(function() {
+                            copyToClipboard($("#clipboard_input"));
+                            $("#response_text").text("Kopiert!").show().fadeOut('slow');
+                        });
+
                         var data = {
                             'action': 'impressum_manager_get_shortcode_preview',
                             'shortcode_key': $(this).val()
@@ -163,6 +168,14 @@ function show_preview_box()
                             $("#impressum-preview-content").html(data);
                         });
                     });
+
+                    function copyToClipboard(element) {
+                        var $temp = $("<input>")
+                        $("body").append($temp);
+                        $temp.val($(element).val()).select();
+                        document.execCommand("copy");
+                        $temp.remove();
+                    }
                 })
             }(jQuery));
         </script>
@@ -198,6 +211,7 @@ function show_preview_box()
             <br><br>
             <input type="text" id="clipboard_input" style="max-width: 500px; width: 100%"/>
             <button id="copy_to_clipboard"><?=__("Copy to Clipboard", SLUG)?></button>
+            <p id="response_text"></p>
 
             <hr>
             <div id="impressum-preview-content">
