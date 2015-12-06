@@ -133,7 +133,7 @@ class Impressum_Manager_Admin
     {
         global $wpdb;
 
-        $val = $_POST['editor'];
+        $val = esc_sql($_POST['editor']);
         $key = sanitize_text_field($_POST['impressum_key']);
         $lang = sanitize_text_field($_POST['lang']);
 
