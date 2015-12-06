@@ -151,6 +151,9 @@ function show_preview_box()
                     });
 
                     $("#impressum_shortcode_preview").change(function () {
+
+                        $("#clipboard_input").val($("#impressum_shortcode_preview option:selected").text().replace(/-/g, "").trim());
+
                         var data = {
                             'action': 'impressum_manager_get_shortcode_preview',
                             'shortcode_key': $(this).val()
@@ -192,6 +195,9 @@ function show_preview_box()
 
                 ?>
             </select>
+            <br><br>
+            <input type="text" id="clipboard_input" style="max-width: 500px; width: 100%"/>
+            <button id="copy_to_clipboard"><?=__("Copy to Clipboard", SLUG)?></button>
 
             <hr>
             <div id="impressum-preview-content">
