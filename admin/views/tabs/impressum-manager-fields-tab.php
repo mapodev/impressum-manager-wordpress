@@ -1,10 +1,3 @@
-<?php
-
-// workaround for visual tab not working, when loading on text editor
-//add_filter('wp_default_editor', create_function('', 'return "tinymce";'));
-
-?>
-
 <script>
     (function ($) {
         $(document).ready(function () {
