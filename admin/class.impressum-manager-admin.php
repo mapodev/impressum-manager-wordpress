@@ -127,7 +127,7 @@ class Impressum_Manager_Admin
     /**
      * Saving Impressum Text into database via ajax
      *
-     * @since 1.0.7
+     * @since 1.1.0
      */
     public static function save_editor_ajax_callback()
     {
