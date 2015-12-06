@@ -25,7 +25,6 @@ if (@$_GET['tut_finished'] == true && array_key_exists("submit", $_REQUEST)) {
         if (get_option('impressum_manager_confirmation') == false) {
             show_confirmation();
         } else {
-            show_hints_box();
             show_preview_box();
         }
         ?>
@@ -222,23 +221,4 @@ function show_preview_box()
         </div>
     <?php
     }
-}
-
-function show_hints_box()
-{
-    ?>
-
-    <!--div class="box primary">
-		<div class="box header"><?= __("Was zu beachten ist", SLUG) ?></div>
-
-		<div class="box content">
-			<ul>
-			  <li><?= __('Stellen Sie die Datenschutzerklärung auf einer separaten Seite ein. Verlinken Sie diese mit "Datenschutz" gut sichtbar von allen Seiten.', SLUG) ?></li>
-			  <li>x</li>
-			  <li>y</li>
-			</ul>
-		</div>
-	</div-->
-
-<?php
 }
