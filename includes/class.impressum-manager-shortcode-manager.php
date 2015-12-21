@@ -159,6 +159,8 @@ class Impressum_Manager_Shortcode_Manager {
 							case 9:
 								$result = __( "Genossenschaft (eG)" );
 								break;
+                            case 10:
+                                $result = __( "Eingetragener Verein (e.V.)" );
 						}
 					};
 
