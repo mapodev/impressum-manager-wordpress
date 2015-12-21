@@ -316,7 +316,7 @@ class Impressum_Manager_Admin
                     $db->save_option("impressum_manager_fax", sanitize_text_field(@$_POST["impressum_manager_fax"]));
                     $db->save_option("impressum_manager_email", sanitize_text_field(@$_POST["impressum_manager_email"]));
                     $db->save_option("impressum_manager_phone", sanitize_text_field(@$_POST["impressum_manager_phone"]));
-                    $db->save_option("impressum_manager_authorized_person", sanitize_text_field(@$_POST["impressum_manager_authorized_person"]));
+                    $db->save_option("impressum_manager_authorized_person", esc_textarea(@$_POST["impressum_manager_authorized_person"]));
                 }
 
                 include(plugin_dir_path(__FILE__) . "views/tutorial/impressum-manager-tutorial-page2.php");
@@ -342,7 +342,7 @@ class Impressum_Manager_Admin
 
                     $db->save_option("impressum_manager_responsible_persons", sanitize_text_field(@$_POST["impressum_manager_responsible_persons"]));
 
-                    $db->save_option("impressum_manager_image_source", sanitize_text_field(@$_POST["impressum_manager_image_source"]));
+                    $db->save_option("impressum_manager_image_source", esc_textarea(@$_POST["impressum_manager_image_source"]));
 
 
                     $db->save_option("impressum_manager_press_content", sanitize_text_field(@$_POST["impressum_manager_press_content"]));
@@ -370,7 +370,7 @@ class Impressum_Manager_Admin
                     $db->save_option("impressum_manager_policy_google_adsense", sanitize_text_field(@$_POST["impressum_manager_policy_google_adsense"]));
                     $db->save_option("impressum_manager_policy_google_plus", sanitize_text_field(@$_POST["impressum_manager_policy_google_plus"]));
                     $db->save_option("impressum_manager_policy_twitter", sanitize_text_field(@$_POST["impressum_manager_policy_twitter"]));
-                    $db->save_option("impressum_manager_extra_field", sanitize_text_field(@$_POST["impressum_manager_extra_field"]));
+                    $db->save_option("impressum_manager_extra_field", esc_textarea(@$_POST["impressum_manager_extra_field"]));
 
                 }
 
@@ -411,7 +411,7 @@ class Impressum_Manager_Admin
         register_setting("impressum-manager-general-tab", "impressum_manager_policy_twitter");
         register_setting("impressum-manager-general-tab", "impressum_manager_policy_google_plus");
         register_setting("impressum-manager-general-tab", "impressum_manager_disabled");
-        register_setting("impressum-manager-general-tab", "impressum_manager_extra_field", array($this, "my_sanitize_method"));
+        register_setting("impressum-manager-general-tab", "impressum_manager_extra_field", "esc_textarea");
 
         // impressum general options
         register_setting("impressum-manager-settings", "impressum_manager_person");
@@ -425,7 +425,7 @@ class Impressum_Manager_Admin
         register_setting("impressum-manager-settings", "impressum_manager_fax", array($this, "my_sanitize_method"));
         register_setting("impressum-manager-settings", "impressum_manager_email", array($this, "my_sanitize_method"));
         register_setting("impressum-manager-settings", "impressum_manager_phone", array($this, "my_sanitize_method"));
-        register_setting("impressum-manager-settings", "impressum_manager_authorized_person", array($this, "my_sanitize_method"));
+        register_setting("impressum-manager-settings", "impressum_manager_authorized_person", "esc_textarea");
         register_setting("impressum-manager-settings", "impressum_manager_vat", array($this, "my_sanitize_method"));
         register_setting("impressum-manager-settings", "impressum_manager_register");
         register_setting("impressum-manager-settings", "impressum_manager_register_court", array($this, "my_sanitize_method"));
@@ -437,7 +437,7 @@ class Impressum_Manager_Admin
         register_setting("impressum-manager-settings", "impressum_manager_state_rules", array($this, "my_sanitize_method"));
         register_setting("impressum-manager-settings", "impressum_manager_chamber", array($this, "my_sanitize_method"));
         register_setting("impressum-manager-settings", "impressum_manager_rules_link", array($this, "my_sanitize_method"));
-        register_setting("impressum-manager-settings", "impressum_manager_image_source", array($this, "my_sanitize_method"));
+        register_setting("impressum-manager-settings", "impressum_manager_image_source", "esc_textarea");
         register_setting("impressum-manager-settings", "impressum_manager_responsible_persons", array($this, "my_sanitize_method"));
         register_setting("impressum-manager-settings", "impressum_manager_press_content", array($this, "my_sanitize_method"));
         register_setting("impressum-manager-settings", "impressum_manager_professional_liability_insurance_checked");
