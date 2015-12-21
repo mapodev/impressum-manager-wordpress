@@ -4,7 +4,7 @@ Donate link: http://www.impressum-manager.com
 Tags: impressum, legal policy, terms
 Requires at least: 3.3.0
 Tested up to: 4.2.2
-Stable tag: 1.1.0
+Stable tag: 4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,10 @@ No questions asked yet.
 Questions can be asked anytime at support@impressum-manager.com
 
 == Changelog ==
+
+= 1.1.1 =
+- Added new "Rechtsform" called "e.V."
+- fixed breaks for textareas
 
 = 1.1.0 =
 - fix: editor for editing impressum fields like policy and disclaimer now working
