@@ -46,7 +46,7 @@ class Impressum_Manager_Shortcode_Manager {
 			if ( isset( $atts['type'] ) ) {
 				$result = $impressum->get_component_by_atts( $atts )->draw();
 				if ( get_option( "impressum_manager_powered_by" ) == true ) {
-					$result .= "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>";
+					$result .= "<p>Plugin von <a href=\"http://www.impressum-manager.com\">http://www.impressum-manager.com</a></p>";
 				}
 
 				if ( get_option( "impressum_manager_source_from" ) == true) {
@@ -171,7 +171,7 @@ class Impressum_Manager_Shortcode_Manager {
 			$result = $impressum->draw();
 
             if ( get_option( "impressum_manager_powered_by" ) == true ) {
-                $result .= "<p>Plugin von <a href=\"http://www.impressum-manager.com\">Impressum Manager</a></p>";
+                $result .= "<p>Plugin von <a href=\"http://www.impressum-manager.com\">http://www.impressum-manager.com</a></p>";
             }
 
             if ( get_option( "impressum_manager_source_from" ) == true) {
