@@ -149,6 +149,13 @@ function show_preview_box()
         <script>
             (function ($) {
                 $(document).ready(function () {
+
+                    $("#copy_to_clipboard").click(function() {
+                        copyToClipboard($("#clipboard_input"));
+                        $("#response_text").text("Kopiert!").show().fadeOut('slow');
+                    });
+
+
                     var loaddata = {
                         'action': 'impressum_manager_get_shortcode_preview',
                         'shortcode_key': ''
@@ -161,11 +168,6 @@ function show_preview_box()
                     $("#impressum_shortcode_preview").change(function () {
 
                         $("#clipboard_input").val($("#impressum_shortcode_preview option:selected").text().replace(/-/g, "").trim());
-
-                        $("#copy_to_clipboard").click(function() {
-                            copyToClipboard($("#clipboard_input"));
-                            $("#response_text").text("Kopiert!").show().fadeOut('slow');
-                        });
 
                         var data = {
                             'action': 'impressum_manager_get_shortcode_preview',
