@@ -14,12 +14,21 @@ if (@$_GET['tut_finished'] == true && array_key_exists("submit", $_REQUEST)) {
     <div class="wrap">
         <h2 class="logo"><a href="http://www.impressum-manager.com/"><?= __('Impressum Manager', SLUG) ?></a></h2>
 
-        <h3><?= __('Willkommen bei Impressum-Manager. Dieses Plugin hilft dir deine Webseite(n) rechtsicher zu machen ...', SLUG); ?></h3>
-        <p>Besuch unsere Webseite <a href="http://www.impressum-manager.com/">http://www.impressum-manager.com</a> und
-            melde dich bei unserem Newsletter an.</p> <p> Kriege als erster die Information, wann unser Premium Produkt online
-            geht.</p>
+        <div style="padding: 15px 30px; border: 1px dashed #333; margin-bottom: 30px; ">
+            <h3><?= __('Willkommen bei Impressum-Manager. Dieses Plugin hilft dir deine Webseite(n) rechtsicher zu machen ...', SLUG); ?></h3>
 
-        <p>Hast du <b>Bugs</b> gefunden? Schreib uns in Github: <a href="https://github.com/mapodev/impressum-manager-wordpress/issues">Issue System</a> oder schreib uns einfach unter <a href="mailto:support@impressum-manager.com">support@impressum-manager.com</a></a></p>
+            <p>Besuch unsere Webseite <a href="http://www.impressum-manager.com/">http://www.impressum-manager.com</a>
+                und
+                melde dich bei unserem Newsletter an.</p>
+
+            <p> Kriege als erster die Information, wann unser Premium Produkt online
+                geht.</p>
+
+            <p>Hast du <b>Bugs</b> gefunden? Schreib uns in Github: <a
+                    href="https://github.com/mapodev/impressum-manager-wordpress/issues">Issue System</a> oder schreib
+                uns
+                einfach unter <a href="mailto:support@impressum-manager.com">support@impressum-manager.com</a></a></p>
+        </div>
 
         <?php
         if (get_option('impressum_manager_confirmation') == false) {
