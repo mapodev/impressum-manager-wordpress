@@ -53,6 +53,11 @@ Questions can be asked anytime at support@impressum-manager.com
 
 == Changelog ==
 
+= 1.1.2 =
+- Fixed Copy to Clipboard
+- Newsletter Opt In added
+- Some Design aspects
+
 = 1.1.1 =
 - Added new "Rechtsform" called "e.V."
 - fixed breaks for textareas

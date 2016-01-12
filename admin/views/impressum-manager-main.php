@@ -14,12 +14,40 @@ if (@$_GET['tut_finished'] == true && array_key_exists("submit", $_REQUEST)) {
     <div class="wrap">
         <h2 class="logo"><a href="http://www.impressum-manager.com/"><?= __('Impressum Manager', SLUG) ?></a></h2>
 
-        <h3><?= __('Willkommen bei Impressum-Manager. Dieses Plugin hilft dir deine Webseite(n) rechtsicher zu machen ...', SLUG); ?></h3>
-        <p>Besuch unsere Webseite <a href="http://www.impressum-manager.com/">http://www.impressum-manager.com</a> und
-            melde dich bei unserem Newsletter an.</p> <p> Kriege als erster die Information, wann unser Premium Produkt online
-            geht.</p>
+        <div style="padding: 15px 30px; border: 1px dashed #333; margin-bottom: 30px; ">
 
-        <p>Hast du <b>Bugs</b> gefunden? Schreib uns in Github: <a href="https://github.com/mapodev/impressum-manager-wordpress/issues">Issue System</a> oder schreib uns einfach unter <a href="mailto:support@impressum-manager.com">support@impressum-manager.com</a></a></p>
+            <div class="newsletter" style="float: right">
+                <!-- Begin MailChimp Signup Form -->
+                <div id="mc_embed_signup">
+                    <form action="//impressum-manager.us11.list-manage.com/subscribe/post?u=f748bd33d8123566e4fbc05fc&amp;id=b82f77eff8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                        <div id="mc_embed_signup_scroll">
+
+                            <h3>Newsletter</h3>
+
+                            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" style="max-width: 210px; width: 100%" placeholder="E-Mail Adresse" required>
+                            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                            <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f748bd33d8123566e4fbc05fc_b82f77eff8" tabindex="-1" value=""></div>
+                            <div class="clear"><input type="submit" value="In den Newsletter einschreiben" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <h3><?= __('Willkommen bei Impressum-Manager. Dieses Plugin hilft dir deine Webseite(n) rechtsicher zu machen ...', SLUG); ?></h3>
+
+            <p>Besuch unsere Webseite <a href="http://www.impressum-manager.com/">http://www.impressum-manager.com</a>
+                und
+                melde dich bei unserem Newsletter an.</p>
+
+            <p> Kriege als erster die Information, wann unser Premium Produkt online
+                geht.</p>
+
+            <p>Hast du <b>Bugs</b> gefunden? Schreib uns in Github: <a
+                    href="https://github.com/mapodev/impressum-manager-wordpress/issues">Issue System</a> oder schreib
+                uns
+                einfach unter <a href="mailto:support@impressum-manager.com">support@impressum-manager.com</a></a></p>
+
+        </div>
 
         <?php
         if (get_option('impressum_manager_confirmation') == false) {
@@ -140,6 +168,13 @@ function show_preview_box()
         <script>
             (function ($) {
                 $(document).ready(function () {
+
+                    $("#copy_to_clipboard").click(function() {
+                        copyToClipboard($("#clipboard_input"));
+                        $("#response_text").text("Kopiert!").show().fadeOut('slow');
+                    });
+
+
                     var loaddata = {
                         'action': 'impressum_manager_get_shortcode_preview',
                         'shortcode_key': ''
@@ -152,11 +187,6 @@ function show_preview_box()
                     $("#impressum_shortcode_preview").change(function () {
 
                         $("#clipboard_input").val($("#impressum_shortcode_preview option:selected").text().replace(/-/g, "").trim());
-
-                        $("#copy_to_clipboard").click(function() {
-                            copyToClipboard($("#clipboard_input"));
-                            $("#response_text").text("Kopiert!").show().fadeOut('slow');
-                        });
 
                         var data = {
                             'action': 'impressum_manager_get_shortcode_preview',
