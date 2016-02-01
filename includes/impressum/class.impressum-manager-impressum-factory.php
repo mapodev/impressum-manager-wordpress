@@ -112,8 +112,8 @@ class Impressum_Manager_Impressum_Factory
 		$name = get_option("impressum_manager_name_company");
 		$address = get_option("impressum_manager_address");
 		$address_extra = get_option("impressum_manager_address_extra");
-		$zip = get_option("impressum_manager_place");
-		$place = get_option("impressum_manager_zip");
+        $place  = get_option("impressum_manager_place");
+        $zip = get_option("impressum_manager_zip");
         $country = get_option("impressum_manager_country");
 
         if(get_option("impressum_manager_person") == 2) {
