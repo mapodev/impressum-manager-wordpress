@@ -53,6 +53,9 @@ Questions can be asked anytime at support@impressum-manager.com
 
 == Changelog ==
 
+= 1.1.3 =
+- fix #6. Thanks to tgorontzy, which pointed out wrongly switched place and zip
+
 = 1.1.2 =
 - Fixed Copy to Clipboard
 - Newsletter Opt In added
