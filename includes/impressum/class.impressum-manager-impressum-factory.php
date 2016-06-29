@@ -123,7 +123,7 @@ class Impressum_Manager_Impressum_Factory
                 __( "Stille Gesellschaft", SLUG ),
                 __( "Offene Handelsgesellschaft (OHG)", SLUG ),
                 __( "Kommanditgesellschaft (KG)", SLUG ),
-                __( "Gesellschaft bürgerlichen Rechts (GdR)", SLUG ),
+                __( "Gesellschaft bürgerlichen Rechts (GbR)", SLUG ),
                 __( "Aktiengesellschaft (AG)", SLUG ),
                 __( "Kommanditgesellschaft auf Aktien (KGaA)", SLUG ),
                 __( "Gesellschaft mit beschränkter Haftung (GmbH)", SLUG ),
