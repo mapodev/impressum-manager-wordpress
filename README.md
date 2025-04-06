@@ -27,6 +27,6 @@ To see the Impressum inside your website you can use the general shortcode `[imp
 - If you have a direct questions, send them to support@impressum-manager.com
 - Ideas? Tell them us! Create a ticket, an we will get back to you.
 
-Impressum Manager is created and maintained by [Marcin Poholski](http://www.mapo-dev.com/) and Christian Jäger.
+Impressum Manager is created and maintained by Marcin Poholski and Christian Jäger.
 
 
